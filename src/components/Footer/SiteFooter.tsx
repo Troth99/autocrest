@@ -1,3 +1,5 @@
+import styles from "./SiteFooter.module.css";
+
 const footerColumns = [
   {
     heading: "Product",
@@ -15,8 +17,8 @@ const footerColumns = [
 
 export default function SiteFooter() {
   return (
-    <footer className="border-t border-slate-700/40">
-      <div className="mx-auto max-w-6xl px-6 py-12">
+    <footer className={styles.footer}>
+      <div className={`${styles.content} mx-auto max-w-6xl px-6 py-12`}>
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
           <div>
             <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-sky-500/15 text-sm font-bold text-sky-400">

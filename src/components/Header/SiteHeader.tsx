@@ -30,9 +30,9 @@ export default function SiteHeader() {
           <a href="#" className={styles.signIn}>
             Sign in
           </a>
-          <a href="#timeline" className={`${buttonStyles.primary} ${styles.primaryCta}`}>
+          <Link href="/register" className={`${buttonStyles.primary} ${styles.primaryCta}`}>
             Get started
-          </a>
+          </Link>
         </div>
       </nav>
     </header>

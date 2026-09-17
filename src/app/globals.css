@@ -21,25 +21,15 @@
 /* Global styles */
 body {
   background:
-    radial-gradient(
-      700px circle at 85% 0%,
-      rgba(213, 243, 107, 0.12),
-      transparent 55%
-    ),
-    radial-gradient(
-      600px circle at 0% 20%,
-      rgba(73, 153, 173, 0.14),
-      transparent 60%
-    ),
-    linear-gradient(rgba(202, 214, 205, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(202, 214, 205, 0.035) 1px, transparent 1px),
-    var(--ink);
-  background-size:
-    auto,
-    auto,
-    48px 48px,
-    48px 48px,
-    auto;
+    linear-gradient(rgba(202, 214, 205, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(202, 214, 205, 0.03) 1px, transparent 1px),
+    radial-gradient(1000px 600px at 0% 0%, rgba(14, 165, 233, 0.2), transparent 72%),
+    radial-gradient(900px 650px at 100% 30%, rgba(99, 102, 241, 0.1), transparent 70%),
+    radial-gradient(1000px 620px at 95% 100%, rgba(190, 242, 100, 0.14), transparent 72%),
+    linear-gradient(135deg, #09151d 0%, #0c1117 50%, #13180d 100%);
+  background-attachment: scroll, scroll, fixed, fixed, fixed, fixed;
+  background-repeat: repeat, repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+  background-size: 48px 48px, 48px 48px, auto, auto, auto, auto;
   color: var(--foreground);
   font-family: var(--font-geist-sans), sans-serif;
 }
