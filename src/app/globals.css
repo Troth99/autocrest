@@ -25,38 +25,35 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Prototype styles: Vehicle Lifecycle Digital Twin home page */
+/* Prototype styles: Vehicle Lifecycle Digital Twin home page (soft steel-blue, shadow style) */
 .dt-hero {
   background:
-    radial-gradient(circle at 15% 20%, rgba(59, 130, 246, 0.25), transparent 45%),
-    radial-gradient(circle at 85% 0%, rgba(168, 85, 247, 0.2), transparent 40%),
-    #0a0a0f;
+    radial-gradient(900px circle at 50% -10%, rgba(56, 189, 248, 0.12), transparent 60%),
+    #0f172a;
 }
 
 .dt-card {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(6px);
-  transition: transform 0.2s ease, border-color 0.2s ease;
+  background: #131b2e;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25), 0 1px 0 rgba(255, 255, 255, 0.03) inset;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .dt-card:hover {
   transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(56, 189, 248, 0.35);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35), 0 1px 0 rgba(255, 255, 255, 0.05) inset;
 }
 
 .dt-dot {
-  width: 0.65rem;
-  height: 0.65rem;
+  width: 0.6rem;
+  height: 0.6rem;
   border-radius: 9999px;
   flex-shrink: 0;
-  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.06);
+  box-shadow: 0 0 10px 1px currentColor;
 }
 
-.dt-glow-text {
-  background: linear-gradient(90deg, #93c5fd, #c4b5fd, #f0abfc);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+.dt-accent-text {
+  color: #38bdf8;
 }
 
