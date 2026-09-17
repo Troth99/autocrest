@@ -68,11 +68,6 @@ body {
   transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
-.dt-hero header {
-  background: rgba(12, 17, 23, 0.72);
-  border-color: var(--line);
-}
-
 .dt-hero .bg-sky-500 {
   background: var(--accent);
   color: var(--ink);
@@ -87,4 +82,3 @@ body {
   border-color: rgba(213, 243, 107, 0.5);
   background: rgba(213, 243, 107, 0.08);
 }
-

@@ -1,4 +1,3 @@
-import Link from "next/link";
 
 const modules = [
   { label: "Events", desc: "A full timeline of everything that happened to the vehicle.", color: "#60a5fa" },
@@ -8,12 +7,6 @@ const modules = [
   { label: "Costs", desc: "Every cost, categorized and summarized.", color: "#a78bfa" },
   { label: "Deadlines", desc: "Insurance, inspections, warranties — what's coming up.", color: "#f472b6" },
   { label: "Organizations", desc: "Insurers, service centers, parts suppliers.", color: "#38bdf8" },
-];
-
-const stats = [
-  { value: "1", label: "vehicle in this demo" },
-  { value: "4", label: "events in the timeline" },
-  { value: "7", label: "connected modules" },
 ];
 
 const steps = [
@@ -48,39 +41,11 @@ export default function Home() {
   return (
     <div className="dt-hero min-h-screen text-slate-100">
       {/* Header */}
-      <header className="sticky top-0 z-10 border-b border-slate-700/40 bg-slate-950/60 backdrop-blur">
-        <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <Link href="/" className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-sky-500/15 text-sm font-bold text-sky-400">
-              VT
-            </span>
-            <span className="text-sm font-semibold tracking-wide text-slate-200">
-              Vehicle Lifecycle <span className="dt-accent-text">Digital Twin</span>
-            </span>
-          </Link>
-          <div className="hidden items-center gap-6 text-sm text-slate-400 md:flex">
-            <a href="#modules" className="hover:text-slate-100">Modules</a>
-            <a href="#how-it-works" className="hover:text-slate-100">How it works</a>
-            <a href="#timeline" className="hover:text-slate-100">Timeline</a>
-          </div>
-          <div className="flex items-center gap-3">
-            <a href="#" className="hidden text-sm font-medium text-slate-300 hover:text-slate-100 sm:block">
-              Sign in
-            </a>
-            <a
-              href="#timeline"
-              className="rounded-full bg-sky-500 px-4 py-2 text-sm font-semibold text-slate-950 shadow-lg shadow-sky-500/20 transition-transform hover:scale-105"
-            >
-              Get started
-            </a>
-          </div>
-        </nav>
-      </header>
 
       {/* Hero */}
       <section className="mx-auto max-w-4xl px-6 pb-12 pt-16 text-center">
         <span className="inline-block rounded-full border border-sky-400/20 bg-sky-400/5 px-4 py-1 text-xs font-medium text-sky-300">
-          Prototype &middot; connected to Supabase
+          Prototype &middot; your vehicle, understood
         </span>
         <h1 className="mx-auto mt-6 max-w-3xl text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl">
           The vehicle&apos;s entire life,{" "}
@@ -105,14 +70,36 @@ export default function Home() {
           </a>
         </div>
 
-        <div className="mx-auto mt-10 grid max-w-lg grid-cols-3 gap-4">
-          {stats.map((s) => (
-            <div key={s.label} className="dt-card rounded-2xl px-4 py-5">
-              <div className="text-2xl font-semibold text-white">{s.value}</div>
-              <div className="mt-1 text-xs text-slate-400">{s.label}</div>
+        <article className="dt-card mx-auto mt-12 max-w-2xl overflow-hidden rounded-3xl p-4 text-left sm:p-5">
+          <div className="flex items-center justify-between border-b border-slate-700/60 pb-4">
+            <div className="flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-rose-400" />
+              <span className="h-2 w-2 rounded-full bg-amber-300" />
+              <span className="h-2 w-2 rounded-full bg-emerald-400" />
+              <span className="ml-2 text-xs font-medium text-slate-500">Vehicle preview</span>
             </div>
-          ))}
-        </div>
+            <span className="rounded-full bg-emerald-400/10 px-3 py-1 text-xs font-medium text-emerald-300">All clear</span>
+          </div>
+          <div className="grid gap-4 pt-5 sm:grid-cols-[1.15fr_.85fr]">
+            <div className="rounded-2xl border border-slate-700/60 bg-slate-950/30 p-5">
+              <p className="text-xs font-semibold uppercase tracking-[.16em] text-sky-300">BMW 320d · AB 1234 CD</p>
+              <div className="mt-3 flex items-end justify-between">
+                <div><p className="text-sm text-slate-400">Vehicle health</p><p className="mt-1 text-3xl font-semibold text-white">86<span className="text-base text-slate-500">/100</span></p></div>
+                <span className="text-xs font-medium text-lime-200">Good condition</span>
+              </div>
+              <div className="mt-4 h-2 overflow-hidden rounded-full bg-slate-800"><div className="h-full w-[86%] rounded-full bg-gradient-to-r from-sky-400 to-lime-300 shadow-[0_0_14px_rgba(213,243,107,.35)]" /></div>
+            </div>
+            <div className="rounded-2xl border border-amber-300/15 bg-amber-300/5 p-5">
+              <p className="text-xs font-semibold uppercase tracking-[.16em] text-amber-200">Next up</p>
+              <p className="mt-4 text-sm font-medium text-white">Technical inspection</p>
+              <p className="mt-1 text-xs text-slate-400">In 24 days</p>
+              <p className="mt-5 text-xs font-medium text-lime-200">Open vehicle →</p>
+            </div>
+          </div>
+          <div className="mt-4 flex items-center justify-between rounded-2xl border border-slate-700/50 bg-slate-950/30 px-4 py-3 text-xs">
+            <span className="text-slate-400">Latest event</span><span className="font-medium text-slate-200">Bumper repair · 1 240 лв.</span>
+          </div>
+        </article>
       </section>
 
       {/* Modules */}
@@ -183,10 +170,10 @@ export default function Home() {
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
             <div>
               <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-sky-500/15 text-sm font-bold text-sky-400">
-                VT
+                AC
               </span>
               <p className="mt-3 max-w-[16rem] text-sm text-slate-400">
-                A digital twin for every vehicle&apos;s history, status, and next decision.
+                AutoCrest connects every vehicle&apos;s history, status, and next decision.
               </p>
             </div>
             {footerColumns.map((col) => (
@@ -205,7 +192,7 @@ export default function Home() {
             ))}
           </div>
           <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-slate-700/40 pt-6 text-xs text-slate-500 sm:flex-row">
-            <span>&copy; 2026 Vehicle Lifecycle Digital Twin. Prototype build.</span>
+            <span>&copy; 2026 AutoCrest. Prototype build.</span>
             <span>Not yet connected to real database data.</span>
           </div>
         </div>
@@ -213,4 +200,3 @@ export default function Home() {
     </div>
   );
 }
-
