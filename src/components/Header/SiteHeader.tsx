@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styles from "./SiteHeader.module.css";
+import buttonStyles from "../ui/Button.module.css";
 
 export default function SiteHeader() {
 
@@ -29,7 +30,7 @@ export default function SiteHeader() {
           <a href="#" className={styles.signIn}>
             Sign in
           </a>
-          <a href="#timeline" className={`button-primary ${styles.primaryCta}`}>
+          <a href="#timeline" className={`${buttonStyles.primary} ${styles.primaryCta}`}>
             Get started
           </a>
         </div>

@@ -1,3 +1,4 @@
+import styles from "../shared/HomeShared.module.css";
 
 
 const steps = [
@@ -18,8 +19,8 @@ export default function HowItWorksSection() {
         </p>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           {steps.map((s) => (
-            <div key={s.step} className="dt-card rounded-2xl p-6">
-              <span className="dt-accent-text text-xs font-bold tracking-widest">{s.step}</span>
+            <div key={s.step} className={`${styles.card} rounded-2xl p-6`}>
+              <span className={`${styles.accentText} text-xs font-bold tracking-widest`}>{s.step}</span>
               <h3 className="mt-2 text-base font-semibold text-white">{s.title}</h3>
               <p className="mt-2 text-sm text-slate-400">{s.desc}</p>
             </div>

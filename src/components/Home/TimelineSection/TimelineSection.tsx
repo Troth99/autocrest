@@ -1,3 +1,5 @@
+import styles from "../shared/HomeShared.module.css";
+
 const timeline = [
   {
     date: "Mar 12, 2025",
@@ -37,9 +39,9 @@ export default function TimeLineSection() {
       </p>
       <ol className="relative ml-2 border-l border-slate-700 pl-8">
         {timeline.map((event) => (
-          <li key={event.date} className="dt-card relative mb-4 rounded-xl p-5">
+          <li key={event.date} className={`${styles.card} relative mb-4 rounded-xl p-5`}>
             <span
-              className="dt-dot absolute left-[-2.325rem] top-6"
+                className={`${styles.dot} absolute left-[-2.325rem] top-6`}
               style={{ background: event.color, color: event.color }}
             />
             <time className="text-xs font-medium uppercase tracking-wide text-slate-400">

@@ -1,0 +1,27 @@
+.title {
+  letter-spacing: -0.045em;
+}
+
+.action {
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.action:hover {
+  transform: scale(1.05);
+}
+
+.secondaryButton {
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.secondaryButton:hover {
+  border-color: rgba(213, 243, 107, 0.5);
+  background: rgba(213, 243, 107, 0.08);
+}
