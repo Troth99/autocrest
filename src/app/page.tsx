@@ -44,41 +44,6 @@ const footerColumns = [
   },
 ];
 
-function TwinIllustration() {
-  return (
-    <svg
-      viewBox="0 0 320 160"
-      className="mx-auto h-auto w-full max-w-md"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <ellipse cx="160" cy="140" rx="120" ry="10" fill="#38bdf8" opacity="0.08" />
-      <path
-        d="M40 108c0-8 6-14 14-16l18-4 14-22c3-5 9-8 15-8h60c8 0 15 4 19 11l12 20 20 5c8 2 14 9 14 17v10c0 6-5 11-11 11H51c-6 0-11-5-11-11v-13Z"
-        fill="#1e293b"
-        stroke="#38bdf8"
-        strokeOpacity="0.5"
-        strokeWidth="1.5"
-      />
-      <rect x="96" y="66" width="90" height="24" rx="4" fill="#0f172a" stroke="#38bdf8" strokeOpacity="0.4" />
-      <circle cx="88" cy="118" r="14" fill="#0f172a" stroke="#38bdf8" strokeWidth="2" />
-      <circle cx="88" cy="118" r="4" fill="#38bdf8" />
-      <circle cx="222" cy="118" r="14" fill="#0f172a" stroke="#38bdf8" strokeWidth="2" />
-      <circle cx="222" cy="118" r="4" fill="#38bdf8" />
-      {[
-        [70, 40],
-        [160, 20],
-        [250, 46],
-      ].map(([x, y], i) => (
-        <g key={i}>
-          <line x1={x} y1={y} x2={160} y2={80} stroke="#38bdf8" strokeOpacity="0.35" strokeDasharray="3 3" />
-          <circle cx={x} cy={y} r="5" fill="#38bdf8" opacity="0.9" />
-        </g>
-      ))}
-    </svg>
-  );
-}
-
 export default function Home() {
   return (
     <div className="dt-hero min-h-screen text-slate-100">
@@ -138,10 +103,6 @@ export default function Home() {
           >
             System modules
           </a>
-        </div>
-
-        <div className="mx-auto mt-14 max-w-md">
-          <TwinIllustration />
         </div>
 
         <div className="mx-auto mt-10 grid max-w-lg grid-cols-3 gap-4">

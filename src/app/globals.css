@@ -1,8 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0c1117;
+  --foreground: #edf2f0;
+  --ink: #0c1117;
+  --panel: rgba(22, 31, 38, 0.78);
+  --line: rgba(202, 214, 205, 0.14);
+  --muted: #91a09d;
+  --accent: #d5f36b;
+  --accent-strong: #b7dc47;
 }
 
 @theme inline {
@@ -12,37 +18,34 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), sans-serif;
 }
 
-/* Prototype styles: Vehicle Lifecycle Digital Twin home page (soft steel-blue, shadow style) */
 .dt-hero {
   background:
-    radial-gradient(900px circle at 50% -10%, rgba(56, 189, 248, 0.12), transparent 60%),
-    #0f172a;
+    radial-gradient(700px circle at 85% 0%, rgba(213, 243, 107, 0.12), transparent 55%),
+    radial-gradient(600px circle at 0% 20%, rgba(73, 153, 173, 0.14), transparent 60%),
+    linear-gradient(rgba(202, 214, 205, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(202, 214, 205, 0.035) 1px, transparent 1px),
+    var(--ink);
+  background-size: auto, auto, 48px 48px, 48px 48px, auto;
 }
 
 .dt-card {
-  background: #131b2e;
-  border: 1px solid rgba(148, 163, 184, 0.12);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25), 0 1px 0 rgba(255, 255, 255, 0.03) inset;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18), 0 1px 0 rgba(255, 255, 255, 0.04) inset;
+  backdrop-filter: blur(14px);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
 .dt-card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(56, 189, 248, 0.35);
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35), 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  transform: translateY(-4px);
+  border-color: rgba(213, 243, 107, 0.4);
+  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.06) inset;
 }
 
 .dt-dot {
@@ -54,6 +57,34 @@ body {
 }
 
 .dt-accent-text {
-  color: #38bdf8;
+  color: var(--accent);
+}
+
+.dt-hero h1 {
+  letter-spacing: -0.045em;
+}
+
+.dt-hero a {
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.dt-hero header {
+  background: rgba(12, 17, 23, 0.72);
+  border-color: var(--line);
+}
+
+.dt-hero .bg-sky-500 {
+  background: var(--accent);
+  color: var(--ink);
+  box-shadow: 0 12px 28px rgba(213, 243, 107, 0.16);
+}
+
+.dt-hero .bg-sky-500:hover {
+  background: var(--accent-strong);
+}
+
+.dt-hero .border-slate-600:hover {
+  border-color: rgba(213, 243, 107, 0.5);
+  background: rgba(213, 243, 107, 0.08);
 }
 
