@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 import { type SubmitEvent, useState } from "react";
+import requester from "@/lib/requester";
 import { Button } from "@/components/ui/button";
 
 export default function LoginForm() {
@@ -12,6 +13,15 @@ export default function LoginForm() {
     event.preventDefault();
   }
 
+
+  const handleTestRequest = async () => {
+    try {
+      const result = await requester("/api/test",  "POST");
+      console.log("success", result);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <section className="card-base" aria-labelledby="login-title">
       <div className="mb-7">
@@ -78,7 +88,7 @@ export default function LoginForm() {
 
         <label className="flex cursor-pointer items-start gap-2.5 text-xs leading-[1.45] text-muted">
           <input
-            className="mt-px size-4 accent-accent"
+            className="mt-px size-4 "
             name="remember"
             type="checkbox"
           />
@@ -92,7 +102,9 @@ export default function LoginForm() {
         >
           Sign in
         </Button>
+
       </form>
+      
 
       <p className="mt-5 text-center text-[0.8125rem] text-muted">
         Don&apos;t have an account?{" "}
