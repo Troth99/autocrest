@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 import { type SubmitEvent, useState } from "react";
-import requester from "@/lib/requester";
 import { Button } from "@/components/ui/button";
 
 export default function LoginForm() {
@@ -14,14 +13,7 @@ export default function LoginForm() {
   }
 
 
-  const handleTestRequest = async () => {
-    try {
-      const result = await requester("/api/test",  "POST");
-      console.log("success", result);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+
   return (
     <section className="card-base" aria-labelledby="login-title">
       <div className="mb-7">
