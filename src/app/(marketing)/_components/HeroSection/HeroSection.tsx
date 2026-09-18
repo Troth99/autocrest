@@ -1,7 +1,6 @@
 
 import shared from "../shared/HomeShared.module.css";
 import styles from "./HeroSection.module.css";
-import buttonStyles from "../../ui/Button.module.css";
 
 export default function HeroSection() {
 
@@ -21,7 +20,7 @@ export default function HeroSection() {
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <a
             href="#timeline"
-            className={`${buttonStyles.primary} ${styles.action} rounded-full px-6 py-3 text-sm font-semibold`}
+            className={`button-primary ${styles.action} rounded-full px-6 py-3 text-sm font-semibold`}
           >
             View sample timeline
           </a>

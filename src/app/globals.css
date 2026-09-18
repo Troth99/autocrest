@@ -2,18 +2,44 @@
 
 :root {
   --background: #0c1117;
-  --foreground: #edf2f0;
+  --text-primary: #edf2f0;
+  --text-secondary: #cbd5e1;
+  --text-muted: #91a09d;
+  --text-subtle: #64748b;
   --ink: #0c1117;
-  --panel: rgba(22, 31, 38, 0.78);
-  --line: rgba(202, 214, 205, 0.14);
-  --muted: #91a09d;
+  --surface-panel: rgba(22, 31, 38, 0.78);
+  --surface-input: rgba(12, 17, 23, 0.56);
+  --surface-input-focus: rgba(12, 17, 23, 0.8);
+  --border-default: rgba(202, 214, 205, 0.14);
+  --border-input: rgba(148, 163, 184, 0.32);
+  --border-input-hover: rgba(148, 163, 184, 0.5);
+  --grid-color: rgba(202, 214, 205, 0.03);
+  --grid-size: 48px;
+  --focus-ring: #38bdf8;
   --accent: #d5f36b;
   --accent-strong: #b7dc47;
+
 }
 
+/* Inline theme variables */
 @theme inline {
   --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-foreground: var(--text-primary);
+  --color-ink: var(--ink);
+  --color-panel: var(--surface-panel);
+  --color-input: var(--surface-input);
+  --color-input-focus: var(--surface-input-focus);
+  --color-line: var(--border-default);
+  --color-border-input: var(--border-input);
+  --color-border-input-hover: var(--border-input-hover);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-muted: var(--text-muted);
+  --color-subtle: var(--text-subtle);
+  --color-grid: var(--grid-color);
+  --color-focus: var(--focus-ring);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -21,15 +47,78 @@
 /* Global styles */
 body {
   background:
-    linear-gradient(rgba(202, 214, 205, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(202, 214, 205, 0.03) 1px, transparent 1px),
-    radial-gradient(1000px 600px at 0% 0%, rgba(14, 165, 233, 0.2), transparent 72%),
-    radial-gradient(900px 650px at 100% 30%, rgba(99, 102, 241, 0.1), transparent 70%),
-    radial-gradient(1000px 620px at 95% 100%, rgba(190, 242, 100, 0.14), transparent 72%),
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px),
+    radial-gradient(
+      1000px 600px at 0% 0%,
+      rgba(14, 165, 233, 0.2),
+      transparent 72%
+    ),
+    radial-gradient(
+      900px 650px at 100% 30%,
+      rgba(99, 102, 241, 0.1),
+      transparent 70%
+    ),
+    radial-gradient(
+      1000px 620px at 95% 100%,
+      rgba(190, 242, 100, 0.14),
+      transparent 72%
+    ),
     linear-gradient(135deg, #09151d 0%, #0c1117 50%, #13180d 100%);
   background-attachment: scroll, scroll, fixed, fixed, fixed, fixed;
   background-repeat: repeat, repeat, no-repeat, no-repeat, no-repeat, no-repeat;
-  background-size: 48px 48px, 48px 48px, auto, auto, auto, auto;
-  color: var(--foreground);
+  background-size:
+    var(--grid-size) var(--grid-size),
+    var(--grid-size) var(--grid-size),
+    auto,
+    auto,
+    auto,
+    auto;
+  color: var(--text-primary);
   font-family: var(--font-geist-sans), sans-serif;
 }
+
+@utility eyebrow {
+  @apply inline-flex rounded-full border border-sky-400/20 bg-sky-400/6 px-2.5 py-1.5 text-[0.6875rem] font-bold tracking-[0.13em] text-sky-300;
+}
+
+@utility field-label {
+  @apply text-[0.8125rem] font-semibold text-text-secondary;
+}
+
+@utility field-hint {
+  @apply text-[0.6875rem] font-medium text-subtle;
+}
+
+@utility field-row {
+  @apply flex items-center justify-between gap-3 text-[0.8125rem] font-semibold text-text-secondary;
+}
+
+@utility form-input {
+  @apply w-full rounded-xl border border-border-input bg-input px-3.5 py-3 text-[0.9375rem] text-text-primary outline-none transition-[border-color,box-shadow,background-color] duration-200 placeholder:text-subtle hover:border-border-input-hover focus:border-focus focus:bg-input-focus focus:shadow-[0_0_0_3px_rgb(56_189_248_/_12%)];
+}
+
+@utility card-base {
+  @apply w-full overflow-hidden rounded-3xl border border-line bg-panel p-6 shadow-[0_18px_40px_rgb(0_0_0/18%),inset_0_1px_rgb(255_255_255/4%)] backdrop-blur-[14px] sm:p-8;
+}
+
+@utility button-base {
+  @apply inline-flex items-center justify-center rounded-full border-0 font-bold outline-offset-3 transition-transform focus-visible:outline-3 focus-visible:outline-sky-400/50;
+}
+
+@utility button-primary {
+  @apply bg-accent text-ink shadow-[0_12px_28px_rgb(213_243_107_/_16%)] transition-colors hover:bg-accent-strong;
+}
+
+@utility button-secondary {
+  @apply border border-line bg-transparent text-text-primary transition-colors hover:border-accent hover:text-accent;
+}
+
+@utility button-ghost {
+  @apply bg-transparent text-muted transition-colors hover:bg-panel hover:text-text-primary;
+}
+
+@utility button-danger {
+  @apply bg-red-500 text-white transition-colors hover:bg-red-600;
+}
+
