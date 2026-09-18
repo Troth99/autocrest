@@ -19,6 +19,12 @@
   --grid-color: rgba(202, 214, 205, 0.03);
   --grid-size: 48px;
   --focus-ring: #38bdf8;
+  --dark-800: rgb(12 17 23 / 72%);
+  --hero-preview: rgb(2 6 23 / 30%);
+  --hero-preview-border: rgb(51 65 85 / 60%);
+  --hero-next: rgb(252 211 77 / 5%);
+  --hero-next-border: rgb(252 211 77 / 15%);
+  --hero-progress-glow: rgb(213 243 107 / 35%);
   --accent: #d5f36b;
   --accent-strong: #b7dc47;
   --background: #0c1117;
@@ -71,6 +77,12 @@
   --color-subtle: var(--text-subtle);
   --color-grid: var(--grid-color);
   --color-focus: var(--focus-ring);
+  --color-dark-800: var(--dark-800);
+  --color-hero-preview: var(--hero-preview);
+  --color-hero-preview-border: var(--hero-preview-border);
+  --color-hero-next: var(--hero-next);
+  --color-hero-next-border: var(--hero-next-border);
+  --shadow-hero-progress: 0 0 14px var(--hero-progress-glow);
   --color-accent: var(--accent);
   --color-accent-strong: var(--accent-strong);
   --font-sans: var(--font-geist-sans);
@@ -150,7 +162,7 @@ body {
 }
 
 @utility form-input {
-  @apply w-full rounded-xl border border-border-input bg-input px-3.5 py-3 text-[0.9375rem] text-text-primary outline-none transition-[border-color,box-shadow,background-color] duration-200 placeholder:text-subtle hover:border-border-input-hover focus:border-focus focus:bg-input-focus focus:shadow-[0_0_0_3px_rgb(56_189_248_/_12%)];
+  @apply w-full rounded-xl border border-border-input bg-input px-3.5 py-3 text-[0.9375rem] text-text-primary outline-none transition-[border-color,box-shadow,background-color] duration-200 placeholder:text-subtle hover:border-border-input-hover focus:border-focus focus:bg-input-focus focus:shadow-[0_0_0_3px_rgb(56_189_248/12%)];
 }
 
 @utility card-base {
@@ -170,7 +182,7 @@ body {
 }
 
 @utility button-primary {
-  @apply bg-accent text-ink shadow-[0_12px_28px_rgb(213_243_107_/_16%)] transition-colors hover:bg-accent-strong;
+  @apply bg-accent text-ink shadow-[0_12px_28px_rgb(213_243_107/16%)] transition-colors hover:bg-accent-strong;
 }
 
 @utility button-secondary {

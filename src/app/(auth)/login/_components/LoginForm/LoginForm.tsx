@@ -1,55 +1,33 @@
 "use client";
 
-
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 import { type SubmitEvent, useState } from "react";
 import { Button } from "@/components/ui/button";
 
-
-export default function RegisterForm() {
-
+export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
 
   function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
   }
 
   return (
-    <section
-      className="card-base"
-      aria-labelledby="register-title"
-    >
+    <section className="card-base" aria-labelledby="login-title">
       <div className="mb-7">
         <span className="eyebrow">AUTOCREST ACCOUNT</span>
         <h1
-          id="register-title"
+          id="login-title"
           className="mt-4 text-[clamp(1.875rem,5vw,2.5rem)] font-semibold leading-[1.05] tracking-[-0.045em] text-white"
         >
-          Create your <span className="text-accent">workspace</span>
+          Welcome <span className="text-accent">back</span>
         </h1>
         <p className="mt-3.5 text-[0.9375rem] leading-[1.55] text-muted">
-          Keep every vehicle, event, and next decision in one clear place.
+          Continue managing your vehicles, events, and next decisions.
         </p>
       </div>
 
       <form className="grid gap-4" onSubmit={handleSubmit}>
-        <div className="grid gap-2">
-          <label className="field-label" htmlFor="username">
-            Username
-          </label>
-          <input
-            id="username"
-            name="username"
-            type="text"
-            placeholder="yourname"
-            autoComplete="username"
-            minLength={3}
-            className="form-input"
-          />
-        </div>
-
         <div className="grid gap-2">
           <label className="field-label" htmlFor="email">
             Email address
@@ -60,6 +38,7 @@ export default function RegisterForm() {
             type="email"
             placeholder="you@example.com"
             autoComplete="email"
+            required
             className="form-input"
           />
         </div>
@@ -67,16 +46,21 @@ export default function RegisterForm() {
         <div className="grid gap-2">
           <div className="field-row">
             <label htmlFor="password">Password</label>
-            <span className="field-hint">At least 8 characters</span>
+            <Link
+              className="field-hint transition-colors hover:text-text-primary"
+              href="#"
+            >
+              Forgot password?
+            </Link>
           </div>
           <div className="relative">
             <input
               id="password"
               name="password"
               type={showPassword ? "text" : "password"}
-              placeholder="Create a strong password"
-              autoComplete="new-password"
-              minLength={8}
+              placeholder="Enter your password"
+              autoComplete="current-password"
+              required
               className="form-input pr-12"
             />
             <Button
@@ -92,56 +76,32 @@ export default function RegisterForm() {
           </div>
         </div>
 
-        <div className="grid gap-2">
-          <label className="field-label" htmlFor="confirm-password">
-            Confirm password
-          </label>
-          <div className="relative">
-            <input
-              id="confirm-password"
-              name="confirmPassword"
-              type={showConfirmPassword ? "text" : "password"}
-              placeholder="Repeat your password"
-              autoComplete="new-password"
-              minLength={8}
-              className="form-input pr-12"
-            />
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              aria-label={showConfirmPassword ? "Hide password" : "Show password"}
-              onClick={() => setShowConfirmPassword((visible) => !visible)}
-              className="absolute right-1 bottom-2.5 top-auto"
-            >
-              {showConfirmPassword ? <EyeOff /> : <Eye />}
-            </Button>
-          </div>
-        </div>
-
         <label className="flex cursor-pointer items-start gap-2.5 text-xs leading-[1.45] text-muted">
           <input
             className="mt-px size-4 accent-accent"
-            name="terms"
+            name="remember"
             type="checkbox"
-            required
           />
-          <span>I agree to the Terms and Privacy Policy.</span>
+          <span>Remember me</span>
         </label>
 
         <Button
-          className="button-base mt-1 h-auto w-full px-4 py-3.5 text-sm cursor-pointer"
+          className="button-primary button-base mt-1 h-auto w-full px-4 py-3.5 text-sm"
           type="submit"
           size="lg"
-
         >
-          Create account
+          Sign in
         </Button>
       </form>
 
       <p className="mt-5 text-center text-[0.8125rem] text-muted">
-        Already have an account?{" "}
-        <Link  href="/login" className="font-semibold text-sky-300">Sign in </Link>
+        Don&apos;t have an account?{" "}
+        <Link
+          className="font-semibold text-sky-300 transition-colors hover:text-sky-200"
+          href="/register"
+        >
+          Create account
+        </Link>
       </p>
     </section>
   );

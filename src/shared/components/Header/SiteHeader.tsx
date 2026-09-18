@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function SiteHeader() {
   return (
-    <header className="sticky top-0 z-10 border-b border-line bg-[rgb(12_17_23/72%)] backdrop-blur-xl">
+    <header className="sticky top-0 z-10 border-b border-line bg-dark-800 backdrop-blur-xl">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
         <Link href="/" className="flex items-center gap-2">
           <span className="flex size-8 items-center justify-center rounded-lg bg-sky-400/15 text-sm font-bold text-sky-400">
@@ -33,12 +33,12 @@ export default function SiteHeader() {
           </a>
         </div>
         <div className="flex items-center gap-3">
-          <a
-            href="#"
+          <Link
+            href="/login"
             className="hidden text-sm font-medium text-slate-300 transition-colors hover:text-slate-100 sm:block"
           >
             Sign in
-          </a>
+          </Link>
           <Link
             href="/register"
             className="button-primary button-base px-4 py-2 text-sm font-semibold hover:scale-105"

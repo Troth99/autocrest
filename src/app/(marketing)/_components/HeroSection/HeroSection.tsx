@@ -40,22 +40,22 @@ export default function HeroSection() {
             <span className="rounded-full bg-emerald-400/10 px-3 py-1 text-xs font-medium text-emerald-300">All clear</span>
           </div>
           <div className="grid gap-4 pt-5 sm:grid-cols-[1.15fr_.85fr]">
-            <div className="rounded-2xl border border-slate-700/60 bg-slate-950/30 p-5">
+            <div className="rounded-2xl border border-hero-preview-border bg-hero-preview p-5">
               <p className="text-xs font-semibold uppercase tracking-[.16em] text-sky-300">BMW 320d · AB 1234 CD</p>
               <div className="mt-3 flex items-end justify-between">
                 <div><p className="text-sm text-slate-400">Vehicle health</p><p className="mt-1 text-3xl font-semibold text-white">86<span className="text-base text-slate-500">/100</span></p></div>
                 <span className="text-xs font-medium text-lime-200">Good condition</span>
               </div>
-              <div className="mt-4 h-2 overflow-hidden rounded-full bg-slate-800"><div className="h-full w-[86%] rounded-full bg-gradient-to-r from-sky-400 to-lime-300 shadow-[0_0_14px_rgba(213,243,107,.35)]" /></div>
+              <div className="mt-4 h-2 overflow-hidden rounded-full bg-slate-800"><div className="h-full w-[86%] rounded-full bg-linear-to-r from-sky-400 to-lime-300 shadow-hero-progress" /></div>
             </div>
-            <div className="rounded-2xl border border-amber-300/15 bg-amber-300/5 p-5">
+            <div className="rounded-2xl border border-hero-next-border bg-hero-next p-5">
               <p className="text-xs font-semibold uppercase tracking-[.16em] text-amber-200">Next up</p>
               <p className="mt-4 text-sm font-medium text-white">Technical inspection</p>
               <p className="mt-1 text-xs text-slate-400">In 24 days</p>
               <p className="mt-5 text-xs font-medium text-lime-200">Open vehicle →</p>
             </div>
           </div>
-          <div className="mt-4 flex items-center justify-between rounded-2xl border border-slate-700/50 bg-slate-950/30 px-4 py-3 text-xs">
+          <div className="mt-4 flex items-center justify-between rounded-2xl border border-slate-700/50 bg-hero-preview px-4 py-3 text-xs">
             <span className="text-slate-400">Latest event</span><span className="font-medium text-slate-200">Bumper repair · 1 240 лв.</span>
           </div>
         </article>
