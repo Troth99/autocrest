@@ -1,6 +1,3 @@
-import styles from "../shared/HomeShared.module.css";
-
-
 const steps = [
   { step: "01", title: "Log an event", desc: "Any accident, service visit, or ownership change gets added to the vehicle's timeline." },
   { step: "02", title: "Everything links up", desc: "Damages, costs, parts, and deadlines attach automatically to that event." },
@@ -19,8 +16,8 @@ export default function HowItWorksSection() {
         </p>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           {steps.map((s) => (
-            <div key={s.step} className={`${styles.card} rounded-2xl p-6`}>
-              <span className={`${styles.accentText} text-xs font-bold tracking-widest`}>{s.step}</span>
+            <div key={s.step} className="content-card rounded-2xl p-6">
+              <span className="text-xs font-bold tracking-widest text-accent">{s.step}</span>
               <h3 className="mt-2 text-base font-semibold text-white">{s.title}</h3>
               <p className="mt-2 text-sm text-slate-400">{s.desc}</p>
             </div>

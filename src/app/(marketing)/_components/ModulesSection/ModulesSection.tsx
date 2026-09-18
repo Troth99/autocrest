@@ -1,5 +1,3 @@
-import styles from "../shared/HomeShared.module.css";
-
 //to replace with dynamic data from the database in the future
 const modules = [
   {
@@ -50,9 +48,9 @@ export default function ModulesSection() {
       </p>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
         {modules.map((m) => (
-          <div key={m.label} className={`${styles.card} rounded-2xl p-6`}>
+          <div key={m.label} className="content-card rounded-2xl p-6">
             <span
-              className={`${styles.dot} mb-4`}
+              className="glow-dot mb-4"
               style={{ background: m.color, color: m.color }}
             />
             <h3 className="text-base font-semibold text-white">{m.label}</h3>

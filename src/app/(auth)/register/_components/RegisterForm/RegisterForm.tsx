@@ -1,9 +1,16 @@
 "use client";
 
 
-import { FormEvent } from "react";
+import { Eye, EyeOff } from "lucide-react";
+import { type FormEvent, useState } from "react";
+import { Button } from "@/components/ui/button";
+
 
 export default function RegisterForm() {
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
   }
@@ -63,32 +70,56 @@ export default function RegisterForm() {
             <label htmlFor="password">Password</label>
             <span className="field-hint">At least 8 characters</span>
           </div>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            placeholder="Create a strong password"
-            autoComplete="new-password"
-            minLength={8}
-            required
-            className="form-input"
-          />
+          <div className="relative">
+            <input
+              id="password"
+              name="password"
+              type={showPassword ? "text" : "password"}
+              placeholder="Create a strong password"
+              autoComplete="new-password"
+              minLength={8}
+              required
+              className="form-input pr-12"
+            />
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              onClick={() => setShowPassword((visible) => !visible)}
+              className="absolute right-1 bottom-[10px] top-auto"
+            >
+              {showPassword ? <EyeOff /> : <Eye />}
+            </Button>
+          </div>
         </div>
 
         <div className="grid gap-2">
           <label className="field-label" htmlFor="confirm-password">
             Confirm password
           </label>
-          <input
-            id="confirm-password"
-            name="confirmPassword"
-            type="password"
-            placeholder="Repeat your password"
-            autoComplete="new-password"
-            minLength={8}
-            required
-            className="form-input"
-          />
+          <div className="relative">
+            <input
+              id="confirm-password"
+              name="confirmPassword"
+              type={showConfirmPassword ? "text" : "password"}
+              placeholder="Repeat your password"
+              autoComplete="new-password"
+              minLength={8}
+              required
+              className="form-input pr-12"
+            />
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+              onClick={() => setShowConfirmPassword((visible) => !visible)}
+              className="absolute right-1 bottom-[10px] top-auto"
+            >
+              {showConfirmPassword ? <EyeOff /> : <Eye />}
+            </Button>
+          </div>
         </div>
 
         <label className="flex cursor-pointer items-start gap-2.5 text-xs leading-[1.45] text-muted">

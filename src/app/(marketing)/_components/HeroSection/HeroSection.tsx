@@ -1,7 +1,4 @@
 
-import shared from "../shared/HomeShared.module.css";
-import styles from "./HeroSection.module.css";
-
 export default function HeroSection() {
 
     return (
@@ -9,9 +6,9 @@ export default function HeroSection() {
         <span className="inline-block rounded-full border border-sky-400/20 bg-sky-400/5 px-4 py-1 text-xs font-medium text-sky-300">
           Prototype &middot; your vehicle, understood
         </span>
-        <h1 className={`${styles.title} mx-auto mt-6 max-w-3xl text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl`}>
+        <h1 className="mx-auto mt-6 max-w-3xl text-4xl font-semibold leading-tight tracking-[-0.045em] text-white sm:text-5xl">
           The vehicle&apos;s entire life,{" "}
-          <span className={shared.accentText}>in one workspace</span>
+          <span className="text-accent">in one workspace</span>
         </h1>
         <p id="question" className="mx-auto mt-6 max-w-2xl text-lg text-slate-400">
           What is happening to this vehicle, why is it happening, and what
@@ -20,19 +17,19 @@ export default function HeroSection() {
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <a
             href="#timeline"
-            className={`button-primary ${styles.action} rounded-full px-6 py-3 text-sm font-semibold`}
+            className="button-primary button-base rounded-full px-6 py-3 text-sm font-semibold transition-[color,background-color,border-color,transform] duration-200 hover:scale-105"
           >
             View sample timeline
           </a>
           <a
             href="#modules"
-            className={`${styles.secondaryButton} rounded-full border border-slate-600 px-6 py-3 text-sm font-medium text-slate-200`}
+            className="button-secondary button-base rounded-full px-6 py-3 text-sm font-medium"
           >
             System modules
           </a>
         </div>
 
-        <article className={`${shared.card} mx-auto mt-12 max-w-2xl overflow-hidden rounded-3xl p-4 text-left sm:p-5`}>
+        <article className="content-card mx-auto mt-12 max-w-2xl overflow-hidden rounded-3xl p-4 text-left sm:p-5">
           <div className="flex items-center justify-between border-b border-slate-700/60 pb-4">
             <div className="flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-rose-400" />
