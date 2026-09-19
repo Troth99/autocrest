@@ -13,7 +13,7 @@ type ValidateFunction<T extends FormValues> = (values: T) => Partial<T>;
 export default function useForm<T extends FormValues>(
   callback: CallbackFunction<T>,
   initialValues: T,
-  validateForm: ValidateFunction<T>,
+  validateForm?: ValidateFunction<T>,
 ) {
   const [values, setValues] = useState<T>(initialValues);
   const [errors, setErrors] = useState<Partial<T>>({});
@@ -39,7 +39,7 @@ export default function useForm<T extends FormValues>(
   const formHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const formErrors = validateForm(values);
+    const formErrors = validateForm?.(values) ?? {};
     setErrors(formErrors);
 
     if (Object.keys(formErrors).length > 0) {

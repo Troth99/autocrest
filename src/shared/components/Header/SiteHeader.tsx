@@ -1,6 +1,13 @@
 import Link from "next/link";
+import { createClient } from "@/lib/supabase/server";
+import UserMenu from "@/shared/components/Header/UserMenu/UserMenu";
 
-export default function SiteHeader() {
+export default async function SiteHeader() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   return (
     <header className="sticky top-0 z-10 border-b border-line bg-dark-800 backdrop-blur-xl">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
@@ -33,18 +40,28 @@ export default function SiteHeader() {
           </a>
         </div>
         <div className="flex items-center gap-3">
-          <Link
-            href="/login"
-            className="hidden text-sm font-medium text-slate-300 transition-colors hover:text-slate-100 sm:block"
-          >
-            Sign in
-          </Link>
-          <Link
-            href="/register"
-            className="button-primary button-base px-4 py-2 text-sm font-semibold hover:scale-105"
-          >
-            Get started
-          </Link>
+          {user ? (
+            <UserMenu
+              username={user.user_metadata?.username ?? user.email ?? "Account"}
+              email={user.email ?? ""}
+              avatarUrl={user.user_metadata?.avatar_url}
+            />
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="hidden text-sm font-medium text-slate-300 transition-colors hover:text-slate-100 sm:block"
+              >
+                Sign in
+              </Link>
+              <Link
+                href="/register"
+                className="button-primary button-base px-4 py-2 text-sm font-semibold hover:scale-105"
+              >
+                Get started
+              </Link>
+            </>
+          )}
         </div>
       </nav>
     </header>

@@ -1,18 +1,49 @@
 "use client";
 
 import Link from "next/link";
-import { Eye, EyeOff } from "lucide-react";
-import { type SubmitEvent, useState } from "react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { PasswordField } from "@/app/(auth)/register/_components/PasswordField/PasswordField";
+import { FieldError } from "@/shared/components/FieldError/FieldError";
+import useForm from "@/shared/hooks/useForm";
+import { loginUser } from "@/lib/services/auth.service";
+import {
+  validateLoginForm,
+  type LoginFormValues,
+} from "@/app/(auth)/validators/login.validator";
 
+const initialValues: LoginFormValues = {
+  email: "",
+  password: "",
+};
 export default function LoginForm() {
-  const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
 
-  function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
-    event.preventDefault();
+  const { register, formHandler, errors, setErrors } = useForm(
+    loginHandler,
+    initialValues,
+    validateLoginForm,
+  );
+
+  async function loginHandler(values: LoginFormValues) {
+    setIsSubmitting(true);
+
+    try {
+      await loginUser(values);
+      router.push("/");
+      router.refresh();
+    } catch (error) {
+      console.error(error);
+      setErrors({
+        email: "Invalid email or password.",
+        password: "Invalid email or password.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   }
-
-
 
   return (
     <section className="card-base" aria-labelledby="login-title">
@@ -29,61 +60,41 @@ export default function LoginForm() {
         </p>
       </div>
 
-      <form className="grid gap-4" onSubmit={handleSubmit}>
+      <form className="grid gap-4" onSubmit={formHandler}>
         <div className="grid gap-2">
           <label className="field-label" htmlFor="email">
             Email address
           </label>
           <input
             id="email"
-            name="email"
             type="email"
             placeholder="you@example.com"
             autoComplete="email"
-            required
             className="form-input"
+            {...register("email")}
           />
+          <FieldError message={errors.email} />
         </div>
 
-        <div className="grid gap-2">
-          <div className="field-row">
-            <label htmlFor="password">Password</label>
+        <PasswordField
+          id="login-password"
+          label="Password"
+          autoComplete="current-password"
+          placeholder="Enter your password"
+          hint={
             <Link
-              className="field-hint transition-colors hover:text-text-primary"
-              href="#"
+              className="font-semibold text-sky-300 transition-colors hover:text-sky-200"
+              href="/forgot-password"
             >
               Forgot password?
             </Link>
-          </div>
-          <div className="relative">
-            <input
-              id="password"
-              name="password"
-              type={showPassword ? "text" : "password"}
-              placeholder="Enter your password"
-              autoComplete="current-password"
-              required
-              className="form-input pr-12"
-            />
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              aria-label={showPassword ? "Hide password" : "Show password"}
-              onClick={() => setShowPassword((visible) => !visible)}
-              className="absolute right-1 bottom-2.5 top-auto"
-            >
-              {showPassword ? <EyeOff /> : <Eye />}
-            </Button>
-          </div>
-        </div>
+          }
+          {...register("password")}
+          error={errors.password}
+        />
 
         <label className="flex cursor-pointer items-start gap-2.5 text-xs leading-[1.45] text-muted">
-          <input
-            className="mt-px size-4 "
-            name="remember"
-            type="checkbox"
-          />
+          <input className="mt-px size-4 " name="remember" type="checkbox" />
           <span>Remember me</span>
         </label>
 
@@ -91,12 +102,11 @@ export default function LoginForm() {
           className="button-primary button-base mt-1 h-auto w-full px-4 py-3.5 text-sm"
           type="submit"
           size="lg"
+          disabled={isSubmitting}
         >
-          Sign in
+          {isSubmitting ? "Signing in..." : "Sign in"}
         </Button>
-
       </form>
-      
 
       <p className="mt-5 text-center text-[0.8125rem] text-muted">
         Don&apos;t have an account?{" "}

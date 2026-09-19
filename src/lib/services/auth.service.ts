@@ -12,13 +12,45 @@ export async function registerUser({
   username,
 }: RegisterInput): Promise<void> {
   const supabase = createClient();
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
       data: { username },
     },
   });
+
+  if (error) {
+    throw error;
+  }
+
+  // Supabase masks existing accounts as a "success" with no identities when email confirmation is on.
+  if (data.user && data.user.identities?.length === 0) {
+    throw new Error("An account with this email already exists.");
+  }
+}
+
+export async function loginUser({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}): Promise<void> {
+  const supabase = createClient();
+  const { error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (error) {
+    throw error;
+  }
+}
+
+export async function logoutUser(): Promise<void> {
+  const supabase = createClient();
+  const { error } = await supabase.auth.signOut();
 
   if (error) {
     throw error;

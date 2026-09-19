@@ -1,9 +1,3 @@
-export type RegisterFormValues = {
-  username: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-};
 
 export type Profile = {
   id: string;
