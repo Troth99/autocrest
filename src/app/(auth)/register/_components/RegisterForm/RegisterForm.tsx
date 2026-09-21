@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { registerUser } from "@/lib/services/auth.service";
+import { loginUser, registerUser } from "@/lib/services/auth.service";
 import useForm from "@/shared/hooks/useForm";
 import { PasswordField } from "../PasswordField/PasswordField";
 import { FieldError } from "@/shared/components/FieldError/FieldError";
@@ -36,12 +36,19 @@ export default function RegisterForm() {
 
     try {
       await registerUser({
-        username: values.username,
-        email: values.email,
+        username: values.username.trim(),
+        email: values.email.trim(),
         password: values.password,
       });
-      //to make a different confirm window that redirects to the login page
-      router.push("/login");
+
+      await loginUser({
+        email: values.email.trim(),
+        password: values.password,
+      });
+     
+      router.push('/')
+      router.refresh()
+
     } catch (error) {
       setErrors({
         email:
@@ -58,9 +65,9 @@ export default function RegisterForm() {
         <span className="eyebrow">AUTOCREST ACCOUNT</span>
         <h1
           id="register-title"
-          className="mt-4 text-[clamp(1.875rem,5vw,2.5rem)] font-semibold leading-[1.05] tracking-[-0.045em] text-white"
+          className="mt-4 text-[clamp(1.875rem,5vw,2.5rem)] font-semibold leading-[1.05] tracking-[-0.045em] text-text-primary"
         >
-          Create your <span className="text-accent">workspace</span>
+          Create your <span className="text-accent-text">workspace</span>
         </h1>
         <p className="mt-3.5 text-[0.9375rem] leading-[1.55] text-muted">
           Keep every vehicle, event, and next decision in one clear place.
@@ -137,7 +144,7 @@ export default function RegisterForm() {
 
       <p className="mt-5 text-center text-[0.8125rem] text-muted">
         Already have an account?{" "}
-        <Link href="/login" className="font-semibold text-sky-300">
+        <Link href="/login" className="font-semibold text-info hover:text-info-strong">
           Sign in{" "}
         </Link>
       </p>

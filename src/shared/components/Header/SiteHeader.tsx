@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import UserMenu from "@/shared/components/Header/UserMenu/UserMenu";
+import ThemeToggle from "@/shared/components/ThemeToggle/ThemeToggle";
 
 export default async function SiteHeader() {
   const supabase = await createClient();
@@ -12,34 +13,35 @@ export default async function SiteHeader() {
     <header className="sticky top-0 z-10 border-b border-line bg-dark-800 backdrop-blur-xl">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
         <Link href="/" className="flex items-center gap-2">
-          <span className="flex size-8 items-center justify-center rounded-lg bg-sky-400/15 text-sm font-bold text-sky-400">
+          <span className="flex size-8 items-center justify-center rounded-lg bg-info-soft text-sm font-bold text-info">
             AC
           </span>
-          <span className="text-sm font-semibold tracking-wide text-slate-200">
-            auto<span className="text-accent">crest</span>
+          <span className="text-sm font-semibold tracking-wide text-text-primary">
+            auto<span className="text-accent-text">crest</span>
           </span>
         </Link>
         <div className="hidden items-center gap-6 md:flex">
           <a
             href="#modules"
-            className="text-sm text-slate-400 transition-colors hover:text-slate-100"
+            className="text-sm text-muted transition-colors hover:text-text-primary"
           >
             Modules
           </a>
           <a
             href="#how-it-works"
-            className="text-sm text-slate-400 transition-colors hover:text-slate-100"
+            className="text-sm text-muted transition-colors hover:text-text-primary"
           >
             How it works
           </a>
           <a
             href="#timeline"
-            className="text-sm text-slate-400 transition-colors hover:text-slate-100"
+            className="text-sm text-muted transition-colors hover:text-text-primary"
           >
             Timeline
           </a>
         </div>
         <div className="flex items-center gap-3">
+          <ThemeToggle />
           {user ? (
             <UserMenu
               username={user.user_metadata?.username ?? user.email ?? "Account"}
@@ -50,7 +52,7 @@ export default async function SiteHeader() {
             <>
               <Link
                 href="/login"
-                className="hidden text-sm font-medium text-slate-300 transition-colors hover:text-slate-100 sm:block"
+                className="hidden text-sm font-medium text-text-secondary transition-colors hover:text-text-primary sm:block"
               >
                 Sign in
               </Link>

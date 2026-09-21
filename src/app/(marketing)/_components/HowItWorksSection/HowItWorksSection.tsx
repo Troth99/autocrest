@@ -8,18 +8,18 @@ const steps = [
 export default function HowItWorksSection() {
     return (
            <section id="how-it-works" className="mx-auto max-w-5xl px-6 py-16">
-        <h2 className="mb-2 text-center text-2xl font-semibold text-white">
+        <h2 className="mb-2 text-center text-2xl font-semibold text-text-primary">
           How it works
         </h2>
-        <p className="mb-10 text-center text-sm text-slate-400">
+        <p className="mb-10 text-center text-sm text-muted">
           Three steps from a single event to the full picture
         </p>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           {steps.map((s) => (
             <div key={s.step} className="content-card rounded-2xl p-6">
-              <span className="text-xs font-bold tracking-widest text-accent">{s.step}</span>
-              <h3 className="mt-2 text-base font-semibold text-white">{s.title}</h3>
-              <p className="mt-2 text-sm text-slate-400">{s.desc}</p>
+              <span className="text-xs font-bold tracking-widest text-accent-text">{s.step}</span>
+              <h3 className="mt-2 text-base font-semibold text-text-primary">{s.title}</h3>
+              <p className="mt-2 text-sm text-muted">{s.desc}</p>
             </div>
           ))}
         </div>

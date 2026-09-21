@@ -42,7 +42,7 @@ export default function UserMenu({ username, email, avatarUrl }: UserMenuProps) 
       <DropdownMenuTrigger className="cursor-pointer rounded-full outline-none focus-visible:ring-2 focus-visible:ring-ring/50">
         <Avatar>
           {avatarUrl && <AvatarImage src={avatarUrl} alt={username} />}
-          <AvatarFallback className="bg-sky-400/15 text-sky-400">
+          <AvatarFallback className="bg-info-soft text-info">
             <UserIcon className="size-4" />
           </AvatarFallback>
         </Avatar>
@@ -51,10 +51,10 @@ export default function UserMenu({ username, email, avatarUrl }: UserMenuProps) 
         <DropdownMenuGroup>
           <DropdownMenuLabel>
             <div className="flex flex-col">
-              <span className="text-sm font-semibold text-slate-200">
+              <span className="text-sm font-semibold text-text-primary">
                 {username}
               </span>
-              <span className="truncate text-xs font-normal text-slate-400">
+              <span className="truncate text-xs font-normal text-muted">
                 {email}
               </span>
             </div>

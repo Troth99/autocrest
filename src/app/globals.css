@@ -18,6 +18,11 @@
   --border-input-hover: rgba(148, 163, 184, 0.5);
   --grid-color: rgba(202, 214, 205, 0.03);
   --grid-size: 48px;
+  --background-glow-start: rgba(14, 165, 233, 0.2);
+  --background-glow-middle: rgba(99, 102, 241, 0.1);
+  --background-glow-end: rgba(190, 242, 100, 0.14);
+  --background-gradient: linear-gradient(135deg, #09151d 0%, #0c1117 50%, #13180d 100%);
+  --footer-background: linear-gradient(180deg, rgb(10 16 23 / 32%) 0%, rgb(10 16 23 / 78%) 48%, #0a1017 100%);
   --focus-ring: #38bdf8;
   --dark-800: rgb(12 17 23 / 72%);
   --hero-preview: rgb(2 6 23 / 30%);
@@ -27,6 +32,11 @@
   --hero-progress-glow: rgb(213 243 107 / 35%);
   --accent: #d5f36b;
   --accent-strong: #b7dc47;
+  --accent-text: #d5f36b;
+  --info: #7dd3fc;
+  --info-strong: #bae6fd;
+  --info-soft: rgba(56, 189, 248, 0.15);
+  --info-border: rgba(56, 189, 248, 0.2);
   --background: #0c1117;
   --foreground: #edf2f0;
   --card: var(--surface-panel);
@@ -58,6 +68,48 @@
   --sidebar-accent-foreground: var(--text-primary);
   --sidebar-border: var(--border-default);
   --sidebar-ring: var(--focus-ring);
+  color-scheme: dark;
+}
+
+.light {
+  --text-primary: #11181d;
+  --text-secondary: #334155;
+  --text-muted: #56636c;
+  --text-subtle: #6b7780;
+  --ink: #0c1117;
+  --surface-panel: rgba(255, 255, 255, 0.84);
+  --surface-input: rgba(248, 250, 252, 0.9);
+  --surface-input-focus: #ffffff;
+  --border-default: rgba(51, 65, 85, 0.16);
+  --border-input: rgba(71, 85, 105, 0.28);
+  --border-input-hover: rgba(14, 116, 144, 0.45);
+  --grid-color: rgba(30, 41, 59, 0.05);
+  --dark-800: rgb(248 250 252 / 82%);
+  --hero-preview: rgb(226 232 240 / 52%);
+  --hero-preview-border: rgb(100 116 139 / 24%);
+  --hero-next: rgb(213 243 107 / 10%);
+  --hero-next-border: rgb(101 125 15 / 24%);
+  --hero-progress-glow: rgb(132 204 22 / 24%);
+  --accent: #b5d83c;
+  --accent-strong: #a1c42e;
+  --accent-text: #657d0f;
+  --info: #087da8;
+  --info-strong: #075f80;
+  --info-soft: rgba(14, 165, 233, 0.12);
+  --info-border: rgba(2, 132, 199, 0.28);
+  --background: #f3f6f7;
+  --foreground: #11181d;
+  --popover: #ffffff;
+  --secondary: #e8edf0;
+  --muted: #e8edf0;
+  --sidebar: #ffffff;
+  --sidebar-accent: #e8edf0;
+  --background-glow-start: rgba(14, 165, 233, 0.1);
+  --background-glow-middle: rgba(99, 102, 241, 0.045);
+  --background-glow-end: rgba(190, 242, 100, 0.045);
+  --background-gradient: linear-gradient(135deg, #f8fafc 0%, #f1f5f7 50%, #f6f8f3 100%);
+  --footer-background: linear-gradient(180deg, rgb(248 250 252 / 45%) 0%, rgb(241 245 247 / 88%) 48%, #e8edef 100%);
+  color-scheme: light;
 }
 
 /* Inline theme variables */
@@ -85,6 +137,11 @@
   --shadow-hero-progress: 0 0 14px var(--hero-progress-glow);
   --color-accent: var(--accent);
   --color-accent-strong: var(--accent-strong);
+  --color-accent-text: var(--accent-text);
+  --color-info: var(--info);
+  --color-info-strong: var(--info-strong);
+  --color-info-soft: var(--info-soft);
+  --color-info-border: var(--info-border);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-sans);
@@ -128,10 +185,10 @@ body {
   background:
     linear-gradient(var(--grid-color) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid-color) 1px, transparent 1px),
-    radial-gradient(1000px 600px at 0% 0%, rgba(14, 165, 233, 0.2), transparent 72%),
-    radial-gradient(900px 650px at 100% 30%, rgba(99, 102, 241, 0.1), transparent 70%),
-    radial-gradient(1000px 620px at 95% 100%, rgba(190, 242, 100, 0.14), transparent 72%),
-    linear-gradient(135deg, #09151d 0%, #0c1117 50%, #13180d 100%);
+    radial-gradient(1000px 600px at 0% 0%, var(--background-glow-start), transparent 72%),
+    radial-gradient(900px 650px at 100% 30%, var(--background-glow-middle), transparent 70%),
+    radial-gradient(1000px 620px at 95% 100%, var(--background-glow-end), transparent 72%),
+    var(--background-gradient);
   background-attachment: scroll, scroll, fixed, fixed, fixed, fixed;
   background-repeat: repeat, repeat, no-repeat, no-repeat, no-repeat, no-repeat;
   background-size:
@@ -146,7 +203,7 @@ body {
 }
 
 @utility eyebrow {
-  @apply inline-flex rounded-full border border-sky-400/20 bg-sky-400/6 px-2.5 py-1.5 text-[0.6875rem] font-bold tracking-[0.13em] text-sky-300;
+  @apply inline-flex rounded-full border border-info-border bg-info-soft px-2.5 py-1.5 text-[0.6875rem] font-bold tracking-[0.13em] text-info;
 }
 
 @utility field-label {
@@ -186,7 +243,7 @@ body {
 }
 
 @utility button-secondary {
-  @apply border border-line bg-transparent text-text-primary transition-colors hover:border-accent hover:text-accent;
+  @apply border border-line bg-transparent text-text-primary transition-colors hover:border-accent hover:text-accent-text;
 }
 
 @utility button-ghost {
@@ -195,6 +252,79 @@ body {
 
 @utility button-danger {
   @apply bg-red-500 text-white transition-colors hover:bg-red-600;
+}
+
+.oauth-button {
+  border-width: 1px;
+  box-shadow: 0 4px 12px rgb(15 23 42 / 8%);
+  font-weight: 650;
+}
+
+.oauth-button-google {
+  border-color: #4285f4;
+  background-color: #e8f0fe;
+  color: #174ea6;
+}
+
+.oauth-button-google:hover {
+  background-color: #dbe7fd;
+  border-color: #1a73e8;
+}
+
+.oauth-button-github {
+  border-color: #24292f;
+  background-color: #24292f;
+  color: #ffffff;
+}
+
+.oauth-button-github:hover {
+  border-color: #0d1117;
+  background-color: #0d1117;
+  color: #ffffff;
+}
+
+.oauth-button-apple {
+  border-color: #9aa4ad;
+  background-color: #ffffff;
+  color: #11181d;
+}
+
+.oauth-button-apple:hover {
+  border-color: #11181d;
+  background-color: #f1f3f4;
+}
+
+.dark .oauth-button-google {
+  border-color: rgb(138 180 248 / 65%);
+  background-color: rgb(66 133 244 / 18%);
+  color: #aecbfa;
+}
+
+.dark .oauth-button-google:hover {
+  background-color: rgb(66 133 244 / 28%);
+}
+
+.dark .oauth-button-github {
+  border-color: #f0f6fc;
+  background-color: #f0f6fc;
+  color: #24292f;
+}
+
+.dark .oauth-button-github:hover {
+  border-color: #ffffff;
+  background-color: #ffffff;
+  color: #0d1117;
+}
+
+.dark .oauth-button-apple {
+  border-color: rgb(255 255 255 / 32%);
+  background-color: rgb(255 255 255 / 7%);
+  color: #ffffff;
+}
+
+.dark .oauth-button-apple:hover {
+  border-color: rgb(255 255 255 / 55%);
+  background-color: rgb(255 255 255 / 12%);
 }
 
 @layer base {

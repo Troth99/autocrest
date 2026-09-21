@@ -28,24 +28,24 @@ const timeline = [
 export default function TimeLineSection() {
   return (
     <section id="timeline" className="mx-auto max-w-3xl px-6 py-16">
-      <h2 className="mb-2 text-2xl font-semibold text-white">
+      <h2 className="mb-2 text-2xl font-semibold text-text-primary">
         Example: BMW 320d &middot; AB 1234 CD
       </h2>
-      <p className="mb-10 text-sm text-slate-400">
+      <p className="mb-10 text-sm text-muted">
         Sample timeline &mdash; static data for now, real events will come from
         the database
       </p>
-      <ol className="relative ml-2 border-l border-slate-700 pl-8">
+      <ol className="relative ml-2 border-l border-line pl-8">
         {timeline.map((event) => (
               <li key={event.date} className="content-card relative mb-4 rounded-xl p-5">
             <span
                 className="glow-dot absolute left-[-2.325rem] top-6"
               style={{ background: event.color, color: event.color }}
             />
-            <time className="text-xs font-medium uppercase tracking-wide text-slate-400">
+            <time className="text-xs font-medium uppercase tracking-wide text-muted">
               {event.date} &middot; {event.type}
             </time>
-            <p className="mt-1 text-base text-slate-100">{event.title}</p>
+            <p className="mt-1 text-base text-text-primary">{event.title}</p>
           </li>
         ))}
       </ol>
