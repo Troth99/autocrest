@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { PasswordField } from "@/app/(auth)/register/_components/PasswordField/PasswordField";
 import { FieldError } from "@/shared/components/FieldError/FieldError";
 import useForm from "@/shared/hooks/useForm";
-import { loginUser } from "@/lib/services/auth.service";
+import { loginUser, logInWithGoogle } from "@/lib/services/auth.service";
 import {
   validateLoginForm,
   type LoginFormValues,
@@ -45,6 +45,17 @@ export default function LoginForm() {
     }
   }
 
+  async function googleLoginHandler() {
+    setIsSubmitting(true);
+
+    try {
+      await logInWithGoogle();
+    } catch (error) {
+      console.error(error);
+      setIsSubmitting(false);
+    }
+  }
+
   return (
     <section className="card-base" aria-labelledby="login-title">
       <div className="mb-7">
@@ -65,6 +76,8 @@ export default function LoginForm() {
           className="oauth-button oauth-button-google h-11 cursor-pointer"
           type="button"
           variant="outline"
+          onClick={googleLoginHandler}
+          disabled={isSubmitting}
         >
           <GoogleIcon />
           Google

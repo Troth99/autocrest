@@ -235,7 +235,7 @@ body {
 }
 
 @utility button-base {
-  @apply inline-flex items-center justify-center rounded-full border-0 font-bold outline-offset-3 transition-transform focus-visible:outline-3 focus-visible:outline-sky-400/50;
+  @apply inline-flex items-center justify-center rounded-full border-0 font-bold outline-offset-3 transition-[transform,box-shadow,background-color,color,border-color] duration-200 hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-3 focus-visible:outline-sky-400/50 motion-reduce:transition-none motion-reduce:hover:translate-y-0;
 }
 
 @utility button-primary {
@@ -258,6 +258,21 @@ body {
   border-width: 1px;
   box-shadow: 0 4px 12px rgb(15 23 42 / 8%);
   font-weight: 650;
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease,
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease;
+}
+
+.oauth-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 9px 20px rgb(15 23 42 / 16%);
+}
+
+.oauth-button:active {
+  transform: translateY(0);
 }
 
 .oauth-button-google {
@@ -325,6 +340,17 @@ body {
 .dark .oauth-button-apple:hover {
   border-color: rgb(255 255 255 / 55%);
   background-color: rgb(255 255 255 / 12%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .oauth-button {
+    transition: none;
+  }
+
+  .oauth-button:hover,
+  .oauth-button:active {
+    transform: none;
+  }
 }
 
 @layer base {

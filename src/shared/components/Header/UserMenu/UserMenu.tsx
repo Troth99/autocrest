@@ -39,7 +39,7 @@ export default function UserMenu({ username, email, avatarUrl }: UserMenuProps) 
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="cursor-pointer rounded-full outline-none focus-visible:ring-2 focus-visible:ring-ring/50">
+      <DropdownMenuTrigger className="cursor-pointer rounded-full outline-none transition-[transform,box-shadow] duration-200 hover:scale-105 hover:shadow-[0_0_18px_rgb(56_189_248/28%)] focus-visible:ring-2 focus-visible:ring-ring/50 motion-reduce:transition-none motion-reduce:hover:scale-100">
         <Avatar>
           {avatarUrl && <AvatarImage src={avatarUrl} alt={username} />}
           <AvatarFallback className="bg-info-soft text-info">
@@ -62,14 +62,14 @@ export default function UserMenu({ username, email, avatarUrl }: UserMenuProps) 
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem
-          className="cursor-pointer"
+          className="cursor-pointer transition-[background-color,color,transform] duration-200 hover:translate-x-0.5 hover:bg-accent motion-reduce:transition-none motion-reduce:hover:translate-x-0"
           onClick={() => router.push("/profile")}
         >
           <UserIcon />
           Profile
         </DropdownMenuItem>
         <DropdownMenuItem
-          className="cursor-pointer"
+          className="cursor-pointer transition-[background-color,color,transform] duration-200 hover:translate-x-0.5 hover:bg-accent motion-reduce:transition-none motion-reduce:hover:translate-x-0"
           onClick={() => router.push("/settings")}
         >
           <Settings />
@@ -78,7 +78,7 @@ export default function UserMenu({ username, email, avatarUrl }: UserMenuProps) 
         <DropdownMenuSeparator />
         <DropdownMenuItem
           variant="destructive"
-          className="cursor-pointer"
+          className="cursor-pointer transition-[background-color,color,transform] duration-200 hover:translate-x-0.5 hover:bg-destructive/10 motion-reduce:transition-none motion-reduce:hover:translate-x-0"
           disabled={isLoggingOut}
           onClick={handleLogout}
         >

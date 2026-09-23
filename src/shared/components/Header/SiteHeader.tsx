@@ -23,19 +23,19 @@ export default async function SiteHeader() {
         <div className="hidden items-center gap-6 md:flex">
           <a
             href="#modules"
-            className="text-sm text-muted transition-colors hover:text-text-primary"
+            className="relative rounded-lg px-2 py-1.5 text-sm font-medium text-text-secondary transition-[color,background-color,transform] duration-200 after:absolute after:inset-x-2 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-info after:transition-transform after:duration-200 hover:-translate-y-0.5 hover:bg-info-soft hover:text-info-strong hover:after:scale-x-100 motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:after:transition-none"
           >
             Modules
           </a>
           <a
             href="#how-it-works"
-            className="text-sm text-muted transition-colors hover:text-text-primary"
+            className="relative rounded-lg px-2 py-1.5 text-sm font-medium text-text-secondary transition-[color,background-color,transform] duration-200 after:absolute after:inset-x-2 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-info after:transition-transform after:duration-200 hover:-translate-y-0.5 hover:bg-info-soft hover:text-info-strong hover:after:scale-x-100 motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:after:transition-none"
           >
             How it works
           </a>
           <a
             href="#timeline"
-            className="text-sm text-muted transition-colors hover:text-text-primary"
+            className="relative rounded-lg px-2 py-1.5 text-sm font-medium text-text-secondary transition-[color,background-color,transform] duration-200 after:absolute after:inset-x-2 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-info after:transition-transform after:duration-200 hover:-translate-y-0.5 hover:bg-info-soft hover:text-info-strong hover:after:scale-x-100 motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:after:transition-none"
           >
             Timeline
           </a>
@@ -44,7 +44,13 @@ export default async function SiteHeader() {
           <ThemeToggle />
           {user ? (
             <UserMenu
-              username={user.user_metadata?.username ?? user.email ?? "Account"}
+              username={
+                user.user_metadata?.full_name ??
+                user.user_metadata?.name ??
+                user.user_metadata?.username ??
+                user.email ??
+                "Account"
+              }
               email={user.email ?? ""}
               avatarUrl={user.user_metadata?.avatar_url}
             />
@@ -52,7 +58,7 @@ export default async function SiteHeader() {
             <>
               <Link
                 href="/login"
-                className="hidden text-sm font-medium text-text-secondary transition-colors hover:text-text-primary sm:block"
+                className="hidden rounded-full border border-line bg-panel px-3.5 py-2 text-sm font-semibold text-text-primary shadow-sm transition-[color,background-color,border-color,transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-info-border hover:bg-info-soft hover:text-info-strong hover:shadow-[0_8px_20px_rgb(14_165_233/14%)] sm:block motion-reduce:transition-none motion-reduce:hover:translate-y-0"
               >
                 Sign in
               </Link>

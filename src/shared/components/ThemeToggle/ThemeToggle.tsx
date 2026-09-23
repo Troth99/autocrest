@@ -17,7 +17,7 @@ export default function ThemeToggle() {
       type="button"
       variant="ghost"
       size="icon"
-      className="cursor-pointer rounded-full text-muted hover:text-text-primary"
+      className="cursor-pointer rounded-full text-muted transition-[transform,color,background-color] duration-200 hover:scale-105 hover:text-text-primary motion-reduce:transition-none motion-reduce:hover:scale-100 [&_svg]:transition-transform [&_svg]:duration-300 hover:[&_svg]:rotate-12 motion-reduce:[&_svg]:transition-none motion-reduce:hover:[&_svg]:rotate-0"
       onClick={() => setTheme(isDark ? "light" : "dark")}
       disabled={!mounted}
       aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
