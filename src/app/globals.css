@@ -286,15 +286,15 @@ body {
   border-color: #1a73e8;
 }
 
-.oauth-button-github {
-  border-color: #24292f;
-  background-color: #24292f;
+.oauth-button-facebook {
+  border-color: #1877f2;
+  background-color: #1877f2;
   color: #ffffff;
 }
 
-.oauth-button-github:hover {
-  border-color: #0d1117;
-  background-color: #0d1117;
+.oauth-button-facebook:hover {
+  border-color: #0866ff;
+  background-color: #0866ff;
   color: #ffffff;
 }
 
@@ -309,6 +309,18 @@ body {
   background-color: #f1f3f4;
 }
 
+.oauth-button-microsoft {
+  border-color: #8a9199;
+  background-color: #ffffff;
+  color: #1f1f1f;
+}
+
+.oauth-button-microsoft:hover {
+  border-color: #5f6368;
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
 .dark .oauth-button-google {
   border-color: rgb(138 180 248 / 65%);
   background-color: rgb(66 133 244 / 18%);
@@ -319,16 +331,16 @@ body {
   background-color: rgb(66 133 244 / 28%);
 }
 
-.dark .oauth-button-github {
-  border-color: #f0f6fc;
-  background-color: #f0f6fc;
-  color: #24292f;
+.dark .oauth-button-facebook {
+  border-color: rgb(96 165 250 / 70%);
+  background-color: rgb(24 119 242 / 24%);
+  color: #bfdbfe;
 }
 
-.dark .oauth-button-github:hover {
-  border-color: #ffffff;
-  background-color: #ffffff;
-  color: #0d1117;
+.dark .oauth-button-facebook:hover {
+  border-color: rgb(96 165 250 / 90%);
+  background-color: rgb(24 119 242 / 36%);
+  color: #dbeafe;
 }
 
 .dark .oauth-button-apple {
@@ -338,6 +350,17 @@ body {
 }
 
 .dark .oauth-button-apple:hover {
+  border-color: rgb(255 255 255 / 55%);
+  background-color: rgb(255 255 255 / 12%);
+}
+
+.dark .oauth-button-microsoft {
+  border-color: rgb(255 255 255 / 32%);
+  background-color: rgb(255 255 255 / 7%);
+  color: #ffffff;
+}
+
+.dark .oauth-button-microsoft:hover {
   border-color: rgb(255 255 255 / 55%);
   background-color: rgb(255 255 255 / 12%);
 }

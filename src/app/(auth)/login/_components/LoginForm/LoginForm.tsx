@@ -7,7 +7,11 @@ import { Button } from "@/components/ui/button";
 import { PasswordField } from "@/app/(auth)/register/_components/PasswordField/PasswordField";
 import { FieldError } from "@/shared/components/FieldError/FieldError";
 import useForm from "@/shared/hooks/useForm";
-import { loginUser, logInWithGoogle } from "@/lib/services/auth.service";
+import {
+  loginUser,
+  logInWithFacebook,
+  logInWithGoogle,
+} from "@/lib/services/auth.service";
 import {
   validateLoginForm,
   type LoginFormValues,
@@ -56,6 +60,17 @@ export default function LoginForm() {
     }
   }
 
+  async function facebookLoginHandler() {
+    setIsSubmitting(true);
+
+    try {
+      await logInWithFacebook();
+    } catch (error) {
+      console.error(error);
+      setIsSubmitting(false);
+    }
+  }
+
   return (
     <section className="card-base" aria-labelledby="login-title">
       <div className="mb-7">
@@ -71,7 +86,7 @@ export default function LoginForm() {
         </p>
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-3">
+      <div className="grid gap-3 sm:grid-cols-2">
         <Button
           className="oauth-button oauth-button-google h-11 cursor-pointer"
           type="button"
@@ -83,12 +98,14 @@ export default function LoginForm() {
           Google
         </Button>
         <Button
-          className="oauth-button oauth-button-github h-11 cursor-pointer"
+          className="oauth-button oauth-button-facebook h-11 cursor-pointer"
           type="button"
           variant="outline"
+          onClick={facebookLoginHandler}
+          disabled={isSubmitting}
         >
-          <GitHubIcon />
-          GitHub
+          <FacebookIcon />
+          Facebook
         </Button>
         <Button
           className="oauth-button oauth-button-apple h-11 cursor-pointer"
@@ -97,6 +114,14 @@ export default function LoginForm() {
         >
           <AppleIcon />
           Apple
+        </Button>
+        <Button
+          className="oauth-button oauth-button-microsoft h-11 cursor-pointer"
+          type="button"
+          variant="outline"
+        >
+          <MicrosoftIcon />
+          Microsoft
         </Button>
       </div>
 
@@ -192,10 +217,13 @@ function GoogleIcon() {
   );
 }
 
-function GitHubIcon() {
+function FacebookIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.86c-2.78.6-3.37-1.18-3.37-1.18-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.35 1.09 2.92.83.09-.65.35-1.09.64-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.58 9.58 0 0 1 12 6.84c.85 0 1.71.11 2.51.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.86v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z" />
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06C2 17.08 5.66 21.25 10.44 22v-7.03H7.9v-2.91h2.54V9.85c0-2.52 1.5-3.91 3.78-3.91 1.09 0 2.23.2 2.23.2v2.46H15.2c-1.24 0-1.63.77-1.63 1.56v1.9h2.77l-.44 2.91h-2.33V22C18.34 21.25 22 17.08 22 12.06Z"
+      />
     </svg>
   );
 }
@@ -204,6 +232,17 @@ function AppleIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
       <path d="M17.05 12.54c.02-2.03 1.66-3 1.74-3.05a3.74 3.74 0 0 0-2.95-1.6c-1.24-.13-2.45.74-3.08.74-.64 0-1.61-.73-2.65-.71a3.9 3.9 0 0 0-3.28 2c-1.42 2.46-.36 6.08 1 8.07.68.97 1.47 2.05 2.51 2.01 1.02-.04 1.4-.65 2.63-.65 1.22 0 1.58.65 2.65.63 1.1-.02 1.79-.97 2.44-1.95a8.1 8.1 0 0 0 1.12-2.28 3.52 3.52 0 0 1-2.13-3.21ZM15.03 6.58a3.59 3.59 0 0 0 .82-2.58 3.66 3.66 0 0 0-2.39 1.23 3.42 3.42 0 0 0-.85 2.48 3.03 3.03 0 0 0 2.42-1.13Z" />
+    </svg>
+  );
+}
+
+function MicrosoftIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path fill="#F25022" d="M2.5 2.5h9v9h-9z" />
+      <path fill="#7FBA00" d="M12.5 2.5h9v9h-9z" />
+      <path fill="#00A4EF" d="M2.5 12.5h9v9h-9z" />
+      <path fill="#FFB900" d="M12.5 12.5h9v9h-9z" />
     </svg>
   );
 }
