@@ -5,7 +5,7 @@ import TimelineSection from "./_components/TimelineSection/TimelineSection";
 
 export default function Home() {
   return (
-    <div className="min-h-screen text-slate-100">
+    <div className="min-h-screen text-text-primary">
       {/* Hero */}
       <HeroSection />
       {/* Modules */}

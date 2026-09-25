@@ -40,10 +40,10 @@ const modules = [
 export default function ModulesSection() {
   return (
     <section id="modules" className="mx-auto max-w-5xl px-6 py-16">
-      <h2 className="mb-2 text-center text-2xl font-semibold text-white">
+      <h2 className="mb-2 text-center text-2xl font-semibold text-text-primary">
         What the app connects
       </h2>
-      <p className="mb-10 text-center text-sm text-slate-400">
+      <p className="mb-10 text-center text-sm text-muted">
         Every module is linked to the vehicle and to the other modules
       </p>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
@@ -53,8 +53,8 @@ export default function ModulesSection() {
               className="glow-dot mb-4"
               style={{ background: m.color, color: m.color }}
             />
-            <h3 className="text-base font-semibold text-white">{m.label}</h3>
-            <p className="mt-2 text-sm text-slate-400">{m.desc}</p>
+            <h3 className="text-base font-semibold text-text-primary">{m.label}</h3>
+            <p className="mt-2 text-sm text-muted">{m.desc}</p>
           </div>
         ))}
       </div>

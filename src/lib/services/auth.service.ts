@@ -56,3 +56,33 @@ export async function logoutUser(): Promise<void> {
     throw error;
   }
 }
+
+
+export async function logInWithGoogle(): Promise<void> {
+  const supabase = createClient();
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: `${window.location.origin}/auth/callback`,
+    },
+  });
+
+  if (error) {
+    throw error;
+  }
+}
+
+export async function logInWithFacebook(): Promise<void> {
+  const supabase = createClient();
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: "facebook",
+    options: {
+      redirectTo: `${window.location.origin}/auth/callback`,
+    },
+  });
+
+  if (error) {
+    throw error;
+  }
+}
+
