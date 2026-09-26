@@ -1,5 +1,16 @@
 import { createClient } from "@/lib/supabase/client";
 
+const REMEMBER_ME_COOKIE = "autocrest-remember-me";
+const REMEMBER_ME_MAX_AGE = 60 * 60 * 24 * 10;
+
+function saveRememberMePreference(rememberMe: boolean) {
+  const maxAge = rememberMe ? `; Max-Age=${REMEMBER_ME_MAX_AGE}` : "";
+
+  document.cookie =
+    `${REMEMBER_ME_COOKIE}=${rememberMe}` +
+    `; Path=/; SameSite=Lax${maxAge}`;
+}
+
 export type RegisterInput = {
   email: string;
   password: string;
@@ -33,11 +44,15 @@ export async function registerUser({
 export async function loginUser({
   email,
   password,
+  rememberMe = true,
 }: {
   email: string;
   password: string;
+  rememberMe?: boolean;
 }): Promise<void> {
+  saveRememberMePreference(rememberMe);
   const supabase = createClient();
+
   const { error } = await supabase.auth.signInWithPassword({
     email,
     password,

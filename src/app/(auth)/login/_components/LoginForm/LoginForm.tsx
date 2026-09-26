@@ -20,12 +20,13 @@ import {
 const initialValues: LoginFormValues = {
   email: "",
   password: "",
+  rememberMe: false,
 };
 export default function LoginForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
-  const { register, formHandler, errors, setErrors } = useForm(
+  const { register, registerCheckbox, formHandler, errors, setErrors } = useForm(
     loginHandler,
     initialValues,
     validateLoginForm,
@@ -107,22 +108,8 @@ export default function LoginForm() {
           <FacebookIcon />
           Facebook
         </Button>
-        <Button
-          className="oauth-button oauth-button-apple h-11 cursor-pointer"
-          type="button"
-          variant="outline"
-        >
-          <AppleIcon />
-          Apple
-        </Button>
-        <Button
-          className="oauth-button oauth-button-microsoft h-11 cursor-pointer"
-          type="button"
-          variant="outline"
-        >
-          <MicrosoftIcon />
-          Microsoft
-        </Button>
+
+        {/* Placeholder for additional OAuth buttons, e.g., Microsoft, Apple */}
       </div>
 
       <div className="my-5 flex items-center gap-3" aria-hidden="true">
@@ -167,7 +154,11 @@ export default function LoginForm() {
         />
 
         <label className="flex cursor-pointer items-start gap-2.5 text-xs leading-[1.45] text-muted">
-          <input className="mt-px size-4 " name="remember" type="checkbox" />
+          <input
+            className="mt-px size-4 "
+            type="checkbox"
+            {...registerCheckbox("rememberMe")}
+          />
           <span>Remember me</span>
         </label>
 
@@ -224,25 +215,6 @@ function FacebookIcon() {
         fill="currentColor"
         d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06C2 17.08 5.66 21.25 10.44 22v-7.03H7.9v-2.91h2.54V9.85c0-2.52 1.5-3.91 3.78-3.91 1.09 0 2.23.2 2.23.2v2.46H15.2c-1.24 0-1.63.77-1.63 1.56v1.9h2.77l-.44 2.91h-2.33V22C18.34 21.25 22 17.08 22 12.06Z"
       />
-    </svg>
-  );
-}
-
-function AppleIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M17.05 12.54c.02-2.03 1.66-3 1.74-3.05a3.74 3.74 0 0 0-2.95-1.6c-1.24-.13-2.45.74-3.08.74-.64 0-1.61-.73-2.65-.71a3.9 3.9 0 0 0-3.28 2c-1.42 2.46-.36 6.08 1 8.07.68.97 1.47 2.05 2.51 2.01 1.02-.04 1.4-.65 2.63-.65 1.22 0 1.58.65 2.65.63 1.1-.02 1.79-.97 2.44-1.95a8.1 8.1 0 0 0 1.12-2.28 3.52 3.52 0 0 1-2.13-3.21ZM15.03 6.58a3.59 3.59 0 0 0 .82-2.58 3.66 3.66 0 0 0-2.39 1.23 3.42 3.42 0 0 0-.85 2.48 3.03 3.03 0 0 0 2.42-1.13Z" />
-    </svg>
-  );
-}
-
-function MicrosoftIcon() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path fill="#F25022" d="M2.5 2.5h9v9h-9z" />
-      <path fill="#7FBA00" d="M12.5 2.5h9v9h-9z" />
-      <path fill="#00A4EF" d="M2.5 12.5h9v9h-9z" />
-      <path fill="#FFB900" d="M12.5 12.5h9v9h-9z" />
     </svg>
   );
 }
