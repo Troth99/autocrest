@@ -11,9 +11,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { logoutUser } from "@/lib/services/auth.service";
+} from "@/shared/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/avatar";
+import { logoutUser } from "@/features/auth/actions";
 
 type UserMenuProps = {
   username: string;

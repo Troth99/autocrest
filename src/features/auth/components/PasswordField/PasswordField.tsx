@@ -1,5 +1,5 @@
 import { Eye, EyeOff } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/components/ui/button";
 import { FieldError } from "@/shared/components/FieldError/FieldError";
 import { useState, type ComponentPropsWithoutRef, type ReactNode } from "react";
 

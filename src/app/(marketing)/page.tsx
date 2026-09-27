@@ -1,17 +1,17 @@
-import HeroSection from "./_components/HeroSection/HeroSection";
-import ModulesSection from "./_components/ModulesSection/ModulesSection";
-import HowItWorksSection from "./_components/HowItWorksSection/HowItWorksSection";
-import TimelineSection from "./_components/TimelineSection/TimelineSection";
+import HeroSection from "@/features/marketing/components/HeroSection/HeroSection";
+import HowItWorksSection from "@/features/marketing/components/HowItWorksSection/HowItWorksSection";
+import ModulesSection from "@/features/marketing/components/ModulesSection/ModulesSection";
+import TimelineSection from "@/features/marketing/components/TimelineSection/TimelineSection";
 
 export default function Home() {
   return (
     <div className="min-h-screen text-text-primary">
       {/* Hero */}
       <HeroSection />
-      {/* Modules */}
-      <ModulesSection />
       {/* How it works */}
       <HowItWorksSection />
+      {/* Modules */}
+      <ModulesSection />
       {/* Timeline */}
       <TimelineSection />
     </div>

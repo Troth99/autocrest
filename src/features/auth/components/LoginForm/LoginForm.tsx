@@ -3,19 +3,19 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { PasswordField } from "@/app/(auth)/register/_components/PasswordField/PasswordField";
+import { Button } from "@/shared/components/ui/button";
+import { PasswordField } from "@/features/auth/components/PasswordField/PasswordField";
 import { FieldError } from "@/shared/components/FieldError/FieldError";
 import useForm from "@/shared/hooks/useForm";
 import {
   loginUser,
   logInWithFacebook,
   logInWithGoogle,
-} from "@/lib/services/auth.service";
+} from "@/features/auth/actions";
 import {
   validateLoginForm,
   type LoginFormValues,
-} from "@/app/(auth)/validators/login.validator";
+} from "@/features/auth/validators/login.validator";
 
 const initialValues: LoginFormValues = {
   email: "",

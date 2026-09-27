@@ -3,15 +3,15 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { loginUser, registerUser } from "@/lib/services/auth.service";
+import { Button } from "@/shared/components/ui/button";
+import { loginUser, registerUser } from "@/features/auth/actions";
 import useForm from "@/shared/hooks/useForm";
-import { PasswordField } from "../PasswordField/PasswordField";
+import { PasswordField } from "@/features/auth/components/PasswordField/PasswordField";
 import { FieldError } from "@/shared/components/FieldError/FieldError";
 import {
   validateRegisterForm,
   type RegisterFormValues,
-} from "@/app/(auth)/validators/register.validator";
+} from "@/features/auth/validators/register.validator";
 
 const initialValues: RegisterFormValues = {
   username: "",
