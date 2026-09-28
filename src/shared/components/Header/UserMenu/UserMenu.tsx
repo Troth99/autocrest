@@ -90,6 +90,7 @@ export default function UserMenu({
           Settings
         </DropdownMenuItem>
         <ThemeSelector />
+         <DropdownMenuSeparator />
         <DropdownMenuItem
           variant="destructive"
           className="cursor-pointer transition-[background-color,color,transform] duration-200 hover:translate-x-0.5 hover:bg-destructive/10 motion-reduce:transition-none motion-reduce:hover:translate-x-0"

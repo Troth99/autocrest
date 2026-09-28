@@ -1,31 +1,234 @@
-import { BadgeCheck, CalendarDays, ChevronRight, CircleCheck, KeyRound, Mail, Palette, ShieldCheck, UserRound } from "lucide-react";
+import {
+  BadgeCheck,
+  CalendarDays,
+  ChevronRight,
+  CircleCheck,
+  KeyRound,
+  Mail,
+  Palette,
+  ShieldCheck,
+  UserRound,
+} from "lucide-react";
 
-type ProfilePageProps = { name: string; email: string; username: string; memberSince: string; emailConfirmed: boolean };
+type ProfilePageProps = {
+  name: string;
+  email: string;
+  username: string;
+  memberSince: string;
+  emailConfirmed: boolean;
+};
 
-export default function ProfilePage({ name, email, username, memberSince, emailConfirmed }: ProfilePageProps) {
+export default function ProfilePage({
+  name,
+  email,
+  username,
+  memberSince,
+  emailConfirmed,
+}: ProfilePageProps) {
   const initials = getInitials(name, email);
-  return <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-10 sm:py-14">
-    <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between"><div><span className="eyebrow">ACCOUNT</span><h1 className="mt-4 text-3xl font-semibold tracking-[-0.045em] text-text-primary sm:text-4xl">Your profile</h1><p className="mt-2 max-w-xl text-sm leading-6 text-muted sm:text-base">Your AutoCrest identity, account status, and preferences.</p></div><p className="flex items-center gap-2 text-sm font-medium text-muted"><CircleCheck className="size-4 text-accent-text" />Account ready</p></div>
-    <section className="relative overflow-hidden rounded-3xl border border-line bg-panel p-6 shadow-[0_18px_40px_rgb(0_0_0/18%),inset_0_1px_rgb(255_255_255/4%)] backdrop-blur-[14px] sm:p-8"><div className="absolute -right-20 -top-24 size-64 rounded-full bg-info/10 blur-3xl" /><div className="absolute -bottom-24 right-20 size-56 rounded-full bg-accent/10 blur-3xl" /><div className="relative flex flex-col gap-6 sm:flex-row sm:items-center"><div className="flex size-20 shrink-0 items-center justify-center rounded-[1.7rem] border border-accent/35 bg-accent/10 text-2xl font-bold tracking-[-0.05em] text-accent-text shadow-[0_12px_30px_rgb(213_243_107/12%)]">{initials}</div><div className="min-w-0"><div className="flex flex-wrap items-center gap-x-3 gap-y-2"><h2 className="truncate text-2xl font-semibold tracking-[-0.04em] text-text-primary">{name}</h2><span className="inline-flex items-center gap-1.5 rounded-full border border-accent/25 bg-accent/10 px-2.5 py-1 text-xs font-semibold text-accent-text"><BadgeCheck className="size-3.5" />Active member</span></div><p className="mt-2 text-sm text-muted">@{username}</p><p className="mt-1 truncate text-sm text-text-secondary">{email}</p></div><div className="border-line sm:ml-auto sm:border-l sm:pl-8"><p className="text-xs font-semibold uppercase tracking-[0.13em] text-subtle">With AutoCrest since</p><p className="mt-2 flex items-center gap-2 text-sm font-semibold text-text-primary"><CalendarDays className="size-4 text-info" />{memberSince}</p></div></div></section>
-    <div className="mt-5 grid gap-5 lg:grid-cols-[1.08fr_.92fr]"><section className="content-card rounded-3xl p-6 sm:p-7"><SectionHeading icon={<UserRound />} title="Personal details" subtitle="The details connected to your AutoCrest account." /><dl className="mt-6 divide-y divide-line rounded-2xl border border-line bg-input/45 px-5"><DetailRow icon={<UserRound />} label="Username" value={`@${username}`} /><DetailRow icon={<Mail />} label="Email address" value={email} /></dl><p className="mt-4 text-xs leading-5 text-subtle">Profile editing will be available here when you are ready to personalise your account.</p></section><section className="content-card rounded-3xl p-6 sm:p-7"><SectionHeading icon={<ShieldCheck />} title="Account security" subtitle="Your sign-in and verification status." /><div className="mt-6 space-y-3"><StatusRow icon={<Mail />} title="Email verification" description={emailConfirmed ? "Your email address is verified." : "Email verification is still pending."} tone={emailConfirmed ? "good" : "neutral"} /><StatusRow icon={<KeyRound />} title="Sign-in method" description="Email and password" tone="neutral" /></div></section></div>
-    <section className="mt-5 content-card rounded-3xl p-6 sm:p-7"><SectionHeading icon={<Palette />} title="Preferences" subtitle="Your display settings follow the theme selected in the header." /><div className="mt-6 grid gap-3 sm:grid-cols-2"><PreferenceCard title="Appearance" description="Switch between dark and light mode from the theme button above." /><PreferenceCard title="Your garage" description="Vehicles, reminders, and documents will live in your separate My Garage space." /></div></section>
-  </main>;
+  return (
+    <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-10 sm:py-14">
+      <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <span className="eyebrow">ACCOUNT</span>
+          <h1 className="mt-4 text-3xl font-semibold tracking-[-0.045em] text-text-primary sm:text-4xl">
+            Your profile
+          </h1>
+          <p className="mt-2 max-w-xl text-sm leading-6 text-muted sm:text-base">
+            Your AutoCrest identity, account status, and preferences.
+          </p>
+        </div>
+        <p className="flex items-center gap-2 text-sm font-medium text-muted">
+          <CircleCheck className="size-4 text-accent-text" />
+          Account ready
+        </p>
+      </div>
+      <section className="relative overflow-hidden rounded-3xl border border-line bg-panel p-6 shadow-[0_18px_40px_rgb(0_0_0/18%),inset_0_1px_rgb(255_255_255/4%)] backdrop-blur-[14px] sm:p-8">
+        <div className="absolute -right-20 -top-24 size-64 rounded-full bg-info/10 blur-3xl" />
+        <div className="absolute -bottom-24 right-20 size-56 rounded-full bg-accent/10 blur-3xl" />
+        <div className="relative flex flex-col gap-6 sm:flex-row sm:items-center">
+          <div className="flex size-20 shrink-0 items-center justify-center rounded-[1.7rem] border border-accent/35 bg-accent/10 text-2xl font-bold tracking-[-0.05em] text-accent-text shadow-[0_12px_30px_rgb(213_243_107/12%)]">
+            {initials}
+          </div>
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+              <h2 className="truncate text-2xl font-semibold tracking-[-0.04em] text-text-primary">
+                {name}
+              </h2>
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-accent/25 bg-accent/10 px-2.5 py-1 text-xs font-semibold text-accent-text">
+                <BadgeCheck className="size-3.5" />
+                Active member
+              </span>
+            </div>
+            <p className="mt-2 text-sm text-muted">@{username}</p>
+            <p className="mt-1 truncate text-sm text-text-secondary">{email}</p>
+          </div>
+          <div className="border-line sm:ml-auto sm:border-l sm:pl-8">
+            <p className="text-xs font-semibold uppercase tracking-[0.13em] text-subtle">
+              With AutoCrest since
+            </p>
+            <p className="mt-2 flex items-center gap-2 text-sm font-semibold text-text-primary">
+              <CalendarDays className="size-4 text-info" />
+              {memberSince}
+            </p>
+          </div>
+        </div>
+      </section>
+      <div className="mt-5 grid gap-5 lg:grid-cols-[1.08fr_.92fr]">
+        <section className="content-card rounded-3xl p-6 sm:p-7">
+          <SectionHeading
+            icon={<UserRound />}
+            title="Personal details"
+            subtitle="The details connected to your AutoCrest account."
+          />
+          <dl className="mt-6 divide-y divide-line rounded-2xl border border-line bg-input/45 px-5">
+            <DetailRow
+              icon={<UserRound />}
+              label="Username"
+              value={`@${username}`}
+            />
+            <DetailRow icon={<Mail />} label="Email address" value={email} />
+          </dl>
+          <p className="mt-4 text-xs leading-5 text-subtle">
+            Profile editing will be available here when you are ready to
+            personalise your account.
+          </p>
+        </section>
+        <section className="content-card rounded-3xl p-6 sm:p-7">
+          <SectionHeading
+            icon={<ShieldCheck />}
+            title="Account security"
+            subtitle="Your sign-in and verification status."
+          />
+          <div className="mt-6 space-y-3">
+            <StatusRow
+              icon={<Mail />}
+              title="Email verification"
+              description={
+                emailConfirmed
+                  ? "Your email address is verified."
+                  : "Email verification is still pending."
+              }
+              tone={emailConfirmed ? "good" : "neutral"}
+            />
+            <StatusRow
+              icon={<KeyRound />}
+              title="Sign-in method"
+              description="Email and password"
+              tone="neutral"
+            />
+          </div>
+        </section>
+      </div>
+      <section className="mt-5 content-card rounded-3xl p-6 sm:p-7">
+        <SectionHeading
+          icon={<Palette />}
+          title="Preferences"
+          subtitle="Your display settings follow the theme selected in the header."
+        />
+        <div className="mt-6 grid gap-3 sm:grid-cols-2">
+          <PreferenceCard
+            title="Appearance"
+            description="Switch between dark and light mode from the theme button above."
+          />
+          <PreferenceCard
+            title="Your garage"
+            description="Vehicles, reminders, and documents will live in your separate My Garage space."
+          />
+        </div>
+      </section>
+    </main>
+  );
 }
 
-function SectionHeading({ icon, title, subtitle }: { icon: React.ReactNode; title: string; subtitle: string }) {
+function SectionHeading({
+  icon,
+  title,
+  subtitle,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  subtitle: string;
+}) {
   return (
     <div className="flex gap-3">
-      <span className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-info-soft text-info [&>svg]:size-5">{icon}</span>
+      <span className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-info-soft text-info [&>svg]:size-5">
+        {icon}
+      </span>
       <div>
-        <h2 className="text-lg font-semibold tracking-[-0.025em] text-text-primary">{title}</h2>
+        <h2 className="text-lg font-semibold tracking text-text-primary">
+          {title}
+        </h2>
         <p className="mt-1 text-sm text-muted">{subtitle}</p>
       </div>
     </div>
   );
 }
 
-function DetailRow({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) { return <div className="flex items-center gap-3 py-4 first:pt-5 last:pb-5"><span className="text-subtle [&>svg]:size-4">{icon}</span><dt className="text-sm text-muted">{label}</dt><dd className="ml-auto max-w-[58%] truncate text-right text-sm font-semibold text-text-primary">{value}</dd></div>; }
-function StatusRow({ icon, title, description, tone }: { icon: React.ReactNode; title: string; description: string; tone: "good" | "neutral" }) { const isGood = tone === "good"; return <div className="flex items-center gap-3 rounded-2xl border border-line bg-input/45 p-4"><span className={`flex size-9 shrink-0 items-center justify-center rounded-xl ${isGood ? "bg-accent/10 text-accent-text" : "bg-info-soft text-info"} [&>svg]:size-4`}>{icon}</span><div className="min-w-0"><p className="text-sm font-semibold text-text-primary">{title}</p><p className="mt-1 text-xs leading-5 text-muted">{description}</p></div><ChevronRight className="ml-auto size-4 shrink-0 text-subtle" /></div>; }
-function PreferenceCard({ title, description }: { title: string; description: string }) { return <div className="rounded-2xl border border-line bg-input/45 p-5"><p className="text-sm font-semibold text-text-primary">{title}</p><p className="mt-2 text-sm leading-6 text-muted">{description}</p></div>; }
-function getInitials(name: string, email: string) { const words = name.trim().split(/\s+/).filter(Boolean); if (words.length > 1) return `${words[0][0]}${words.at(-1)?.[0]}`.toUpperCase(); if (words[0]) return words[0].slice(0, 2).toUpperCase(); return email.slice(0, 2).toUpperCase(); }
-
+function DetailRow({
+  icon,
+  label,
+  value,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="flex items-center gap-3 py-4 first:pt-5 last:pb-5">
+      <span className="text-subtle [&>svg]:size-4">{icon}</span>
+      <dt className="text-sm text-muted">{label}</dt>
+      <dd className="ml-auto max-w-[58%] truncate text-right text-sm font-semibold text-text-primary">
+        {value}
+      </dd>
+    </div>
+  );
+}
+function StatusRow({
+  icon,
+  title,
+  description,
+  tone,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  tone: "good" | "neutral";
+}) {
+  const isGood = tone === "good";
+  return (
+    <div className="flex items-center gap-3 rounded-2xl border border-line bg-input/45 p-4">
+      <span
+        className={`flex size-9 shrink-0 items-center justify-center rounded-xl ${isGood ? "bg-accent/10 text-accent-text" : "bg-info-soft text-info"} [&>svg]:size-4`}
+      >
+        {icon}
+      </span>
+      <div className="min-w-0">
+        <p className="text-sm font-semibold text-text-primary">{title}</p>
+        <p className="mt-1 text-xs leading-5 text-muted">{description}</p>
+      </div>
+      <ChevronRight className="ml-auto size-4 shrink-0 text-subtle" />
+    </div>
+  );
+}
+function PreferenceCard({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-line bg-input/45 p-5">
+      <p className="text-sm font-semibold text-text-primary">{title}</p>
+      <p className="mt-2 text-sm leading-6 text-muted">{description}</p>
+    </div>
+  );
+}
+function getInitials(name: string, email: string) {
+  const words = name.trim().split(/\s+/).filter(Boolean);
+  if (words.length > 1)
+    return `${words[0][0]}${words.at(-1)?.[0]}`.toUpperCase();
+  if (words[0]) return words[0].slice(0, 2).toUpperCase();
+  return email.slice(0, 2).toUpperCase();
+}
