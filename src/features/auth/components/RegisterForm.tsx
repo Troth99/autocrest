@@ -4,9 +4,9 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/shared/components/ui/button";
-import { loginUser, registerUser } from "@/features/auth/actions";
+import { loginUser, registerUser } from "@/features/auth/services/auth.service";
 import useForm from "@/shared/hooks/useForm";
-import { PasswordField } from "@/features/auth/components/PasswordField/PasswordField";
+import { PasswordField } from "./PasswordField";
 import { FieldError } from "@/shared/components/FieldError/FieldError";
 import {
   validateRegisterForm,

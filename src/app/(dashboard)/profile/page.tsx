@@ -1,4 +1,4 @@
-import ProfilePage from "@/features/profile/components/ProfilePage/ProfilePage";
+import { ProfilePage } from "@/features/profile";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function ProfileRoute() {

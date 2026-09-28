@@ -72,7 +72,6 @@ export async function logoutUser(): Promise<void> {
   }
 }
 
-
 export async function logInWithGoogle(): Promise<void> {
   const supabase = createClient();
   const { error } = await supabase.auth.signInWithOAuth({

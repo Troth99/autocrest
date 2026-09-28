@@ -1,7 +1,9 @@
-import HeroSection from "@/features/marketing/components/HeroSection/HeroSection";
-import HowItWorksSection from "@/features/marketing/components/HowItWorksSection/HowItWorksSection";
-import ModulesSection from "@/features/marketing/components/ModulesSection/ModulesSection";
-import TimelineSection from "@/features/marketing/components/TimelineSection/TimelineSection";
+import {
+  HeroSection,
+  HowItWorksSection,
+  ModulesSection,
+  TimelineSection,
+} from "@/features/marketing";
 
 export default function Home() {
   return (
