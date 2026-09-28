@@ -2,7 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { LogOut, Settings, User as UserIcon } from "lucide-react";
+import {
+  LogOut,
+  Settings,
+  User as UserIcon,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,8 +16,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/shared/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/avatar";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/shared/components/ui/avatar";
 import { logoutUser } from "@/features/auth/actions";
+import ThemeSelector from "@/shared/components/Header/UserMenu/ThemeSelector/ThemeSelector";
 
 type UserMenuProps = {
   username: string;
@@ -21,9 +30,14 @@ type UserMenuProps = {
   avatarUrl?: string | null;
 };
 
-export default function UserMenu({ username, email, avatarUrl }: UserMenuProps) {
+export default function UserMenu({
+  username,
+  email,
+  avatarUrl,
+}: UserMenuProps) {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const router = useRouter();
+
 
   async function handleLogout() {
     setIsLoggingOut(true);
@@ -75,7 +89,7 @@ export default function UserMenu({ username, email, avatarUrl }: UserMenuProps) 
           <Settings />
           Settings
         </DropdownMenuItem>
-        <DropdownMenuSeparator />
+        <ThemeSelector />
         <DropdownMenuItem
           variant="destructive"
           className="cursor-pointer transition-[background-color,color,transform] duration-200 hover:translate-x-0.5 hover:bg-destructive/10 motion-reduce:transition-none motion-reduce:hover:translate-x-0"
