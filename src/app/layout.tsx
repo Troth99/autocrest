@@ -32,7 +32,17 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const currentUser = toCurrentUser(user);
+  const { data: profile } = user
+    ? await supabase
+        .from("profiles")
+        .select(
+          "username, full_name, phone, country_code, region, city, avatar_url, bio",
+        )
+        .eq("id", user.id)
+        .maybeSingle()
+    : { data: null };
+
+  const currentUser = toCurrentUser(user, profile);
   return (
     <html
       lang="en"

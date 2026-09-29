@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { ChevronRight, Check } from "lucide-react";
+import { Check } from "lucide-react";
 
 export function SectionHeading({
   icon,
@@ -89,25 +89,6 @@ export function StatusRow({
         <p className="text-sm font-semibold text-text-primary">{title}</p>
         <p className="mt-1 text-xs leading-5 text-muted">{description}</p>
       </div>
-      <ChevronRight className="ml-auto size-4 shrink-0 text-subtle" />
-    </div>
-  );
-}
-
-export function OnboardingStep({
-  icon,
-  title,
-}: {
-  icon: ReactNode;
-  title: string;
-}) {
-  return (
-    <div className="flex items-center gap-3 rounded-2xl border border-line bg-input/45 p-4">
-      <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-info-soft text-info [&>svg]:size-4">
-        {icon}
-      </span>
-      <p className="text-sm font-semibold text-text-primary">{title}</p>
-      <ChevronRight className="ml-auto size-4 shrink-0 text-subtle" />
     </div>
   );
 }

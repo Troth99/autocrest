@@ -1,33 +1,31 @@
-import { KeyRound, LockKeyhole, Mail, ShieldCheck } from "lucide-react";
+import { Clock3, KeyRound, LockKeyhole, ShieldCheck } from "lucide-react";
 import { SectionHeading, StatusRow } from "./profile-ui";
 
 export default function AccountSecurityCard({
-  emailConfirmed,
+  signInMethod,
+  lastSignIn,
 }: {
-  emailConfirmed: boolean;
+  signInMethod: string;
+  lastSignIn: string;
 }) {
   return (
     <section className="content-card rounded-3xl p-6 sm:p-7">
       <SectionHeading
         icon={<ShieldCheck />}
         title="Account security"
-        subtitle="A quick view of your sign-in and verification status."
+        subtitle="Review how you sign in and keep your account secure."
       />
-      <div className="mt-6 space-y-3">
-        <StatusRow
-          icon={<Mail />}
-          title="Email verification"
-          description={
-            emailConfirmed
-              ? "Your email address is verified."
-              : "Email verification is still pending."
-          }
-          tone={emailConfirmed ? "good" : "neutral"}
-        />
+      <div className="mt-6 grid gap-3 md:grid-cols-3">
         <StatusRow
           icon={<KeyRound />}
-          title="Password protection"
-          description="Your account uses email and password sign-in."
+          title="Sign-in method"
+          description={signInMethod}
+          tone="good"
+        />
+        <StatusRow
+          icon={<Clock3 />}
+          title="Last sign-in"
+          description={lastSignIn}
           tone="neutral"
         />
         <StatusRow

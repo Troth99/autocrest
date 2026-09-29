@@ -1,4 +1,4 @@
-import { CarFront, KeyRound, PencilLine } from "lucide-react";
+import { KeyRound, PencilLine, Settings } from "lucide-react";
 import { QuickAction, SectionHeading } from "./profile-ui";
 
 export default function QuickActionsCard() {
@@ -21,9 +21,9 @@ export default function QuickActionsCard() {
           description="Keep your sign-in secure."
         />
         <QuickAction
-          icon={<CarFront />}
-          title="Open My Garage"
-          description="Manage your vehicles and records."
+          icon={<Settings />}
+          title="Account settings"
+          description="Manage your account preferences."
         />
       </div>
     </section>
