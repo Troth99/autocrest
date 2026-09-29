@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import UserMenu from "@/shared/components/Header/UserMenu/UserMenu";
-import ThemeToggle from "@/shared/components/ThemeToggle/ThemeToggle";
 
 export default async function SiteHeader() {
   const supabase = await createClient();
@@ -41,7 +40,6 @@ export default async function SiteHeader() {
           </a>
         </div>
         <div className="flex items-center gap-3">
-          <ThemeToggle />
           {user ? (
             <UserMenu
               username={

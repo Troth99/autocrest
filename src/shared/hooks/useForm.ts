@@ -2,7 +2,11 @@
 
 import { useState, type ChangeEvent, type FormEvent } from "react";
 
-export type FormValues = Record<string, string | undefined>;
+export type FormValues = Record<string, string | boolean | undefined>;
+
+type CheckboxFieldName<T extends FormValues> = {
+  [K in keyof T]: T[K] extends boolean | undefined ? K : never;
+}[keyof T] & string;
 
 type CallbackFunction<T extends FormValues> = (
   values: T,
@@ -49,13 +53,14 @@ export default function useForm<T extends FormValues>(
     await callback(values);
   };
 
-  const register = (fieldName: keyof T & string) => ({
+  const register = <K extends keyof T & string>(fieldName: K) => ({
     name: fieldName,
-    value: values[fieldName] ?? "",
+    // Ensure the value is a string for text-based inputs
+    value: typeof values[fieldName] === "string" ? values[fieldName] : "",
     onChange: changeHandler,
   });
 
-  const setFieldValue = (fieldName: keyof T, value: string) => {
+  const setFieldValue = <K extends keyof T>(fieldName: K, value: T[K]) => {
     setValues((currentValues) => ({
       ...currentValues,
       [fieldName]: value,
@@ -66,6 +71,13 @@ export default function useForm<T extends FormValues>(
       [fieldName]: undefined,
     }));
   };
+
+  const registerCheckbox = (fieldName: CheckboxFieldName<T>) => ({
+    name: fieldName,
+    checked: values[fieldName] === true,
+    onChange: (event: ChangeEvent<HTMLInputElement>) =>
+      setFieldValue(fieldName, event.target.checked as T[typeof fieldName]),
+  });
 
   const reset = () => {
     setValues(initialValues);
@@ -79,6 +91,7 @@ export default function useForm<T extends FormValues>(
     errors,
     setErrors,
     setFieldValue,
+    registerCheckbox,
     reset,
   };
 }
