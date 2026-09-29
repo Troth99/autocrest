@@ -1,34 +1,31 @@
 "use client";
 
 import { CircleCheck } from "lucide-react";
-import AccountOverviewCard from "./AccountOverviewCard";
-import AccountSecurityCard from "./AccountSecurityCard";
-import DangerZone from "./DangerZone";
-import GettingStartedCard from "./GettingStartedCard";
-import ProfileCompletionCard from "./ProfileCompletionCard";
-import ProfileHero from "./ProfileHero";
-import QuickActionsCard from "./QuickActionsCard";
+import AccountOverviewCard from "./components/AccountOverviewCard";
+import AccountSecurityCard from "./components/AccountSecurityCard";
+import DangerZone from "./components/DangerZone";
+import GettingStartedCard from "./components/GettingStartedCard";
+import ProfileCompletionCard from "./components/ProfileCompletionCard";
+import ProfileHero from "./components/ProfileHero";
+import QuickActionsCard from "./components/QuickActionsCard";
 import { useCurrentUser } from "@/shared/context/CurrentUserContext";
 
+export default function ProfilePage() {
+  const { user } = useCurrentUser();
 
-export default function ProfilePage(
+  if (!user) return null;
+  const { name, username, email: savedEmail, emailConfirmed, createdAt } = user;
 
-) {
+  
+  // Use the saved email if available, otherwise use a placeholder
+  const email = savedEmail ?? "your-email@example.com";
 
-    const { user } = useCurrentUser();
-
-  if(!user) return null
-
-  const email = user.email ?? "your-email@example.com";
-
-  const memberSince = new Intl.DateTimeFormat("en", {
+  const memberSince = new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
     month: "long",
     year: "numeric",
-  }).format(new Date(user.createdAt));
+  }).format(new Date(createdAt));
 
-  const name = user.name
-  const username = user.username
-  const emailConfirmed = user.emailConfirmed
   return (
     <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-10 sm:py-14">
       <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">

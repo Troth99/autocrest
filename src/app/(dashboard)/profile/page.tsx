@@ -1,9 +1,5 @@
-import { ProfilePage } from "@/features/profile";
+import ProfilePage from "@/features/profile/ProfilePage";
 
-export default async function ProfileRoute() {
-
-  return (
-    <ProfilePage
-    />
-  );
+export default function ProfileRoute() {
+  return <ProfilePage />;
 }
