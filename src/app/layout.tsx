@@ -4,6 +4,9 @@ import "./globals.css";
 import SiteHeader from "@/shared/components/Header/SiteHeader";
 import SiteFooter from "@/shared/components/Footer/SiteFooter";
 import ThemeProvider from "@/shared/components/ThemeProvider/ThemeProvider";
+import { CurrentUserProvider } from "@/shared/context/CurrentUserContext";
+import { toCurrentUser } from "@/lib/supabase/current-user";
+import { createClient } from "@/lib/supabase/server";
 
 // Google Fonts configuration
 const geistSans = Geist({
@@ -22,7 +25,14 @@ export const metadata: Metadata = {
   description: "A connected view of your vehicle's lifecycle.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const currentUser = toCurrentUser(user);
   return (
     <html
       lang="en"
@@ -31,9 +41,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <ThemeProvider>
-          <SiteHeader />
-          {children}
-          <SiteFooter />
+          <CurrentUserProvider initialUser={currentUser}>
+            <SiteHeader />
+            {children}
+            <SiteFooter />
+          </CurrentUserProvider>
         </ThemeProvider>
       </body>
     </html>
