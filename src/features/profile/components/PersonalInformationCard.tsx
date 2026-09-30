@@ -1,11 +1,15 @@
-import { MapPin, Phone, UserRound } from "lucide-react";
+import { AtSign, Mail, MapPin, Phone, UserRound } from "lucide-react";
 import { DetailRow, SectionHeading } from "./profile-ui";
 
 export default function PersonalInformationCard({
+  username,
+  email,
   phone,
   location,
   bio,
 }: {
+  username: string;
+  email: string;
   phone: string | null;
   location: string | null;
   bio: string | null;
@@ -14,10 +18,12 @@ export default function PersonalInformationCard({
     <section className="content-card rounded-3xl p-6 sm:p-7">
       <SectionHeading
         icon={<UserRound />}
-        title="Personal information"
-        subtitle="The personal details connected to your AutoCrest account."
+        title="Profile details"
+        subtitle="The information people see on your AutoCrest account."
       />
-      <dl className="mt-6 divide-y divide-line rounded-2xl border border-line bg-input/45 px-5">
+      <dl className="mt-6 divide-y divide-line border-y border-line">
+        <DetailRow icon={<AtSign />} label="Username" value={`@${username}`} />
+        <DetailRow icon={<Mail />} label="Email" value={email} />
         <DetailRow
           icon={<Phone />}
           label="Phone number"
@@ -29,12 +35,12 @@ export default function PersonalInformationCard({
           value={location ?? "Not added"}
         />
       </dl>
-      <div className="mt-4 rounded-2xl border border-line bg-input/45 p-5">
+      <div className="mt-6">
         <p className="text-xs font-semibold uppercase tracking-[0.12em] text-subtle">
           About
         </p>
-        <p className="mt-2 text-sm leading-6 text-text-secondary">
-          {bio ?? "Add a short bio to make your profile feel more personal."}
+        <p className="mt-2 max-w-2xl text-sm leading-6 text-text-secondary">
+          {bio ?? "No bio added yet."}
         </p>
       </div>
     </section>

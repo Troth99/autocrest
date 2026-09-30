@@ -52,7 +52,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         <ThemeProvider>
           <CurrentUserProvider initialUser={currentUser}>
-            <SiteHeader />
+            <SiteHeader user={currentUser} />
             {children}
             <SiteFooter />
           </CurrentUserProvider>

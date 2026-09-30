@@ -15,7 +15,7 @@ export default async function IsDashboardLayout({
         } = await supabase.auth.getUser();
     
         if(!user) {
-             redirect("/login"); // Replace with your home page route
+             redirect("/login"); 
         }
       return children;
 }
