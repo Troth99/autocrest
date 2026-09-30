@@ -1,15 +1,18 @@
 import { createClient } from "@/lib/supabase/client";
 
-
 export async function getProfileData(userId: string | undefined) {
-    const supabase = createClient();
+  const supabase = createClient();
 
-    const {data, error} = await supabase.from("profiles").select("*").eq("id", userId).single();
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", userId)
+    .single();
 
-    if(error) {
-        throw new Error(error.message);
-    }
-    return data
+  if (error) {
+    throw new Error(error.message);
+  }
+  return data;
 }
 
 export async function updateProfile(
