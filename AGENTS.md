@@ -50,3 +50,9 @@ This repo is a Next.js 16 App Router app with TypeScript, Tailwind, and Supabase
 - [src/features](src/features)
 - [src/shared](src/shared)
 - [src/lib/supabase](src/lib/supabase)
+
+## Personal preferences
+- Use `async/await` for all asynchronous code instead of `.then()` or `.catch()`.
+- before changing any code, check the existing codebase for similar patterns and follow them.
+- do not add libraries or dependencies unless absolutely necessary; prefer using existing utilities and helpers.
+- after working on a feature, show what changes were made.

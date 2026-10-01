@@ -67,7 +67,7 @@ export default function ProfileHero({
             })}
           >
             <PencilLine />
-            Edit profile
+            Update profile
           </Link>
           <Link
             href="/change-password"

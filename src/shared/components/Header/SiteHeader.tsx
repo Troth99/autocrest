@@ -19,6 +19,7 @@ export default function SiteHeader({
             auto<span className="text-accent-text">crest</span>
           </span>
         </Link>
+      
         <div className="hidden items-center gap-6 md:flex">
           <a
             href="#modules"
@@ -39,6 +40,7 @@ export default function SiteHeader({
             Timeline
           </a>
         </div>
+
         <div className="flex items-center gap-3">
           {user ? (
             <UserMenu

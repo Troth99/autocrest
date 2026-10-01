@@ -6,14 +6,16 @@ import { useCurrentUser } from "@/shared/context/CurrentUserContext";
 import { updateProfile } from "./services/edit-profile.service";
 import type { ProfileFormValues } from "./services/edit-profile.service";
 import { useState } from "react";
-import { ArrowLeft, Camera, Save } from "lucide-react";
+import { Camera, Mail, Phone, Save } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/avatar";
+import { getInitials } from "@/features/profile/components/profile-ui";
 import useForm from "@/shared/hooks/useForm";
 import { useRouter } from "next/navigation";
 import PhoneEditSelector, { normalizePhoneNumber } from "./components/PhoneEditSelector";
 
 export default function EditProfilePage() {
   const { user } = useCurrentUser();
-  
+
   const initialValues: ProfileFormValues = {
     full_name: user?.fullName ?? "",
     username: user?.username ?? "",
@@ -51,18 +53,10 @@ export default function EditProfilePage() {
   if (!user) return null;
 
   return (
-    <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-10 sm:py-14">
-      <Link
-        href="/profile"
-        className={buttonVariants({ variant: "ghost", size: "sm" })}
-      >
-        <ArrowLeft />
-        Back to profile
-      </Link>
+    <main className="mx-auto w-full max-w-7xl px-5 py-8 sm:px-8 sm:py-10">
 
-      <div className="mt-6">
-        <span className="eyebrow">PROFILE</span>
-        <h1 className="mt-4 text-3xl font-semibold tracking-[-0.045em] text-text-primary sm:text-4xl">
+      <div>
+        <h1 className="text-3xl font-semibold tracking-[-0.045em] text-text-primary sm:text-4xl">
           Edit profile
         </h1>
         <p className="mt-2 text-sm leading-6 text-muted sm:text-base">
@@ -70,13 +64,34 @@ export default function EditProfilePage() {
         </p>
       </div>
 
-      <form className="card-base mt-8 space-y-7" onSubmit={formHandler}>
+      <div className="mt-8 grid items-stretch gap-6 xl:grid-cols-[minmax(16rem,0.8fr)_minmax(0,1.6fr)]">
+        <aside className="rounded-2xl border border-line bg-panel px-6 py-10 sm:px-8">
+          <div className="flex flex-col items-center text-center">
+            <Avatar className="size-32 sm:size-40">
+              {values.avatar_url && <AvatarImage src={values.avatar_url} alt={`${user.name}'s profile picture`} />}
+              <AvatarFallback className="bg-linear-to-br from-info-soft to-info/30 text-5xl font-medium text-info sm:text-6xl">
+                {getInitials(values.full_name || user.name, user.email ?? "")}
+              </AvatarFallback>
+            </Avatar>
+            <h2 className="mt-6 w-full break-words text-2xl font-semibold tracking-tight">{values.full_name || user.name}</h2>
+            <span className="mt-3 rounded-full border border-info-border bg-info-soft px-4 py-1.5 text-xs font-medium text-info">AutoCrest member</span>
+          </div>
+          <div className="mt-8 space-y-5 border-t border-line pt-6 text-sm text-muted">
+            <p className="flex items-start gap-3"><Mail className="mt-0.5 size-5 shrink-0 text-info" /><span className="break-all">{user.email ?? "No email available"}</span></p>
+            <p className="flex items-center gap-3"><Phone className="size-5 shrink-0 text-info" />{values.phone || "No phone added"}</p>
+          </div>
+        </aside>
+      <form className="space-y-7 rounded-2xl border border-line bg-panel p-6 sm:p-8 [&_input]:h-12 [&_input]:rounded-xl [&_input]:px-4" onSubmit={formHandler}>
+        <div>
+          <h2 className="text-xl font-semibold tracking-tight">Personal information</h2>
+          <p className="mt-2 text-sm text-muted">Update the details on your AutoCrest account.</p>
+        </div>
         <section>
           <p className="text-sm font-semibold text-text-primary">
             Profile photo
           </p>
           <p className="mt-1 text-sm text-muted">
-            Use an image URL for now. Upload can be added later.
+            Add an image URL to personalize your account.
           </p>
           <div className="mt-4 flex items-center gap-4">
             <div className="flex size-16 items-center justify-center rounded-2xl bg-info-soft text-info">
@@ -147,14 +162,14 @@ export default function EditProfilePage() {
         <div className="flex flex-col-reverse gap-3 border-t border-line pt-6 sm:flex-row sm:justify-end">
           <Link
             href="/profile"
-            className={buttonVariants({ variant: "ghost" })}
+            className={buttonVariants({ variant: "outline", className: "h-11 px-6" })}
           >
             Cancel
           </Link>
           <Button
             type="submit"
             disabled={isSaving}
-            className="bg-accent text-ink hover:bg-accent/85 cursor-pointer"
+            className="h-11 cursor-pointer bg-accent px-6 text-ink hover:bg-accent/85"
           >
             <Save />
             {isSaving ? "Saving..." : "Save changes"}
@@ -166,6 +181,7 @@ export default function EditProfilePage() {
           </p>
         ) : null}
       </form>
+      </div>
     </main>
   );
 }

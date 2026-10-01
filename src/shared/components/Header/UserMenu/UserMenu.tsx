@@ -84,7 +84,7 @@ export default function UserMenu({
         </DropdownMenuItem>
         <DropdownMenuItem
           className="cursor-pointer transition-[background-color,color,transform] duration-200 hover:translate-x-0.5 hover:bg-accent motion-reduce:transition-none motion-reduce:hover:translate-x-0"
-          onClick={() => router.push("/settings")}
+          disabled
         >
           <Settings />
           Settings
