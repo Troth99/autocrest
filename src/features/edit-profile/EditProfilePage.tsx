@@ -14,6 +14,7 @@ import { ArrowLeft, Camera, Save } from "lucide-react";
 import useForm from "@/shared/hooks/useForm";
 import { useRouter } from "next/navigation";
 import { toUpdatedCurrentUser } from "./utils/to-updated-current-user";
+import EditProfileSkeleton from "./components/EditProfileSkeleton";
 
 const initialValues: ProfileFormValues = {
   full_name: "",
@@ -28,6 +29,7 @@ export default function EditProfilePage() {
   const { user, setUser } = useCurrentUser();
   const router = useRouter();
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [isProfileLoading, setIsProfileLoading] = useState(true);
   const [saveError, setSaveError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -55,19 +57,25 @@ export default function EditProfilePage() {
     updateProfileHandler,
     initialValues,
   );
+  const userId = user?.id;
 
   useEffect(() => {
-    if (!user) return;
-
+    if (!userId) return;
     async function loadProfile() {
-      const data = await getProfileData(user?.id);
-      setProfile(data);
-      if (data) setFormValues(data);
+
+      try {
+        const data = await getProfileData(userId);
+        setProfile(data);
+        if (data) setFormValues(data);
+      } finally {
+        setIsProfileLoading(false);
+      }
     }
 
     loadProfile();
-  }, [user, setFormValues]);
+  }, [userId, setFormValues]);
   if (!user) return null;
+  if (isProfileLoading) return <EditProfileSkeleton />;
 
   return (
     <>

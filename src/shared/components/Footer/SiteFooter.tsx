@@ -49,7 +49,6 @@ export default function SiteFooter() {
         </div>
         <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-line pt-6 text-xs text-subtle sm:flex-row">
           <span>&copy; 2026 AutoCrest. Prototype build.</span>
-          <span>Not yet connected to real database data.</span>
         </div>
       </div>
     </footer>
