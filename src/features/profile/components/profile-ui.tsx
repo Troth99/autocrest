@@ -32,7 +32,7 @@ export function DetailRow({
 }: {
   icon: ReactNode;
   label: string;
-  value: string;
+  value: ReactNode;
 }) {
   return (
     <div className="flex items-center gap-3 py-4 first:pt-4 last:pb-4">

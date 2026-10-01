@@ -1,5 +1,6 @@
 import { AtSign, Mail, MapPin, Phone, UserRound } from "lucide-react";
 import { DetailRow, SectionHeading } from "./profile-ui";
+import PhoneNumber from "./PhoneNumber";
 
 export default function PersonalInformationCard({
   username,
@@ -27,7 +28,7 @@ export default function PersonalInformationCard({
         <DetailRow
           icon={<Phone />}
           label="Phone number"
-          value={phone ?? "Not added"}
+          value={<PhoneNumber value={phone} />}
         />
         <DetailRow
           icon={<MapPin />}

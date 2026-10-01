@@ -9,14 +9,15 @@ import { useState } from "react";
 import { ArrowLeft, Camera, Save } from "lucide-react";
 import useForm from "@/shared/hooks/useForm";
 import { useRouter } from "next/navigation";
-import { toUpdatedCurrentUser } from "./utils/to-updated-current-user";
+import PhoneEditSelector, { normalizePhoneNumber } from "./components/PhoneEditSelector";
 
 export default function EditProfilePage() {
-  const { user, setUser } = useCurrentUser();
+  const { user } = useCurrentUser();
+  
   const initialValues: ProfileFormValues = {
     full_name: user?.fullName ?? "",
     username: user?.username ?? "",
-    phone: user?.phone ?? "",
+    phone: normalizePhoneNumber(user?.phone),
     city: user?.city ?? "",
     avatar_url: user?.avatarUrl ?? "",
     bio: user?.bio ?? "",
@@ -33,7 +34,6 @@ export default function EditProfilePage() {
 
     try {
       await updateProfile(user.id, values);
-      setUser(toUpdatedCurrentUser(user, values));
       router.push("/profile");
       router.refresh();
     } catch (error) {
@@ -44,7 +44,7 @@ export default function EditProfilePage() {
     }
   };
 
-  const { register, formHandler } = useForm(
+  const { register, formHandler, values, setFieldValue } = useForm(
     updateProfileHandler,
     initialValues,
   );
@@ -121,18 +121,10 @@ export default function EditProfilePage() {
               {...register("username")}
             />
           </label>
-          <label
-            className="grid gap-2 text-sm font-medium text-text-secondary"
-            htmlFor="phone"
-          >
-            Phone number
-            <Input
-              id="phone"
-              type="text"
-              placeholder="Optional"
-              {...register("phone")}
-            />
-          </label>
+          <PhoneEditSelector
+            value={values.phone}
+            onChange={(value) => setFieldValue("phone", value)}
+          />
           <label
             className="grid gap-2 text-sm font-medium text-text-secondary"
             htmlFor="location"

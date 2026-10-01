@@ -7,6 +7,7 @@ import ThemeProvider from "@/shared/components/ThemeProvider/ThemeProvider";
 import { CurrentUserProvider } from "@/shared/context/CurrentUserContext";
 import { toCurrentUser } from "@/lib/supabase/current-user";
 import { createClient } from "@/lib/supabase/server";
+import "react-phone-number-input/style.css";
 
 // Google Fonts configuration
 const geistSans = Geist({
