@@ -1,8 +1,17 @@
 import { createClient } from "@/lib/supabase/client";
 
-export async function getProfileData(userId: string | undefined) {
-  const supabase = createClient();
+const supabase = createClient();
 
+export type ProfileFormValues = {
+  full_name: string;
+  username: string;
+  phone: string;
+  city: string;
+  avatar_url: string;
+  bio: string;
+};
+
+export async function getProfileData(userId: string | undefined) {
   const { data, error } = await supabase
     .from("profiles")
     .select("*")
@@ -15,25 +24,15 @@ export async function getProfileData(userId: string | undefined) {
   return data;
 }
 
-export async function updateProfile(
-  userId: string,
-  values: {
-    fullName: string;
-    username: string;
-    phone: string;
-    avatarUrl: string;
-    bio: string;
-  },
-) {
-  const supabase = createClient();
-
+export async function updateProfile(userId: string, values: ProfileFormValues) {
   const { error } = await supabase
     .from("profiles")
     .update({
-      full_name: values.fullName || null,
+      full_name: values.full_name || null,
       username: values.username || null,
       phone: values.phone || null,
-      avatar_url: values.avatarUrl || null,
+      city: values.city || null,
+      avatar_url: values.avatar_url || null,
       bio: values.bio || null,
     })
     .eq("id", userId);

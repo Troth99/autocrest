@@ -3,26 +3,52 @@ import Link from "next/link";
 import { Button, buttonVariants } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
 import { useCurrentUser } from "@/shared/context/CurrentUserContext";
-import { getProfileData } from "./services/edit-profile.service";
-import { useEffect, useState, type ComponentProps } from "react";
+import {
+  getProfileData,
+  updateProfile,
+} from "./services/edit-profile.service";
+import type { ProfileFormValues } from "./services/edit-profile.service";
+import { useEffect, useState } from "react";
 import type { Profile } from "@/shared/types/auth";
 import { ArrowLeft, Camera, Save } from "lucide-react";
 import useForm from "@/shared/hooks/useForm";
+import { useRouter } from "next/navigation";
+import { toUpdatedCurrentUser } from "./utils/to-updated-current-user";
 
-const initialValues = {
+const initialValues: ProfileFormValues = {
   full_name: "",
   username: "",
   phone: "",
+  city: "",
   avatar_url: "",
   bio: "",
 };
 
 export default function EditProfilePage() {
-  const { user } = useCurrentUser();
+  const { user, setUser } = useCurrentUser();
+  const router = useRouter();
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
 
   const updateProfileHandler = async (values: typeof initialValues) => {
-    // Implement the logic to update the profile here
+    if (!user) return;
+
+    setIsSaving(true);
+    setSaveError(null);
+
+    try {
+      await updateProfile(user.id, values);
+      setUser(toUpdatedCurrentUser(user, values));
+      router.push("/profile");
+      router.refresh();
+    } catch (error) {
+      setSaveError(
+        error instanceof Error ? error.message : "Unable to save your profile.",
+      );
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const { register, formHandler, setFormValues } = useForm(
@@ -93,26 +119,51 @@ export default function EditProfilePage() {
           <div className="border-t border-line" />
 
           <section className="grid gap-5 sm:grid-cols-2">
-            <Field
-              label="Display name"
-              id="full-name"
-              placeholder="Your name"
-              {...register("full_name")}
-            />
-            <Field
-              label="Username"
-              id="username"
-              placeholder="username"
-              {...register("username")}
-            />
-            <Field
-              label="Phone number"
-              id="phone"
-              type="tel"
-              placeholder="Optional"
-              {...register("phone")}
-            />
-            <Field label="Location" id="location" placeholder="City, country" />
+            <label
+              className="grid gap-2 text-sm font-medium text-text-secondary"
+              htmlFor="full-name"
+            >
+              Display name
+              <Input
+                id="full-name"
+                placeholder="Your name"
+                {...register("full_name")}
+              />
+            </label>
+            <label
+              className="grid gap-2 text-sm font-medium text-text-secondary"
+              htmlFor="username"
+            >
+              Username
+              <Input
+                id="username"
+                placeholder="username"
+                {...register("username")}
+              />
+            </label>
+            <label
+              className="grid gap-2 text-sm font-medium text-text-secondary"
+              htmlFor="phone"
+            >
+              Phone number
+              <Input
+                id="phone"
+                type="text"
+                placeholder="Optional"
+                {...register("phone")}
+              />
+            </label>
+            <label
+              className="grid gap-2 text-sm font-medium text-text-secondary"
+              htmlFor="location"
+            >
+              Location
+              <Input
+                id="location"
+                placeholder="City"
+                {...register("city")}
+              />
+            </label>
             <label className="grid gap-2 text-sm font-medium text-text-secondary sm:col-span-2">
               About
               <textarea
@@ -134,37 +185,21 @@ export default function EditProfilePage() {
             </Link>
             <Button
               type="submit"
+              disabled={isSaving}
               className="bg-accent text-ink hover:bg-accent/85 cursor-pointer"
             >
               <Save />
-              Save changes
+              {isSaving ? "Saving..." : "Save changes"}
             </Button>
           </div>
+          {saveError ? (
+            <p className="text-sm text-destructive" role="alert">
+              {saveError}
+            </p>
+          ) : null}
         </form>
       </main>
     </>
   );
 
-  function Field({
-    label,
-    id,
-    placeholder,
-    type = "text",
-    ...inputProps
-  }: {
-    label: string;
-    id: string;
-    placeholder: string;
-    type?: string;
-  } & Pick<ComponentProps<typeof Input>, "name" | "value" | "onChange">) {
-    return (
-      <label
-        className="grid gap-2 text-sm font-medium text-text-secondary"
-        htmlFor={id}
-      >
-        {label}
-        <Input id={id} type={type} placeholder={placeholder} {...inputProps} />
-      </label>
-    );
-  }
 }
