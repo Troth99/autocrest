@@ -1,5 +1,9 @@
-import { CalendarDays } from "lucide-react";
+"use client";
+
+import { CalendarDays, KeyRound, PencilLine } from "lucide-react";
+import Link from "next/link";
 import { getInitials } from "./profile-ui";
+import { buttonVariants } from "@/shared/components/ui/button";
 import {
   Avatar,
   AvatarFallback,
@@ -9,14 +13,12 @@ import {
 export default function ProfileHero({
   name,
   email,
-  username,
   memberSince,
   avatarUrl,
 
 }: {
   name: string;
   email: string;
-  username: string;
   memberSince: string;
   avatarUrl: string | null;
 
@@ -27,7 +29,7 @@ export default function ProfileHero({
     <section className="card-base relative">
       <div className="absolute -right-20 -top-24 size-64 rounded-full bg-info/10 blur-3xl" />
       <div className="absolute -bottom-24 right-20 size-56 rounded-full bg-accent/10 blur-3xl" />
-      <div className="relative flex flex-col gap-6 sm:flex-row sm:items-center">
+      <div className="relative flex flex-col gap-5">
         <Avatar className="size-20 rounded-[1.7rem] shadow-[0_12px_30px_rgb(213_243_107/12%)] after:rounded-[1.7rem] after:border-accent/35">
           {avatarUrl && (
             <AvatarImage
@@ -47,10 +49,8 @@ export default function ProfileHero({
             </h2>
 
           </div>
-          <p className="mt-2 text-sm text-muted">@{username}</p>
-          <p className="mt-1 truncate text-sm text-text-secondary">{email}</p>
         </div>
-        <div className="border-line sm:ml-auto sm:border-l sm:pl-8">
+        <div className="border-line border-t pt-5">
           <p className="text-xs font-semibold uppercase tracking-[0.13em] text-subtle">
             With AutoCrest since
           </p>
@@ -58,6 +58,27 @@ export default function ProfileHero({
             <CalendarDays className="size-4 text-info" />
             {memberSince}
           </p>
+        </div>
+        <div className="grid gap-2 pt-1">
+          <Link
+            href="/profile/edit"
+            className={buttonVariants({
+              className: "w-full cursor-pointer bg-accent text-ink hover:bg-accent/85",
+            })}
+          >
+            <PencilLine />
+            Update profile
+          </Link>
+          <Link
+            href="/change-password"
+            className={buttonVariants({
+              variant: "outline",
+              className: "w-full cursor-pointer",
+            })}
+          >
+            <KeyRound />
+            Change password
+          </Link>
         </div>
       </div>
     </section>

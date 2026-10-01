@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import AccountNavigation from "@/shared/components/AccountNavigation";
 
 export default async function IsDashboardLayout({
   children,
@@ -15,7 +16,12 @@ export default async function IsDashboardLayout({
         } = await supabase.auth.getUser();
     
         if(!user) {
-             redirect("/login"); // Replace with your home page route
+             redirect("/login"); 
         }
-      return children;
+      return (
+        <div className="flex flex-1 flex-col lg:flex-row">
+          <AccountNavigation />
+          <div className="min-w-0 flex-1">{children}</div>
+        </div>
+      );
 }

@@ -1,6 +1,11 @@
 "use client";
 
-import { useState, type ChangeEvent, type FormEvent } from "react";
+import {
+  useCallback,
+  useState,
+  type ChangeEvent,
+  type SyntheticEvent,
+} from "react";
 
 export type FormValues = Record<string, string | boolean | undefined>;
 
@@ -40,7 +45,7 @@ export default function useForm<T extends FormValues>(
     }));
   };
 
-  const formHandler = async (event: FormEvent<HTMLFormElement>) => {
+  const formHandler = async (event: SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formErrors = validateForm?.(values) ?? {};
@@ -72,6 +77,25 @@ export default function useForm<T extends FormValues>(
     }));
   };
 
+  const setFormValues = useCallback(
+    (nextValues: Partial<{ [K in keyof T]: T[K] | null }>) => {
+      setValues((currentValues) => {
+        const updatedValues = { ...currentValues };
+
+        for (const key of Object.keys(currentValues) as (keyof T)[]) {
+          const value = nextValues[key];
+          if (value === undefined) continue;
+
+          updatedValues[key] = (value ?? "") as T[typeof key];
+        }
+
+        return updatedValues;
+      });
+      setErrors({});
+    },
+    [],
+  );
+
   const registerCheckbox = (fieldName: CheckboxFieldName<T>) => ({
     name: fieldName,
     checked: values[fieldName] === true,
@@ -91,6 +115,7 @@ export default function useForm<T extends FormValues>(
     errors,
     setErrors,
     setFieldValue,
+    setFormValues,
     registerCheckbox,
     reset,
   };

@@ -7,6 +7,7 @@ import ThemeProvider from "@/shared/components/ThemeProvider/ThemeProvider";
 import { CurrentUserProvider } from "@/shared/context/CurrentUserContext";
 import { toCurrentUser } from "@/lib/supabase/current-user";
 import { createClient } from "@/lib/supabase/server";
+import "react-phone-number-input/style.css";
 
 // Google Fonts configuration
 const geistSans = Geist({
@@ -35,9 +36,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   const { data: profile } = user
     ? await supabase
         .from("profiles")
-        .select(
-          "username, full_name, phone, country_code, region, city, avatar_url, bio",
-        )
+        .select("*")
         .eq("id", user.id)
         .maybeSingle()
     : { data: null };
@@ -52,7 +51,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         <ThemeProvider>
           <CurrentUserProvider initialUser={currentUser}>
-            <SiteHeader />
+            <SiteHeader user={currentUser} />
             {children}
             <SiteFooter />
           </CurrentUserProvider>

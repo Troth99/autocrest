@@ -15,6 +15,14 @@ export function CurrentUserProvider({
   children: ReactNode;
 }) {
   const [user, setUser] = useState<CurrentUser | null>(initialUser);
+  const [previousInitialUser, setPreviousInitialUser] =
+    useState<CurrentUser | null>(initialUser);
+
+  // A route refresh supplies new server data while preserving client state.
+  if (initialUser !== previousInitialUser) {
+    setPreviousInitialUser(initialUser);
+    setUser(initialUser);
+  }
 
   return (
     <CurrentUserContext.Provider value={{ user, setUser }}>

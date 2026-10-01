@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/server";
+import type { CurrentUser } from "@/shared/types/currentUser";
 import UserMenu from "@/shared/components/Header/UserMenu/UserMenu";
 
-export default async function SiteHeader() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+export default function SiteHeader({
+  user,
+}: {
+  user: CurrentUser | null;
+}) {
 
   return (
     <header className="sticky top-0 z-10 border-b border-line bg-dark-800 backdrop-blur-xl">
@@ -19,6 +19,7 @@ export default async function SiteHeader() {
             auto<span className="text-accent-text">crest</span>
           </span>
         </Link>
+      
         <div className="hidden items-center gap-6 md:flex">
           <a
             href="#modules"
@@ -39,18 +40,17 @@ export default async function SiteHeader() {
             Timeline
           </a>
         </div>
+
         <div className="flex items-center gap-3">
           {user ? (
             <UserMenu
               username={
-                user.user_metadata?.full_name ??
-                user.user_metadata?.name ??
-                user.user_metadata?.username ??
+                user.name ??
                 user.email ??
                 "Account"
               }
               email={user.email ?? ""}
-              avatarUrl={user.user_metadata?.avatar_url}
+              avatarUrl={user.avatarUrl}
             />
           ) : (
             <>

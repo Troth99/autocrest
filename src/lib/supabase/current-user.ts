@@ -29,6 +29,11 @@ export function toCurrentUser(
     metadata.username ||
     user.email?.split("@")[0] ||
     "user";
+  const avatarUrl =
+    profile?.avatar_url?.trim() ||
+    metadata.avatar_url ||
+    metadata.picture ||
+    null;
 
   return {
     id: user.id,
@@ -36,7 +41,7 @@ export function toCurrentUser(
     name: fullName ?? username,
     fullName,
     username,
-    avatarUrl: profile?.avatar_url || metadata.avatar_url || null,
+    avatarUrl,
     phone: profile?.phone || null,
     countryCode: profile?.country_code || null,
     region: profile?.region || null,
