@@ -1,6 +1,4 @@
 "use client";
-
-
 import AccountSecurityCard from "./components/AccountSecurityCard";
 import DangerZone from "./components/DangerZone";
 import PersonalInformationCard from "./components/PersonalInformationCard";
@@ -55,42 +53,43 @@ export default function ProfilePage() {
   const location = locationParts.length ? locationParts.join(", ") : null;
 
   return (
-    <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-10 sm:py-14">
-      <div className="mb-8">
-        <div>
-          <span className="eyebrow">ACCOUNT</span>
-          <h1 className="mt-4 text-3xl font-semibold tracking-[-0.045em] text-text-primary sm:text-4xl">
-            Profile
-          </h1>
-          <p className="mt-2 max-w-xl text-sm leading-6 text-muted sm:text-base">
-            Your identity and account security in one place.
-          </p>
+
+      <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-10 sm:py-14">
+        <div className="mb-8">
+          <div>
+            <span className="eyebrow">ACCOUNT</span>
+            <h1 className="mt-4 text-3xl font-semibold tracking-[-0.045em] text-text-primary sm:text-4xl">
+              Profile
+            </h1>
+            <p className="mt-2 max-w-xl text-sm leading-6 text-muted sm:text-base">
+              Your identity and account security in one place.
+            </p>
+          </div>
         </div>
-      </div>
-      <div className="grid gap-5 lg:grid-cols-[minmax(15rem,0.72fr)_minmax(0,1.5fr)] lg:items-start">
-        <aside>
-          <ProfileHero
-            name={name}
-            email={email}
-            memberSince={memberSince}
-            avatarUrl={avatarUrl}
-          />
-        </aside>
-        <div className="space-y-5">
-          <PersonalInformationCard
-            username={username}
-            email={email}
-            phone={phone}
-            location={location}
-            bio={bio}
-          />
-          <AccountSecurityCard
-            signInMethod={signInMethod}
-            lastSignIn={lastSignIn}
-          />
-          <DangerZone />
+        <div className="grid gap-5 lg:grid-cols-[minmax(15rem,0.72fr)_minmax(0,1.5fr)] lg:items-start">
+          <aside>
+            <ProfileHero
+              name={name}
+              email={email}
+              memberSince={memberSince}
+              avatarUrl={avatarUrl}
+            />
+          </aside>
+          <div className="space-y-5">
+            <PersonalInformationCard
+              username={username}
+              email={email}
+              phone={phone}
+              location={location}
+              bio={bio}
+            />
+            <AccountSecurityCard
+              signInMethod={signInMethod}
+              lastSignIn={lastSignIn}
+            />
+            <DangerZone />
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
   );
 }

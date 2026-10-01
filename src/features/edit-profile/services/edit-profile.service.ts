@@ -1,7 +1,5 @@
 import { createClient } from "@/lib/supabase/client";
 
-const supabase = createClient();
-
 export type ProfileFormValues = {
   full_name: string;
   username: string;
@@ -11,20 +9,8 @@ export type ProfileFormValues = {
   bio: string;
 };
 
-export async function getProfileData(userId: string | undefined) {
-  const { data, error } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("id", userId)
-    .single();
-
-  if (error) {
-    throw new Error(error.message);
-  }
-  return data;
-}
-
 export async function updateProfile(userId: string, values: ProfileFormValues) {
+  const supabase = createClient();
   const { error } = await supabase
     .from("profiles")
     .update({

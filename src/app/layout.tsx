@@ -35,9 +35,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   const { data: profile } = user
     ? await supabase
         .from("profiles")
-        .select(
-          "username, full_name, phone, country_code, region, city, avatar_url, bio",
-        )
+        .select("*")
         .eq("id", user.id)
         .maybeSingle()
     : { data: null };
