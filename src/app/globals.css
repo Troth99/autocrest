@@ -21,8 +21,18 @@
   --background-glow-start: rgba(14, 165, 233, 0.2);
   --background-glow-middle: rgba(99, 102, 241, 0.1);
   --background-glow-end: rgba(190, 242, 100, 0.14);
-  --background-gradient: linear-gradient(135deg, #09151d 0%, #0c1117 50%, #13180d 100%);
-  --footer-background: linear-gradient(180deg, rgb(10 16 23 / 32%) 0%, rgb(10 16 23 / 78%) 48%, #0a1017 100%);
+  --background-gradient: linear-gradient(
+    135deg,
+    #09151d 0%,
+    #0c1117 50%,
+    #13180d 100%
+  );
+  --footer-background: linear-gradient(
+    180deg,
+    rgb(10 16 23 / 32%) 0%,
+    rgb(10 16 23 / 78%) 48%,
+    #0a1017 100%
+  );
   --focus-ring: #38bdf8;
   --dark-800: rgb(12 17 23 / 72%);
   --hero-preview: rgb(2 6 23 / 30%);
@@ -107,8 +117,18 @@
   --background-glow-start: rgba(14, 165, 233, 0.1);
   --background-glow-middle: rgba(99, 102, 241, 0.045);
   --background-glow-end: rgba(190, 242, 100, 0.045);
-  --background-gradient: linear-gradient(135deg, #f8fafc 0%, #f1f5f7 50%, #f6f8f3 100%);
-  --footer-background: linear-gradient(180deg, rgb(248 250 252 / 45%) 0%, rgb(241 245 247 / 88%) 48%, #e8edef 100%);
+  --background-gradient: linear-gradient(
+    135deg,
+    #f8fafc 0%,
+    #f1f5f7 50%,
+    #f6f8f3 100%
+  );
+  --footer-background: linear-gradient(
+    180deg,
+    rgb(248 250 252 / 45%) 0%,
+    rgb(241 245 247 / 88%) 48%,
+    #e8edef 100%
+  );
   color-scheme: light;
 }
 
@@ -185,9 +205,21 @@ body {
   background:
     linear-gradient(var(--grid-color) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid-color) 1px, transparent 1px),
-    radial-gradient(1000px 600px at 0% 0%, var(--background-glow-start), transparent 72%),
-    radial-gradient(900px 650px at 100% 30%, var(--background-glow-middle), transparent 70%),
-    radial-gradient(1000px 620px at 95% 100%, var(--background-glow-end), transparent 72%),
+    radial-gradient(
+      1000px 600px at 0% 0%,
+      var(--background-glow-start),
+      transparent 72%
+    ),
+    radial-gradient(
+      900px 650px at 100% 30%,
+      var(--background-glow-middle),
+      transparent 70%
+    ),
+    radial-gradient(
+      1000px 620px at 95% 100%,
+      var(--background-glow-end),
+      transparent 72%
+    ),
     var(--background-gradient);
   background-attachment: scroll, scroll, fixed, fixed, fixed, fixed;
   background-repeat: repeat, repeat, no-repeat, no-repeat, no-repeat, no-repeat;
@@ -227,7 +259,7 @@ body {
 }
 
 @utility content-card {
-  @apply border border-line bg-panel shadow-[0_18px_40px_rgb(0_0_0/18%),inset_0_1px_rgb(255_255_255/4%)] backdrop-blur-[14px] transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_20px_44px_rgb(0_0_0/30%),inset_0_1px_rgb(255_255_255/6%)];
+  @apply border border-line bg-panel shadow-[0_18px_40px_rgb(0_0_0/18%),inset_0_1px_rgb(255_255_255/4%)] backdrop-blur-[14px] transition-[transform,box-shadow,border-color]
 }
 
 @utility glow-dot {
@@ -379,15 +411,11 @@ body {
 @layer base {
   * {
     @apply border-border outline-ring/50;
-
   }
   body {
     @apply text-foreground;
-
   }
   html {
     @apply font-sans;
-
   }
-
 }
