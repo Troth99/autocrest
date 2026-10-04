@@ -12,7 +12,7 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "@/shared/components/ui/avatar";
-import { getInitials } from "@/features/profile/components/profile-ui";
+import { getInitials } from "@/features/profile/utils/getInitials";
 import useForm from "@/shared/hooks/useForm";
 import { useRouter } from "next/navigation";
 import PhoneEditSelector, {

@@ -1,5 +1,6 @@
 import { AtSign, Mail, MapPin, Phone, UserRound } from "lucide-react";
-import { DetailRow, SectionHeading } from "./profile-ui";
+import DetailRow from "./DetailRow";
+import SectionHeading from "./SectionHeading";
 import PhoneNumber from "./PhoneNumber";
 
 export default function PersonalInformationCard({

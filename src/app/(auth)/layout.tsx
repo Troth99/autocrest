@@ -6,15 +6,17 @@ export default async function AuthLayout({
 }: {
   children: React.ReactNode;
 }) {
-    const supabase = await createClient()
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
 
-    const {
-        data: { user }
-    } = await supabase.auth.getUser();
-
-    if(user) {
-        // Redirect to home page or handle authenticated state
-         redirect("/"); // Replace with your home page route
-    }
+  if (user) {
+    const { data, error } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+    if (error) throw error;
+    redirect(
+      data.nextLevel === "aal2" && data.currentLevel !== "aal2"
+        ? "/verify-2fa"
+        : "/",
+    );
+  }
   return children;
 }
