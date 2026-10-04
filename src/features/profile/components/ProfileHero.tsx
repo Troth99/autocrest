@@ -2,7 +2,7 @@
 
 import { CalendarDays, KeyRound, PencilLine } from "lucide-react";
 import Link from "next/link";
-import { getInitials } from "./profile-ui";
+import { getInitials } from "@/features/profile/utils/getInitials";
 import { buttonVariants } from "@/shared/components/ui/button";
 import {
   Avatar,

@@ -1,6 +1,7 @@
 import { Clock3, KeyRound, ShieldCheck } from "lucide-react";
 import TwoFactorSetup from "@/features/profile/components/two-factor/TwoFactorSetup";
-import { SectionHeading, StatusRow } from "./profile-ui";
+import SectionHeading from "./SectionHeading";
+import StatusRow from "./StatusRow";
 
 export default function AccountSecurityCard({
   signInMethod,

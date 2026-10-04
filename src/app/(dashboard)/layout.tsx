@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import AccountNavigation from "@/shared/components/AccountNavigation";
+import AccountNavigation from "./components/AccountNavigation";
 
 export default async function IsDashboardLayout({
   children,

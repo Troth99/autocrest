@@ -24,9 +24,20 @@ export default function AccountNavigation() {
           <UserRound className="size-5 shrink-0" />
           Profile
         </Link>
+        <Link
+          href="/garrage"
+          aria-current={pathname.startsWith("/garrage") ? "page" : undefined}
+          className={`flex items-center gap-3 rounded-xl border-l-3 px-4 py-3.5 text-sm font-medium transition-colors ${
+            pathname.startsWith("/garrage")
+              ? "border-accent bg-info-soft text-info"
+              : "border-transparent text-muted hover:bg-info-soft hover:text-text-primary"
+          }`}
+        >
+          <CarFront className="size-5 shrink-0" />
+          My Garage
+        </Link>
         {[
           { label: "Dashboard", icon: House },
-          { label: "My Garage", icon: CarFront },
           { label: "Settings", icon: Settings },
         ].map(({ label, icon: Icon }) => (
           <span
@@ -41,7 +52,6 @@ export default function AccountNavigation() {
             </span>
           </span>
         ))}
-    
       </div>
     </nav>
   );
