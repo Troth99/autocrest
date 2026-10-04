@@ -27,18 +27,15 @@ export default function LoginForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
-  const { register, registerCheckbox, formHandler, errors, setErrors } = useForm(
-    loginHandler,
-    initialValues,
-    validateLoginForm,
-  );
+  const { register, registerCheckbox, formHandler, errors, setErrors } =
+    useForm(loginHandler, initialValues, validateLoginForm);
 
   async function loginHandler(values: LoginFormValues) {
     setIsSubmitting(true);
 
     try {
       await loginUser(values);
-      router.push("/");
+      router.replace("/verify-2fa");
       router.refresh();
     } catch (error) {
       console.error(error);
@@ -185,5 +182,3 @@ export default function LoginForm() {
     </section>
   );
 }
-
-
