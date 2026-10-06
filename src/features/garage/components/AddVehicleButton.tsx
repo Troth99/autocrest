@@ -1,6 +1,6 @@
 "use client";
 
-import {  useState } from "react";
+import { Fragment, useState } from "react";
 import { VehicleType } from "../types/vehicle";
 import { ChevronDown, Plus } from "lucide-react";
 import {
@@ -37,18 +37,22 @@ export default function AddVehicleButton() {
         <ChevronDown className="size-4" aria-hidden="true" />
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="start" sideOffset={8} className="w-52">
+      <DropdownMenuContent align="start" sideOffset={8} className="w-64">
         {vehicleOptions.map(({ value, label }, index) => (
-          <>
+          <Fragment key={value}>
             {index > 0 && <DropdownMenuSeparator className="my-1" />}
             <DropdownMenuItem
-              key={value}
+              disabled={value !== "car"}
+              aria-selected={selectedType === value}
               onClick={() => handleSelect(value)}
               className="cursor-pointer px-4 py-2.5"
             >
               {label}
+              {value !== "car" && (
+                <span className="ml-auto text-xs text-muted">Coming soon</span>
+              )}
             </DropdownMenuItem>
-          </>
+          </Fragment>
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
