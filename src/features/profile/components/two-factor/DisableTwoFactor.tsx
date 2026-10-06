@@ -31,6 +31,7 @@ export default function DisableTwoFactor({
     warning: string;
   } | null>(null);
 
+  //Shared function to run an async action while managing busy state and error handling.
   async function run(action: () => Promise<void>) {
     if (pending.current) return;
     pending.current = true;
@@ -50,6 +51,7 @@ export default function DisableTwoFactor({
     }
   }
 
+  //Function to load the list of enabled two-factor authenticators and update the state accordingly. If no verified authenticators are found, an error is thrown.
   async function loadFactors() {
     await run(async () => {
       const data = await listMfaFactors();

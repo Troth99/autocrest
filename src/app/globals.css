@@ -266,6 +266,22 @@ body {
   @apply size-[0.6rem] shrink-0 rounded-full shadow-[0_0_10px_1px_currentColor];
 }
 
+@utility section-title {
+  @apply text-lg font-semibold text-text-primary;
+}
+
+@utility section-description {
+  @apply text-sm leading-6 text-muted;
+}
+
+@utility panel-card {
+  @apply content-card rounded-3xl;
+}
+
+@utility action-button {
+  @apply inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-semibold text-ink disabled:cursor-not-allowed;
+}
+
 @utility button-base {
   @apply inline-flex items-center justify-center rounded-full border-0 font-bold outline-offset-3 transition-[transform,box-shadow,background-color,color,border-color] duration-200 hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-3 focus-visible:outline-sky-400/50 motion-reduce:transition-none motion-reduce:hover:translate-y-0;
 }
