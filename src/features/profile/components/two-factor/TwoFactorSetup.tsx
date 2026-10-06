@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import TwoFactorStatusCard, { type TwoFactorStatus } from "@/features/profile/components/two-factor/TwoFactorStatusCard";
-import TwoFactorSetupDialog, { type TwoFactorSetupData } from "@/features/profile/components/two-factor/TwoFactorSetupDialog";
+import TwoFactorSetupDialog, { type TwoFactorSetupData } from "@/features/profile/components/two-factor/TwoFactorSetupUI";
 import {
   cancelMfaSetup,
   listMfaFactors,
@@ -22,6 +22,7 @@ export default function TwoFactorSetup() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
 
+  //check if two-factor is enabled on mount and update status accordingly. If an error occurs, set the status to "error" and display the error message.
   useEffect(() => {
     let active = true;
     async function load() {
@@ -50,6 +51,7 @@ export default function TwoFactorSetup() {
     };
   }, []);
 
+  //Shared function to run an async action while managing busy state and error handling.
   async function run(action: () => Promise<void>) {
     if (busyRef.current) return;
     busyRef.current = true;
@@ -69,6 +71,7 @@ export default function TwoFactorSetup() {
     }
   }
 
+  //Function to verify the two-factor authentication code entered by the user. If verification is successful, update the status to "enabled" and reset the setup state.
   async function verify(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!setup) return;
@@ -81,6 +84,7 @@ export default function TwoFactorSetup() {
     });
   }
 
+  //Function to close the two-factor setup dialog. If a setup is in progress, cancel it and reset the state.
   async function closeSetup() {
     if (busyRef.current) return;
     await run(async () => {
@@ -91,6 +95,7 @@ export default function TwoFactorSetup() {
     });
   }
 
+  //Function to prepare the two-factor setup by starting the MFA setup process and updating the setup state.
   async function prepareSetup() {
     await run(async () => {
       setSetup(await startMfaSetup());
