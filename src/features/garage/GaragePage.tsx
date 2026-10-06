@@ -4,10 +4,10 @@
   CarFront,
   Check,
   Gauge,
-  Plus,
   ReceiptText,
 } from "lucide-react";
 import { getVehicles } from "@/features/garage/services/vehichles.service";
+import AddVehicleButton from "./components/AddVehicleButton";
 
 export default async function GaragePage() {
   const vehicles = await getVehicles();
@@ -30,9 +30,7 @@ export default async function GaragePage() {
             Every car, every kilometre, every detail. All in one place.
           </p>
         </div>
-        <button type="button" disabled className="action-button">
-          <Plus className="size-4" aria-hidden="true" /> Add vehicle
-        </button>
+        <AddVehicleButton />
       </div>
 
       <div className="mb-7 grid gap-3 sm:grid-cols-2">
@@ -87,9 +85,9 @@ export default async function GaragePage() {
               <p className="mt-2 section-description">
                 Add your first vehicle to keep its details and history together.
               </p>
-              <button type="button" disabled className="mt-6 action-button">
-                <Plus className="size-4" aria-hidden="true" /> Add vehicle
-              </button>
+              <div className="mt-6">
+                <AddVehicleButton />
+              </div>
             </div>
           ) : (
             <div className="grid gap-5 md:grid-cols-2">

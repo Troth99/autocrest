@@ -1,9 +1,11 @@
 export type VehicleType =
   | "car"
   | "motorcycle"
+  | "atv"
   | "van"
   | "truck"
   | "camper"
+  | "trailer"
   | "other";
 
 export type FuelType =
