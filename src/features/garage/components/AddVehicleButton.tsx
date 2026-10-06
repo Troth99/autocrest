@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { VehicleType } from "../types/vehicle";
 import { ChevronDown, Plus } from "lucide-react";
 import {
@@ -10,6 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/shared/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
 
 const vehicleOptions: { value: VehicleType; label: string }[] = [
   { value: "car", label: "Car" },
@@ -23,11 +24,12 @@ const vehicleOptions: { value: VehicleType; label: string }[] = [
 ];
 
 export default function AddVehicleButton() {
-  // State to track the selected vehicle type
-  const [selectedType, setSelectedType] = useState<VehicleType | null>(null);
+  const router = useRouter();
 
   function handleSelect(type: VehicleType) {
-    setSelectedType(type);
+    if (type === "car") {
+      router.push("/cars/add");
+    }
   }
   return (
     <DropdownMenu>
@@ -43,7 +45,6 @@ export default function AddVehicleButton() {
             {index > 0 && <DropdownMenuSeparator className="my-1" />}
             <DropdownMenuItem
               disabled={value !== "car"}
-              aria-selected={selectedType === value}
               onClick={() => handleSelect(value)}
               className="cursor-pointer px-4 py-2.5"
             >

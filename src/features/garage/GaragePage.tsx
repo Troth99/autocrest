@@ -10,7 +10,6 @@ import { getVehicles } from "@/features/garage/services/vehichles.service";
 import AddVehicleButton from "./components/AddVehicleButton";
 
 export default async function GaragePage() {
-
   const vehicles = await getVehicles();
 
   // Calculate total mileage across all vehicles
