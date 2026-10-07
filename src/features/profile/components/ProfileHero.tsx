@@ -27,8 +27,8 @@ export default function ProfileHero({
 
   return (
     <section className="card-base relative">
-      <div className="absolute -right-20 -top-24 size-64 rounded-full bg-info/10 blur-3xl" />
-      <div className="absolute -bottom-24 right-20 size-56 rounded-full bg-accent/10 blur-3xl" />
+      <div className="profile-card-glow absolute -right-20 -top-24 size-64 rounded-full bg-info/10 blur-3xl" />
+      <div className="profile-card-glow absolute -bottom-24 right-20 size-56 rounded-full bg-accent/10 blur-3xl" />
       <div className="relative flex flex-col gap-5">
         <Avatar className="size-20 rounded-[1.7rem] shadow-[0_12px_30px_rgb(213_243_107/12%)] after:rounded-[1.7rem] after:border-accent/35">
           {avatarUrl && (
