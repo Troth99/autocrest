@@ -4,12 +4,14 @@ import SectionHeading from "./SectionHeading";
 import PhoneNumber from "./PhoneNumber";
 
 export default function PersonalInformationCard({
+  fullName,
   username,
   email,
   phone,
   location,
   bio,
 }: {
+  fullName: string | null;
   username: string;
   email: string;
   phone: string | null;
@@ -24,6 +26,11 @@ export default function PersonalInformationCard({
         subtitle="The information people see on your AutoCrest account."
       />
       <dl className="mt-6 divide-y divide-line border-y border-line">
+        <DetailRow
+          icon={<UserRound />}
+          label="Full name"
+          value={fullName?.trim() || "Not added"}
+        />
         <DetailRow icon={<AtSign />} label="Username" value={`@${username}`} />
         <DetailRow icon={<Mail />} label="Email" value={email} />
         <DetailRow
