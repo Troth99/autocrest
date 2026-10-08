@@ -1,16 +1,20 @@
+"use client";
+
 import Link from "next/link";
+import GarageHeaderTools, {
+  GarageSearch,
+} from "@/features/garage/components/GarageHeaderTools";
 import type { CurrentUser } from "@/shared/types/currentUser";
 import UserMenu from "@/shared/components/Header/UserMenu/UserMenu";
 
-export default function SiteHeader({
-  user,
-}: {
-  user: CurrentUser | null;
-}) {
+export default function SiteHeader({ user }: { user: CurrentUser | null }) {
+  const isAccountPage = Boolean(user);
 
   return (
     <header className="sticky top-0 z-10 border-b border-line bg-dark-800 backdrop-blur-xl">
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
+      <nav
+        className={`mx-auto flex items-center justify-between gap-4 px-4 py-4 sm:px-6 ${isAccountPage ? "max-w-screen-2xl flex-wrap" : "max-w-6xl"}`}
+      >
         <Link href="/" className="flex items-center gap-2">
           <span className="flex size-8 items-center justify-center rounded-lg bg-info-soft text-sm font-bold text-info">
             AC
@@ -19,36 +23,37 @@ export default function SiteHeader({
             auto<span className="text-accent-text">crest</span>
           </span>
         </Link>
-      
-        <div className="hidden items-center gap-6 md:flex">
-          <a
-            href="#modules"
-            className="relative rounded-lg px-2 py-1.5 text-sm font-medium text-text-secondary transition-[color,background-color,transform] duration-200 after:absolute after:inset-x-2 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-info after:transition-transform after:duration-200 hover:-translate-y-0.5 hover:bg-info-soft hover:text-info-strong hover:after:scale-x-100 motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:after:transition-none"
-          >
-            Modules
-          </a>
-          <a
-            href="#how-it-works"
-            className="relative rounded-lg px-2 py-1.5 text-sm font-medium text-text-secondary transition-[color,background-color,transform] duration-200 after:absolute after:inset-x-2 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-info after:transition-transform after:duration-200 hover:-translate-y-0.5 hover:bg-info-soft hover:text-info-strong hover:after:scale-x-100 motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:after:transition-none"
-          >
-            How it works
-          </a>
-          <a
-            href="#timeline"
-            className="relative rounded-lg px-2 py-1.5 text-sm font-medium text-text-secondary transition-[color,background-color,transform] duration-200 after:absolute after:inset-x-2 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-info after:transition-transform after:duration-200 hover:-translate-y-0.5 hover:bg-info-soft hover:text-info-strong hover:after:scale-x-100 motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:after:transition-none"
-          >
-            Timeline
-          </a>
-        </div>
+
+        {isAccountPage ? (
+          <GarageSearch />
+        ) : (
+          <div className="hidden items-center gap-6 md:flex">
+            <a
+              href="#modules"
+              className="relative rounded-lg px-2 py-1.5 text-sm font-medium text-text-secondary transition-[color,background-color,transform] duration-200 after:absolute after:inset-x-2 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-info after:transition-transform after:duration-200 hover:-translate-y-0.5 hover:bg-info-soft hover:text-info-strong hover:after:scale-x-100 motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:after:transition-none"
+            >
+              Modules
+            </a>
+            <a
+              href="#how-it-works"
+              className="relative rounded-lg px-2 py-1.5 text-sm font-medium text-text-secondary transition-[color,background-color,transform] duration-200 after:absolute after:inset-x-2 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-info after:transition-transform after:duration-200 hover:-translate-y-0.5 hover:bg-info-soft hover:text-info-strong hover:after:scale-x-100 motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:after:transition-none"
+            >
+              How it works
+            </a>
+            <a
+              href="#timeline"
+              className="relative rounded-lg px-2 py-1.5 text-sm font-medium text-text-secondary transition-[color,background-color,transform] duration-200 after:absolute after:inset-x-2 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-info after:transition-transform after:duration-200 hover:-translate-y-0.5 hover:bg-info-soft hover:text-info-strong hover:after:scale-x-100 motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:after:transition-none"
+            >
+              Timeline
+            </a>
+          </div>
+        )}
 
         <div className="flex items-center gap-3">
+          {isAccountPage && <GarageHeaderTools />}
           {user ? (
             <UserMenu
-              username={
-                user.name ??
-                user.email ??
-                "Account"
-              }
+              username={user.name ?? user.email ?? "Account"}
               email={user.email ?? ""}
               avatarUrl={user.avatarUrl}
             />

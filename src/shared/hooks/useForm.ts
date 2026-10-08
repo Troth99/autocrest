@@ -11,7 +11,8 @@ export type FormValues = Record<string, string | boolean | undefined>;
 
 type CheckboxFieldName<T extends FormValues> = {
   [K in keyof T]: T[K] extends boolean | undefined ? K : never;
-}[keyof T] & string;
+}[keyof T] &
+  string;
 
 type CallbackFunction<T extends FormValues> = (
   values: T,
@@ -32,13 +33,16 @@ export default function useForm<T extends FormValues>(
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >,
   ) => {
+    // Destructure the name and value from the event target from the input element in form
     const { name, value } = event.target;
 
+    // Update the value for the field, ensuring that we handle checkboxes correctly
     setValues((currentValues) => ({
       ...currentValues,
       [name]: value,
     }));
 
+    // Clear the error for the field when the user starts typing
     setErrors((currentErrors) => ({
       ...currentErrors,
       [name]: undefined,

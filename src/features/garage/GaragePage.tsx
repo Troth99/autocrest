@@ -8,9 +8,13 @@
 } from "lucide-react";
 import { getVehicles } from "@/features/garage/services/vehichles.service";
 import AddVehicleButton from "./components/AddVehicleButton";
+import Link from "next/link";
 
-export default async function GaragePage() {
+export default async function GaragePage({ query = "" }: { query?: string }) {
   const vehicles = await getVehicles();
+  const matchingVehicles = vehicles.filter((vehicle) =>
+    [vehicle.make, vehicle.model, vehicle.nickname, vehicle.plate].filter(Boolean).join(" ").toLocaleLowerCase().includes(query.toLocaleLowerCase()),
+  );
 
   // Calculate total mileage across all vehicles
   const totalMileage = vehicles.reduce(
@@ -65,6 +69,12 @@ export default async function GaragePage() {
 
       <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_18rem] xl:items-start">
         <section aria-labelledby="vehicles-heading">
+          {query && (
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-2 rounded-xl border border-line bg-input/45 px-4 py-3 text-sm">
+              <p className="text-muted">{matchingVehicles.length} results for <span className="font-medium text-text-primary">“{query}”</span></p>
+              <Link href="/garrage" className="font-semibold text-info hover:text-info-strong">Clear search</Link>
+            </div>
+          )}
           <div className="mb-4 flex items-center justify-between">
             <h2 id="vehicles-heading" className="section-title">
               Your vehicles
@@ -89,9 +99,15 @@ export default async function GaragePage() {
                 <AddVehicleButton />
               </div>
             </div>
+          ) : matchingVehicles.length === 0 ? (
+            <div className="panel-card px-6 py-14 text-center">
+              <h3 className="text-xl font-semibold text-text-primary">No matching vehicles</h3>
+              <p className="mt-2 section-description">Try a different vehicle name or registration plate.</p>
+              <Link href="/garrage" className="mt-5 inline-flex text-sm font-semibold text-info">Show all vehicles</Link>
+            </div>
           ) : (
             <div className="grid gap-5 md:grid-cols-2">
-              {vehicles.map((vehicle) => (
+              {matchingVehicles.map((vehicle) => (
                 <article
                   key={vehicle.id}
                   className="panel-card overflow-hidden"
