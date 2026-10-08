@@ -3,13 +3,18 @@ import { ChevronDown } from "lucide-react";
 import { Fragment } from "react";
 import { Separator } from "@/shared/components/ui/separator";
 import { Input } from "@/shared/components/ui/input";
-import type { VehicleMake } from "@/features/garage/types/vehicle-catalog";
+import type { VehicleMake, VehicleModel } from "@/features/garage/types/vehicle-catalog";
 
 type Props = {
   makes: VehicleMake[];
   selectedMake: string;
   onMakeChange: (makeId: string) => void;
   isLoadingMakes: boolean;
+  models: VehicleModel[];
+  selectedModel: string;
+  onModelChange: (modelId: string) => void;
+  isLoadingModels: boolean;
+  modelsError: string | null;
 };
 
 export default function VehicleBasicFields({
@@ -17,6 +22,11 @@ export default function VehicleBasicFields({
   selectedMake,
   onMakeChange,
   isLoadingMakes,
+  models,
+  selectedModel,
+  onModelChange,
+  isLoadingModels,
+  modelsError,
 }: Props) {
   return (
     <fieldset className="content-card min-w-0 rounded-2xl p-4 sm:p-5">
@@ -32,16 +42,16 @@ export default function VehicleBasicFields({
             name="make_id"
             value={selectedMake || null}
             onValueChange={(value) => onMakeChange(value ?? "")}
-            disabled={isLoadingMakes || makes.length === 0}
+            disabled={isLoadingMakes}
             required
           >
             <Select.Trigger id="make" className="select-trigger">
               <span className="truncate">
-                {makes.find((make) => make.id === selectedMake)?.name ??
+                {selectedMake === "other" ? "Other" : makes.find((make) => make.id === selectedMake)?.name ??
                   (isLoadingMakes
                     ? "Loading makes..."
                     : makes.length === 0
-                      ? "No makes available"
+                      ? "Choose Other to enter a make"
                       : "Choose a make")}
               </span>
               <Select.Icon>
@@ -76,25 +86,74 @@ export default function VehicleBasicFields({
                         </Select.Item>
                       </Fragment>
                     ))}
+                    {makes.length > 0 && <Separator className="my-1 bg-line" />}
+                    <Select.Item value="other" className="cursor-pointer rounded-md px-2.5 py-1.5 text-sm outline-none data-highlighted:bg-info-soft data-highlighted:text-info data-selected:font-semibold">
+                      <Select.ItemText>Other</Select.ItemText>
+                    </Select.Item>
                   </Select.List>
                 </Select.Popup>
               </Select.Positioner>
             </Select.Portal>
           </Select.Root>
+          {selectedMake === "other" && (
+            <label htmlFor="custom-make" className="grid gap-2">
+              Make name *
+              <Input id="custom-make" name="custom_make" placeholder="Enter your vehicle make" required />
+            </label>
+          )}
         </div>
-        <label
-          htmlFor="model"
-          className="grid gap-2 text-sm font-medium text-text-secondary"
-        >
-          <span>Model *</span>
-          <Input
-            id="model"
-            name="model"
-            type="text"
-            placeholder="e.g. Corolla"
+        <div className="grid gap-2 text-sm font-medium text-text-secondary">
+          <label htmlFor="model">Model *</label>
+          {selectedMake === "other" ? (
+            <Input key="custom-make-model" id="model" name="custom_model" placeholder="Enter your vehicle model" required />
+          ) : (
+          <Select.Root
+            name="model_id"
+            value={selectedModel || null}
+            onValueChange={(value) => onModelChange(value ?? "")}
+            disabled={!selectedMake || isLoadingModels}
             required
-          />
-        </label>
+          >
+            <Select.Trigger id="model" className="select-trigger"
+              aria-invalid={Boolean(modelsError)}
+              aria-describedby={modelsError ? "model-error" : undefined}>
+              <span className="truncate">
+                {selectedModel === "other" ? "Other" : models.find((model) => model.id === selectedModel)?.name ??
+                  (!selectedMake ? "Choose a make first" : isLoadingModels ? "Loading models..." : models.length === 0 ? "Choose Other to enter a model" : "Choose a model")}
+              </span>
+              <Select.Icon><ChevronDown className="size-4" aria-hidden="true" /></Select.Icon>
+            </Select.Trigger>
+            <Select.Portal>
+              <Select.Positioner side="bottom" align="start" sideOffset={4}
+                alignItemWithTrigger={false} className="z-50">
+                <Select.Popup className="w-(--anchor-width) overflow-hidden rounded-lg border border-slate-300 bg-slate-100 text-text-primary shadow-xl dark:border-slate-600 dark:bg-slate-800">
+                  <Select.List className="max-h-[min(200px,var(--available-height))] overflow-y-auto overscroll-contain p-1">
+                    {models.map((model, index) => (
+                      <Fragment key={model.id}>
+                        {index > 0 && <Separator className="my-1 bg-line" />}
+                        <Select.Item value={model.id} className="cursor-pointer rounded-md px-2.5 py-1.5 text-sm outline-none data-highlighted:bg-info-soft data-highlighted:text-info data-selected:font-semibold">
+                          <Select.ItemText>{model.name}</Select.ItemText>
+                        </Select.Item>
+                      </Fragment>
+                    ))}
+                    {models.length > 0 && <Separator className="my-1 bg-line" />}
+                    <Select.Item value="other" className="cursor-pointer rounded-md px-2.5 py-1.5 text-sm outline-none data-highlighted:bg-info-soft data-highlighted:text-info data-selected:font-semibold">
+                      <Select.ItemText>Other</Select.ItemText>
+                    </Select.Item>
+                  </Select.List>
+                </Select.Popup>
+              </Select.Positioner>
+            </Select.Portal>
+          </Select.Root>
+          )}
+          {selectedMake !== "other" && selectedModel === "other" && (
+            <label htmlFor="custom-model" className="grid gap-2">
+              Model name *
+              <Input key={selectedMake} id="custom-model" name="custom_model" placeholder="Enter your vehicle model" required />
+            </label>
+          )}
+          {modelsError && <span id="model-error" role="alert" className="text-xs text-destructive">{modelsError}</span>}
+        </div>
         <label
           htmlFor="manufacture_year"
           className="grid gap-2 text-sm font-medium text-text-secondary"

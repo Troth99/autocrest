@@ -11,15 +11,26 @@ import VehicleAdditionalDetails from "@/features/garage/components/add-vehicle/V
 import type { VehicleMake } from "@/features/garage/types/vehicle-catalog";
 import { useEffect, useState } from "react";
 import { getVehicleMakes } from "@/features/garage/services/vehicle-catalog.service";
+import { getVehicleModels } from "@/features/garage/services/vehicle-catalog.service";
+import type { VehicleModel } from "@/features/garage/types/vehicle-catalog";
 
 export default function AddVehicleForm() {
   const [makes, setMakes] = useState<VehicleMake[]>([]);
   const [isLoadingMakes, setIsLoadingMakes] = useState(true);
   const [makesError, setMakesError] = useState<string | null>(null);
   const [selectedMake, setSelectedMake] = useState("");
+  const [models, setModels] = useState<VehicleModel[]>([]);
+  const [selectedModel, setSelectedModel] = useState("");
+  const [isLoadingModels, setIsLoadingModels] = useState(false);
+  const [modelsError, setModelsError] = useState<string | null>(null);
 
   function handleMakeChange(makeId: string) {
+    if (makeId === selectedMake) return;
     setSelectedMake(makeId);
+    setSelectedModel("");
+    setModels([]);
+    setModelsError(null);
+    setIsLoadingModels(Boolean(makeId) && makeId !== "other");
   }
 
   useEffect(() => {
@@ -47,6 +58,35 @@ export default function AddVehicleForm() {
       cancelled = true;
     };
   }, []);
+  useEffect(() => {
+    if (!selectedMake || selectedMake === "other") return;
+
+    let cancelled = false;
+
+    async function loadModels() {
+      try {
+        const data = await getVehicleModels(selectedMake);
+
+        if (!cancelled) {
+          setModels(data);
+        }
+      } catch {
+        if (!cancelled) {
+          setModelsError("Could not load models.");
+        }
+      } finally {
+        if (!cancelled) {
+          setIsLoadingModels(false);
+        }
+      }
+    }
+
+    void loadModels();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedMake]);
 
   return (
     <main className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-10">
@@ -64,6 +104,11 @@ export default function AddVehicleForm() {
           selectedMake={selectedMake}
           onMakeChange={handleMakeChange}
           isLoadingMakes={isLoadingMakes}
+          models={models}
+          selectedModel={selectedModel}
+          onModelChange={setSelectedModel}
+          isLoadingModels={isLoadingModels}
+          modelsError={modelsError}
         />
         <VehicleRegistrationFields />
         <VehicleTechnicalFields />
