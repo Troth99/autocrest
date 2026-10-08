@@ -135,7 +135,9 @@
 .light .card-base,
 .light .content-card,
 .light .panel-card {
-  box-shadow: 0 2px 8px rgb(23 33 43 / 4%), 0 12px 24px rgb(23 33 43 / 3%);
+  box-shadow:
+    0 2px 8px rgb(23 33 43 / 4%),
+    0 12px 24px rgb(23 33 43 / 3%);
 }
 
 .light .profile-card-glow {
@@ -277,8 +279,12 @@ body {
   @apply w-full overflow-hidden rounded-3xl border border-line bg-panel p-6 shadow-[0_18px_40px_rgb(0_0_0/18%),inset_0_1px_rgb(255_255_255/4%)] backdrop-blur-[14px] sm:p-8;
 }
 
+@utility select-trigger {
+  @apply flex h-9 w-full items-center justify-between gap-2 rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm text-text-primary outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30 disabled:cursor-not-allowed disabled:opacity-50;
+}
+
 @utility content-card {
-  @apply border border-line bg-panel shadow-[0_18px_40px_rgb(0_0_0/18%),inset_0_1px_rgb(255_255_255/4%)] backdrop-blur-[14px] transition-[transform,box-shadow,border-color]
+  @apply border border-line bg-panel shadow-[0_18px_40px_rgb(0_0_0/18%),inset_0_1px_rgb(255_255_255/4%)] backdrop-blur-[14px] transition-[transform,box-shadow,border-color];
 }
 
 @utility glow-dot {
