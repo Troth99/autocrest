@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import VehicleBasicFields from "@/features/garage/components/add-vehicle/VehicleBasicFields";
@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { getVehicleMakes } from "@/features/garage/services/vehicle-catalog.service";
 import { getVehicleModels } from "@/features/garage/services/vehicle-catalog.service";
 import type { VehicleModel } from "@/features/garage/types/vehicle-catalog";
+import VehiclePhotoFields from "@/features/garage/components/add-vehicle/VehiclePhotoFields";
 
 export default function AddVehicleForm() {
   const [makes, setMakes] = useState<VehicleMake[]>([]);
@@ -23,6 +24,9 @@ export default function AddVehicleForm() {
   const [selectedModel, setSelectedModel] = useState("");
   const [isLoadingModels, setIsLoadingModels] = useState(false);
   const [modelsError, setModelsError] = useState<string | null>(null);
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
+  const [photoError, setPhotoError] = useState<string | null>(null);
+
 
   function handleMakeChange(makeId: string) {
     if (makeId === selectedMake) return;
@@ -99,6 +103,12 @@ export default function AddVehicleForm() {
       )}
       <form className="grid gap-4" onSubmit={(event) => event.preventDefault()}>
         <input type="hidden" name="vehicle_type" value="car" />
+        <VehiclePhotoFields
+          photoFile={photoFile}
+          photoError={photoError}
+          onPhotoChange={setPhotoFile}
+          onPhotoError={setPhotoError}
+        />
         <VehicleBasicFields
           makes={makes}
           selectedMake={selectedMake}

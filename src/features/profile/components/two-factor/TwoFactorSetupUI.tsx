@@ -47,7 +47,7 @@ export default function TwoFactorSetupDialog({
       disablePointerDismissal
     >
       <Dialog.Portal>
-        <Dialog.Backdrop className="fixed inset-0 z-50 bg-black/65 backdrop-blur-sm transition-opacity duration-200 data-ending-style:opacity-0 motion-reduce:transition-none" />
+        <Dialog.Backdrop className="fixed inset-0 z-50 bg-black/65 transition-opacity duration-200 data-ending-style:opacity-0 motion-reduce:transition-none" />
         <Dialog.Popup
           finalFocus={triggerRef}
           className="card-base fixed top-1/2 left-1/2 z-50 max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 overflow-y-auto text-text-primary shadow-2xl outline-none transition-[opacity,scale] duration-200 data-starting-style:scale-95 data-starting-style:opacity-0 data-ending-style:scale-95 data-ending-style:opacity-0 motion-reduce:transition-none"

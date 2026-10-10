@@ -276,7 +276,7 @@ body {
 }
 
 @utility card-base {
-  @apply w-full overflow-hidden rounded-3xl border border-line bg-panel p-6 shadow-[0_18px_40px_rgb(0_0_0/18%),inset_0_1px_rgb(255_255_255/4%)] backdrop-blur-[14px] sm:p-8;
+  @apply w-full overflow-hidden rounded-3xl border border-line bg-panel p-6 shadow-[0_18px_40px_rgb(0_0_0/18%),inset_0_1px_rgb(255_255_255/4%)] sm:p-8;
 }
 
 @utility select-trigger {
@@ -284,7 +284,7 @@ body {
 }
 
 @utility content-card {
-  @apply border border-line bg-panel shadow-[0_18px_40px_rgb(0_0_0/18%),inset_0_1px_rgb(255_255_255/4%)] backdrop-blur-[14px] transition-[transform,box-shadow,border-color];
+  @apply border border-line bg-panel shadow-[0_18px_40px_rgb(0_0_0/18%),inset_0_1px_rgb(255_255_255/4%)] transition-[transform,box-shadow,border-color];
 }
 
 @utility glow-dot {
