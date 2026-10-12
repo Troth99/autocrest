@@ -11,7 +11,7 @@ export default function SiteHeader({ user }: { user: CurrentUser | null }) {
   const isAccountPage = Boolean(user);
 
   return (
-    <header className="sticky top-0 z-10 border-b border-line bg-dark-800 backdrop-blur-xl">
+    <header className="sticky top-0 z-10 border-b border-line bg-dark-800">
       <nav
         className={`mx-auto flex items-center justify-between gap-4 px-4 py-4 sm:px-6 ${isAccountPage ? "max-w-screen-2xl flex-wrap" : "max-w-6xl"}`}
       >

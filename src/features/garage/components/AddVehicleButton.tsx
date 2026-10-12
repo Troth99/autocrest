@@ -28,7 +28,7 @@ export default function AddVehicleButton() {
 
   function handleSelect(type: VehicleType) {
     if (type === "car") {
-      router.push("/cars/add");
+      router.push("/vehicles/add?type=car");
     }
   }
   return (

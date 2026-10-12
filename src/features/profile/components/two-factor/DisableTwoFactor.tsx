@@ -119,7 +119,7 @@ export default function DisableTwoFactor({
         Disable 2FA
       </Button>
       <Dialog.Portal>
-        <Dialog.Backdrop className="fixed inset-0 z-50 bg-black/65 backdrop-blur-sm" />
+        <Dialog.Backdrop className="fixed inset-0 z-50 bg-black/65" />
         <Dialog.Popup
           finalFocus={triggerRef}
           className="fixed top-1/2 left-1/2 z-50 max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-3xl border border-line bg-panel p-6 text-text-primary shadow-2xl outline-none sm:p-8"

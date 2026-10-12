@@ -1,4 +1,4 @@
-﻿import {
+import {
   Activity,
   ArrowUpRight,
   CarFront,
@@ -6,7 +6,7 @@
   Gauge,
   ReceiptText,
 } from "lucide-react";
-import { getVehicles } from "@/features/garage/services/vehichles.service";
+import { getVehicles } from "@/features/garage/services/vehicles.service";
 import AddVehicleButton from "./components/AddVehicleButton";
 import Link from "next/link";
 

@@ -1,6 +1,7 @@
+import type { VehicleDocumentFieldProps } from "@/features/garage/types/vehicle-document-form";
 import { Input } from "@/shared/components/ui/input";
 
-export default function VehicleTechnicalFields() {
+export default function VehicleTechnicalFields({ values, onFieldChange }: VehicleDocumentFieldProps) {
   return (
     <fieldset className="content-card min-w-0 rounded-2xl p-4 sm:p-5">
       <legend className="sr-only">Engine and drivetrain</legend>
@@ -9,6 +10,16 @@ export default function VehicleTechnicalFields() {
         Specifications for your car. Leave unknown details blank.
       </p>
       <div className="mt-4 grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <label htmlFor="colour" className="grid gap-2 text-sm font-medium text-text-secondary">
+          <span>Colour</span>
+          <Input id="colour" name="colour" value={values.colour}
+            onChange={(event) => onFieldChange("colour", event.target.value)} />
+        </label>
+        <label htmlFor="seats" className="grid gap-2 text-sm font-medium text-text-secondary">
+          <span>Seats</span>
+          <Input id="seats" name="seats" type="number" min={1} step={1} value={values.seats}
+            onChange={(event) => onFieldChange("seats", event.target.value)} />
+        </label>
         <label
           htmlFor="fuel_type"
           className="grid gap-2 text-sm font-medium text-text-secondary"
@@ -16,8 +27,8 @@ export default function VehicleTechnicalFields() {
           <span>Fuel type</span>
           <select
             id="fuel_type"
-            name="fuel_type"
-            defaultValue=""
+            name="fuel_type" value={values.fuel_type} onChange={(event) => onFieldChange("fuel_type", event.target.value)}
+
             className="h-9 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm text-text-primary outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30"
           >
             <option value="" className="bg-panel text-text-primary">
@@ -115,7 +126,7 @@ export default function VehicleTechnicalFields() {
           <span>Engine capacity (cc)</span>
           <Input
             id="engine_cc"
-            name="engine_cc"
+            name="engine_cc" value={values.engine_cc} onChange={(event) => onFieldChange("engine_cc", event.target.value)}
             type="number"
             placeholder="e.g. 1798"
             min={0}
@@ -128,7 +139,7 @@ export default function VehicleTechnicalFields() {
           <span>Power (hp)</span>
           <Input
             id="power_hp"
-            name="power_hp"
+            name="power_hp" value={values.power_hp} onChange={(event) => onFieldChange("power_hp", event.target.value)}
             type="number"
             placeholder="e.g. 122"
             min={0}
@@ -142,8 +153,8 @@ export default function VehicleTechnicalFields() {
           <span>Euro emissions standard</span>
           <select
             id="euro_standard"
-            name="euro_standard"
-            defaultValue=""
+            name="euro_standard" value={values.euro_standard} onChange={(event) => onFieldChange("euro_standard", event.target.value)}
+
             className="h-9 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm text-text-primary outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30"
           >
             <option value="" className="bg-panel text-text-primary">

@@ -1,6 +1,7 @@
+import type { VehicleDocumentFieldProps } from "@/features/garage/types/vehicle-document-form";
 import { Input } from "@/shared/components/ui/input";
 
-export default function VehicleRegistrationFields() {
+export default function VehicleRegistrationFields({ values, onFieldChange }: VehicleDocumentFieldProps) {
   return (
     <fieldset className="content-card min-w-0 rounded-2xl p-4 sm:p-5">
       <legend className="sr-only">Registration</legend>
@@ -16,7 +17,7 @@ export default function VehicleRegistrationFields() {
           <span>Registration plate</span>
           <Input
             id="plate"
-            name="plate"
+            name="plate" value={values.plate} onChange={(event) => onFieldChange("plate", event.target.value)}
             type="text"
             placeholder="e.g. CB1234AB"
           />
@@ -28,7 +29,7 @@ export default function VehicleRegistrationFields() {
           <span>VIN</span>
           <Input
             id="vin"
-            name="vin"
+            name="vin" value={values.vin} onChange={(event) => onFieldChange("vin", event.target.value)}
             type="text"
             placeholder="Vehicle identification number"
           />
@@ -40,7 +41,7 @@ export default function VehicleRegistrationFields() {
           <span>Registration certificate number</span>
           <Input
             id="registration_certificate_number"
-            name="registration_certificate_number"
+            name="registration_certificate_number" value={values.registration_certificate_number} onChange={(event) => onFieldChange("registration_certificate_number", event.target.value)}
             type="text"
           />
         </label>
@@ -63,7 +64,7 @@ export default function VehicleRegistrationFields() {
           <span>First registration date</span>
           <Input
             id="first_registration_date"
-            name="first_registration_date"
+            name="first_registration_date" value={values.first_registration_date} onChange={(event) => onFieldChange("first_registration_date", event.target.value)}
             type="date"
           />
         </label>

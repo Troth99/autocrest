@@ -4,6 +4,40 @@
 
 @custom-variant dark (&:is(.dark *));
 
+.light .vehicle-form :is([data-slot="input"], select, .select-trigger) {
+  border-color: #94a3b8;
+  background-color: #f1f5f9;
+  color: #17212b;
+  transition: border-color 150ms, background-color 150ms, box-shadow 150ms;
+}
+
+.light .vehicle-form [data-slot="input"]::placeholder {
+  color: #526277;
+  opacity: 1;
+}
+
+.light .vehicle-form :is([data-slot="input"], select, .select-trigger):hover:not(:disabled) {
+  border-color: #64748b;
+  background-color: #e8eef5;
+}
+
+.light .vehicle-form :is([data-slot="input"], select, .select-trigger):focus-visible {
+  border-color: #0284c7;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgb(2 132 199 / 16%);
+}
+
+.light .vehicle-form :is([data-slot="input"], select, .select-trigger):disabled {
+  border-color: #cbd5e1;
+  background-color: #e2e8f0;
+  color: #64748b;
+  opacity: 1;
+}
+
+.light .vehicle-form :is([data-slot="input"], select, .select-trigger)[aria-invalid="true"] {
+  border-color: var(--destructive);
+}
+
 :root {
   --text-primary: #edf2f0;
   --text-secondary: #cbd5e1;
@@ -276,7 +310,7 @@ body {
 }
 
 @utility card-base {
-  @apply w-full overflow-hidden rounded-3xl border border-line bg-panel p-6 shadow-[0_18px_40px_rgb(0_0_0/18%),inset_0_1px_rgb(255_255_255/4%)] backdrop-blur-[14px] sm:p-8;
+  @apply w-full overflow-hidden rounded-3xl border border-line bg-panel p-6 shadow-[0_18px_40px_rgb(0_0_0/18%),inset_0_1px_rgb(255_255_255/4%)] sm:p-8;
 }
 
 @utility select-trigger {
@@ -284,7 +318,7 @@ body {
 }
 
 @utility content-card {
-  @apply border border-line bg-panel shadow-[0_18px_40px_rgb(0_0_0/18%),inset_0_1px_rgb(255_255_255/4%)] backdrop-blur-[14px] transition-[transform,box-shadow,border-color];
+  @apply border border-line bg-panel shadow-[0_18px_40px_rgb(0_0_0/18%),inset_0_1px_rgb(255_255_255/4%)] transition-[transform,box-shadow,border-color];
 }
 
 @utility glow-dot {
