@@ -1,15 +1,21 @@
 "use client";
-
+import { vehicleDocumentSchema } from "@/features/garage/validators/vehicle-document.validator";
+import type { VehicleDocumentDetails } from "@/features/garage/validators/vehicle-document.validator";
 import { useState } from "react";
 import type { ChangeEvent } from "react";
-import { FileScan, Upload, WandSparkles } from "lucide-react";
+import { CircleCheck, FileScan, Upload, WandSparkles } from "lucide-react";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
-export default function VehicleDocumentScan() {
+export default function VehicleDocumentScan({ onExtracted }: {
+    onExtracted: (details: VehicleDocumentDetails) => void;
+}) {
     const [frontFile, setFrontFile] = useState<File | null>(null);
     const [frontError, setFrontError] = useState<string | null>(null);
+    const [isScanning, setIsScanning] = useState(false);
+    const [extractedDetails, setExtractedDetails] =
+        useState<VehicleDocumentDetails | null>(null);
 
     function handleFileChange(
         event: ChangeEvent<HTMLInputElement>,
@@ -17,6 +23,7 @@ export default function VehicleDocumentScan() {
         const file = event.target.files?.[0] ?? null;
 
         setFrontError(null);
+        setExtractedDetails(null);
 
         if (!file) {
             setFrontFile(null);
@@ -40,9 +47,60 @@ export default function VehicleDocumentScan() {
         setFrontFile(file);
     }
 
+    async function handleExtract() {
+        if (!frontFile || isScanning) return;
+
+        setIsScanning(true);
+        setFrontError(null);
+        setExtractedDetails(null);
+
+        try {
+            const formData = new FormData();
+            formData.append("document", frontFile);
+
+            const response = await fetch("/api/vehicles/extract", {
+                method: "POST",
+                body: formData,
+                signal: AbortSignal.timeout(75_000),
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(
+                    typeof result.error === "string"
+                        ? result.error
+                        : "Could not scan the document.",
+                );
+            }
+
+            const details = vehicleDocumentSchema.safeParse(result.details);
+
+            if (!details.success) {
+                throw new Error("The server returned invalid vehicle details.");
+            }
+
+            onExtracted(details.data);
+            setExtractedDetails(details.data);
+        } catch (error) {
+            setFrontError(
+                error instanceof Error && error.name === "TimeoutError"
+                    ? "Scanning took too long. Please try again."
+                    : error instanceof Error
+                        ? error.message
+                        : "Could not scan the document.",
+            );
+        } finally {
+            setIsScanning(false);
+        }
+    }
     return (
-        <fieldset className="min-w-0 rounded-2xl border border-sky-300 bg-sky-50 p-4 shadow-sm sm:p-6 dark:border-sky-700 dark:bg-slate-900">
+
+        <fieldset aria-busy={isScanning} className="relative min-w-0 rounded-2xl border border-sky-300 bg-sky-50 p-4 shadow-sm sm:p-6 dark:border-sky-700 dark:bg-slate-900">
             <legend className="sr-only">Scan registration document</legend>
+            {isScanning && (
+                <span aria-hidden="true" className="pointer-events-none absolute -inset-px animate-pulse rounded-2xl border-2 border-sky-500 shadow-[0_0_18px_rgba(14,165,233,0.45)] motion-reduce:animate-none dark:border-sky-400" />
+            )}
 
             <div className="flex items-start gap-3">
                 <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-sky-700 text-white dark:bg-sky-400 dark:text-slate-950">
@@ -51,14 +109,17 @@ export default function VehicleDocumentScan() {
                 <div>
                     <h2 className="text-lg font-semibold text-slate-950 dark:text-white">Scan registration document</h2>
                     <p className="mt-1 text-sm text-slate-700 dark:text-slate-300">
-                        Select a clear photo of the front of your registration document.
+                        Select a clear photo of your registration document (Part I or Part II).
+                    </p>
+                    <p className="mt-1 text-xs text-slate-600 dark:text-slate-400">
+                        English and Cyrillic text can be scanned. Vehicle names may need manual correction after scanning.
                     </p>
                 </div>
             </div>
 
             <div className="mt-4 grid gap-4">
                 <div className="grid content-start gap-2">
-                    <input
+                    <input disabled={isScanning}
                         id="registration_document_front"
                         type="file"
                         accept="image/jpeg,image/png,image/webp"
@@ -74,7 +135,7 @@ export default function VehicleDocumentScan() {
                         <Upload className="size-7 shrink-0 text-sky-700 dark:text-sky-300" aria-hidden="true" />
                         <span className="min-w-0 flex-1">
                             <span className="block break-all text-base font-semibold text-slate-950 dark:text-white">
-                                {frontFile ? frontFile.name : "Upload front document photo"}
+                                {frontFile ? frontFile.name : "Upload registration document photo"}
                             </span>
                             <span id="document_photo_help" className="mt-1 block text-sm text-slate-600 dark:text-slate-300">
                                 JPEG, PNG or WebP. Maximum 5 MB.
@@ -101,16 +162,29 @@ export default function VehicleDocumentScan() {
             <div className="mt-4 flex flex-wrap items-center gap-3">
                 <button
                     type="button"
-                    disabled
-                    className="inline-flex cursor-not-allowed items-center gap-2 rounded-lg border border-slate-300 bg-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-600 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-400"
+                    onClick={handleExtract}
+                    disabled={!frontFile || isScanning}
+                    aria-busy={isScanning}
+                    className="inline-flex items-center gap-2 rounded-lg bg-sky-700 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-sky-800 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-sky-400 dark:text-slate-950 dark:hover:bg-sky-300"
                 >
                     <WandSparkles className="size-4" aria-hidden="true" />
-                    Extract details
+                    {isScanning ? "Reading document..." : "Extract details"}
                 </button>
 
-                <p className="text-sm text-slate-700 dark:text-slate-300">
-                    Automatic filling will be available soon.
+                <p role="status" className="text-sm text-slate-700 dark:text-slate-300">
+                    {isScanning ? "Scanning your document. Please wait..." : extractedDetails ? "Scan complete." : "Select a photo, then extract the vehicle details."}
                 </p>
+            </div>
+            <div role="status" aria-atomic="true">
+                {extractedDetails && !isScanning && (
+                    <div className="mt-4 flex items-start gap-3 rounded-xl border border-emerald-300 bg-emerald-50 p-4 text-emerald-900 dark:border-emerald-700 dark:bg-emerald-950 dark:text-emerald-100">
+                        <CircleCheck className="mt-0.5 size-5 shrink-0" aria-hidden="true" />
+                        <div>
+                            <p className="text-sm font-semibold">Document scanned successfully</p>
+                            <p className="mt-1 text-sm">The readable vehicle details have been filled in. Review and edit the fields below before continuing.</p>
+                        </div>
+                    </div>
+                )}
             </div>
         </fieldset>
     );

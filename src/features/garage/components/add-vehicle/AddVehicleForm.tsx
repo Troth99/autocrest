@@ -8,96 +8,21 @@ import VehicleMileageFields from "@/features/garage/components/add-vehicle/field
 import VehiclePurchaseFields from "@/features/garage/components/add-vehicle/fields/VehiclePurchaseFields";
 import VehicleFormHeader from "@/features/garage/components/add-vehicle/VehicleFormHeader";
 import VehicleAdditionalDetails from "@/features/garage/components/add-vehicle/fields/VehicleAdditionalDetails";
-import type { VehicleMake } from "@/features/garage/types/vehicle-catalog";
-import { useEffect, useState } from "react";
-import { getVehicleMakes } from "@/features/garage/services/vehicle-catalog.service";
-import { getVehicleModels } from "@/features/garage/services/vehicle-catalog.service";
-import type { VehicleModel } from "@/features/garage/types/vehicle-catalog";
+import { useState } from "react";
+import useVehicleDocumentAutofill from "@/features/garage/hooks/useVehicleDocumentAutofill";
 import VehiclePhotoFields from "@/features/garage/components/add-vehicle/fields/VehiclePhotoFields";
 import VehicleDocumentScan from "@/features/garage/components/add-vehicle/VehicleDocumentScan";
 
-
-
 export default function AddVehicleForm() {
-  const [makes, setMakes] = useState<VehicleMake[]>([]);
-  const [isLoadingMakes, setIsLoadingMakes] = useState(true);
-  const [makesError, setMakesError] = useState<string | null>(null);
-  const [selectedMake, setSelectedMake] = useState("");
-  const [models, setModels] = useState<VehicleModel[]>([]);
-  const [selectedModel, setSelectedModel] = useState("");
-  const [isLoadingModels, setIsLoadingModels] = useState(false);
-  const [modelsError, setModelsError] = useState<string | null>(null);
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [photoError, setPhotoError] = useState<string | null>(null);
-  // Engine capacity in cubic centimetres (cc).
-  // Stored as text so the input can also be empty its used for documentation scan.
-  const [engineCc, setEngineCc] = useState("");
 
-
-
-  function handleMakeChange(makeId: string) {
-    if (makeId === selectedMake) return;
-    setSelectedMake(makeId);
-    setSelectedModel("");
-    setModels([]);
-    setModelsError(null);
-    setIsLoadingModels(Boolean(makeId) && makeId !== "other");
-  }
-
-  useEffect(() => {
-    let cancelled = false;
-
-    async function loadMakes() {
-      try {
-        const data = await getVehicleMakes("car");
-        if (!cancelled) {
-          setMakes(data);
-        }
-      } catch {
-        if (!cancelled) {
-          setMakesError("Could not load vehicle makes.");
-        }
-      } finally {
-        if (!cancelled) {
-          setIsLoadingMakes(false);
-        }
-      }
-    }
-
-    void loadMakes();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-  useEffect(() => {
-    if (!selectedMake || selectedMake === "other") return;
-
-    let cancelled = false;
-
-    async function loadModels() {
-      try {
-        const data = await getVehicleModels(selectedMake);
-
-        if (!cancelled) {
-          setModels(data);
-        }
-      } catch {
-        if (!cancelled) {
-          setModelsError("Could not load models.");
-        }
-      } finally {
-        if (!cancelled) {
-          setIsLoadingModels(false);
-        }
-      }
-    }
-
-    void loadModels();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [selectedMake]);
+  const {
+    makes, isLoadingMakes, makesError, selectedMake,
+    models, selectedModel, isLoadingModels, modelsError,
+    documentValues, handleFieldChange, handleDocumentExtracted,
+    handleMakeChange, handleModelChange,
+  } = useVehicleDocumentAutofill();
 
   return (
     <main className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-10">
@@ -112,15 +37,7 @@ export default function AddVehicleForm() {
 
         <input type="hidden" name="vehicle_type" value="car" />
 
-        <VehicleDocumentScan />
-
-
-        <VehiclePhotoFields
-          photoFile={photoFile}
-          photoError={photoError}
-          onPhotoChange={setPhotoFile}
-          onPhotoError={setPhotoError}
-        />
+        <VehicleDocumentScan onExtracted={handleDocumentExtracted} />
 
         <VehiclePhotoFields
           photoFile={photoFile}
@@ -128,21 +45,24 @@ export default function AddVehicleForm() {
           onPhotoChange={setPhotoFile}
           onPhotoError={setPhotoError}
         />
+
         <VehicleBasicFields
+          values={documentValues}
+          onFieldChange={handleFieldChange}
           makes={makes}
           selectedMake={selectedMake}
           onMakeChange={handleMakeChange}
           isLoadingMakes={isLoadingMakes}
           models={models}
           selectedModel={selectedModel}
-          onModelChange={setSelectedModel}
+          onModelChange={handleModelChange}
           isLoadingModels={isLoadingModels}
           modelsError={modelsError}
         />
-        <VehicleRegistrationFields />
+        <VehicleRegistrationFields values={documentValues} onFieldChange={handleFieldChange} />
         <VehicleTechnicalFields
-          engineCc={engineCc}
-          onEngineCcChange={setEngineCc}
+          values={documentValues}
+          onFieldChange={handleFieldChange}
         />
         <VehicleMileageFields />
         <VehiclePurchaseFields />
