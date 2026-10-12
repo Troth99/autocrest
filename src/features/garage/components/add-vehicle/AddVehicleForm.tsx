@@ -15,6 +15,8 @@ import { getVehicleModels } from "@/features/garage/services/vehicle-catalog.ser
 import type { VehicleModel } from "@/features/garage/types/vehicle-catalog";
 import VehiclePhotoFields from "@/features/garage/components/add-vehicle/VehiclePhotoFields";
 
+
+
 export default function AddVehicleForm() {
   const [makes, setMakes] = useState<VehicleMake[]>([]);
   const [isLoadingMakes, setIsLoadingMakes] = useState(true);
@@ -26,6 +28,7 @@ export default function AddVehicleForm() {
   const [modelsError, setModelsError] = useState<string | null>(null);
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [photoError, setPhotoError] = useState<string | null>(null);
+
 
 
   function handleMakeChange(makeId: string) {
@@ -102,6 +105,7 @@ export default function AddVehicleForm() {
         </p>
       )}
       <form className="grid gap-4" onSubmit={(event) => event.preventDefault()}>
+
         <input type="hidden" name="vehicle_type" value="car" />
         <VehiclePhotoFields
           photoFile={photoFile}

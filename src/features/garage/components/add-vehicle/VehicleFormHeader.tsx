@@ -12,11 +12,10 @@ export default function VehicleFormHeader() {
       <header className="my-6">
         <span className="eyebrow">YOUR VEHICLE DETAILS</span>
         <h1 className="mt-3 text-3xl font-semibold tracking-tight text-text-primary">
-          Add your car
+          Add your vehicle
         </h1>
         <p className="mt-2 section-description">
-          Keep your car&apos;s details together. Fields marked * are required.
-        </p>
+          Keep your vehicle&apos;s details together. Fields marked * are required.        </p>
         <p className="mt-2 text-sm text-muted">
           Form preview — saving is not available yet.
         </p>

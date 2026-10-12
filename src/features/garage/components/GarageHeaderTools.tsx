@@ -72,7 +72,7 @@ export default function GarageHeaderTools() {
           className="w-64 rounded-2xl p-2"
         >
           <DropdownMenuItem
-            onClick={() => router.push("/cars/add")}
+            onClick={() => router.push("/vehicles/add")}
             className="cursor-pointer gap-3 rounded-xl px-3 py-3"
           >
             <CarFront className="size-5" /> Add vehicle
