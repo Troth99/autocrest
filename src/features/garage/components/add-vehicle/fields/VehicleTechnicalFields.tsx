@@ -1,6 +1,12 @@
 import { Input } from "@/shared/components/ui/input";
 
-export default function VehicleTechnicalFields() {
+export default function VehicleTechnicalFields({
+  engineCc,
+  onEngineCcChange,
+}: {
+  engineCc: string;
+  onEngineCcChange: (value: string) => void;
+}) {
   return (
     <fieldset className="content-card min-w-0 rounded-2xl p-4 sm:p-5">
       <legend className="sr-only">Engine and drivetrain</legend>

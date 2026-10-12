@@ -14,6 +14,7 @@ import { getVehicleMakes } from "@/features/garage/services/vehicle-catalog.serv
 import { getVehicleModels } from "@/features/garage/services/vehicle-catalog.service";
 import type { VehicleModel } from "@/features/garage/types/vehicle-catalog";
 import VehiclePhotoFields from "@/features/garage/components/add-vehicle/fields/VehiclePhotoFields";
+import VehicleDocumentScan from "@/features/garage/components/add-vehicle/VehicleDocumentScan";
 
 
 
@@ -28,6 +29,9 @@ export default function AddVehicleForm() {
   const [modelsError, setModelsError] = useState<string | null>(null);
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [photoError, setPhotoError] = useState<string | null>(null);
+  // Engine capacity in cubic centimetres (cc).
+  // Stored as text so the input can also be empty its used for documentation scan.
+  const [engineCc, setEngineCc] = useState("");
 
 
 
@@ -104,9 +108,20 @@ export default function AddVehicleForm() {
           {makesError}
         </p>
       )}
-      <form className="grid gap-4" onSubmit={(event) => event.preventDefault()}>
+      <form className="vehicle-form grid gap-4" onSubmit={(event) => event.preventDefault()}>
 
         <input type="hidden" name="vehicle_type" value="car" />
+
+        <VehicleDocumentScan />
+
+
+        <VehiclePhotoFields
+          photoFile={photoFile}
+          photoError={photoError}
+          onPhotoChange={setPhotoFile}
+          onPhotoError={setPhotoError}
+        />
+
         <VehiclePhotoFields
           photoFile={photoFile}
           photoError={photoError}
@@ -125,7 +140,10 @@ export default function AddVehicleForm() {
           modelsError={modelsError}
         />
         <VehicleRegistrationFields />
-        <VehicleTechnicalFields />
+        <VehicleTechnicalFields
+          engineCc={engineCc}
+          onEngineCcChange={setEngineCc}
+        />
         <VehicleMileageFields />
         <VehiclePurchaseFields />
         <VehicleAdditionalDetails />

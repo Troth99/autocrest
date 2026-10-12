@@ -1,0 +1,117 @@
+"use client";
+
+import { useState } from "react";
+import type { ChangeEvent } from "react";
+import { FileScan, Upload, WandSparkles } from "lucide-react";
+
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
+const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/webp"];
+
+export default function VehicleDocumentScan() {
+    const [frontFile, setFrontFile] = useState<File | null>(null);
+    const [frontError, setFrontError] = useState<string | null>(null);
+
+    function handleFileChange(
+        event: ChangeEvent<HTMLInputElement>,
+    ) {
+        const file = event.target.files?.[0] ?? null;
+
+        setFrontError(null);
+
+        if (!file) {
+            setFrontFile(null);
+            return;
+        }
+
+        if (!ACCEPTED_TYPES.includes(file.type)) {
+            setFrontError("Choose a JPEG, PNG or WebP image.");
+            setFrontFile(null);
+            event.target.value = "";
+            return;
+        }
+
+        if (file.size > MAX_FILE_SIZE) {
+            setFrontError("The image must be 5 MB or smaller.");
+            setFrontFile(null);
+            event.target.value = "";
+            return;
+        }
+
+        setFrontFile(file);
+    }
+
+    return (
+        <fieldset className="min-w-0 rounded-2xl border border-sky-300 bg-sky-50 p-4 shadow-sm sm:p-6 dark:border-sky-700 dark:bg-slate-900">
+            <legend className="sr-only">Scan registration document</legend>
+
+            <div className="flex items-start gap-3">
+                <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-sky-700 text-white dark:bg-sky-400 dark:text-slate-950">
+                    <FileScan className="size-6" aria-hidden="true" />
+                </span>
+                <div>
+                    <h2 className="text-lg font-semibold text-slate-950 dark:text-white">Scan registration document</h2>
+                    <p className="mt-1 text-sm text-slate-700 dark:text-slate-300">
+                        Select a clear photo of the front of your registration document.
+                    </p>
+                </div>
+            </div>
+
+            <div className="mt-4 grid gap-4">
+                <div className="grid content-start gap-2">
+                    <input
+                        id="registration_document_front"
+                        type="file"
+                        accept="image/jpeg,image/png,image/webp"
+                        onChange={handleFileChange}
+                        aria-invalid={Boolean(frontError)}
+                        aria-describedby={`document_photo_help${frontError ? " document_front_error" : ""}`}
+                        className="peer sr-only"
+                    />
+                    <label
+                        htmlFor="registration_document_front"
+                        className="flex cursor-pointer flex-col items-center gap-3 rounded-xl border-2 border-dashed border-sky-500 bg-white px-4 py-7 text-center transition-colors hover:border-sky-700 hover:bg-sky-100 peer-focus-visible:outline-2 peer-focus-visible:outline-offset-4 peer-focus-visible:outline-sky-600 sm:flex-row sm:gap-4 sm:text-left dark:border-sky-500 dark:bg-slate-800 dark:hover:border-sky-300 dark:hover:bg-slate-700"
+                    >
+                        <Upload className="size-7 shrink-0 text-sky-700 dark:text-sky-300" aria-hidden="true" />
+                        <span className="min-w-0 flex-1">
+                            <span className="block break-all text-base font-semibold text-slate-950 dark:text-white">
+                                {frontFile ? frontFile.name : "Upload front document photo"}
+                            </span>
+                            <span id="document_photo_help" className="mt-1 block text-sm text-slate-600 dark:text-slate-300">
+                                JPEG, PNG or WebP. Maximum 5 MB.
+                            </span>
+                        </span>
+                        <span className="shrink-0 rounded-lg bg-sky-700 px-4 py-2.5 text-sm font-semibold text-white dark:bg-sky-400 dark:text-slate-950">
+                            {frontFile ? "Change photo" : "Choose photo"}
+                        </span>
+                    </label>
+
+                    {frontError && (
+                        <p
+                            id="document_front_error"
+                            role="alert"
+                            className="text-sm text-destructive"
+                        >
+                            {frontError}
+                        </p>
+                    )}
+                </div>
+
+            </div>
+
+            <div className="mt-4 flex flex-wrap items-center gap-3">
+                <button
+                    type="button"
+                    disabled
+                    className="inline-flex cursor-not-allowed items-center gap-2 rounded-lg border border-slate-300 bg-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-600 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-400"
+                >
+                    <WandSparkles className="size-4" aria-hidden="true" />
+                    Extract details
+                </button>
+
+                <p className="text-sm text-slate-700 dark:text-slate-300">
+                    Automatic filling will be available soon.
+                </p>
+            </div>
+        </fieldset>
+    );
+}
