@@ -1,19 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import VehicleBasicFields from "@/features/garage/components/add-vehicle/VehicleBasicFields";
-import VehicleRegistrationFields from "@/features/garage/components/add-vehicle/VehicleRegistrationFields";
-import VehicleTechnicalFields from "@/features/garage/components/add-vehicle/VehicleTechnicalFields";
-import VehicleMileageFields from "@/features/garage/components/add-vehicle/VehicleMileageFields";
-import VehiclePurchaseFields from "@/features/garage/components/add-vehicle/VehiclePurchaseFields";
+import VehicleBasicFields from "@/features/garage/components/add-vehicle/fields/VehicleBasicFields";
+import VehicleRegistrationFields from "@/features/garage/components/add-vehicle/fields/VehicleRegistrationFields";
+import VehicleTechnicalFields from "@/features/garage/components/add-vehicle/fields/VehicleTechnicalFields";
+import VehicleMileageFields from "@/features/garage/components/add-vehicle/fields/VehicleMileageFields";
+import VehiclePurchaseFields from "@/features/garage/components/add-vehicle/fields/VehiclePurchaseFields";
 import VehicleFormHeader from "@/features/garage/components/add-vehicle/VehicleFormHeader";
-import VehicleAdditionalDetails from "@/features/garage/components/add-vehicle/VehicleAdditionalDetails";
+import VehicleAdditionalDetails from "@/features/garage/components/add-vehicle/fields/VehicleAdditionalDetails";
 import type { VehicleMake } from "@/features/garage/types/vehicle-catalog";
 import { useEffect, useState } from "react";
 import { getVehicleMakes } from "@/features/garage/services/vehicle-catalog.service";
 import { getVehicleModels } from "@/features/garage/services/vehicle-catalog.service";
 import type { VehicleModel } from "@/features/garage/types/vehicle-catalog";
-import VehiclePhotoFields from "@/features/garage/components/add-vehicle/VehiclePhotoFields";
+import VehiclePhotoFields from "@/features/garage/components/add-vehicle/fields/VehiclePhotoFields";
 
 
 
