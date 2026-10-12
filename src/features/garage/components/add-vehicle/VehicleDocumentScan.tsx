@@ -111,9 +111,7 @@ export default function VehicleDocumentScan({ onExtracted }: {
                     <p className="mt-1 text-sm text-slate-700 dark:text-slate-300">
                         Select a clear photo of your registration document (Part I or Part II).
                     </p>
-                    <p className="mt-1 text-xs text-slate-600 dark:text-slate-400">
-                        English and Cyrillic text can be scanned. Vehicle names may need manual correction after scanning.
-                    </p>
+            
                 </div>
             </div>
 
