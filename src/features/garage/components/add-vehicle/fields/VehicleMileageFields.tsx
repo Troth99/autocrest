@@ -1,6 +1,11 @@
 import { Input } from "@/shared/components/ui/input";
+import type { VehicleFormRegister } from "@/features/garage/types/add-vehicle-form";
 
-export default function VehicleMileageFields() {
+type Props = {
+  register: VehicleFormRegister;
+};
+
+export default function VehicleMileageFields({ register }: Props) {
   return (
     <fieldset className="content-card min-w-0 rounded-2xl p-4 sm:p-5">
       <legend className="sr-only">Mileage</legend>
@@ -16,7 +21,7 @@ export default function VehicleMileageFields() {
           <span>Current mileage (km) *</span>
           <Input
             id="mileage_km"
-            name="mileage_km"
+            {...register("mileage_km")}
             type="number"
             placeholder="e.g. 85000"
             required
@@ -30,7 +35,7 @@ export default function VehicleMileageFields() {
           <span>Mileage recorded on</span>
           <Input
             id="mileage_recorded_at"
-            name="mileage_recorded_at"
+            {...register("mileage_recorded_at")}
             type="date"
           />
         </label>

@@ -12,6 +12,10 @@ import { useState } from "react";
 import useVehicleDocumentAutofill from "@/features/garage/hooks/useVehicleDocumentAutofill";
 import VehiclePhotoFields from "@/features/garage/components/add-vehicle/fields/VehiclePhotoFields";
 import VehicleDocumentScan from "@/features/garage/components/add-vehicle/VehicleDocumentScan";
+import useForm from "@/shared/hooks/useForm";
+import { initialValues } from "@/features/garage/constants/add-vehicle-form";
+import type { AddVehicleFormValues } from "@/features/garage/types/add-vehicle-form";
+
 
 export default function AddVehicleForm() {
   const [photoFile, setPhotoFile] = useState<File | null>(null);
@@ -24,6 +28,29 @@ export default function AddVehicleForm() {
     handleMakeChange, handleModelChange,
   } = useVehicleDocumentAutofill();
 
+  const {
+    register,
+    registerCheckbox,
+    formHandler,
+  } = useForm(handleAddCar, initialValues);
+
+  async function handleAddCar(values: AddVehicleFormValues) {
+    // Catalog selection and document autofill already own these fields.
+    // Include their current values when submitting the registered inputs.
+    const submittedValues: AddVehicleFormValues = {
+      ...values,
+      ...documentValues,
+      make_id: selectedMake,
+      model_id: selectedMake === "other" ? "" : selectedModel,
+      custom_make: selectedMake === "other" ? documentValues.custom_make : "",
+      custom_model:
+        selectedMake === "other" || selectedModel === "other"
+          ? documentValues.custom_model
+          : "",
+    };
+
+   
+  }
   return (
     <main className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-10">
       <VehicleFormHeader />
@@ -33,7 +60,7 @@ export default function AddVehicleForm() {
           {makesError}
         </p>
       )}
-      <form className="vehicle-form grid gap-4" onSubmit={(event) => event.preventDefault()}>
+      <form className="vehicle-form grid gap-4" onSubmit={formHandler}>
 
         <input type="hidden" name="vehicle_type" value="car" />
 
@@ -47,6 +74,7 @@ export default function AddVehicleForm() {
         />
 
         <VehicleBasicFields
+          register={register}
           values={documentValues}
           onFieldChange={handleFieldChange}
           makes={makes}
@@ -59,14 +87,14 @@ export default function AddVehicleForm() {
           isLoadingModels={isLoadingModels}
           modelsError={modelsError}
         />
-        <VehicleRegistrationFields values={documentValues} onFieldChange={handleFieldChange} />
-        <VehicleTechnicalFields
+        <VehicleRegistrationFields register={register} values={documentValues} onFieldChange={handleFieldChange} />
+        <VehicleTechnicalFields register={register}
           values={documentValues}
           onFieldChange={handleFieldChange}
         />
-        <VehicleMileageFields />
-        <VehiclePurchaseFields />
-        <VehicleAdditionalDetails />
+        <VehicleMileageFields register={register} />
+        <VehiclePurchaseFields register={register} />
+        <VehicleAdditionalDetails register={register} registerCheckbox={registerCheckbox} />
         <div className="flex flex-wrap items-center justify-end gap-3">
           <Link
             href="/garrage"
@@ -75,9 +103,8 @@ export default function AddVehicleForm() {
             Cancel
           </Link>
           <button
-            type="button"
-            disabled
-            className="action-button cursor-not-allowed opacity-50"
+            type="submit"
+            className="action-button cursor-pointer"
           >
             Add car
           </button>

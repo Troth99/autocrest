@@ -1,7 +1,10 @@
+import type { VehicleFormRegister } from "@/features/garage/types/add-vehicle-form";
 import type { VehicleDocumentFieldProps } from "@/features/garage/types/vehicle-document-form";
 import { Input } from "@/shared/components/ui/input";
 
-export default function VehicleRegistrationFields({ values, onFieldChange }: VehicleDocumentFieldProps) {
+type Props = VehicleDocumentFieldProps & { register: VehicleFormRegister };
+
+export default function VehicleRegistrationFields({ values, onFieldChange, register }: Props) {
   return (
     <fieldset className="content-card min-w-0 rounded-2xl p-4 sm:p-5">
       <legend className="sr-only">Registration</legend>
@@ -52,7 +55,7 @@ export default function VehicleRegistrationFields({ values, onFieldChange }: Veh
           <span>Registration country code</span>
           <Input
             id="registration_country_code"
-            name="registration_country_code"
+            {...register("registration_country_code")}
             type="text"
             placeholder="e.g. BG"
           />

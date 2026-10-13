@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { ImagePlus } from "lucide-react";
 
+
 type Proops = {
     photoFile: File | null;
     photoError: string | null;

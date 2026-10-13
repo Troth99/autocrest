@@ -1,7 +1,10 @@
+import type { VehicleFormRegister } from "@/features/garage/types/add-vehicle-form";
 import type { VehicleDocumentFieldProps } from "@/features/garage/types/vehicle-document-form";
 import { Input } from "@/shared/components/ui/input";
 
-export default function VehicleTechnicalFields({ values, onFieldChange }: VehicleDocumentFieldProps) {
+type Props = VehicleDocumentFieldProps & { register: VehicleFormRegister };
+
+export default function VehicleTechnicalFields({ values, onFieldChange, register }: Props) {
   return (
     <fieldset className="content-card min-w-0 rounded-2xl p-4 sm:p-5">
       <legend className="sr-only">Engine and drivetrain</legend>
@@ -70,7 +73,7 @@ export default function VehicleTechnicalFields({ values, onFieldChange }: Vehicl
           <span>Transmission</span>
           <select
             id="transmission"
-            name="transmission"
+            {...register("transmission")}
             defaultValue=""
             className="h-9 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm text-text-primary outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30"
           >
@@ -98,7 +101,7 @@ export default function VehicleTechnicalFields({ values, onFieldChange }: Vehicl
           <span>Drivetrain</span>
           <select
             id="drivetrain"
-            name="drivetrain"
+            {...register("drivetrain")}
             defaultValue=""
             className="h-9 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm text-text-primary outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30"
           >

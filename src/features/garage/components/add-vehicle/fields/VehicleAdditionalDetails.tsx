@@ -1,4 +1,8 @@
-﻿export default function VehicleAdditionalDetails() {
+import type { VehicleFormRegister, VehicleFormRegisterCheckbox } from "@/features/garage/types/add-vehicle-form";
+
+type Props = { register: VehicleFormRegister; registerCheckbox: VehicleFormRegisterCheckbox };
+
+export default function VehicleAdditionalDetails({ register, registerCheckbox }: Props) {
   return (
     <fieldset className="content-card min-w-0 rounded-2xl p-4 sm:p-5">
       <legend className="sr-only">Additional details</legend>
@@ -10,7 +14,7 @@
         Description
         <textarea
           id="description"
-          name="description"
+          {...register("description")}
           rows={4}
           placeholder="Notes about your car, modifications, or anything else you want to remember."
           className="w-full resize-y rounded-lg border border-input bg-transparent px-2.5 py-2 text-sm text-text-primary outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30"
@@ -22,7 +26,7 @@
       >
         <input
           id="is_primary"
-          name="is_primary"
+          {...registerCheckbox("is_primary")}
           type="checkbox"
           className="mt-1 size-4 accent-info"
         />

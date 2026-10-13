@@ -5,6 +5,7 @@ import { Fragment } from "react";
 import { Separator } from "@/shared/components/ui/separator";
 import { Input } from "@/shared/components/ui/input";
 import type { VehicleMake, VehicleModel } from "@/features/garage/types/vehicle-catalog";
+import type { VehicleFormRegister } from "@/features/garage/types/add-vehicle-form";
 
 type Props = VehicleDocumentFieldProps & {
   makes: VehicleMake[];
@@ -16,6 +17,7 @@ type Props = VehicleDocumentFieldProps & {
   onModelChange: (modelId: string) => void;
   isLoadingModels: boolean;
   modelsError: string | null;
+  register: VehicleFormRegister;
 };
 
 export default function VehicleBasicFields({
@@ -30,6 +32,7 @@ export default function VehicleBasicFields({
   onModelChange,
   isLoadingModels,
   modelsError,
+  register,
 }: Props) {
   return (
     <fieldset className="content-card min-w-0 rounded-2xl p-4 sm:p-5">
@@ -164,7 +167,7 @@ export default function VehicleBasicFields({
           <span>Manufacture year</span>
           <Input
             id="manufacture_year"
-            name="manufacture_year"
+            {...register("manufacture_year")}
             type="number"
             placeholder="e.g. 2020"
             min={0}
@@ -177,7 +180,7 @@ export default function VehicleBasicFields({
           <span>Trim / variant</span>
           <Input
             id="trim"
-            name="trim"
+            {...register("trim")}
             type="text"
             placeholder="e.g. 1.8 Hybrid Design"
           />
@@ -189,7 +192,7 @@ export default function VehicleBasicFields({
           <span>Nickname</span>
           <Input
             id="nickname"
-            name="nickname"
+            {...register("nickname")}
             type="text"
             placeholder="A name for your car"
           />
@@ -201,8 +204,7 @@ export default function VehicleBasicFields({
           <span>Vehicle use</span>
           <select
             id="vehicle_use"
-            name="vehicle_use"
-            defaultValue=""
+            {...register("vehicle_use")}
             className="h-9 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm text-text-primary outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30"
           >
             <option value="" className="bg-panel text-text-primary">

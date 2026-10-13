@@ -1,6 +1,9 @@
+import type { VehicleFormRegister } from "@/features/garage/types/add-vehicle-form";
 import { Input } from "@/shared/components/ui/input";
 
-export default function VehiclePurchaseFields() {
+type Props = { register: VehicleFormRegister };
+
+export default function VehiclePurchaseFields({ register }: Props) {
   return (
     <fieldset className="content-card min-w-0 rounded-2xl p-4 sm:p-5">
       <legend className="sr-only">Purchase details</legend>
@@ -14,7 +17,7 @@ export default function VehiclePurchaseFields() {
           className="grid gap-2 text-sm font-medium text-text-secondary"
         >
           <span>Purchase date</span>
-          <Input id="purchase_date" name="purchase_date" type="date" />
+          <Input id="purchase_date" {...register("purchase_date")} type="date" />
         </label>
         <label
           htmlFor="purchase_price"
@@ -23,7 +26,7 @@ export default function VehiclePurchaseFields() {
           <span>Purchase price</span>
           <Input
             id="purchase_price"
-            name="purchase_price"
+            {...register("purchase_price")}
             type="number"
             min={0}
             step="0.01"
@@ -36,7 +39,7 @@ export default function VehiclePurchaseFields() {
           <span>Currency code</span>
           <Input
             id="purchase_currency_code"
-            name="purchase_currency_code"
+            {...register("purchase_currency_code")}
             type="text"
             placeholder="e.g. EUR"
           />
