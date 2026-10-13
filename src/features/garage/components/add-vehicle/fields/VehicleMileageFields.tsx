@@ -1,6 +1,13 @@
+import VehicleFieldError from "@/features/garage/components/add-vehicle/VehicleFieldError";
+import type { VehicleFormErrors } from "@/features/garage/types/add-vehicle-form";
 import { Input } from "@/shared/components/ui/input";
+import type { VehicleFormRegister } from "@/features/garage/types/add-vehicle-form";
 
-export default function VehicleMileageFields() {
+type Props = { errors: VehicleFormErrors;
+  register: VehicleFormRegister;
+};
+
+export default function VehicleMileageFields({ errors, register }: Props) {
   return (
     <fieldset className="content-card min-w-0 rounded-2xl p-4 sm:p-5">
       <legend className="sr-only">Mileage</legend>
@@ -16,12 +23,12 @@ export default function VehicleMileageFields() {
           <span>Current mileage (km) *</span>
           <Input
             id="mileage_km"
-            name="mileage_km"
+            {...register("mileage_km")}
             type="number"
             placeholder="e.g. 85000"
-            required
             min={0}
-          />
+          aria-invalid={Boolean(errors.mileage_km)} aria-describedby={errors.mileage_km ? "mileage_km-error" : undefined} />
+<VehicleFieldError field="mileage_km" message={errors.mileage_km} />
         </label>
         <label
           htmlFor="mileage_recorded_at"
@@ -30,9 +37,10 @@ export default function VehicleMileageFields() {
           <span>Mileage recorded on</span>
           <Input
             id="mileage_recorded_at"
-            name="mileage_recorded_at"
+            {...register("mileage_recorded_at")}
             type="date"
-          />
+          aria-invalid={Boolean(errors.mileage_recorded_at)} aria-describedby={errors.mileage_recorded_at ? "mileage_recorded_at-error" : undefined} />
+<VehicleFieldError field="mileage_recorded_at" message={errors.mileage_recorded_at} />
         </label>
       </div>
     </fieldset>

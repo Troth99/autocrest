@@ -483,6 +483,68 @@ body {
   }
 }
 
+@keyframes garage-car-idle {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  35% { transform: translateY(-1.5px) rotate(-1deg); }
+  70% { transform: translateY(0.5px) rotate(1deg); }
+}
+
+@keyframes garage-road-travel {
+  to { background-position: -16px 0; }
+}
+
+.garage-vehicle-card {
+  position: relative;
+  border: 1px solid var(--border-default);
+  border-radius: 1.5rem;
+  background:
+    radial-gradient(ellipse at top right, color-mix(in srgb, var(--info) 14%, transparent), transparent 65%),
+    var(--surface-panel);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 10%);
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.garage-vehicle-placeholder {
+  background:
+    radial-gradient(ellipse at center, var(--info-soft), transparent 75%),
+    var(--surface-input);
+}
+
+.garage-vehicle-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 1.5rem auto;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--info), transparent);
+}
+
+@media (hover: hover) {
+  .garage-vehicle-card:hover {
+    border-color: color-mix(in srgb, var(--info) 45%, var(--border-default));
+    box-shadow: 0 16px 36px rgb(0 0 0 / 14%);
+  }
+}
+
+.garage-car-motion {
+  animation: garage-car-idle 2.4s ease-in-out infinite;
+}
+
+.garage-road-motion {
+  background-image: repeating-linear-gradient(to right, currentColor 0 8px, transparent 8px 16px);
+  animation: garage-road-travel 1.2s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .garage-vehicle-card {
+    transition: none;
+  }
+
+  .garage-car-motion,
+  .garage-road-motion {
+    animation: none;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

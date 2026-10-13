@@ -11,12 +11,14 @@ const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 export default function VehicleDocumentScan({ onExtracted }: {
     onExtracted: (details: VehicleDocumentDetails) => void;
 }) {
+    // The photo stays local until the user clicks Extract details.
     const [frontFile, setFrontFile] = useState<File | null>(null);
     const [frontError, setFrontError] = useState<string | null>(null);
     const [isScanning, setIsScanning] = useState(false);
     const [extractedDetails, setExtractedDetails] =
         useState<VehicleDocumentDetails | null>(null);
 
+    // Validate the selected photo and clear the previous scan result.
     function handleFileChange(
         event: ChangeEvent<HTMLInputElement>,
     ) {
@@ -48,6 +50,7 @@ export default function VehicleDocumentScan({ onExtracted }: {
     }
 
     async function handleExtract() {
+        // Prevent requests without a photo and duplicate requests while scanning.
         if (!frontFile || isScanning) return;
 
         setIsScanning(true);
@@ -55,6 +58,7 @@ export default function VehicleDocumentScan({ onExtracted }: {
         setExtractedDetails(null);
 
         try {
+            // Send the file to our server; the Gemini API key stays on the server.
             const formData = new FormData();
             formData.append("document", frontFile);
 
@@ -74,12 +78,14 @@ export default function VehicleDocumentScan({ onExtracted }: {
                 );
             }
 
+            // Validate the returned data before passing it to the form.
             const details = vehicleDocumentSchema.safeParse(result.details);
 
             if (!details.success) {
                 throw new Error("The server returned invalid vehicle details.");
             }
 
+            // Pass the details to the parent to fill the form; this does not save to the database.
             onExtracted(details.data);
             setExtractedDetails(details.data);
         } catch (error) {
@@ -91,6 +97,7 @@ export default function VehicleDocumentScan({ onExtracted }: {
                         : "Could not scan the document.",
             );
         } finally {
+            // Reset the loading state after either success or failure.
             setIsScanning(false);
         }
     }
@@ -111,9 +118,7 @@ export default function VehicleDocumentScan({ onExtracted }: {
                     <p className="mt-1 text-sm text-slate-700 dark:text-slate-300">
                         Select a clear photo of your registration document (Part I or Part II).
                     </p>
-                    <p className="mt-1 text-xs text-slate-600 dark:text-slate-400">
-                        English and Cyrillic text can be scanned. Vehicle names may need manual correction after scanning.
-                    </p>
+            
                 </div>
             </div>
 
