@@ -1,8 +1,10 @@
+import VehicleFieldError from "@/features/garage/components/add-vehicle/VehicleFieldError";
+import type { VehicleFormErrors } from "@/features/garage/types/add-vehicle-form";
 import type { VehicleFormRegister, VehicleFormRegisterCheckbox } from "@/features/garage/types/add-vehicle-form";
 
-type Props = { register: VehicleFormRegister; registerCheckbox: VehicleFormRegisterCheckbox };
+type Props = { errors: VehicleFormErrors; register: VehicleFormRegister; registerCheckbox: VehicleFormRegisterCheckbox };
 
-export default function VehicleAdditionalDetails({ register, registerCheckbox }: Props) {
+export default function VehicleAdditionalDetails({ errors, register, registerCheckbox }: Props) {
   return (
     <fieldset className="content-card min-w-0 rounded-2xl p-4 sm:p-5">
       <legend className="sr-only">Additional details</legend>
@@ -15,10 +17,12 @@ export default function VehicleAdditionalDetails({ register, registerCheckbox }:
         <textarea
           id="description"
           {...register("description")}
+          aria-invalid={Boolean(errors.description)} aria-describedby={errors.description ? "description-error" : undefined}
           rows={4}
           placeholder="Notes about your car, modifications, or anything else you want to remember."
           className="w-full resize-y rounded-lg border border-input bg-transparent px-2.5 py-2 text-sm text-text-primary outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30"
         />
+        <VehicleFieldError field="description" message={errors.description} />
       </label>
       <label
         htmlFor="is_primary"
@@ -36,6 +40,7 @@ export default function VehicleAdditionalDetails({ register, registerCheckbox }:
             The vehicle you use most often.
           </span>
         </span>
+        <VehicleFieldError field="is_primary" message={errors.is_primary} />
       </label>
     </fieldset>
   );

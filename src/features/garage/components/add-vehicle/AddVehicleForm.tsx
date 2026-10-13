@@ -17,7 +17,9 @@ import { initialValues } from "@/features/garage/constants/add-vehicle-form";
 import { createClient } from "@/lib/supabase/client";
 import { addVehicle } from "@/features/garage/services/vehicles.service";
 import { useRouter } from "next/navigation";
-import type { AddVehicleFormValues } from "@/features/garage/types/add-vehicle-form";
+import type { AddVehicleFormValues, VehicleFormErrors } from "@/features/garage/types/add-vehicle-form";
+import { addVehicleSchema } from "@/features/garage/validators/add-vehicle-validator";
+import { uploadVehiclePhoto } from "@/features/garage/services/vehicle-photo.service";
 
 
 export default function AddVehicleForm() {
@@ -26,6 +28,8 @@ export default function AddVehicleForm() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<VehicleFormErrors>({});
+  const [savedVehicleId, setSavedVehicleId] = useState<string | null>(null);
 
   const {
     makes, isLoadingMakes, makesError, selectedMake,
@@ -43,6 +47,24 @@ export default function AddVehicleForm() {
   async function handleAddCar(values: AddVehicleFormValues) {
     if (isSubmitting) return;
 
+    // A retry after a photo error must not insert another vehicle.
+    if (savedVehicleId) {
+      setIsSubmitting(true);
+      setSubmitError(null);
+      setPhotoError(null);
+      try {
+        if (photoFile) await uploadVehiclePhoto(createClient(), savedVehicleId, photoFile);
+        router.push("/garrage");
+        router.refresh();
+      } catch (error) {
+        setPhotoError(error instanceof Error ? error.message : "Photo upload failed. Please try again.");
+        setSubmitError("Your car is already saved. Retry the photo upload or continue to the garage.");
+      } finally {
+        setIsSubmitting(false);
+      }
+      return;
+    }
+
     // Catalog selection and document autofill already own these fields.
     // Include their current values when submitting the registered inputs.
     const submittedValues: AddVehicleFormValues = {
@@ -57,8 +79,8 @@ export default function AddVehicleForm() {
           : "",
     };
 
-    setIsSubmitting(true);
     setSubmitError(null);
+    setFieldErrors({});
 
     try {
       const make =
@@ -71,19 +93,45 @@ export default function AddVehicleForm() {
           ? submittedValues.custom_model
           : models.find((item) => item.id === selectedModel)?.name ?? "";
 
+      const input = { ...submittedValues, make, model };
+      const validation = addVehicleSchema.safeParse(input);
+
+      if (!validation.success) {
+        const errors: VehicleFormErrors = {};
+        for (const issue of validation.error.issues) {
+          const field = issue.path[0] as keyof VehicleFormErrors;
+          if (!errors[field]) errors[field] = issue.message;
+        }
+        setFieldErrors(errors);
+        setSubmitError("Please correct the highlighted fields.");
+        return;
+      }
+
+      setIsSubmitting(true);
       const supabase = createClient();
 
-      await addVehicle(supabase, {
+      const vehicleId = await addVehicle(supabase, {
         ...submittedValues,
         make,
         model,
       });
+      setSavedVehicleId(vehicleId);
+
+      if (photoFile) {
+        try {
+          await uploadVehiclePhoto(supabase, vehicleId, photoFile);
+        } catch (error) {
+          setPhotoError(error instanceof Error ? error.message : "Photo upload failed. Please try again.");
+          setSubmitError("Your car is saved, but its photo could not be uploaded. Retry below or continue to the garage.");
+          return;
+        }
+      }
 
       router.push("/garrage");
       router.refresh();
-    } catch {
+    } catch (error) {
       setSubmitError(
-        "Could not save the car. Check your details and try again.",
+        error instanceof Error ? error.message : "Could not save the car. Please try again.",
       );
     } finally {
       setIsSubmitting(false);
@@ -100,11 +148,28 @@ export default function AddVehicleForm() {
           {makesError}
         </p>
       )}
-      <form className="vehicle-form grid gap-4" onSubmit={formHandler}>
+      <form
+        noValidate
+        className="vehicle-form grid gap-4"
+        onSubmit={formHandler}
+        onChange={(event) => {
+          const target = event.target;
+          if (!(target instanceof HTMLInputElement || target instanceof HTMLSelectElement || target instanceof HTMLTextAreaElement)) return;
+          const field = target.name === "custom_make" ? "make" : target.name === "custom_model" ? "model" : target.name;
+          setFieldErrors((current) => ({ ...current, [field]: undefined }));
+          setSubmitError(null);
+        }}
+      >
 
         <input type="hidden" name="vehicle_type" value="car" />
 
-        <VehicleDocumentScan onExtracted={handleDocumentExtracted} />
+        <fieldset disabled={isSubmitting || Boolean(savedVehicleId)} className="contents">
+          <VehicleDocumentScan onExtracted={(details) => {
+            handleDocumentExtracted(details);
+            setFieldErrors({});
+            setSubmitError(null);
+          }} />
+        </fieldset>
 
         <VehiclePhotoFields
           photoFile={photoFile}
@@ -113,28 +178,39 @@ export default function AddVehicleForm() {
           onPhotoError={setPhotoError}
         />
 
-        <VehicleBasicFields
-          register={register}
-          values={documentValues}
-          onFieldChange={handleFieldChange}
-          makes={makes}
-          selectedMake={selectedMake}
-          onMakeChange={handleMakeChange}
-          isLoadingMakes={isLoadingMakes}
-          models={models}
-          selectedModel={selectedModel}
-          onModelChange={handleModelChange}
-          isLoadingModels={isLoadingModels}
-          modelsError={modelsError}
-        />
-        <VehicleRegistrationFields register={register} values={documentValues} onFieldChange={handleFieldChange} />
-        <VehicleTechnicalFields register={register}
-          values={documentValues}
-          onFieldChange={handleFieldChange}
-        />
-        <VehicleMileageFields register={register} />
-        <VehiclePurchaseFields register={register} />
-        <VehicleAdditionalDetails register={register} registerCheckbox={registerCheckbox} />
+        <fieldset disabled={isSubmitting || Boolean(savedVehicleId)} className="grid min-w-0 gap-4 border-0 p-0">
+          <VehicleBasicFields
+            errors={fieldErrors}
+            register={register}
+            values={documentValues}
+            onFieldChange={handleFieldChange}
+            makes={makes}
+            selectedMake={selectedMake}
+            onMakeChange={(makeId) => {
+              handleMakeChange(makeId);
+              setFieldErrors((current) => ({ ...current, make: undefined, model: undefined }));
+              setSubmitError(null);
+            }}
+            isLoadingMakes={isLoadingMakes}
+            models={models}
+            selectedModel={selectedModel}
+            onModelChange={(modelId) => {
+              handleModelChange(modelId);
+              setFieldErrors((current) => ({ ...current, model: undefined }));
+              setSubmitError(null);
+            }}
+            isLoadingModels={isLoadingModels}
+            modelsError={modelsError}
+          />
+          <VehicleRegistrationFields errors={fieldErrors} register={register} values={documentValues} onFieldChange={handleFieldChange} />
+          <VehicleTechnicalFields errors={fieldErrors} register={register}
+            values={documentValues}
+            onFieldChange={handleFieldChange}
+          />
+          <VehicleMileageFields errors={fieldErrors} register={register} />
+          <VehiclePurchaseFields errors={fieldErrors} register={register} />
+          <VehicleAdditionalDetails errors={fieldErrors} register={register} registerCheckbox={registerCheckbox} />
+        </fieldset>
         {submitError && (
           <p role="alert" className="text-sm text-destructive">
             {submitError}
@@ -145,14 +221,14 @@ export default function AddVehicleForm() {
             href="/garrage"
             className="rounded-lg border border-line px-5 py-2.5 text-sm font-medium text-text-secondary hover:bg-input/45"
           >
-            Cancel
+            {savedVehicleId ? "Continue to garage" : "Cancel"}
           </Link>
           <button
             type="submit"
             disabled={isSubmitting}
             className="action-button cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {isSubmitting ? "Saving..." : "Add car"}
+            {isSubmitting ? "Saving..." : savedVehicleId ? photoFile ? "Retry photo upload" : "Continue to garage" : "Add car"}
           </button>
         </div>
       </form>

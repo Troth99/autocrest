@@ -2,6 +2,7 @@ import VehicleCard from "@/features/garage/components/VehicleCard";
 import GarageOverview from "@/features/garage/components/GarageOverview";
 import { CarFront } from "lucide-react";
 import { getVehicles } from "@/features/garage/services/vehicles.service";
+import { getVehiclePhotoUrls } from "@/features/garage/services/vehicle-photo.service";
 import { createClient } from "@/lib/supabase/server";
 import AddVehicleButton from "./components/AddVehicleButton";
 import Link from "next/link";
@@ -9,6 +10,7 @@ import Link from "next/link";
 export default async function GaragePage({ query = "" }: { query?: string }) {
   const supabase = await createClient();
   const vehicles = await getVehicles(supabase);
+  const photos = await getVehiclePhotoUrls(supabase, vehicles.map((vehicle) => vehicle.id));
   const matchingVehicles = vehicles.filter((vehicle) =>
     [vehicle.make, vehicle.model, vehicle.nickname, vehicle.plate].filter(Boolean).join(" ").toLocaleLowerCase().includes(query.toLocaleLowerCase()),
   );
@@ -45,6 +47,7 @@ export default async function GaragePage({ query = "" }: { query?: string }) {
               {vehicles.length} {vehicles.length === 1 ? "vehicle" : "vehicles"}
             </span>
           </div>
+          {photos.error && <p role="alert" className="mb-4 text-sm text-muted">{photos.error} Refresh to try again.</p>}
           {vehicles.length === 0 ? (
             <div className="panel-card px-6 py-14 text-center">
               <CarFront
@@ -72,8 +75,8 @@ export default async function GaragePage({ query = "" }: { query?: string }) {
               ? "grid grid-cols-1 justify-items-center gap-5"
               : "grid gap-5 md:grid-cols-2 xl:grid-cols-1 2xl:grid-cols-2"}>
               {matchingVehicles.map((vehicle) => (
-                <div key={vehicle.id} className={matchingVehicles.length === 1 ? "@container w-full max-w-[680px]" : "@container min-w-0"}>
-                  <VehicleCard vehicle={vehicle} />
+                <div key={vehicle.id} className={matchingVehicles.length === 1 ? "@container w-full max-w-170" : "@container min-w-0"}>
+                  <VehicleCard vehicle={vehicle} photoUrl={photos.urls[vehicle.id]} />
                 </div>
               ))}
             </div>

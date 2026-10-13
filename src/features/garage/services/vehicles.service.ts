@@ -2,7 +2,9 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Vehicle } from "@/features/garage/types/vehicle";
 import { addVehicleSchema } from "@/features/garage/validators/add-vehicle-validator";
 
-export async function getVehicles(supabase: SupabaseClient): Promise<Vehicle[]> {
+export async function getVehicles(
+  supabase: SupabaseClient,
+): Promise<Vehicle[]> {
   const {
     data: { user },
     error: authError,
@@ -46,13 +48,51 @@ export async function addVehicle(supabase: SupabaseClient, input: unknown) {
     throw new Error("You must be signed in to add a car.");
   }
 
-  const { error } = await supabase.from("vehicles").insert({
-    ...values,
-    user_id: user.id,
-    vehicle_type: "car",
-  });
+  const { data, error } = await supabase
+    .from("vehicles")
+    .insert({
+      ...values,
+      user_id: user.id,
+      vehicle_type: "car",
+    })
+    .select("id")
+    .single();
 
   if (error) {
+    console.error(
+      "Vehicle insert failed",
+      JSON.stringify({
+        code: error.code,
+        message: error.message,
+        details: error.details,
+        hint: error.hint,
+      }),
+    );
+
+    if (error.code === "23505") {
+      if (error.message.includes("vehicles_one_primary_per_user_idx")) {
+        throw new Error(
+          "A primary vehicle is already set. Uncheck 'Set as my primary vehicle' to add another vehicle.",
+        );
+      }
+      throw new Error("A vehicle with these unique details already exists.");
+    }
+    if (error.code === "23514") {
+      throw new Error(
+        "The vehicle details do not meet a database rule. Check the browser console for the rule name.",
+      );
+    }
+    if (error.code === "42501") {
+      throw new Error(
+        "Your account is not allowed to save this vehicle. Check the vehicles access policies.",
+      );
+    }
+    throw new Error(
+      `Could not save the car (${error.code || "database error"}). Please try again.`,
+    );
+  }
+  if (!data) {
     throw new Error("Could not save the car.");
   }
+  return data.id as string;
 }
