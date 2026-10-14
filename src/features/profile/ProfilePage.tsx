@@ -35,9 +35,9 @@ export default function ProfilePage() {
 
   const lastSignIn = lastSignInAt
     ? new Intl.DateTimeFormat("en-GB", {
-        dateStyle: "medium",
-        timeStyle: "short",
-      }).format(new Date(lastSignInAt))
+      dateStyle: "medium",
+      timeStyle: "short",
+    }).format(new Date(lastSignInAt))
     : "Not available";
 
   const signInMethod =
@@ -54,7 +54,7 @@ export default function ProfilePage() {
   const location = locationParts.length ? locationParts.join(", ") : null;
 
   return (
-    <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-10 sm:py-14">
+    <main className="mx-auto w-full max-w-310 flex-1 px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
       <div className="mb-8">
         <div>
           <span className="eyebrow">ACCOUNT</span>
@@ -66,16 +66,16 @@ export default function ProfilePage() {
           </p>
         </div>
       </div>
-      <div className="grid gap-6 xl:grid-cols-[220px_minmax(0,1fr)_240px] lg:grid-cols-[220px_minmax(0,1fr)] lg:items-start">
-        <div className="min-w-0">
+      <div className="grid gap-5 lg:grid-cols-[270px_minmax(0,1fr)] lg:items-stretch">
+        <aside className="min-w-0 lg:col-start-1 lg:row-start-1">
           <ProfileHero
             name={name}
             email={email}
             memberSince={memberSince}
             avatarUrl={avatarUrl}
           />
-        </div>
-        <div className="min-w-0 space-y-5">
+        </aside>
+        <div className="min-w-0 lg:col-start-2 lg:row-start-1">
           <PersonalInformationCard
             fullName={user.fullName}
             username={username}
@@ -84,13 +84,17 @@ export default function ProfilePage() {
             location={location}
             bio={bio}
           />
+        </div>
+        <aside className="min-w-0 lg:col-start-1 lg:row-start-2 [&>section]:h-full">
+          <CompleteYourSetup user={user} />
+        </aside>
+        <div className="grid min-w-0 gap-5 lg:col-start-2 lg:row-start-2 lg:grid-rows-[minmax(0,1fr)_auto] [&>section]:mt-0">
           <AccountSecurityCard
             signInMethod={signInMethod}
             lastSignIn={lastSignIn}
           />
           <DangerZone />
         </div>
-        <aside className="lg:col-start-2 xl:col-start-auto"><CompleteYourSetup user={user} /></aside>
       </div>
     </main>
   );

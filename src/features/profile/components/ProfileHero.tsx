@@ -26,11 +26,11 @@ export default function ProfileHero({
   const initials = getInitials(name, email);
 
   return (
-    <section className="relative border-r border-line pr-5">
+    <section className="relative overflow-hidden rounded-3xl border border-line bg-panel p-6 shadow-sm before:absolute before:inset-x-0 before:top-0 before:h-1 before:bg-accent">
 
 
       <div className="relative flex flex-col gap-4">
-        <Avatar className="size-14 rounded-[1.7rem] shadow-[0_12px_30px_rgb(166_154_232/12%)] after:rounded-[1.7rem] after:border-accent/35">
+        <Avatar className="size-20 rounded-[1.7rem] ring-4 ring-info-soft after:rounded-[1.7rem] after:border-accent/35">
           {avatarUrl && (
             <AvatarImage
               src={avatarUrl}
