@@ -45,7 +45,7 @@ export async function addVehicle(supabase: SupabaseClient, input: unknown) {
   } = await supabase.auth.getUser();
 
   if (authError || !user) {
-    throw new Error("You must be signed in to add a car.");
+    throw new Error("You must be signed in to add a vehicle.");
   }
 
   const { data, error } = await supabase
@@ -88,11 +88,11 @@ export async function addVehicle(supabase: SupabaseClient, input: unknown) {
       );
     }
     throw new Error(
-      `Could not save the car (${error.code || "database error"}). Please try again.`,
+      `Could not save the vehicle (${error.code || "database error"}). Please try again.`,
     );
   }
   if (!data) {
-    throw new Error("Could not save the car.");
+    throw new Error("Could not save the vehicle.");
   }
   return data.id as string;
 }

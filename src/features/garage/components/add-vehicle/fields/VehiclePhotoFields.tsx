@@ -54,7 +54,7 @@ export default function VehiclePhotoFields(
                 >
                     {photoFile ? "Change photo" : "Choose photo"}
                 </label>
-                        <p className="mt-0.5 text-xs text-muted">Add a photo to recognise your car at a glance.</p>
+                        <p className="mt-0.5 text-xs text-muted">Add a photo to recognise your vehicle at a glance.</p>
                     </div>
                 </div>
 

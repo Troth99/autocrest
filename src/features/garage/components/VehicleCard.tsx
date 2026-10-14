@@ -20,8 +20,8 @@ export default function VehicleCard({ vehicle, photoUrl }: Props) {
   ];
 
   return (
-    <article className="garage-vehicle-card flex h-full w-full min-w-0 flex-col overflow-hidden p-3 sm:p-4">
-      <div className={`relative aspect-video overflow-hidden rounded-xl border border-line ${photoUrl ? "" : "garage-vehicle-placeholder"}`}>
+    <article className="garage-vehicle-card flex h-full w-full min-w-0 flex-col overflow-hidden">
+      <div className={`relative aspect-16/10 overflow-hidden border-b border-line ${photoUrl ? "" : "garage-vehicle-placeholder"}`}>
         {photoUrl ? (
           <Image src={photoUrl} alt={name} fill unoptimized sizes="(max-width: 768px) 100vw, 680px" className="object-cover" />
         ) : (
@@ -41,14 +41,14 @@ export default function VehicleCard({ vehicle, photoUrl }: Props) {
           </span>
         )}
       </div>
-      <div className="flex flex-1 flex-col px-2 pb-1 pt-5 sm:px-3">
-        <h3 className="wrap-break-word text-2xl font-semibold tracking-tight text-text-primary sm:text-3xl">{name}</h3>
+      <div className="flex flex-1 flex-col p-4">
+        <h3 className="wrap-break-word text-lg font-semibold tracking-tight text-text-primary">{name}</h3>
         {details && <p className="mt-1.5 text-sm capitalize text-muted">{details}</p>}
 
-        <dl className="mt-5 grid grid-cols-2 gap-x-4 gap-y-5 border-t border-line pt-5 @min-[520px]:grid-cols-4">
+        <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-4 border-t border-line pt-4 ">
           {specs.map(({ label, value, icon: Icon }) => (
             <div key={label} className="flex min-w-0 items-center gap-2.5">
-              <Icon className="size-6 shrink-0 stroke-[1.5] text-info" aria-hidden="true" />
+              <Icon className="size-5 shrink-0 stroke-[1.5] text-info" aria-hidden="true" />
               <div className="min-w-0">
                 <dt className="text-xs text-muted">{label}</dt>
                 <dd className="mt-1 wrap-break-word text-sm font-semibold text-text-primary">{value ?? "Not provided"}</dd>
@@ -56,8 +56,8 @@ export default function VehicleCard({ vehicle, photoUrl }: Props) {
             </div>
           ))}
         </dl>
-        <div className="mt-auto pt-6">
-          <button type="button" disabled className="flex w-full items-center justify-between rounded-xl border border-line bg-info-soft px-4 py-3.5 text-sm font-medium text-text-secondary disabled:cursor-not-allowed">
+        <div className="mt-auto pt-5">
+          <button type="button" disabled className="flex w-full items-center justify-between rounded-lg border border-info-border bg-transparent px-4 py-2.5 text-sm font-medium text-text-secondary disabled:cursor-not-allowed">
             Vehicle details <ArrowUpRight className="size-4" aria-hidden="true" />
           </button>
         </div>

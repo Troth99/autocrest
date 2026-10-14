@@ -12,9 +12,9 @@ export default function VehicleTechnicalFields({ values, onFieldChange, register
       <legend className="sr-only">Engine and drivetrain</legend>
       <h2 className="section-title">Engine and drivetrain</h2>
       <p className="mt-1 text-sm text-muted">
-        Specifications for your car. Leave unknown details blank.
+        Specifications for your vehicle. Leave unknown details blank.
       </p>
-      <div className="mt-4 grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-4 grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-2">
         <label htmlFor="colour" className="grid gap-2 text-sm font-medium text-text-secondary">
           <span>Colour</span>
           <Input id="colour" name="colour" value={values.colour}

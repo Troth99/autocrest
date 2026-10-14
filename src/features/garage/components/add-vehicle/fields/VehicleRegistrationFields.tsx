@@ -14,7 +14,7 @@ export default function VehicleRegistrationFields({ values, onFieldChange, regis
       <p className="mt-1 text-sm text-muted">
         Details from your vehicle registration documents.
       </p>
-      <div className="mt-4 grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-4 grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-2">
         <label
           htmlFor="plate"
           className="grid gap-2 text-sm font-medium text-text-secondary"

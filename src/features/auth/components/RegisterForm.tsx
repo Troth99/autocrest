@@ -60,7 +60,7 @@ export default function RegisterForm() {
   }
 
   return (
-    <section className="card-base" aria-labelledby="register-title">
+    <section className="auth-form-card" aria-labelledby="register-title">
       <div className="mb-7">
         <span className="eyebrow">AUTOCREST ACCOUNT</span>
         <h1

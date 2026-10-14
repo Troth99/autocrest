@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { Check, X } from "lucide-react";
+import { Button, buttonVariants } from "@/shared/components/ui/button";
 import VehicleBasicFields from "@/features/garage/components/add-vehicle/fields/VehicleBasicFields";
 import VehicleRegistrationFields from "@/features/garage/components/add-vehicle/fields/VehicleRegistrationFields";
 import VehicleTechnicalFields from "@/features/garage/components/add-vehicle/fields/VehicleTechnicalFields";
@@ -70,14 +72,7 @@ export default function AddVehicleForm() {
           }} />
         </fieldset>
 
-        <VehiclePhotoFields
-          photoFile={photoFile}
-          photoError={photoError}
-          onPhotoChange={setPhotoFile}
-          onPhotoError={setPhotoError}
-        />
-
-        <fieldset disabled={isSubmitting || Boolean(savedVehicleId)} className="grid min-w-0 gap-4 border-0 p-0">
+        <fieldset disabled={isSubmitting || Boolean(savedVehicleId)} className="grid min-w-0 gap-5 border-0 p-0 xl:grid-cols-2">
           <VehicleBasicFields
             errors={fieldErrors}
             register={register}
@@ -110,6 +105,13 @@ export default function AddVehicleForm() {
           <VehiclePurchaseFields errors={fieldErrors} register={register} />
           <VehicleAdditionalDetails errors={fieldErrors} register={register} registerCheckbox={registerCheckbox} />
         </fieldset>
+        <VehiclePhotoFields
+          photoFile={photoFile}
+          photoError={photoError}
+          onPhotoChange={setPhotoFile}
+          onPhotoError={setPhotoError}
+        />
+
         {submitError && (
           <p role="alert" className="text-sm text-destructive">
             {submitError}
@@ -118,17 +120,19 @@ export default function AddVehicleForm() {
         <div className="flex flex-wrap items-center justify-end gap-3">
           <Link
             href="/garrage"
-            className="rounded-lg border border-line px-5 py-2.5 text-sm font-medium text-text-secondary hover:bg-input/45"
+            className={buttonVariants({ variant: "outline", className: "h-12 gap-2.5 px-6 text-base" })}
           >
+            <X className="size-5" aria-hidden="true" />
             {savedVehicleId ? "Continue to garage" : "Cancel"}
           </Link>
-          <button
+          <Button
             type="submit"
             disabled={isSubmitting}
-            className="action-button cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+            className="h-12 cursor-pointer gap-2.5 bg-accent px-6 text-base text-ink hover:bg-accent-strong"
           >
-            {isSubmitting ? "Saving..." : savedVehicleId ? photoFile ? "Retry photo upload" : "Continue to garage" : "Add car"}
-          </button>
+            <Check className="size-5" aria-hidden="true" />
+            {isSubmitting ? "Saving..." : savedVehicleId ? photoFile ? "Retry photo upload" : "Continue to garage" : "Add vehicle"}
+          </Button>
         </div>
       </form>
     </main>

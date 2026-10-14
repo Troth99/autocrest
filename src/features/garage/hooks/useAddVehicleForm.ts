@@ -59,7 +59,7 @@ export default function useAddVehicleForm({
             : "Photo upload failed. Please try again.",
         );
         setSubmitError(
-          "Your car is already saved. Retry the photo upload or continue to the garage.",
+          "Your vehicle is already saved. Retry the photo upload or continue to the garage.",
         );
       } finally {
         setIsSubmitting(false);
@@ -129,7 +129,7 @@ export default function useAddVehicleForm({
               : "Photo upload failed. Please try again.",
           );
           setSubmitError(
-            "Your car is saved, but its photo could not be uploaded. Retry below or continue to the garage.",
+            "Your vehicle is saved, but its photo could not be uploaded. Retry below or continue to the garage.",
           );
           return;
         }
@@ -141,7 +141,7 @@ export default function useAddVehicleForm({
       setSubmitError(
         error instanceof Error
           ? error.message
-          : "Could not save the car. Please try again.",
+          : "Could not save the vehicle. Please try again.",
       );
     } finally {
       setIsSubmitting(false);

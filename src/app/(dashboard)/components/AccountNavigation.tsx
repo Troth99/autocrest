@@ -9,8 +9,9 @@ export default function AccountNavigation() {
   return (
     <nav
       aria-label="Account navigation"
-      className="border-b border-line bg-panel px-4 py-5 lg:w-60 lg:shrink-0 lg:border-b-0 lg:border-r lg:py-10"
+      className="border-b border-line bg-panel px-3 py-4 lg:w-52 lg:shrink-0 lg:border-b-0 lg:border-r lg:px-4 lg:py-8"
     >
+      <p className="mb-5 hidden px-4 text-[10px] font-semibold uppercase tracking-[0.18em] text-subtle lg:block">YOUR WORKSPACE</p>
       <div className="flex flex-wrap gap-2 lg:flex-col">
         <Link
           href="/profile"
@@ -19,7 +20,7 @@ export default function AccountNavigation() {
               ? "page"
               : undefined
           }
-          className={`flex items-center gap-3 rounded-xl border-l-3 px-4 py-3.5 text-sm font-medium transition-colors ${pathname.startsWith("/profile") || pathname === "/change-password" ? "border-accent bg-info-soft text-info" : "border-transparent text-muted hover:bg-info-soft hover:text-text-primary"}`}
+          className={`flex items-center gap-3 rounded-lg border-l-3 px-4 py-3 text-sm font-medium transition-colors ${pathname.startsWith("/profile") || pathname === "/change-password" ? "border-accent bg-info-soft text-info" : "border-transparent text-muted hover:bg-info-soft hover:text-text-primary"}`}
         >
           <UserRound className="size-5 shrink-0" />
           Profile
@@ -27,11 +28,10 @@ export default function AccountNavigation() {
         <Link
           href="/garrage"
           aria-current={pathname.startsWith("/garrage") ? "page" : undefined}
-          className={`flex items-center gap-3 rounded-xl border-l-3 px-4 py-3.5 text-sm font-medium transition-colors ${
-            pathname.startsWith("/garrage")
+          className={`flex items-center gap-3 rounded-lg border-l-3 px-4 py-3 text-sm font-medium transition-colors ${pathname.startsWith("/garrage")
               ? "border-accent bg-info-soft text-info"
               : "border-transparent text-muted hover:bg-info-soft hover:text-text-primary"
-          }`}
+            }`}
         >
           <CarFront className="size-5 shrink-0" />
           My Garage

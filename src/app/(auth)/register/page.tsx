@@ -1,9 +1,6 @@
 import { RegisterForm } from "@/features/auth";
+import AuthShell from "@/features/auth/components/AuthShell";
 
 export default function RegisterPage() {
-  return (
-    <main className="mx-auto flex min-h-screen max-w-md items-center px-6 py-16">
-      <RegisterForm />
-    </main>
-  );
+  return <AuthShell><RegisterForm /></AuthShell>;
 }

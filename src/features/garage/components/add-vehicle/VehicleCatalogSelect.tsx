@@ -38,7 +38,7 @@ export default function VehicleCatalogSelect({ id, name, label, options, value, 
       </Combobox.Trigger>
       <Combobox.Portal>
         <Combobox.Positioner side="bottom" align="start" sideOffset={6} className="z-50">
-          <Combobox.Popup className="w-(--anchor-width) min-w-52 overflow-hidden rounded-xl border border-slate-300 bg-slate-100 text-slate-900 shadow-xl dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100">
+          <Combobox.Popup className="w-(--anchor-width) min-w-52 overflow-hidden rounded-xl border border-line bg-popover text-text-primary shadow-xl">
             <div className="relative border-b border-line p-2">
               <Search className="absolute left-4 top-1/2 size-4 -translate-y-1/2 text-muted" aria-hidden="true" />
               

@@ -15,7 +15,7 @@ export default function VehicleMileageFields({ errors, register }: Props) {
       <p className="mt-1 text-sm text-muted">
         Your current odometer reading, in kilometres.
       </p>
-      <div className="mt-4 grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-4 grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-2">
         <label
           htmlFor="mileage_km"
           className="grid gap-2 text-sm font-medium text-text-secondary"
