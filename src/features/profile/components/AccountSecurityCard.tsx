@@ -17,7 +17,7 @@ export default function AccountSecurityCard({
         title="Account security"
         subtitle="Review how you sign in and keep your account secure."
       />
-      <div className="mt-6 grid gap-3 md:grid-cols-3">
+      <div className="mt-6 grid gap-4 md:grid-cols-3 [&>div]:min-h-48 [&>div]:p-5">
         <StatusRow
           icon={<KeyRound />}
           title="Sign-in method"
