@@ -17,21 +17,20 @@ export default async function GaragePage({ query = "" }: { query?: string }) {
 
 
   return (
-    <main className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 sm:py-14">
-      <div className="mb-8 flex flex-wrap items-end justify-between gap-5">
+    <main className="mx-auto w-full max-w-7xl px-4 py-7 sm:px-6 sm:py-8">
+      <div className="mb-6 flex flex-wrap items-end justify-between gap-5 xl:mr-[344px]">
         <div>
-          <span className="eyebrow">A HOME FOR YOUR CARS</span>
-          <h1 className="mt-4 text-3xl font-semibold tracking-[-0.045em] text-text-primary sm:text-4xl">
+          <h1 className="text-3xl font-semibold tracking-[-0.045em] text-text-primary sm:text-4xl">
             My Garage
           </h1>
           <p className="mt-2 section-description sm:text-base">
-            Your vehicles, maintenance and paperwork. All in one place.
+            Your vehicles, organised.
           </p>
         </div>
         <AddVehicleButton />
       </div>
 
-      <div className="grid items-start gap-7 xl:grid-cols-[minmax(0,1fr)_320px]">
+      <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
         <section className="min-w-0" aria-labelledby="vehicles-heading">
           {query && (
             <div className="mb-4 flex flex-wrap items-center justify-between gap-2 rounded-xl border border-line bg-input/45 px-4 py-3 text-sm">
@@ -39,8 +38,8 @@ export default async function GaragePage({ query = "" }: { query?: string }) {
               <Link href="/garrage" className="font-semibold text-info hover:text-info-strong">Clear search</Link>
             </div>
           )}
-          <div className="mb-4 flex items-center justify-between">
-            <h2 id="vehicles-heading" className="section-title">
+          <div className="sr-only">
+            <h2 id="vehicles-heading" className="sr-only">
               Your vehicles
             </h2>
             <span className="rounded-full border border-line px-3 py-1 text-xs text-muted">
@@ -73,7 +72,7 @@ export default async function GaragePage({ query = "" }: { query?: string }) {
           ) : (
             <div className={matchingVehicles.length === 1
               ? "grid grid-cols-1 justify-items-center gap-5"
-              : "grid gap-5 md:grid-cols-2 xl:grid-cols-1 2xl:grid-cols-2"}>
+              : "grid gap-5 md:grid-cols-2"}>
               {matchingVehicles.map((vehicle) => (
                 <div key={vehicle.id} className={matchingVehicles.length === 1 ? "@container w-full max-w-170" : "@container min-w-0"}>
                   <VehicleCard vehicle={vehicle} photoUrl={photos.urls[vehicle.id]} />

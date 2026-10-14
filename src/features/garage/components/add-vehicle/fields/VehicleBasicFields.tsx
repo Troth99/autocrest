@@ -25,9 +25,9 @@ export default function VehicleBasicFields({
       <legend className="sr-only">Basic information</legend>
       <h2 className="section-title">Basic information</h2>
       <p className="mt-1 text-sm text-muted">
-        The essentials that identify your car.
+        The essentials that identify your vehicle.
       </p>
-      <div className="mt-4 grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-4 grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-2">
         <VehicleMakeModelFields
           errors={errors}
           values={values}
@@ -79,7 +79,7 @@ export default function VehicleBasicFields({
             id="nickname"
             {...register("nickname")}
             type="text"
-            placeholder="A name for your car"
+            placeholder="A name for your vehicle"
           aria-invalid={Boolean(errors.nickname)} aria-describedby={errors.nickname ? "nickname-error" : undefined} />
 <VehicleFieldError field="nickname" message={errors.nickname} />
         </label>

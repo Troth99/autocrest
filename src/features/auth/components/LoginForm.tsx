@@ -71,9 +71,9 @@ export default function LoginForm() {
   }
 
   return (
-    <section className="card-base" aria-labelledby="login-title">
+    <section className="auth-form-card" aria-labelledby="login-title">
       <div className="mb-7">
-        <span className="eyebrow">AUTOCREST ACCOUNT</span>
+        <span className="text-xs font-semibold uppercase tracking-[0.15em] text-info">AUTOCREST ACCOUNT</span>
         <h1
           id="login-title"
           className="mt-4 text-[clamp(1.875rem,5vw,2.5rem)] font-semibold leading-[1.05] tracking-[-0.045em] text-text-primary"
@@ -94,7 +94,7 @@ export default function LoginForm() {
           disabled={isSubmitting}
         >
           <GoogleIcon />
-          Google
+          Continue with Google
         </Button>
         <Button
           className="oauth-button oauth-button-facebook h-11 cursor-pointer"
@@ -104,7 +104,7 @@ export default function LoginForm() {
           disabled={isSubmitting}
         >
           <FacebookIcon />
-          Facebook
+          Continue with Facebook
         </Button>
 
         {/* Placeholder for additional OAuth buttons, e.g., Microsoft, Apple */}

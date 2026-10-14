@@ -1,6 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import AccountNavigation from "./components/AccountNavigation";
 
 export default async function IsDashboardLayout({
   children,
@@ -19,8 +18,7 @@ export default async function IsDashboardLayout({
              redirect("/login"); 
         }
       return (
-        <div className="flex flex-1 flex-col lg:flex-row">
-          <AccountNavigation />
+        <div className="mx-auto w-full max-w-7xl flex-1 border-x border-line">
           <div className="min-w-0 flex-1">{children}</div>
         </div>
       );

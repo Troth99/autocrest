@@ -11,9 +11,9 @@ export default function VehiclePurchaseFields({ errors, register }: Props) {
       <legend className="sr-only">Purchase details</legend>
       <h2 className="section-title">Purchase details</h2>
       <p className="mt-1 text-sm text-muted">
-        Optional information about when you bought your car.
+        Optional information about when you bought your vehicle.
       </p>
-      <div className="mt-4 grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-4 grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-2">
         <label
           htmlFor="purchase_date"
           className="grid gap-2 text-sm font-medium text-text-secondary"

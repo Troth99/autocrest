@@ -66,17 +66,16 @@ export default function ProfilePage() {
           </p>
         </div>
       </div>
-      <div className="grid gap-5 lg:grid-cols-[minmax(15rem,0.72fr)_minmax(0,1.5fr)] lg:items-start">
-        <aside className="space-y-5">
+      <div className="grid gap-6 xl:grid-cols-[220px_minmax(0,1fr)_240px] lg:grid-cols-[220px_minmax(0,1fr)] lg:items-start">
+        <div className="min-w-0">
           <ProfileHero
             name={name}
             email={email}
             memberSince={memberSince}
             avatarUrl={avatarUrl}
           />
-          <CompleteYourSetup user={user} />
-        </aside>
-        <div className="space-y-5">
+        </div>
+        <div className="min-w-0 space-y-5">
           <PersonalInformationCard
             fullName={user.fullName}
             username={username}
@@ -91,6 +90,7 @@ export default function ProfilePage() {
           />
           <DangerZone />
         </div>
+        <aside className="lg:col-start-2 xl:col-start-auto"><CompleteYourSetup user={user} /></aside>
       </div>
     </main>
   );

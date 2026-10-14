@@ -1,9 +1,6 @@
 import { LoginForm } from "@/features/auth";
+import AuthShell from "@/features/auth/components/AuthShell";
 
 export default function LoginPage() {
-  return (
-    <main className="mx-auto flex min-h-screen max-w-md items-center px-6 py-16">
-      <LoginForm />
-    </main>
-  );
+  return <AuthShell><LoginForm /></AuthShell>;
 }

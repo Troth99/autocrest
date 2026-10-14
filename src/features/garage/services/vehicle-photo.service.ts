@@ -54,10 +54,10 @@ export async function uploadVehiclePhoto(
     const { error: cleanupError } = await storage.remove([path]);
     if (cleanupError) {
       throw new Error(
-        "Could not link the photo to the car or remove the uploaded file. Please try again.",
+        "Could not link the photo to the vehicle or remove the uploaded file. Please try again.",
       );
     }
-    throw new Error("Could not attach the photo to the car. Please try again.");
+    throw new Error("Could not attach the photo to the vehicle. Please try again.");
   }
 }
 

@@ -29,29 +29,18 @@ const sections = [
 
 export default function GarageOverview() {
   return (
-    <aside aria-labelledby="garage-tools-heading">
-      <div className="mb-4 flex items-center justify-between gap-3">
-        <h2 id="garage-tools-heading" className="section-title">Garage organiser</h2>
-        <span className="text-xs text-muted">Coming soon</span>
-      </div>
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-1">
+    <aside aria-labelledby="garage-tools-heading" className="xl:-mt-[88px] xl:border-l xl:border-line xl:pl-6">
+      <h2 id="garage-tools-heading" className="text-xl font-semibold tracking-tight">Garage organiser</h2>
+      <p className="mb-5 mt-2 text-sm text-muted">Everything for your vehicles, in one place.</p>
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
         {sections.map(({ title, icon: Icon, description, items }) => (
-          <section key={title} className="content-card overflow-hidden rounded-2xl p-5">
-            <div className="flex items-center gap-3">
-              <span className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-info/20 bg-info-soft text-info">
-                <Icon className="size-5 stroke-[1.5]" aria-hidden="true" />
-              </span>
-              <h3 className="text-sm font-semibold text-text-primary">{title}</h3>
+          <section key={title} className="content-card flex min-h-28 items-start gap-3 rounded-xl p-4" title={items.join(" ? ")}>
+            <Icon className="mt-1 size-7 shrink-0 stroke-[1.5] text-info" aria-hidden="true" />
+            <div className="min-w-0 flex-1">
+              <div className="flex flex-wrap items-center justify-between gap-2"><h3 className="text-xs font-semibold text-text-primary">{title}</h3><span className="rounded-full bg-info-soft px-2 py-1 text-[9px] text-muted">Coming soon</span></div>
+              <p className="mt-2 text-xs leading-5 text-muted">{description}</p>
+              <span className="sr-only">{items.join(". ")}</span>
             </div>
-            <p className="mt-3 text-xs leading-5 text-muted">{description}</p>
-            <ul className="mt-4 space-y-2 border-t border-line pt-3">
-              {items.map((item) => (
-                <li key={item} className="flex items-center gap-2 text-xs text-text-secondary">
-                  <span className="size-1 rounded-full bg-info/60" aria-hidden="true" />
-                  {item}
-                </li>
-              ))}
-            </ul>
           </section>
         ))}
       </div>

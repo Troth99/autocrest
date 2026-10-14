@@ -4,7 +4,7 @@ import { ArrowRight, Check } from "lucide-react";
 const benefits = [
   "One timeline instead of scattered notes and invoices",
   "Clear reminders before important deadlines",
-  "A better picture of what owning your car really costs",
+  "A better picture of what owning your vehicle really costs",
   "A shareable history when you are ready to sell",
 ];
 
@@ -39,7 +39,7 @@ export default function TimelineSection() {
       </div>
 
       <div className="mt-16 rounded-3xl border border-accent/20 bg-accent/10 px-6 py-10 text-center sm:mt-24 sm:px-10 sm:py-14">
-        <h2 className="text-3xl font-semibold tracking-[-0.045em] text-text-primary sm:text-4xl">Start building your car&apos;s story.</h2>
+        <h2 className="text-3xl font-semibold tracking-[-0.045em] text-text-primary sm:text-4xl">Start building your vehicle&apos;s story.</h2>
         <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-text-secondary sm:text-base">Bring every important detail together and always know what your vehicle needs next.</p>
         <Link href="/register" className="button-primary button-base mt-7 gap-2 px-5 py-3 text-sm">Create your free garage <ArrowRight className="size-4" /></Link>
       </div>

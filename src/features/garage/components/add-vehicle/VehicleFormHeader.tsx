@@ -9,9 +9,8 @@ export default function VehicleFormHeader() {
       >
         Back to my garage
       </Link>
-      <header className="my-6">
-        <span className="eyebrow">YOUR VEHICLE DETAILS</span>
-        <h1 className="mt-3 text-3xl font-semibold tracking-tight text-text-primary">
+      <header className="mb-6 mt-4">
+        <h1 className="text-3xl font-semibold tracking-tight text-text-primary">
           Add your vehicle
         </h1>
         <p className="mt-2 section-description">

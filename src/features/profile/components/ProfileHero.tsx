@@ -26,11 +26,11 @@ export default function ProfileHero({
   const initials = getInitials(name, email);
 
   return (
-    <section className="card-base relative">
-      <div className="profile-card-glow absolute -right-20 -top-24 size-64 rounded-full bg-info/10 blur-3xl" />
-      <div className="profile-card-glow absolute -bottom-24 right-20 size-56 rounded-full bg-accent/10 blur-3xl" />
-      <div className="relative flex flex-col gap-5">
-        <Avatar className="size-20 rounded-[1.7rem] shadow-[0_12px_30px_rgb(213_243_107/12%)] after:rounded-[1.7rem] after:border-accent/35">
+    <section className="relative border-r border-line pr-5">
+
+
+      <div className="relative flex flex-col gap-4">
+        <Avatar className="size-14 rounded-[1.7rem] shadow-[0_12px_30px_rgb(166_154_232/12%)] after:rounded-[1.7rem] after:border-accent/35">
           {avatarUrl && (
             <AvatarImage
               src={avatarUrl}
@@ -42,15 +42,17 @@ export default function ProfileHero({
             {initials}
           </AvatarFallback>
         </Avatar>
-        <div className="min-w-0">
+        <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-            <h2 className="truncate text-2xl font-semibold tracking-[-0.04em] text-text-primary">
+            <h2 className="truncate text-lg font-semibold tracking-[-0.04em] text-text-primary">
               {name}
             </h2>
 
           </div>
         </div>
-        <div className="border-line border-t pt-5">
+        <p className="break-all text-xs text-muted">{email}</p>
+        <nav aria-label="Profile sections" className="grid gap-2 text-sm"><a href="#personal-information" className="rounded-lg bg-info-soft px-3 py-2 text-info">Personal information</a><a href="#account-security" className="rounded-lg px-3 py-2 text-muted hover:text-info">Account security</a></nav>
+        <div className="border-line border-t pt-4">
           <p className="text-xs font-semibold uppercase tracking-[0.13em] text-subtle">
             With AutoCrest since
           </p>

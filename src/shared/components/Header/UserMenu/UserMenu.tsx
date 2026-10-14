@@ -76,14 +76,14 @@ export default function UserMenu({
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem
-          className="cursor-pointer transition-[background-color,color,transform] duration-200 hover:translate-x-0.5 hover:bg-accent motion-reduce:transition-none motion-reduce:hover:translate-x-0"
+          className="cursor-pointer transition-[background-color,color,transform] duration-200 hover:translate-x-0.5 hover:bg-info-soft motion-reduce:transition-none motion-reduce:hover:translate-x-0"
           onClick={() => router.push("/profile")}
         >
           <UserIcon />
           Profile
         </DropdownMenuItem>
         <DropdownMenuItem
-          className="cursor-pointer transition-[background-color,color,transform] duration-200 hover:translate-x-0.5 hover:bg-accent motion-reduce:transition-none motion-reduce:hover:translate-x-0"
+          className="cursor-pointer transition-[background-color,color,transform] duration-200 hover:translate-x-0.5 hover:bg-info-soft motion-reduce:transition-none motion-reduce:hover:translate-x-0"
           disabled
         >
           <Settings />
