@@ -13,9 +13,9 @@ export default function SiteHeader({ user }: { user: CurrentUser | null }) {
   return (
     <header className="sticky top-0 z-10 border-b border-line bg-dark-800">
       <nav
-        className={`mx-auto flex items-center justify-between gap-4 px-4 py-4 sm:px-6 ${isAccountPage ? "max-w-7xl flex-wrap" : "max-w-6xl"}`}
+        className={`mx-auto flex items-center justify-between gap-4 px-4 py-4 sm:px-6 ${isAccountPage ? "w-full flex-wrap lg:px-10" : "max-w-6xl"}`}
       >
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/" className="flex shrink-0 items-center gap-2">
           <svg viewBox="0 0 36 32" className="h-8 w-9 shrink-0 text-accent-text" fill="currentColor" aria-hidden="true">
             <path d="M18 3 24 10 18 17 12 10Z" />
             <path d="M10.5 12 16.5 19 8 29H0Z" opacity="0.85" />
@@ -26,8 +26,8 @@ export default function SiteHeader({ user }: { user: CurrentUser | null }) {
         </Link>
 
         {isAccountPage ? (
-          <div className="order-last flex w-full min-w-0 items-center gap-2 sm:order-0 sm:w-auto sm:flex-1 sm:gap-4">
-            <div className="ml-auto min-w-0 flex-1"><GarageSearch /></div>
+          <div className="order-last w-full min-w-0 sm:order-0 sm:mr-auto sm:w-auto sm:flex-1 sm:max-w-sm lg:ml-4">
+            <GarageSearch />
           </div>
         ) : (
           <div className="hidden items-center gap-6 md:flex">
@@ -52,7 +52,7 @@ export default function SiteHeader({ user }: { user: CurrentUser | null }) {
           </div>
         )}
 
-        <div className="flex items-center gap-3">
+        <div className="flex shrink-0 items-center gap-3">
           {isAccountPage && <GarageHeaderTools />}
           {user ? (
             <UserMenu
