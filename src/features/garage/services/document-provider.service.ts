@@ -11,7 +11,11 @@ export async function requestDocumentExtraction(
     options.signal.throwIfAborted();
     const response = await fetch(currentUrl, options);
     const canSwitchModel = fallbackUrl && currentUrl !== fallbackUrl;
-    if (canSwitchModel && [429, 500, 502, 503, 504].includes(response.status) && attempt < 2) {
+    if (
+      canSwitchModel &&
+      [429, 500, 502, 503, 504].includes(response.status) &&
+      attempt < 2
+    ) {
       await response.body?.cancel();
       currentUrl = fallbackUrl;
       continue;
@@ -23,4 +27,9 @@ export async function requestDocumentExtraction(
     await response.body?.cancel();
     await delay(1000 * 2 ** attempt, undefined, { signal: options.signal });
   }
+}
+
+
+export async function handleExtract() {
+  
 }

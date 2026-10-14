@@ -1,5 +1,5 @@
 "use client";
-import { vehicleDocumentSchema } from "@/features/garage/validators/vehicle-document.validator";
+import { extractVehicleDocument } from "@/features/garage/services/vehicle-document.service";
 import type { VehicleDocumentDetails } from "@/features/garage/validators/vehicle-document.validator";
 import { useState } from "react";
 import type { ChangeEvent } from "react";
@@ -58,36 +58,12 @@ export default function VehicleDocumentScan({ onExtracted }: {
         setExtractedDetails(null);
 
         try {
-            // Send the file to our server; the Gemini API key stays on the server.
-            const formData = new FormData();
-            formData.append("document", frontFile);
+            const details = await extractVehicleDocument(frontFile);
 
-            const response = await fetch("/api/vehicles/extract", {
-                method: "POST",
-                body: formData,
-                signal: AbortSignal.timeout(75_000),
-            });
+            onExtracted(details);
+            setExtractedDetails(details);
 
-            const result = await response.json();
 
-            if (!response.ok) {
-                throw new Error(
-                    typeof result.error === "string"
-                        ? result.error
-                        : "Could not scan the document.",
-                );
-            }
-
-            // Validate the returned data before passing it to the form.
-            const details = vehicleDocumentSchema.safeParse(result.details);
-
-            if (!details.success) {
-                throw new Error("The server returned invalid vehicle details.");
-            }
-
-            // Pass the details to the parent to fill the form; this does not save to the database.
-            onExtracted(details.data);
-            setExtractedDetails(details.data);
         } catch (error) {
             setFrontError(
                 error instanceof Error && error.name === "TimeoutError"
@@ -118,7 +94,7 @@ export default function VehicleDocumentScan({ onExtracted }: {
                     <p className="mt-1 text-sm text-slate-700 dark:text-slate-300">
                         Select a clear photo of your registration document (Part I or Part II).
                     </p>
-            
+
                 </div>
             </div>
 

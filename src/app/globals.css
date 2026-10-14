@@ -38,6 +38,82 @@
   border-color: var(--destructive);
 }
 
+.vehicle-form :is([data-slot="input"], select, textarea, .select-trigger) {
+  border-color: #607184;
+  background-color: #1c2935;
+  color: #cbd5e1;
+  font-size: 1rem;
+  padding-inline: 0.875rem;
+  transition: border-color 150ms, background-color 150ms, box-shadow 150ms;
+}
+
+.vehicle-form :is([data-slot="input"], select, .select-trigger) {
+  height: 2.75rem;
+}
+
+.vehicle-form [data-slot="input"]::placeholder,
+.vehicle-form textarea::placeholder {
+  color: #94a3b8;
+  opacity: 1;
+}
+
+.vehicle-form :is([data-slot="input"], select, textarea, .select-trigger):hover:not(:disabled) {
+  border-color: #8a9bad;
+  background-color: #223240;
+}
+
+.vehicle-form :is([data-slot="input"], select, textarea, .select-trigger):focus-visible {
+  border-color: var(--focus-ring);
+  background-color: #223240;
+  box-shadow: 0 0 0 3px rgb(56 189 248 / 15%);
+}
+
+.vehicle-form :is([data-slot="input"], select, textarea, .select-trigger):disabled {
+  border-color: rgba(148, 163, 184, 0.25);
+  background-color: rgba(30, 41, 59, 0.5);
+  color: rgba(148, 163, 184, 0.75);
+  opacity: 1;
+}
+
+.vehicle-form :is([data-slot="input"], select, textarea, .select-trigger)[aria-invalid="true"] {
+  border-color: var(--destructive);
+}
+
+.light .vehicle-form :is([data-slot="input"], select, textarea, .select-trigger) {
+  border-color: #94a3b8;
+  background-color: #f1f5f9;
+  color: #17212b;
+  transition: border-color 150ms, background-color 150ms, box-shadow 150ms;
+}
+
+.light .vehicle-form [data-slot="input"]::placeholder,
+.light .vehicle-form textarea::placeholder {
+  color: #526277;
+  opacity: 1;
+}
+
+.light .vehicle-form :is([data-slot="input"], select, textarea, .select-trigger):hover:not(:disabled) {
+  border-color: #64748b;
+  background-color: #e8eef5;
+}
+
+.light .vehicle-form :is([data-slot="input"], select, textarea, .select-trigger):focus-visible {
+  border-color: #0284c7;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgb(2 132 199 / 16%);
+}
+
+.light .vehicle-form :is([data-slot="input"], select, textarea, .select-trigger):disabled {
+  border-color: #cbd5e1;
+  background-color: #e2e8f0;
+  color: #64748b;
+  opacity: 1;
+}
+
+.light .vehicle-form :is([data-slot="input"], select, textarea, .select-trigger)[aria-invalid="true"] {
+  border-color: var(--destructive);
+}
+
 :root {
   --text-primary: #edf2f0;
   --text-secondary: #cbd5e1;
