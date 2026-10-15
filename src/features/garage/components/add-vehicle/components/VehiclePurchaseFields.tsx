@@ -1,4 +1,4 @@
-import VehicleFieldError from "@/features/garage/components/add-vehicle/VehicleFieldError";
+import VehicleFieldError from "@/features/garage/components/add-vehicle/components/VehicleFieldError";
 import type { VehicleFormErrors } from "@/features/garage/types/add-vehicle-form";
 import type { VehicleFormRegister } from "@/features/garage/types/add-vehicle-form";
 import { Input } from "@/shared/components/ui/input";

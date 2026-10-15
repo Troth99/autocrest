@@ -1,11 +1,47 @@
-
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+import VehicleHeading from "./components/VehicleHeading";
+import VehicleOverview from "./components/VehicleOverview";
+import VehicleMainActions from "./components/VehicleMainActions";
+import VehicleSpecifications from "./components/VehicleSpecifications";
+import VehicleRegistration from "./components/VehicleRegistration";
+import VehicleActivity from "./components/VehicleActivity";
+import VehicleReminders from "./components/VehicleReminders";
+import VehiclePurchaseDetails from "./components/VehiclePurchaseDetails";
+import VehicleNotes from "./components/VehicleNotes";
 
 export default function VehicleDetails({ vehicleId }: { vehicleId: string }) {
-
-
     return (
-        <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_240px]">
-            <p>Details to test</p>
+        <div className="space-y-6">
+            {/* Page heading */}
+            <VehicleHeading />
+
+            {/* Vehicle overview */}
+            <VehicleOverview />
+
+            <VehicleMainActions />
+
+            <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_340px]">
+                <div className="space-y-6">
+                    <VehicleSpecifications />
+
+                    <VehicleRegistration />
+
+                    <VehicleActivity />
+                </div>
+
+                <aside className="space-y-6">
+                    <VehicleReminders />
+
+                    <VehiclePurchaseDetails />
+
+                    <VehicleNotes />
+                    <Link href="/garrage" className="flex items-center justify-between rounded-xl border border-line px-4 py-3 text-sm text-text-secondary transition-colors hover:border-info-border hover:bg-info-soft">
+                        Back to all vehicles <ArrowUpRight className="size-4" aria-hidden="true" />
+                    </Link>
+                    <p className="break-all px-1 text-xs text-subtle">Vehicle reference: {vehicleId}</p>
+                </aside>
+            </div>
         </div>
-    )
+    );
 }

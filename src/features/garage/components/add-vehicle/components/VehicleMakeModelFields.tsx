@@ -1,5 +1,5 @@
-import VehicleCatalogSelect from "@/features/garage/components/add-vehicle/VehicleCatalogSelect";
-import VehicleFieldError from "@/features/garage/components/add-vehicle/VehicleFieldError";
+import VehicleCatalogSelect from "@/features/garage/components/add-vehicle/components/VehicleCatalogSelect";
+import VehicleFieldError from "@/features/garage/components/add-vehicle/components/VehicleFieldError";
 import { Input } from "@/shared/components/ui/input";
 import type { VehicleFormErrors } from "@/features/garage/types/add-vehicle-form";
 import type { VehicleDocumentFieldProps } from "@/features/garage/types/vehicle-document-form";

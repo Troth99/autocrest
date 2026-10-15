@@ -1,5 +1,5 @@
-import VehicleMakeModelFields, { type VehicleMakeModelProps } from "@/features/garage/components/add-vehicle/fields/VehicleMakeModelFields";
-import VehicleFieldError from "@/features/garage/components/add-vehicle/VehicleFieldError";
+import VehicleMakeModelFields, { type VehicleMakeModelProps } from "@/features/garage/components/add-vehicle/components/VehicleMakeModelFields";
+import VehicleFieldError from "@/features/garage/components/add-vehicle/components/VehicleFieldError";
 import { Input } from "@/shared/components/ui/input";
 import type { VehicleFormRegister } from "@/features/garage/types/add-vehicle-form";
 
