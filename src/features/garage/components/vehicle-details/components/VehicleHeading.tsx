@@ -23,12 +23,12 @@ export default function VehicleHeading() {
                     <button
                         type="button"
                         disabled
-                        className="button-base button-primary gap-2 px-4 py-2.5 text-sm disabled:cursor-not-allowed disabled:opacity-60"
+                        className="vehicle-edit-action"
                         title="Editing is not connected yet"
                     >
                         <Pencil className="size-4" aria-hidden="true" /> Edit vehicle
                     </button>
-                    <button type="button" disabled className="button-base button-secondary gap-2 border px-4 py-2.5 text-sm disabled:cursor-not-allowed disabled:opacity-60" title="Mileage updates are not connected yet">
+                    <button type="button" disabled className="vehicle-mileage-action" title="Mileage updates are not connected yet">
                         <Gauge className="size-4" aria-hidden="true" /> Update mileage
                     </button>
                     <DropdownMenu>
@@ -51,7 +51,7 @@ export default function VehicleHeading() {
                     </DropdownMenu>
                 </div>
             </div>
-            <p className="rounded-xl border border-info-border bg-info-soft px-4 py-3 text-xs leading-5 text-text-secondary">
+            <p className="vehicle-preview-notice">
                 Design preview — all vehicle details, reminders and activity below are sample data. Action buttons are previews and are not connected yet.
             </p>
         </>

@@ -11,7 +11,7 @@ export default function SectionHeading({
 }) {
   return (
     <div className="flex gap-3">
-      <span className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-info-soft text-info [&>svg]:size-5">
+      <span className="profile-section-icon">
         {icon}
       </span>
       <div>

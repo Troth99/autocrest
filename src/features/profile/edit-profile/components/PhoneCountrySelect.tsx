@@ -10,7 +10,7 @@ function CountryFlag({ country }: { country?: Country }) {
   const Flag = country ? flags[country] : undefined;
 
   return (
-    <span aria-hidden="true" className="flex h-3.5 w-5 shrink-0 items-center justify-center overflow-hidden rounded-xs [&>svg]:size-full">
+    <span aria-hidden="true" className="phone-country-flag">
       {Flag ? <Flag title={country ?? ""} /> : <Globe className="text-muted" />}
     </span>
   );
@@ -76,7 +76,7 @@ export default function PhoneCountrySelect({
                       {option.label}
                     </Select.ItemText>
                     {option.value ? (
-                      <span className="text-xs text-muted">
+                      <span className="detail-label">
                         +{getCountryCallingCode(option.value)}
                       </span>
                     ) : null}

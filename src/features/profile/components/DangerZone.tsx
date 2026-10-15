@@ -6,7 +6,7 @@ export default function DangerZone() {
     <section className="mt-5 rounded-3xl border border-destructive/25 bg-destructive/5 p-6 sm:p-7">
       <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex gap-5">
-          <span className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-destructive/10 text-destructive [&>svg]:size-5">
+          <span className="profile-danger-icon">
             <CircleAlert />
           </span>
           <div>

@@ -11,7 +11,7 @@ export default function VehicleMainActions() {
           { label: "Add expense", icon: ReceiptText },
           { label: "Add document", icon: FileCheck2 },
         ].map(({ label, icon: Icon }) => (
-          <button key={label} type="button" disabled title={label + " is not connected yet"} className="button-base gap-3 border border-info-border bg-panel px-4 py-3 text-sm text-text-primary disabled:cursor-not-allowed disabled:opacity-60">
+          <button key={label} type="button" disabled title={label + " is not connected yet"} className="vehicle-record-action">
             <Icon className="size-5 text-info" aria-hidden="true" /> {label}
           </button>
         ))}

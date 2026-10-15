@@ -19,14 +19,14 @@ export default function TimelineSection() {
           <ul className="mt-7 space-y-3">
             {benefits.map((benefit) => (
               <li key={benefit} className="flex gap-3 text-sm leading-6 text-text-secondary">
-                <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent-text"><Check className="size-3.5" /></span>
+                <span className="timeline-check"><Check className="size-3.5" /></span>
                 {benefit}
               </li>
             ))}
           </ul>
         </div>
 
-        <div className="rounded-3xl border border-line bg-panel p-6 shadow-[0_18px_40px_rgb(0_0_0/18%),inset_0_1px_rgb(255_255_255/4%)] sm:p-8">
+        <div className="timeline-card">
           <p className="text-xs font-bold uppercase tracking-[0.14em] text-info">YOUR NEXT DECISION</p>
           <h3 className="mt-4 text-2xl font-semibold tracking-[-0.04em] text-text-primary">Service due soon</h3>
           <p className="mt-2 text-sm leading-6 text-muted">Oil and filter service is due in approximately 1,200 km.</p>
@@ -38,7 +38,7 @@ export default function TimelineSection() {
         </div>
       </div>
 
-      <div className="mt-16 rounded-3xl border border-accent/20 bg-accent/10 px-6 py-10 text-center sm:mt-24 sm:px-10 sm:py-14">
+      <div className="timeline-callout">
         <h2 className="text-3xl font-semibold tracking-[-0.045em] text-text-primary sm:text-4xl">Start building your vehicle&apos;s story.</h2>
         <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-text-secondary sm:text-base">Bring every important detail together and always know what your vehicle needs next.</p>
         <Link href="/register" className="button-primary button-base mt-7 gap-2 px-5 py-3 text-sm">Create your free garage <ArrowRight className="size-4" /></Link>

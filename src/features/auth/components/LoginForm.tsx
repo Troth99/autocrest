@@ -76,7 +76,7 @@ export default function LoginForm() {
         <span className="text-xs font-semibold uppercase tracking-[0.15em] text-info">AUTOCREST ACCOUNT</span>
         <h1
           id="login-title"
-          className="mt-4 text-[clamp(1.875rem,5vw,2.5rem)] font-semibold leading-[1.05] tracking-[-0.045em] text-text-primary"
+          className="auth-form-title"
         >
           Welcome <span className="text-accent-text">back</span>
         </h1>

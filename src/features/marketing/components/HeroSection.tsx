@@ -4,7 +4,7 @@ import { ArrowRight, FileText, ReceiptText, Wrench } from "lucide-react";
 
 export default function HeroSection() {
   return (
-    <section className="relative isolate flex min-h-[calc(100svh-5rem)] w-full items-center overflow-hidden px-6 py-12 sm:px-10 lg:px-12 lg:py-20">
+    <section className="marketing-hero">
       <Image src="/images/garage/bmw.jpg" alt="BMW, ready for the next journey" fill priority sizes="100vw" className="-z-20 object-cover object-[65%_center]" />
       <div className="absolute inset-0 -z-10 bg-linear-to-r from-slate-950 via-slate-950/85 to-slate-950/10" />
       <div className="mx-auto w-full max-w-7xl">

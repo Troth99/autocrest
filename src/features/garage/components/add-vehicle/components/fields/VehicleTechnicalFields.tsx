@@ -35,7 +35,7 @@ export default function VehicleTechnicalFields({ values, onFieldChange, register
             aria-required="true"
             name="fuel_type" value={values.fuel_type} onChange={(event) => onFieldChange("fuel_type", event.target.value)}
 
-            className="h-9 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm text-text-primary outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30"
+            className="form-select"
           >
             <option value="" className="bg-panel text-text-primary">
               Choose a fuel type
@@ -79,7 +79,7 @@ export default function VehicleTechnicalFields({ values, onFieldChange, register
             id="transmission"
             aria-required="true"
             {...register("transmission")}
-            className="h-9 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm text-text-primary outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30"
+            className="form-select"
           >
             <option value="" className="bg-panel text-text-primary">
               Choose a transmission
@@ -107,7 +107,7 @@ export default function VehicleTechnicalFields({ values, onFieldChange, register
           <select aria-invalid={Boolean(errors.drivetrain)} aria-describedby={errors.drivetrain ? "drivetrain-error" : undefined}
             id="drivetrain"
             {...register("drivetrain")}
-            className="h-9 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm text-text-primary outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30"
+            className="form-select"
           >
             <option value="" className="bg-panel text-text-primary">
               Not specified
@@ -165,7 +165,7 @@ export default function VehicleTechnicalFields({ values, onFieldChange, register
             id="euro_standard"
             name="euro_standard" value={values.euro_standard} onChange={(event) => onFieldChange("euro_standard", event.target.value)}
 
-            className="h-9 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm text-text-primary outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30"
+            className="form-select"
           >
             <option value="" className="bg-panel text-text-primary">
               Not specified

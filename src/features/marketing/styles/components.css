@@ -1,0 +1,23 @@
+/* Marketing component styles. Keep layout-specific utilities in JSX. */
+@layer components {
+  .marketing-hero {
+    @apply relative isolate flex min-h-[calc(100svh-5rem)] w-full items-center overflow-hidden px-6;
+    @apply py-12 sm:px-10 lg:px-12 lg:py-20;
+  }
+
+  .timeline-check {
+    @apply mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-accent/15;
+    @apply text-accent-text;
+  }
+
+  .timeline-card {
+    @apply rounded-3xl border border-line bg-panel p-6;
+    @apply shadow-[0_18px_40px_rgb(0_0_0/18%),inset_0_1px_rgb(255_255_255/4%)] sm:p-8;
+  }
+
+  .timeline-callout {
+    @apply mt-16 rounded-3xl border border-accent/20 bg-accent/10 px-6 py-10 text-center sm:mt-24;
+    @apply sm:px-10 sm:py-14;
+  }
+
+}

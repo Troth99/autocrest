@@ -36,7 +36,7 @@ export default function VehicleDetails({ vehicleId }: { vehicleId: string }) {
                     <VehiclePurchaseDetails />
 
                     <VehicleNotes />
-                    <Link href="/garrage" className="flex items-center justify-between rounded-xl border border-line px-4 py-3 text-sm text-text-secondary transition-colors hover:border-info-border hover:bg-info-soft">
+                    <Link href="/garrage" className="vehicle-back-link">
                         Back to all vehicles <ArrowUpRight className="size-4" aria-hidden="true" />
                     </Link>
                     <p className="break-all px-1 text-xs text-subtle">Vehicle reference: {vehicleId}</p>

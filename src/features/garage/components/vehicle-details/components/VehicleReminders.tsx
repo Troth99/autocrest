@@ -12,7 +12,7 @@ export default function VehicleReminders() {
     <section className="rounded-2xl border border-info-border bg-linear-to-br from-info-soft to-panel p-5 sm:p-6">
         <div className="flex items-center gap-2"><CalendarDays className="size-5 text-info" aria-hidden="true" /><h2 className="text-lg font-semibold">Upcoming reminders</h2></div>
         <p className="mt-2 text-xs leading-5 text-muted">A little planning keeps your car ready for the road.</p>
-        <div className="mt-4"><button type="button" disabled className="button-base button-secondary gap-2 border px-3 py-2 text-xs disabled:cursor-not-allowed disabled:opacity-60" title="Add reminder is not connected yet"><Plus className="size-4" aria-hidden="true" /> Add reminder</button></div>
+        <div className="mt-4"><button type="button" disabled className="vehicle-detail-action" title="Add reminder is not connected yet"><Plus className="size-4" aria-hidden="true" /> Add reminder</button></div>
         <ul className="mt-5 space-y-4">
             {reminders.map(({ title, detail, icon: Icon }) => (
                 <li key={title} className="flex gap-3 rounded-xl border border-line bg-panel p-3">

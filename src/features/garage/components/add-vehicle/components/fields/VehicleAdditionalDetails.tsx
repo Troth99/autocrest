@@ -20,7 +20,7 @@ export default function VehicleAdditionalDetails({ errors, register, registerChe
           aria-invalid={Boolean(errors.description)} aria-describedby={errors.description ? "description-error" : undefined}
           rows={4}
           placeholder="Notes about your vehicle, modifications, or anything else you want to remember."
-          className="w-full resize-y rounded-lg border border-input bg-transparent px-2.5 py-2 text-sm text-text-primary outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30"
+          className="form-textarea"
         />
         <VehicleFieldError field="description" message={errors.description} />
       </label>

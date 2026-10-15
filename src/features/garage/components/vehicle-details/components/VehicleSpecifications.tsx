@@ -18,11 +18,11 @@ const specifications = [
 
 export default function VehicleSpecifications() {
   return (
-    <section className="rounded-2xl border border-line bg-panel p-5 sm:p-6">
+    <section className="section-card">
         <div className="mb-6 flex items-center gap-3"><Cog className="size-5 text-info" aria-hidden="true" /><h2 className="text-lg font-semibold">Vehicle specifications</h2></div>
         <dl className="grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3">
             {specifications.map(({ label, value }) => (
-                <div key={label}><dt className="text-xs text-muted">{label}</dt><dd className="mt-1.5 text-sm font-medium">{value}</dd></div>
+                <div key={label}><dt className="detail-label">{label}</dt><dd className="detail-value">{value}</dd></div>
             ))}
         </dl>
     </section>

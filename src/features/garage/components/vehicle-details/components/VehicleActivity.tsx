@@ -9,8 +9,8 @@ const activity = [
 
 export default function VehicleActivity() {
     return (
-        <section className="rounded-2xl border border-line bg-panel p-5 sm:p-6">
-            <div className="mb-2 flex flex-wrap items-center justify-between gap-2"><h2 className="text-lg font-semibold">Recent activity</h2><span className="text-xs text-muted">Sample history</span></div>
+        <section className="section-card">
+            <div className="mb-2 flex flex-wrap items-center justify-between gap-2"><h2 className="text-lg font-semibold">Recent activity</h2><span className="detail-label">Sample history</span></div>
             <ul className="divide-y divide-line">
                 {activity.map(({ title, detail, date, icon: Icon }) => (
                     <li key={title} className="flex items-start gap-3 py-4">

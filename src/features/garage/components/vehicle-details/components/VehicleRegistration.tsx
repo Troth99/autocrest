@@ -12,13 +12,13 @@ const registration = [
 
 export default function VehicleRegistration() {
   return (
-    <section className="rounded-2xl border border-line bg-panel p-5 sm:p-6">
+    <section className="section-card">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-3"><ClipboardList className="size-5 text-info" aria-hidden="true" /><h2 className="text-lg font-semibold">Registration & documents</h2></div>
         </div>
         <dl className="grid gap-x-6 gap-y-5 sm:grid-cols-2">
             {registration.map(({ label, value }) => (
-                <div key={label}><dt className="text-xs text-muted">{label}</dt><dd className="mt-1.5 text-sm font-medium">{value}</dd></div>
+                <div key={label}><dt className="detail-label">{label}</dt><dd className="detail-value">{value}</dd></div>
             ))}
         </dl>
     </section>

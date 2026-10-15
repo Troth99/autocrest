@@ -76,7 +76,7 @@ export default function TwoFactorSetupDialog({
             <div className="mt-6">
               <div
                 role="status"
-                className="flex items-center gap-3 rounded-2xl border border-accent/25 bg-accent/5 p-4 text-sm text-accent-text"
+                className="two-factor-notice"
               >
                 <Check className="size-5" />
                 Setup complete

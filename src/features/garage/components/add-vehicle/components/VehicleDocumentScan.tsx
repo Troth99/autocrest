@@ -85,13 +85,13 @@ export default function VehicleDocumentScan({ onExtracted }: {
         >
             <legend className="sr-only">Scan registration document</legend>
             {isScanning && (
-                <span aria-hidden="true" className="pointer-events-none absolute -inset-px animate-pulse rounded-2xl border-2 border-info motion-reduce:animate-none" />
+                <span aria-hidden="true" className="document-scan-progress" />
             )}
 
             <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_240px]">
                 <div className="rounded-xl border border-info-border bg-background/40 p-4 sm:p-5">
                     <div className="flex items-start gap-3">
-                        <span className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-accent text-ink shadow-lg shadow-accent/20">
+                        <span className="document-scan-icon">
                             <FileScan className="size-8" aria-hidden="true" />
                         </span>
                         <div>
@@ -117,7 +117,7 @@ export default function VehicleDocumentScan({ onExtracted }: {
                             />
                             <label
                                 htmlFor="registration_document_front"
-                                className="flex cursor-pointer flex-col items-center gap-3 rounded-xl border border-info-border bg-panel px-4 py-4 text-center transition-colors hover:border-info hover:bg-info-soft peer-focus-visible:outline-2 peer-focus-visible:outline-offset-4 peer-focus-visible:outline-focus sm:flex-row sm:gap-4 sm:text-left"
+                                className="document-scan-upload"
                             >
                                 <Upload className="size-7 shrink-0 text-info" aria-hidden="true" />
                                 <span className="min-w-0 flex-1">
@@ -152,7 +152,7 @@ export default function VehicleDocumentScan({ onExtracted }: {
                             onClick={handleExtract}
                             disabled={!frontFile || isScanning}
                             aria-busy={isScanning}
-                            className="cursor-pointer inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-accent-strong disabled:cursor-not-allowed disabled:opacity-50"
+                            className="document-scan-extract"
                         >
                             <WandSparkles className="size-4" aria-hidden="true" />
                             {isScanning ? "Reading document..." : "Extract details"}
@@ -170,7 +170,7 @@ export default function VehicleDocumentScan({ onExtracted }: {
             </div>
             <div role="status" aria-atomic="true">
                 {extractedDetails && !isScanning && (
-                    <div className="mt-4 flex items-start gap-3 rounded-xl border border-emerald-300 bg-emerald-50 p-4 text-emerald-900 dark:border-emerald-700 dark:bg-emerald-950 dark:text-emerald-100">
+                    <div className="document-scan-success">
                         <CircleCheck className="mt-0.5 size-5 shrink-0" aria-hidden="true" />
                         <div>
                             <p className="text-sm font-semibold">Document scanned successfully</p>

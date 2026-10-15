@@ -42,9 +42,9 @@ export default function VehiclePhotoFields(
                 </div>
             )}
 
-            <div className="mt-4 grid gap-3 rounded-xl border border-dashed border-info-border bg-linear-to-br from-info-soft to-transparent p-4 sm:p-5">
+            <div className="vehicle-photo-upload">
                 <div className="flex items-center gap-3">
-                    <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-info-border bg-info-soft text-info">
+                    <span className="vehicle-photo-icon">
                         <ImagePlus className="size-5" aria-hidden="true" />
                     </span>
                     <div className="min-w-0">
@@ -69,7 +69,7 @@ export default function VehiclePhotoFields(
                     }
                     aria-invalid={Boolean(photoError)}
                     aria-label="Choose vehicle photo"
-                    className="w-full min-w-0 cursor-pointer rounded-lg text-sm text-muted file:mr-3 file:cursor-pointer file:rounded-lg file:border file:border-info-border file:bg-info-soft file:px-4 file:py-2.5 file:text-sm file:font-medium file:text-info hover:file:bg-info/20 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+                    className="vehicle-photo-input"
                     onChange={(event) => {
                         const file = event.target.files?.[0];
                         event.target.value = "";
@@ -107,7 +107,7 @@ export default function VehiclePhotoFields(
                 {photoFile && (
                     <button
                         type="button"
-                        className="cursor-pointer justify-self-start rounded-lg border border-line px-3 py-2 text-xs font-medium text-text-secondary transition-colors hover:bg-input/45 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                        className="vehicle-photo-remove"
                         onClick={() => {
                             onPhotoChange(null);
                             onPhotoError(null);

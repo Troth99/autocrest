@@ -47,7 +47,7 @@ export function GarageSearch() {
         <button
           type="submit"
           aria-label="Search garage"
-          className="absolute right-2 top-1/2 -translate-y-1/2 rounded-lg p-2 text-muted transition-colors hover:bg-info-soft hover:text-info focus-visible:outline-2 focus-visible:outline-focus"
+          className="garage-search-submit"
         >
           <Search className="size-4" aria-hidden="true" />
         </button>

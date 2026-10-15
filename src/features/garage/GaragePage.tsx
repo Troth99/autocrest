@@ -1,10 +1,10 @@
-import VehicleCard from "@/features/garage/components/overview/VehicleCard";
-import GarageOverview from "@/features/garage/components/overview/GarageOverview";
+import VehicleCard from "@/features/garage/components/garage-home/VehicleCard";
+import GarageOverview from "@/features/garage/components/garage-home/GarageOverview";
 import { CarFront } from "lucide-react";
 import { getVehicles } from "@/features/garage/services/vehicles.service";
 import { getVehiclePhotoUrls } from "@/features/garage/services/vehicle-photo.service";
 import { createClient } from "@/lib/supabase/server";
-import AddVehicleButton from "@/features/garage/components/header/AddVehicleButton";
+import AddVehicleButton from "@/features/garage/components/garage-home/AddVehicleButton";
 import Link from "next/link";
 
 export default async function GaragePage({ query = "" }: { query?: string }) {
@@ -36,7 +36,7 @@ export default async function GaragePage({ query = "" }: { query?: string }) {
       <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
         <section className="min-w-0" aria-labelledby="vehicles-heading">
           {query && (
-            <div className="mb-4 flex flex-wrap items-center justify-between gap-2 rounded-xl border border-line bg-input/45 px-4 py-3 text-sm">
+            <div className="garage-search-summary">
               <p className="text-muted">{matchingVehicles.length} results for <span className="font-medium text-text-primary">“{query}”</span></p>
               <Link href="/garrage" className="font-semibold text-info hover:text-info-strong">Clear search</Link>
             </div>

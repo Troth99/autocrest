@@ -15,7 +15,7 @@ const footerColumns = [
 
 export default function SiteFooter() {
   return (
-    <footer className="relative isolate overflow-hidden border-t border-line bg-(image:--footer-background) shadow-[0_-18px_42px_rgb(0_0_0/12%),inset_0_1px_rgb(255_255_255/2.5%)] before:absolute before:left-1/2 before:-top-px before:h-px before:w-[min(30rem,70vw)] before:-translate-x-1/2 before:bg-[linear-gradient(90deg,transparent,#38bdf8_25%,var(--accent)_75%,transparent)] before:opacity-45 before:content-['']">
+    <footer className="site-footer">
       <div className="relative z-10 mx-auto max-w-6xl px-6 py-12">
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
           <div>
@@ -47,7 +47,7 @@ export default function SiteFooter() {
             </div>
           ))}
         </div>
-        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-line pt-6 text-xs text-subtle sm:flex-row">
+        <div className="site-footer-bottom">
           <span>&copy; 2026 AutoCrest. Prototype build.</span>
         </div>
       </div>

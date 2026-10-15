@@ -26,7 +26,7 @@ export default function ProfileHero({
   const initials = getInitials(name, email);
 
   return (
-    <section className="relative overflow-hidden rounded-3xl border border-line bg-panel p-6 shadow-sm before:absolute before:inset-x-0 before:top-0 before:h-1 before:bg-accent">
+    <section className="profile-hero">
 
 
       <div className="relative flex flex-col gap-4">

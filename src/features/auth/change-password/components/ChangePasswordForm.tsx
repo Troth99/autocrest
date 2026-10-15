@@ -90,7 +90,7 @@ export default function ChangePasswordForm() {
       </fieldset>
       {saveError && <p role="alert" className="text-sm text-destructive">{saveError}</p>}
       {success && (
-        <p role="status" className="flex items-center gap-3 rounded-xl border border-accent/25 bg-accent/5 p-4 text-sm text-accent-text">
+        <p role="status" className="password-security-notice">
           <Check className="size-5 shrink-0" />Your password has been changed successfully.
         </p>
       )}

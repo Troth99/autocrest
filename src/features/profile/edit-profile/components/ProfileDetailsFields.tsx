@@ -66,7 +66,7 @@ export default function ProfileDetailsFields({
           maxLength={255}
           aria-describedby="bio-character-count"
           placeholder="Tell people a little about yourself."
-          className="w-full resize-none rounded-lg border border-input bg-transparent px-2.5 py-2 text-sm text-text-primary outline-none transition-colors placeholder:text-muted focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30"
+          className="profile-description-input"
           {...register("bio")}
         />
         <span

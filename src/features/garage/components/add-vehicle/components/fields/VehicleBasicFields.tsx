@@ -91,7 +91,7 @@ export default function VehicleBasicFields({
           <select aria-invalid={Boolean(errors.vehicle_use)} aria-describedby={errors.vehicle_use ? "vehicle_use-error" : undefined}
             id="vehicle_use"
             {...register("vehicle_use")}
-            className="h-9 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm text-text-primary outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30"
+            className="form-select"
           >
             <option value="" className="bg-panel text-text-primary">
               Not specified

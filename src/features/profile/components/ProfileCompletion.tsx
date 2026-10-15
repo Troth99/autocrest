@@ -78,7 +78,7 @@ export default function ProfileCompletion({
               <Link
                 href={href}
                 aria-label={`Add ${label.toLowerCase()}`}
-                className="ml-auto inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs font-semibold text-info transition-colors hover:bg-info-soft focus-visible:outline-2 focus-visible:outline-focus"
+                className="profile-completion-link"
               >
                 Add <ArrowRight className="size-3" aria-hidden="true" />
               </Link>

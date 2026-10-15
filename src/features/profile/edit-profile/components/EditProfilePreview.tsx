@@ -32,7 +32,7 @@ export default function EditProfilePreview({
         <h2 className="mt-6 w-full wrap-break-word text-2xl font-semibold tracking-tight">
           {name}
         </h2>
-        <span className="mt-3 rounded-full border border-info-border bg-info-soft px-4 py-1.5 text-xs font-medium text-info">
+        <span className="profile-preview-badge">
           AutoCrest member
         </span>
       </div>
