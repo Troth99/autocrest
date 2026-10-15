@@ -3,9 +3,14 @@
 import Link from "next/link";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/shared/components/ui/dropdown-menu";
 import { ArrowLeft, Download, Gauge, MoreHorizontal, Pencil, Star, Trash2 } from "lucide-react";
+import { Vehicle } from "@/features/garage/types/vehicle";
 
 
-export default function VehicleHeading() {
+export default function VehicleHeading({
+    vehicle,
+}: {
+    vehicle: Vehicle
+}) {
 
     return (
         <>
@@ -15,8 +20,15 @@ export default function VehicleHeading() {
             <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
                     <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-info">My garage / Vehicle details</p>
-                    <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Volkswagen Golf</h1>
-                    <p className="mt-2 text-sm text-muted">2018 · 1.4 TSI Comfortline · Daily Golf</p>
+
+                    <h1 className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                        <span className="text-3xl font-semibold tracking-tight sm:text-4xl">
+                            {vehicle.make}
+                        </span>
+                        <span className="text-xl font-medium text-muted sm:text-2xl">
+                            {vehicle.model}
+                        </span>
+                    </h1>              <p className="mt-2 text-sm text-muted">{[vehicle.manufacture_year, vehicle.trim, vehicle.nickname].filter((value) => value != null && value !== "").join(" \u00b7 ")}</p>
                 </div>
                 {/* Vehicle actions: static controls to extract into VehicleActions later. */}
                 <div role="group" aria-label="Vehicle actions" className="flex flex-wrap items-center gap-2">

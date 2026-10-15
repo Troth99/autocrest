@@ -18,12 +18,16 @@ export default function VehicleTechnicalFields({ values, onFieldChange, register
         <label htmlFor="colour" className="grid gap-2 text-sm font-medium text-text-secondary">
           <span>Colour</span>
           <Input id="colour" name="colour" value={values.colour}
+            aria-invalid={Boolean(errors.colour)} aria-describedby={errors.colour ? "colour-error" : undefined}
             onChange={(event) => onFieldChange("colour", event.target.value)} />
+          <VehicleFieldError field="colour" message={errors.colour} />
         </label>
         <label htmlFor="seats" className="grid gap-2 text-sm font-medium text-text-secondary">
           <span>Seats</span>
           <Input id="seats" name="seats" type="number" min={1} step={1} value={values.seats}
+            aria-invalid={Boolean(errors.seats)} aria-describedby={errors.seats ? "seats-error" : undefined}
             onChange={(event) => onFieldChange("seats", event.target.value)} />
+          <VehicleFieldError field="seats" message={errors.seats} />
         </label>
         <label
           htmlFor="fuel_type"
