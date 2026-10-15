@@ -9,7 +9,7 @@ export default function AccountNavigation() {
   return (
     <nav
       aria-label="Account navigation"
-      className="border-b border-line bg-panel px-3 py-4 lg:w-52 lg:shrink-0 lg:border-b-0 lg:border-r lg:px-4 lg:py-8"
+      className="account-navigation"
     >
       <p className="mb-5 hidden px-4 text-[10px] font-semibold uppercase tracking-[0.18em] text-subtle lg:block">YOUR WORKSPACE</p>
       <div className="flex flex-wrap gap-2 lg:flex-col">

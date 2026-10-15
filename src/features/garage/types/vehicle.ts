@@ -55,6 +55,8 @@ export type Vehicle = {
   engine_cc: number | null;
   power_hp: number | null;
   euro_standard: EuroStandard | null;
+  colour: string | null;
+  seats: number | null;
   mileage_km: number;
   mileage_recorded_at: string | null;
   description: string | null;

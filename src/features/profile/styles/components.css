@@ -1,0 +1,65 @@
+/* Profile component styles. Keep layout-specific utilities in JSX. */
+@layer components {
+  .profile-danger-icon {
+    @apply flex size-10 shrink-0 items-center justify-center rounded-2xl bg-destructive/10;
+    @apply text-destructive [&>svg]:size-5;
+  }
+
+  .profile-completion-link {
+    @apply ml-auto inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs font-semibold;
+    @apply text-info transition-colors hover:bg-info-soft focus-visible:outline-2;
+    @apply focus-visible:outline-focus;
+  }
+
+  .profile-hero {
+    @apply relative overflow-hidden rounded-3xl border border-line bg-panel p-6 shadow-sm;
+    @apply before:absolute before:inset-x-0 before:top-0 before:h-1 before:bg-accent;
+  }
+
+  .profile-section-icon {
+    @apply flex size-10 shrink-0 items-center justify-center rounded-2xl bg-info-soft text-info;
+    @apply [&>svg]:size-5;
+  }
+
+  .two-factor-notice {
+    @apply flex items-center gap-3 rounded-2xl border border-accent/25 bg-accent/5 p-4 text-sm;
+    @apply text-accent-text;
+  }
+
+  .profile-preview-badge {
+    @apply mt-3 rounded-full border border-info-border bg-info-soft px-4 py-1.5 text-xs font-medium;
+    @apply text-info;
+  }
+
+  .phone-country-flag {
+    @apply flex h-3.5 w-5 shrink-0 items-center justify-center overflow-hidden rounded-xs;
+    @apply [&>svg]:size-full;
+  }
+
+  .profile-avatar-upload {
+    @apply mt-4 flex flex-col items-start gap-5 rounded-2xl border border-dashed border-info-border;
+    @apply bg-linear-to-br from-info-soft to-transparent p-5 sm:flex-row sm:items-center;
+  }
+
+  .profile-avatar-badge {
+    @apply absolute -right-1 bottom-0 flex size-8 items-center justify-center rounded-full border-4;
+    @apply border-panel bg-info text-ink;
+  }
+
+  .profile-description-input {
+    @apply w-full resize-none rounded-lg border border-input bg-transparent px-2.5 py-2 text-sm;
+    @apply text-text-primary outline-none transition-colors placeholder:text-muted;
+    @apply focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30;
+  }
+
+  .profile-edit-form {
+    @apply space-y-7 rounded-2xl border border-line bg-panel p-6 sm:p-8 [&_input]:h-12;
+    @apply [&_input]:rounded-xl [&_input]:px-4;
+  }
+
+  .profile-details-layout {
+    @apply grid min-w-0 gap-5 lg:col-start-2 lg:row-start-2 lg:grid-rows-[minmax(0,1fr)_auto];
+    @apply [&>section]:mt-0;
+  }
+
+}

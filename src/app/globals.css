@@ -1,6 +1,11 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "../shared/styles/components.css";
+@import "../features/auth/styles/components.css";
+@import "../features/garage/styles/components.css";
+@import "../features/marketing/styles/components.css";
+@import "../features/profile/styles/components.css";
 
 @custom-variant dark (&:is(.dark *));
 

@@ -1,0 +1,13 @@
+/* Auth component styles. Keep layout-specific utilities in JSX. */
+@layer components {
+  .password-security-notice {
+    @apply flex items-center gap-3 rounded-xl border border-accent/25 bg-accent/5 p-4 text-sm;
+    @apply text-accent-text;
+  }
+
+  .auth-form-title {
+    @apply mt-4 text-[clamp(1.875rem,5vw,2.5rem)] font-semibold leading-[1.05] tracking-[-0.045em];
+    @apply text-text-primary;
+  }
+
+}

@@ -124,7 +124,7 @@ export default function EditProfilePage() {
           avatarUrl={avatarPreview || values.avatar_url || null}
         />
         <form
-          className="space-y-7 rounded-2xl border border-line bg-panel p-6 sm:p-8 [&_input]:h-12 [&_input]:rounded-xl [&_input]:px-4"
+          className="profile-edit-form"
           onSubmit={formHandler}
         >
           <div>

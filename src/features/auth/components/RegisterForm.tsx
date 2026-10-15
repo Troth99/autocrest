@@ -65,7 +65,7 @@ export default function RegisterForm() {
         <span className="eyebrow">AUTOCREST ACCOUNT</span>
         <h1
           id="register-title"
-          className="mt-4 text-[clamp(1.875rem,5vw,2.5rem)] font-semibold leading-[1.05] tracking-[-0.045em] text-text-primary"
+          className="auth-form-title"
         >
           Create your <span className="text-accent-text">workspace</span>
         </h1>

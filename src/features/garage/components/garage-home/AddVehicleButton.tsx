@@ -1,7 +1,7 @@
 "use client";
 
 import { Fragment } from "react";
-import { VehicleType } from "../types/vehicle";
+import type { VehicleType } from "@/features/garage/types/vehicle";
 import { ChevronDown, Plus } from "lucide-react";
 import {
   DropdownMenu,

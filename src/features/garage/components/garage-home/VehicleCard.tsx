@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowUpRight, CarFront, Check, Cog, Fuel, Gauge, Settings2 } from "lucide-react";
 import type { Vehicle } from "@/features/garage/types/vehicle";
 
@@ -27,16 +28,16 @@ export default function VehicleCard({ vehicle, photoUrl }: Props) {
         ) : (
           <div className="flex h-full flex-col items-center justify-center gap-3 text-info">
             <CarFront className="garage-car-motion size-16 stroke-[1.25]" aria-hidden="true" />
-            <span className="text-xs text-muted">No photo added</span>
+            <span className="detail-label">No photo added</span>
           </div>
         )}
         {vehicle.is_primary && (
-          <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-lg bg-accent px-3 py-1.5 text-xs font-semibold text-ink">
+          <span className="vehicle-card-primary">
             <Check className="size-3.5" aria-hidden="true" /> Primary
           </span>
         )}
         {vehicle.plate && (
-          <span className="absolute bottom-3 right-3 rounded-md border border-white/20 bg-slate-950/85 px-3 py-1.5 font-mono text-xs font-semibold text-white">
+          <span className="vehicle-card-plate">
             {vehicle.plate}
           </span>
         )}
@@ -50,16 +51,19 @@ export default function VehicleCard({ vehicle, photoUrl }: Props) {
             <div key={label} className="flex min-w-0 items-center gap-2.5">
               <Icon className="size-5 shrink-0 stroke-[1.5] text-info" aria-hidden="true" />
               <div className="min-w-0">
-                <dt className="text-xs text-muted">{label}</dt>
+                <dt className="detail-label">{label}</dt>
                 <dd className="mt-1 wrap-break-word text-sm font-semibold text-text-primary">{value ?? "Not provided"}</dd>
               </div>
             </div>
           ))}
         </dl>
         <div className="mt-auto pt-5">
-          <button type="button" disabled className="flex w-full items-center justify-between rounded-lg border border-info-border bg-transparent px-4 py-2.5 text-sm font-medium text-text-secondary disabled:cursor-not-allowed">
-            Vehicle details <ArrowUpRight className="size-4" aria-hidden="true" />
-          </button>
+          <Link
+            href={`/vehicles/${vehicle.id}`}
+            className="button-base button-primary flex w-full items-center justify-between px-4 py-3 text-sm"          >
+            <span>View details</span>
+            <ArrowUpRight className="size-4" aria-hidden="true" />
+          </Link>
         </div>
       </div>
     </article>

@@ -36,7 +36,7 @@ export default function ProfileAvatarSelector({
               Profile photo
             </h3>
             <p className="mt-1 text-sm text-muted">Give your profile a personal touch.</p>
-            <div className="mt-4 flex flex-col items-start gap-5 rounded-2xl border border-dashed border-info-border bg-linear-to-br from-info-soft to-transparent p-5 sm:flex-row sm:items-center">
+            <div className="profile-avatar-upload">
               <div className="relative shrink-0">
                 <Avatar className="size-24 ring-4 ring-info/10">
                   {(avatarPreview || avatarUrl) && (
@@ -46,7 +46,7 @@ export default function ProfileAvatarSelector({
                     {initials}
                   </AvatarFallback>
                 </Avatar>
-                <span className="absolute -right-1 bottom-0 flex size-8 items-center justify-center rounded-full border-4 border-panel bg-info text-ink">
+                <span className="profile-avatar-badge">
                   <Camera className="size-4" aria-hidden="true" />
                 </span>
               </div>

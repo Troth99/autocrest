@@ -88,7 +88,7 @@ export default function ProfilePage() {
         <aside className="min-w-0 lg:col-start-1 lg:row-start-2 [&>section]:h-full">
           <CompleteYourSetup user={user} />
         </aside>
-        <div className="grid min-w-0 gap-5 lg:col-start-2 lg:row-start-2 lg:grid-rows-[minmax(0,1fr)_auto] [&>section]:mt-0">
+        <div className="profile-details-layout">
           <AccountSecurityCard
             signInMethod={signInMethod}
             lastSignIn={lastSignIn}

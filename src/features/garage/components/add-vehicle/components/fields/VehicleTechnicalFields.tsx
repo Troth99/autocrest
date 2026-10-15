@@ -1,4 +1,4 @@
-import VehicleFieldError from "@/features/garage/components/add-vehicle/VehicleFieldError";
+import VehicleFieldError from "@/features/garage/components/add-vehicle/components/VehicleFieldError";
 import type { VehicleFormErrors } from "@/features/garage/types/add-vehicle-form";
 import type { VehicleFormRegister } from "@/features/garage/types/add-vehicle-form";
 import type { VehicleDocumentFieldProps } from "@/features/garage/types/vehicle-document-form";
@@ -18,12 +18,16 @@ export default function VehicleTechnicalFields({ values, onFieldChange, register
         <label htmlFor="colour" className="grid gap-2 text-sm font-medium text-text-secondary">
           <span>Colour</span>
           <Input id="colour" name="colour" value={values.colour}
+            aria-invalid={Boolean(errors.colour)} aria-describedby={errors.colour ? "colour-error" : undefined}
             onChange={(event) => onFieldChange("colour", event.target.value)} />
+          <VehicleFieldError field="colour" message={errors.colour} />
         </label>
         <label htmlFor="seats" className="grid gap-2 text-sm font-medium text-text-secondary">
           <span>Seats</span>
           <Input id="seats" name="seats" type="number" min={1} step={1} value={values.seats}
+            aria-invalid={Boolean(errors.seats)} aria-describedby={errors.seats ? "seats-error" : undefined}
             onChange={(event) => onFieldChange("seats", event.target.value)} />
+          <VehicleFieldError field="seats" message={errors.seats} />
         </label>
         <label
           htmlFor="fuel_type"
@@ -35,7 +39,7 @@ export default function VehicleTechnicalFields({ values, onFieldChange, register
             aria-required="true"
             name="fuel_type" value={values.fuel_type} onChange={(event) => onFieldChange("fuel_type", event.target.value)}
 
-            className="h-9 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm text-text-primary outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30"
+            className="form-select"
           >
             <option value="" className="bg-panel text-text-primary">
               Choose a fuel type
@@ -79,7 +83,7 @@ export default function VehicleTechnicalFields({ values, onFieldChange, register
             id="transmission"
             aria-required="true"
             {...register("transmission")}
-            className="h-9 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm text-text-primary outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30"
+            className="form-select"
           >
             <option value="" className="bg-panel text-text-primary">
               Choose a transmission
@@ -107,7 +111,7 @@ export default function VehicleTechnicalFields({ values, onFieldChange, register
           <select aria-invalid={Boolean(errors.drivetrain)} aria-describedby={errors.drivetrain ? "drivetrain-error" : undefined}
             id="drivetrain"
             {...register("drivetrain")}
-            className="h-9 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm text-text-primary outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30"
+            className="form-select"
           >
             <option value="" className="bg-panel text-text-primary">
               Not specified
@@ -165,7 +169,7 @@ export default function VehicleTechnicalFields({ values, onFieldChange, register
             id="euro_standard"
             name="euro_standard" value={values.euro_standard} onChange={(event) => onFieldChange("euro_standard", event.target.value)}
 
-            className="h-9 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm text-text-primary outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30"
+            className="form-select"
           >
             <option value="" className="bg-panel text-text-primary">
               Not specified

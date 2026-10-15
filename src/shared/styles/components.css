@@ -1,0 +1,100 @@
+/* Shared visual patterns. Keep layout-specific utilities in JSX. */
+@layer components {
+  .account-navigation {
+    @apply border-b border-line bg-panel px-3 py-4 lg:w-52 lg:shrink-0 lg:border-b-0 lg:border-r;
+    @apply lg:px-4 lg:py-8;
+  }
+
+  .form-textarea {
+    @apply w-full resize-y rounded-lg border border-input bg-transparent px-2.5 py-2 text-sm;
+    @apply text-text-primary outline-none focus-visible:border-ring focus-visible:ring-3;
+    @apply focus-visible:ring-ring/50 dark:bg-input/30;
+  }
+
+  .form-select {
+    @apply h-9 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm;
+    @apply text-text-primary outline-none focus-visible:border-ring focus-visible:ring-3;
+    @apply focus-visible:ring-ring/50 dark:bg-input/30;
+  }
+
+  .detail-label {
+    @apply text-xs text-muted;
+  }
+
+  .section-card {
+    @apply rounded-2xl border border-line bg-panel p-5 sm:p-6;
+  }
+
+  .detail-value {
+    @apply mt-1.5 text-sm font-medium;
+  }
+
+  .coming-soon-panel {
+    @apply relative overflow-hidden rounded-3xl border border-line bg-panel px-6 py-12 text-center;
+    @apply shadow-xl sm:px-12 sm:py-16;
+  }
+
+  .coming-soon-icon {
+    @apply relative mx-auto mb-8 flex size-28 items-center justify-center rounded-full border;
+    @apply border-info-border bg-info-soft;
+  }
+
+  .coming-soon-badge {
+    @apply absolute -bottom-1 -right-1 flex size-10 items-center justify-center rounded-xl border;
+    @apply border-line bg-popover text-accent-text shadow-lg;
+  }
+
+  .coming-soon-action {
+    @apply action-button;
+    @apply mt-8 justify-center focus-visible:outline-2 focus-visible:outline-offset-4;
+    @apply focus-visible:outline-info;
+  }
+
+  .site-footer {
+    @apply relative isolate overflow-hidden border-t border-line bg-(image:--footer-background);
+    @apply shadow-[0_-18px_42px_rgb(0_0_0/12%),inset_0_1px_rgb(255_255_255/2.5%)] before:absolute;
+    @apply before:left-1/2 before:-top-px before:h-px before:w-[min(30rem,70vw)];
+    @apply before:-translate-x-1/2;
+    @apply before:bg-[linear-gradient(90deg,transparent,#38bdf8_25%,var(--accent)_75%,transparent)];
+    @apply before:opacity-45 before:content-[''];
+  }
+
+  .site-footer-bottom {
+    @apply mt-10 flex flex-col items-center justify-between gap-4 border-t border-line pt-6 text-xs;
+    @apply text-subtle sm:flex-row;
+  }
+}
+
+/* Site header */
+@layer components {
+  .header-nav {
+    @apply mx-auto flex items-center justify-between gap-4 px-4 py-4 sm:px-6;
+  }
+
+  .header-nav-account {
+    @apply w-full flex-wrap lg:px-10;
+  }
+
+  .header-nav-link {
+    @apply relative rounded-lg px-2 py-1.5 text-sm font-medium text-text-secondary;
+    @apply transition-[color,background-color,transform] duration-200 after:absolute after:inset-x-2;
+    @apply after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full;
+    @apply after:bg-info after:transition-transform after:duration-200 hover:-translate-y-0.5;
+    @apply hover:bg-info-soft hover:text-info-strong hover:after:scale-x-100;
+    @apply motion-reduce:transition-none motion-reduce:hover:translate-y-0;
+    @apply motion-reduce:after:transition-none;
+  }
+
+  .header-sign-in {
+    @apply hidden rounded-full border border-line bg-panel px-3.5 py-2 text-sm font-semibold;
+    @apply text-text-primary shadow-sm;
+    @apply transition-[color,background-color,border-color,transform,box-shadow] duration-200;
+    @apply hover:-translate-y-0.5 hover:border-info-border hover:bg-info-soft hover:text-info-strong;
+    @apply hover:shadow-[0_8px_20px_rgb(166_154_232/14%)] sm:block motion-reduce:transition-none;
+    @apply motion-reduce:hover:translate-y-0;
+  }
+
+  .header-search {
+    @apply order-last w-full min-w-0 sm:order-0 sm:ml-auto sm:w-auto sm:flex-1 sm:max-w-sm;
+  }
+}

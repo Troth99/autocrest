@@ -1,5 +1,5 @@
 import AddVehicleForm from "@/features/garage/components/add-vehicle/AddVehicleForm";
-import VehicleTypeSelection from "@/features/garage/components/VehicleTypeSelection";
+import VehicleTypeSelection from "@/features/garage/components/add-vehicle/components/VehicleTypeSelection";
 
 type Props = {
   searchParams: Promise<{

@@ -96,3 +96,48 @@ export async function addVehicle(supabase: SupabaseClient, input: unknown) {
   }
   return data.id as string;
 }
+
+export async function getVehicleById(
+  supabase: SupabaseClient,
+  vehicleId: string,
+): Promise<Vehicle | null> {
+
+  // Use the authenticated user from the supplied client, never an input user ID.
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
+
+  // Check for authentication errors and ensure the user is signed in
+  if (authError) {
+    throw authError;
+  }
+
+  // Ensure the user is signed in before fetching vehicle details
+  if(!user) {
+    throw new Error("You must be signed in to view vehicle details.");
+  }
+
+  const { data, error } = await supabase
+    .from("vehicles")
+    .select("*")
+    .eq("id", vehicleId)
+    .eq("user_id", user.id)
+    .is("archived_at", null)
+    .maybeSingle<Vehicle>();
+
+  if (error) {
+    console.error(
+      "Vehicle fetch failed",
+      JSON.stringify({
+        code: error.code,
+        message: error.message,
+        details: error.details,
+        hint: error.hint,
+      }),
+    );
+    throw error;
+  }
+
+  return data ?? null;
+}

@@ -70,6 +70,8 @@ export const addVehicleSchema = z
     model: z.string().trim().min(1, "Model is required."),
     nickname: optionalText,
     trim: optionalText,
+    colour: optionalText,
+    seats: optionalPositiveInteger,
     plate: optionalText,
     vin: optionalText,
     registration_certificate_number: optionalText,

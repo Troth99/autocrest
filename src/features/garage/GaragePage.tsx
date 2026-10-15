@@ -1,16 +1,19 @@
-import VehicleCard from "@/features/garage/components/VehicleCard";
-import GarageOverview from "@/features/garage/components/GarageOverview";
+import VehicleCard from "@/features/garage/components/garage-home/VehicleCard";
+import GarageOverview from "@/features/garage/components/garage-home/GarageOverview";
 import { CarFront } from "lucide-react";
 import { getVehicles } from "@/features/garage/services/vehicles.service";
 import { getVehiclePhotoUrls } from "@/features/garage/services/vehicle-photo.service";
 import { createClient } from "@/lib/supabase/server";
-import AddVehicleButton from "./components/AddVehicleButton";
+import AddVehicleButton from "@/features/garage/components/garage-home/AddVehicleButton";
 import Link from "next/link";
 
 export default async function GaragePage({ query = "" }: { query?: string }) {
   const supabase = await createClient();
   const vehicles = await getVehicles(supabase);
+
   const photos = await getVehiclePhotoUrls(supabase, vehicles.map((vehicle) => vehicle.id));
+
+
   const matchingVehicles = vehicles.filter((vehicle) =>
     [vehicle.make, vehicle.model, vehicle.nickname, vehicle.plate].filter(Boolean).join(" ").toLocaleLowerCase().includes(query.toLocaleLowerCase()),
   );
@@ -18,7 +21,7 @@ export default async function GaragePage({ query = "" }: { query?: string }) {
 
   return (
     <main className="mx-auto w-full max-w-7xl px-4 py-7 sm:px-6 sm:py-8">
-      <div className="mb-6 flex flex-wrap items-end justify-between gap-5 xl:mr-[344px]">
+      <div className="mb-6 flex flex-wrap items-end justify-between gap-5 xl:mr-86">
         <div>
           <h1 className="text-3xl font-semibold tracking-[-0.045em] text-text-primary sm:text-4xl">
             My Garage
@@ -33,7 +36,7 @@ export default async function GaragePage({ query = "" }: { query?: string }) {
       <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
         <section className="min-w-0" aria-labelledby="vehicles-heading">
           {query && (
-            <div className="mb-4 flex flex-wrap items-center justify-between gap-2 rounded-xl border border-line bg-input/45 px-4 py-3 text-sm">
+            <div className="garage-search-summary">
               <p className="text-muted">{matchingVehicles.length} results for <span className="font-medium text-text-primary">“{query}”</span></p>
               <Link href="/garrage" className="font-semibold text-info hover:text-info-strong">Clear search</Link>
             </div>
@@ -46,7 +49,9 @@ export default async function GaragePage({ query = "" }: { query?: string }) {
               {vehicles.length} {vehicles.length === 1 ? "vehicle" : "vehicles"}
             </span>
           </div>
+
           {photos.error && <p role="alert" className="mb-4 text-sm text-muted">{photos.error} Refresh to try again.</p>}
+
           {vehicles.length === 0 ? (
             <div className="panel-card px-6 py-14 text-center">
               <CarFront

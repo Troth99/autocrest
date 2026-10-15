@@ -3,16 +3,16 @@
 import Link from "next/link";
 import { Check, X } from "lucide-react";
 import { Button, buttonVariants } from "@/shared/components/ui/button";
-import VehicleBasicFields from "@/features/garage/components/add-vehicle/fields/VehicleBasicFields";
-import VehicleRegistrationFields from "@/features/garage/components/add-vehicle/fields/VehicleRegistrationFields";
-import VehicleTechnicalFields from "@/features/garage/components/add-vehicle/fields/VehicleTechnicalFields";
-import VehicleMileageFields from "@/features/garage/components/add-vehicle/fields/VehicleMileageFields";
-import VehiclePurchaseFields from "@/features/garage/components/add-vehicle/fields/VehiclePurchaseFields";
-import VehicleFormHeader from "@/features/garage/components/add-vehicle/VehicleFormHeader";
-import VehicleAdditionalDetails from "@/features/garage/components/add-vehicle/fields/VehicleAdditionalDetails";
+import VehicleBasicFields from "@/features/garage/components/add-vehicle/components/fields/VehicleBasicFields";
+import VehicleRegistrationFields from "@/features/garage/components/add-vehicle/components/fields/VehicleRegistrationFields";
+import VehicleTechnicalFields from "@/features/garage/components/add-vehicle/components/fields/VehicleTechnicalFields";
+import VehicleMileageFields from "@/features/garage/components/add-vehicle/components/fields/VehicleMileageFields";
+import VehiclePurchaseFields from "@/features/garage/components/add-vehicle/components/fields/VehiclePurchaseFields";
+import VehicleFormHeader from "@/features/garage/components/add-vehicle/components/VehicleFormHeader";
+import VehicleAdditionalDetails from "@/features/garage/components/add-vehicle/components/fields/VehicleAdditionalDetails";
 import useVehicleDocumentAutofill from "@/features/garage/hooks/useVehicleDocumentAutofill";
-import VehiclePhotoFields from "@/features/garage/components/add-vehicle/fields/VehiclePhotoFields";
-import VehicleDocumentScan from "@/features/garage/components/add-vehicle/VehicleDocumentScan";
+import VehiclePhotoFields from "@/features/garage/components/add-vehicle/components/fields/VehiclePhotoFields";
+import VehicleDocumentScan from "@/features/garage/components/add-vehicle/components/VehicleDocumentScan";
 import useAddVehicleForm from "@/features/garage/hooks/useAddVehicleForm";
 import useForm from "@/shared/hooks/useForm";
 import { initialValues } from "@/features/garage/constants/add-vehicle-form";
@@ -72,6 +72,12 @@ export default function AddVehicleForm() {
           }} />
         </fieldset>
 
+        <VehiclePhotoFields
+          photoFile={photoFile}
+          photoError={photoError}
+          onPhotoChange={setPhotoFile}
+          onPhotoError={setPhotoError}
+        />
         <fieldset disabled={isSubmitting || Boolean(savedVehicleId)} className="grid min-w-0 gap-5 border-0 p-0 xl:grid-cols-2">
           <VehicleBasicFields
             errors={fieldErrors}
@@ -105,12 +111,6 @@ export default function AddVehicleForm() {
           <VehiclePurchaseFields errors={fieldErrors} register={register} />
           <VehicleAdditionalDetails errors={fieldErrors} register={register} registerCheckbox={registerCheckbox} />
         </fieldset>
-        <VehiclePhotoFields
-          photoFile={photoFile}
-          photoError={photoError}
-          onPhotoChange={setPhotoFile}
-          onPhotoError={setPhotoError}
-        />
 
         {submitError && (
           <p role="alert" className="text-sm text-destructive">
