@@ -3,7 +3,7 @@
 import Link from "next/link";
 import GarageHeaderTools, {
   GarageSearch,
-} from "@/features/garage/components/GarageHeaderTools";
+} from "@/features/garage/components/header/GarageHeaderTools";
 import type { CurrentUser } from "@/shared/types/currentUser";
 import UserMenu from "@/shared/components/Header/UserMenu/UserMenu";
 

@@ -1,10 +1,10 @@
-import VehicleCard from "@/features/garage/components/VehicleCard";
-import GarageOverview from "@/features/garage/components/GarageOverview";
+import VehicleCard from "@/features/garage/components/overview/VehicleCard";
+import GarageOverview from "@/features/garage/components/overview/GarageOverview";
 import { CarFront } from "lucide-react";
 import { getVehicles } from "@/features/garage/services/vehicles.service";
 import { getVehiclePhotoUrls } from "@/features/garage/services/vehicle-photo.service";
 import { createClient } from "@/lib/supabase/server";
-import AddVehicleButton from "./components/AddVehicleButton";
+import AddVehicleButton from "@/features/garage/components/header/AddVehicleButton";
 import Link from "next/link";
 
 export default async function GaragePage({ query = "" }: { query?: string }) {
