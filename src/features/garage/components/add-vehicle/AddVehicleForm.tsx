@@ -72,6 +72,12 @@ export default function AddVehicleForm() {
           }} />
         </fieldset>
 
+        <VehiclePhotoFields
+          photoFile={photoFile}
+          photoError={photoError}
+          onPhotoChange={setPhotoFile}
+          onPhotoError={setPhotoError}
+        />
         <fieldset disabled={isSubmitting || Boolean(savedVehicleId)} className="grid min-w-0 gap-5 border-0 p-0 xl:grid-cols-2">
           <VehicleBasicFields
             errors={fieldErrors}
@@ -105,12 +111,6 @@ export default function AddVehicleForm() {
           <VehiclePurchaseFields errors={fieldErrors} register={register} />
           <VehicleAdditionalDetails errors={fieldErrors} register={register} registerCheckbox={registerCheckbox} />
         </fieldset>
-        <VehiclePhotoFields
-          photoFile={photoFile}
-          photoError={photoError}
-          onPhotoChange={setPhotoFile}
-          onPhotoError={setPhotoError}
-        />
 
         {submitError && (
           <p role="alert" className="text-sm text-destructive">

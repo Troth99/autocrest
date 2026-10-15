@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowUpRight, CarFront, Check, Cog, Fuel, Gauge, Settings2 } from "lucide-react";
 import type { Vehicle } from "@/features/garage/types/vehicle";
 
@@ -57,9 +58,13 @@ export default function VehicleCard({ vehicle, photoUrl }: Props) {
           ))}
         </dl>
         <div className="mt-auto pt-5">
-          <button type="button" disabled className="flex w-full items-center justify-between rounded-lg border border-info-border bg-transparent px-4 py-2.5 text-sm font-medium text-text-secondary disabled:cursor-not-allowed">
-            Vehicle details <ArrowUpRight className="size-4" aria-hidden="true" />
-          </button>
+          <Link
+            href={`/vehicles/${vehicle.id}`}
+            className="flex w-full items-center justify-between rounded-lg border border-info-border px-4 py-2.5 text-sm font-medium text-text-secondary"
+          >
+            <span>View details</span>
+            <ArrowUpRight className="size-4" aria-hidden="true" />
+          </Link>
         </div>
       </div>
     </article>

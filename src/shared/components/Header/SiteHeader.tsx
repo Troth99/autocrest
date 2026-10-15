@@ -13,7 +13,7 @@ export default function SiteHeader({ user }: { user: CurrentUser | null }) {
   return (
     <header className="sticky top-0 z-10 border-b border-line bg-dark-800">
       <nav
-        className={`mx-auto flex items-center justify-between gap-4 px-4 py-4 sm:px-6 ${isAccountPage ? "w-full flex-wrap lg:px-10" : "max-w-6xl"}`}
+        className={`header-nav ${isAccountPage ? "header-nav-account" : "max-w-6xl"}`}
       >
         <Link href="/" className="flex shrink-0 items-center gap-2">
           <svg viewBox="0 0 36 32" className="h-8 w-9 shrink-0 text-accent-text" fill="currentColor" aria-hidden="true">
@@ -26,33 +26,24 @@ export default function SiteHeader({ user }: { user: CurrentUser | null }) {
         </Link>
 
         {isAccountPage ? (
-          <div className="order-last w-full min-w-0 sm:order-0 sm:mr-auto sm:w-auto sm:flex-1 sm:max-w-sm lg:ml-4">
+          <div className="header-search">
             <GarageSearch />
           </div>
-        ) : (
+          ) : (
           <div className="hidden items-center gap-6 md:flex">
-            <a
-              href="#modules"
-              className="relative rounded-lg px-2 py-1.5 text-sm font-medium text-text-secondary transition-[color,background-color,transform] duration-200 after:absolute after:inset-x-2 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-info after:transition-transform after:duration-200 hover:-translate-y-0.5 hover:bg-info-soft hover:text-info-strong hover:after:scale-x-100 motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:after:transition-none"
-            >
+            <a href="#modules" className="header-nav-link">
               Modules
             </a>
-            <a
-              href="#how-it-works"
-              className="relative rounded-lg px-2 py-1.5 text-sm font-medium text-text-secondary transition-[color,background-color,transform] duration-200 after:absolute after:inset-x-2 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-info after:transition-transform after:duration-200 hover:-translate-y-0.5 hover:bg-info-soft hover:text-info-strong hover:after:scale-x-100 motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:after:transition-none"
-            >
+            <a href="#how-it-works" className="header-nav-link">
               How it works
             </a>
-            <a
-              href="#timeline"
-              className="relative rounded-lg px-2 py-1.5 text-sm font-medium text-text-secondary transition-[color,background-color,transform] duration-200 after:absolute after:inset-x-2 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-info after:transition-transform after:duration-200 hover:-translate-y-0.5 hover:bg-info-soft hover:text-info-strong hover:after:scale-x-100 motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:after:transition-none"
-            >
+            <a href="#timeline" className="header-nav-link">
               Timeline
             </a>
           </div>
         )}
 
-        <div className="flex shrink-0 items-center gap-3">
+        <div className="flex shrink-0 items-center gap-5 lg:mr-30">
           {isAccountPage && <GarageHeaderTools />}
           {user ? (
             <UserMenu
@@ -62,10 +53,7 @@ export default function SiteHeader({ user }: { user: CurrentUser | null }) {
             />
           ) : (
             <>
-              <Link
-                href="/login"
-                className="hidden rounded-full border border-line bg-panel px-3.5 py-2 text-sm font-semibold text-text-primary shadow-sm transition-[color,background-color,border-color,transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-info-border hover:bg-info-soft hover:text-info-strong hover:shadow-[0_8px_20px_rgb(166_154_232/14%)] sm:block motion-reduce:transition-none motion-reduce:hover:translate-y-0"
-              >
+              <Link href="/login" className="header-sign-in">
                 Sign in
               </Link>
               <Link

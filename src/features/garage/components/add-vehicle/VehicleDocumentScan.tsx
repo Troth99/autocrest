@@ -79,14 +79,17 @@ export default function VehicleDocumentScan({ onExtracted }: {
     }
     return (
 
-        <fieldset aria-busy={isScanning} className="relative min-w-0 overflow-hidden rounded-2xl border-2 border-info-border bg-linear-to-br from-info-soft via-panel to-panel p-4 sm:p-6">
+        <fieldset
+            aria-busy={isScanning}
+            className="document-scan-panel relative min-w-0 overflow-hidden rounded-2xl border p-4 sm:p-6"
+        >
             <legend className="sr-only">Scan registration document</legend>
             {isScanning && (
                 <span aria-hidden="true" className="pointer-events-none absolute -inset-px animate-pulse rounded-2xl border-2 border-info motion-reduce:animate-none" />
             )}
 
             <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_240px]">
-                <div className="rounded-xl border border-info-border bg-background/30 p-4 sm:p-5">
+                <div className="rounded-xl border border-info-border bg-background/40 p-4 sm:p-5">
                     <div className="flex items-start gap-3">
                         <span className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-accent text-ink shadow-lg shadow-accent/20">
                             <FileScan className="size-8" aria-hidden="true" />
@@ -149,7 +152,7 @@ export default function VehicleDocumentScan({ onExtracted }: {
                             onClick={handleExtract}
                             disabled={!frontFile || isScanning}
                             aria-busy={isScanning}
-                            className="inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-accent-strong disabled:cursor-not-allowed disabled:opacity-50"
+                            className="cursor-pointer inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-accent-strong disabled:cursor-not-allowed disabled:opacity-50"
                         >
                             <WandSparkles className="size-4" aria-hidden="true" />
                             {isScanning ? "Reading document..." : "Extract details"}

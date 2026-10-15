@@ -2,6 +2,43 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+/* Give document autofill its own blue palette, separate from manual fields. */
+.document-scan-panel {
+  --accent: #67e8f9;
+  --accent-strong: #a5f3fc;
+  --info: #67e8f9;
+  --info-soft: rgb(103 232 249 / 12%);
+  --info-border: rgb(103 232 249 / 30%);
+  --focus-ring: #67e8f9;
+  --ink: #082f49;
+  --surface-panel: #12344b;
+  --background: #09283d;
+  --text-primary: #f0f9ff;
+  --text-secondary: #cce8f5;
+  --text-muted: #a6cddd;
+  border-color: #4fb7d2;
+  background: linear-gradient(120deg, #164b65, #10334c 65%, #102b42);
+  box-shadow: inset 0 3px 0 #67e8f9;
+}
+
+.light .document-scan-panel {
+  --accent: #0e7490;
+  --accent-strong: #155e75;
+  --info: #0e7490;
+  --info-soft: rgb(14 116 144 / 8%);
+  --info-border: rgb(14 116 144 / 25%);
+  --focus-ring: #0e7490;
+  --ink: #ffffff;
+  --surface-panel: #f0fbff;
+  --background: #ffffff;
+  --text-primary: #123047;
+  --text-secondary: #29566b;
+  --text-muted: #416a7d;
+  border-color: #69b9ce;
+  background: linear-gradient(120deg, #d7f4fc, #edf9ff);
+  box-shadow: inset 0 3px 0 #0e7490;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 [data-slot="input"] {
@@ -447,3 +484,37 @@ body {
   padding: 1.5rem 0;
 }
 .garage-vehicle-card::before { display: none; }
+
+/* Site header */
+@layer components {
+  .header-nav {
+    @apply mx-auto flex items-center justify-between gap-4 px-4 py-4 sm:px-6;
+  }
+
+  .header-nav-account {
+    @apply w-full flex-wrap lg:px-10;
+  }
+
+  .header-nav-link {
+    @apply relative rounded-lg px-2 py-1.5 text-sm font-medium text-text-secondary;
+    @apply transition-[color,background-color,transform] duration-200 after:absolute after:inset-x-2;
+    @apply after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full;
+    @apply after:bg-info after:transition-transform after:duration-200 hover:-translate-y-0.5;
+    @apply hover:bg-info-soft hover:text-info-strong hover:after:scale-x-100;
+    @apply motion-reduce:transition-none motion-reduce:hover:translate-y-0;
+    @apply motion-reduce:after:transition-none;
+  }
+
+  .header-sign-in {
+    @apply hidden rounded-full border border-line bg-panel px-3.5 py-2 text-sm font-semibold;
+    @apply text-text-primary shadow-sm;
+    @apply transition-[color,background-color,border-color,transform,box-shadow] duration-200;
+    @apply hover:-translate-y-0.5 hover:border-info-border hover:bg-info-soft hover:text-info-strong;
+    @apply hover:shadow-[0_8px_20px_rgb(166_154_232/14%)] sm:block motion-reduce:transition-none;
+    @apply motion-reduce:hover:translate-y-0;
+  }
+
+  .header-search {
+    @apply order-last w-full min-w-0 sm:order-0 sm:ml-auto sm:w-auto sm:flex-1 sm:max-w-sm;
+  }
+}

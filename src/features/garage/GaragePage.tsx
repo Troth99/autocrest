@@ -10,7 +10,10 @@ import Link from "next/link";
 export default async function GaragePage({ query = "" }: { query?: string }) {
   const supabase = await createClient();
   const vehicles = await getVehicles(supabase);
+
   const photos = await getVehiclePhotoUrls(supabase, vehicles.map((vehicle) => vehicle.id));
+
+
   const matchingVehicles = vehicles.filter((vehicle) =>
     [vehicle.make, vehicle.model, vehicle.nickname, vehicle.plate].filter(Boolean).join(" ").toLocaleLowerCase().includes(query.toLocaleLowerCase()),
   );
@@ -18,7 +21,7 @@ export default async function GaragePage({ query = "" }: { query?: string }) {
 
   return (
     <main className="mx-auto w-full max-w-7xl px-4 py-7 sm:px-6 sm:py-8">
-      <div className="mb-6 flex flex-wrap items-end justify-between gap-5 xl:mr-[344px]">
+      <div className="mb-6 flex flex-wrap items-end justify-between gap-5 xl:mr-86">
         <div>
           <h1 className="text-3xl font-semibold tracking-[-0.045em] text-text-primary sm:text-4xl">
             My Garage
@@ -46,7 +49,9 @@ export default async function GaragePage({ query = "" }: { query?: string }) {
               {vehicles.length} {vehicles.length === 1 ? "vehicle" : "vehicles"}
             </span>
           </div>
+
           {photos.error && <p role="alert" className="mb-4 text-sm text-muted">{photos.error} Refresh to try again.</p>}
+
           {vehicles.length === 0 ? (
             <div className="panel-card px-6 py-14 text-center">
               <CarFront
