@@ -6,6 +6,8 @@ type Props = {
 };
 
 export default function EditVehicleTechnicalFields({ register }: Props) {
+
+    //To change the dropdown menus
     return (
         <fieldset className="content-card min-w-0 rounded-2xl p-4 sm:p-5">
             <legend className="sr-only">Technical specifications</legend>
