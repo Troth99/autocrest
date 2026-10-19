@@ -37,6 +37,28 @@
 
 /* Garage component styles. Keep layout-specific utilities in JSX. */
 @layer components {
+  .vehicle-timeline-row {
+    @apply relative grid gap-2 pl-5 sm:grid-cols-[92px_minmax(0,1fr)] sm:gap-5 sm:pl-0;
+  }
+
+  .vehicle-timeline-entry {
+    @apply relative flex min-w-0 gap-3 rounded-xl border border-line bg-background/25 p-4;
+  }
+
+  .vehicle-timeline-row::before {
+    content: "";
+    @apply absolute bottom-[-1rem] left-0 top-0 w-px bg-info-border sm:left-[102px];
+  }
+
+  .vehicle-timeline-row::after {
+    content: "";
+    @apply absolute left-[-3px] top-5 size-[7px] rounded-full bg-info sm:left-[99px];
+  }
+
+  .vehicle-timeline-row:last-child::before {
+    @apply bottom-5;
+  }
+
   .vehicle-photo-upload {
     @apply mt-4 grid gap-3 rounded-xl border border-dashed border-info-border bg-linear-to-br;
     @apply from-info-soft to-transparent p-4 sm:p-5;

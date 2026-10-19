@@ -1,26 +1,26 @@
-import { ClipboardList } from "lucide-react";
+import { FileText } from "lucide-react";
+import { formatVehicleValue } from "@/features/garage/utils/formatVehicleValue";
+import type { Vehicle } from "@/features/garage/types/vehicle";
 
-// Static preview data and layout.
-const registration = [
-    { label: "Registration plate", value: "CB1234AB" },
-    { label: "Country", value: "Bulgaria (BG)" },
-    { label: "First registration", value: "15 May 2018" },
-    { label: "VIN", value: "Not provided" },
-    { label: "Certificate number", value: "Not provided" },
-    { label: "Vehicle use", value: "Personal" },
-];
-
-export default function VehicleRegistration() {
+export default function VehicleRegistration({ vehicle }: { vehicle: Vehicle }) {
+  const fields = [
+    ["Registration plate", vehicle.plate], ["Country", vehicle.registration_country_code],
+    ["First registration", vehicle.first_registration_date], ["VIN", vehicle.vin],
+    ["Certificate number", vehicle.registration_certificate_number],
+    ["Vehicle use", vehicle.vehicle_use],
+  ] as const;
   return (
     <section className="section-card">
-        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-            <div className="flex items-center gap-3"><ClipboardList className="size-5 text-info" aria-hidden="true" /><h2 className="text-lg font-semibold">Registration & documents</h2></div>
-        </div>
-        <dl className="grid gap-x-6 gap-y-5 sm:grid-cols-2">
-            {registration.map(({ label, value }) => (
-                <div key={label}><dt className="detail-label">{label}</dt><dd className="detail-value">{value}</dd></div>
-            ))}
-        </dl>
+      <h2 className="mb-4 flex items-center gap-3 text-xl font-semibold tracking-tight"><FileText className="size-5 text-info" aria-hidden="true" /> Registration &amp; documents</h2>
+      <dl className="divide-y divide-line">
+        {fields.map(([label, value]) => (
+          <div key={label} className="grid grid-cols-2 gap-4 py-2.5 text-sm">
+            <dt className="text-muted">{label}</dt>
+            <dd className="wrap-break-word font-medium">{formatVehicleValue(value)}</dd>
+          </div>
+        ))}
+      </dl>
+      <p className="mt-4 border-t border-line pt-4 text-xs leading-5 text-muted">Document uploads and insurance records are coming soon.</p>
     </section>
   );
 }
