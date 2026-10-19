@@ -9,9 +9,10 @@ import VehiclePhotoUpload from "./VehiclePhotoUpload";
 type Props = {
   vehicle: Vehicle;
   photoUrl?: string | null;
+  photoId?: string | null;
 };
 
-export default function VehicleHeading({ vehicle, photoUrl }: Props) {
+export default function VehicleHeading({ vehicle, photoUrl, photoId }: Props) {
   const name = `${vehicle.make} ${vehicle.model}`;
 
   const subtitle = [
@@ -26,23 +27,23 @@ export default function VehicleHeading({ vehicle, photoUrl }: Props) {
     <div className="flex flex-wrap items-start gap-5">
       <div className="w-full shrink-0 space-y-3 sm:w-72 lg:w-80">
         <div className="vehicle-heading-photo">
-        {photoUrl ? (
-          <Image
-            src={photoUrl}
-            alt={name}
-            fill
-            unoptimized
-            sizes="(min-width: 1024px) 320px, (min-width: 640px) 288px, 100vw"
-            className="object-cover"
-          />
-        ) : (
-          <>
-            <CarFront className="size-20 stroke-[1.25] text-info" aria-hidden="true" />
-            <span className="text-xs text-muted">No photo added</span>
-          </>
-        )}
+          {photoUrl ? (
+            <Image
+              src={photoUrl}
+              alt={name}
+              fill
+              unoptimized
+              sizes="(min-width: 1024px) 320px, (min-width: 640px) 288px, 100vw"
+              className="object-cover"
+            />
+          ) : (
+            <>
+              <CarFront className="size-20 stroke-[1.25] text-info" aria-hidden="true" />
+              <span className="text-xs text-muted">No photo added</span>
+            </>
+          )}
         </div>
-        <VehiclePhotoUpload vehicleId={vehicle.id} hasPhoto={Boolean(photoUrl)} />
+        <VehiclePhotoUpload vehicleId={vehicle.id} hasPhoto={Boolean(photoUrl)} photoId={photoId} />
       </div>
       <div className="min-w-0 flex-1">
         <p className="vehicle-heading-eyebrow">My garage / Vehicle details</p>
