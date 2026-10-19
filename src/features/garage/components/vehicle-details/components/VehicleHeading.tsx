@@ -1,71 +1,90 @@
-"use client";
-
+import Image from "next/image";
 import Link from "next/link";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/shared/components/ui/dropdown-menu";
-import { ArrowLeft, Download, Gauge, MoreHorizontal, Pencil, Star, Trash2 } from "lucide-react";
-import { Vehicle } from "@/features/garage/types/vehicle";
+import { ArrowLeft, CarFront, Gauge, Pencil, Star } from "lucide-react";
+import type { Vehicle } from "@/features/garage/types/vehicle";
+import VehiclePlate from "./VehiclePlate";
+import VehicleActionsMenu from "./VehicleActionsMenu";
+import VehiclePhotoUpload from "./VehiclePhotoUpload";
 
+type Props = {
+  vehicle: Vehicle;
+  photoUrl?: string | null;
+  photoId?: string | null;
+};
 
-export default function VehicleHeading({
-    vehicle,
-}: {
-    vehicle: Vehicle
-}) {
+export default function VehicleHeading({ vehicle, photoUrl, photoId }: Props) {
+  const name = `${vehicle.make} ${vehicle.model}`;
 
-    return (
-        <>
-            <Link href="/garrage" className="inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-info">
-                <ArrowLeft className="size-4" aria-hidden="true" /> Back to my garage
-            </Link>
-            <div className="flex flex-wrap items-start justify-between gap-4">
-                <div>
-                    <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-info">My garage / Vehicle details</p>
+  const subtitle = [
+    vehicle.manufacture_year,
+    vehicle.trim,
+    vehicle.nickname
+  ]
+    .filter((val) => val !== null && val !== "")
+    .join(" . ");
 
-                    <h1 className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                        <span className="text-3xl font-semibold tracking-tight sm:text-4xl">
-                            {vehicle.make}
-                        </span>
-                        <span className="text-xl font-medium text-muted sm:text-2xl">
-                            {vehicle.model}
-                        </span>
-                    </h1>              <p className="mt-2 text-sm text-muted">{[vehicle.manufacture_year, vehicle.trim, vehicle.nickname].filter((value) => value != null && value !== "").join(" \u00b7 ")}</p>
-                </div>
-                {/* Vehicle actions: static controls to extract into VehicleActions later. */}
-                <div role="group" aria-label="Vehicle actions" className="flex flex-wrap items-center gap-2">
-                    <button
-                        type="button"
-                        disabled
-                        className="vehicle-edit-action"
-                        title="Editing is not connected yet"
-                    >
-                        <Pencil className="size-4" aria-hidden="true" /> Edit vehicle
-                    </button>
-                    <button type="button" disabled className="vehicle-mileage-action" title="Mileage updates are not connected yet">
-                        <Gauge className="size-4" aria-hidden="true" /> Update mileage
-                    </button>
-                    <DropdownMenu>
-                        <DropdownMenuTrigger aria-label="More vehicle actions" className="button-base button-secondary border p-2.5">
-                            <MoreHorizontal className="size-5" aria-hidden="true" />
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" sideOffset={8} className="w-60 rounded-xl p-2">
-                            <DropdownMenuItem disabled className="gap-2 px-3 py-2.5">
-                                <Star className="size-4" aria-hidden="true" /> Set as primary
-                                <span className="ml-auto text-[10px]">Already primary</span>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem disabled className="gap-2 px-3 py-2.5">
-                                <Download className="size-4" aria-hidden="true" /> Export history
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem disabled className="gap-2 px-3 py-2.5 text-destructive">
-                                <Trash2 className="size-4" aria-hidden="true" /> Remove vehicle
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                </div>
-            </div>
-            <p className="vehicle-preview-notice">
-                Design preview — all vehicle details, reminders and activity below are sample data. Action buttons are previews and are not connected yet.
-            </p>
-        </>
-    )
+  return (
+    <div className="flex flex-wrap items-start gap-5">
+      <div className="w-full shrink-0 space-y-3 sm:w-72 lg:w-80">
+        <div className="vehicle-heading-photo">
+          {photoUrl ? (
+            <Image
+              src={photoUrl}
+              alt={name}
+              fill
+              unoptimized
+              sizes="(min-width: 1024px) 320px, (min-width: 640px) 288px, 100vw"
+              className="object-cover"
+            />
+          ) : (
+            <>
+              <CarFront className="size-20 stroke-[1.25] text-info" aria-hidden="true" />
+              <span className="text-xs text-muted">No photo added</span>
+            </>
+          )}
+        </div>
+        <VehiclePhotoUpload vehicleId={vehicle.id} hasPhoto={Boolean(photoUrl)} photoId={photoId} />
+      </div>
+      <div className="min-w-0 flex-1">
+        <p className="vehicle-heading-eyebrow">My garage / Vehicle details</p>
+        <h1 className="vehicle-heading-title">{name}</h1>
+        <p className="mt-2 text-sm text-muted">{subtitle}</p>
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+
+          {vehicle.plate && (
+            <VehiclePlate
+              plate={vehicle.plate}
+              countryCode={vehicle.registration_country_code}
+            />
+          )}
+          {vehicle.is_primary && (
+            <span className="vehicle-heading-primary">
+              <Star className="size-3.5" aria-hidden="true" /> Primary
+            </span>
+          )}
+        </div>
+      </div>
+      <div className="vehicle-heading-actions" role="group" aria-label="Vehicle actions">
+        <Link href="/garrage" className="vehicle-heading-back">
+          <ArrowLeft className="size-4" aria-hidden="true" /> Back to my garage
+        </Link>
+        <Link
+          href={`/vehicles/${vehicle.id}/editVehicle`}
+          className="vehicle-edit-action"
+        >
+          <Pencil className="size-4" aria-hidden="true" />
+          <span>Edit Vehicle</span>
+        </Link>
+        <button
+          type="button"
+          disabled
+          title="Mileage updates are not connected yet"
+          className="vehicle-mileage-action"
+        >
+          <Gauge className="size-4" aria-hidden="true" /> Update mileage
+        </button>
+        <VehicleActionsMenu isPrimary={vehicle.is_primary} />
+      </div>
+    </div>
+  );
 }

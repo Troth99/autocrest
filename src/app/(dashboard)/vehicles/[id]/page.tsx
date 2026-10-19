@@ -6,12 +6,12 @@ import { notFound } from "next/navigation";
 
 
 export default async function VehiclePage({ params }: { params: Promise<{ id: string }> }) {
-    const { id} = await params;
+    const { id } = await params;
 
     const supabase = await createClient();
     const vehicle = await getVehicleById(supabase, id)
 
-    if(!vehicle) {
+    if (!vehicle) {
         notFound()
     }
 
@@ -20,7 +20,11 @@ export default async function VehiclePage({ params }: { params: Promise<{ id: st
     return (
         <main className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-10">
             {photos.error && <p role="alert" className="mb-4 text-sm text-muted">{photos.error} Refresh to try again.</p>}
-            <VehicleDetails vehicle={vehicle} photoUrl={photos.urls[vehicle.id] ?? null} />
+            <VehicleDetails
+                vehicle={vehicle}
+                photoUrl={photos.urls[vehicle.id] ?? null}
+                photoId={photos.selectedPhotos[vehicle.id]?.id ?? null}
+            />
         </main>
     )
 }

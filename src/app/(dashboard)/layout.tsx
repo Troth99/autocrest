@@ -6,22 +6,20 @@ export default async function IsDashboardLayout({
   children,
 }: {
   children: React.ReactNode;
-}) 
+}) {
+  const supabase = await createClient()
 
-{
-     const supabase = await createClient()
-    
-        const {
-            data: { user }
-        } = await supabase.auth.getUser();
-    
-        if(!user) {
-             redirect("/login"); 
-        }
-      return (
-        <div className="flex w-full flex-1 flex-col lg:flex-row">
-          <AccountNavigation />
-          <div className="min-w-0 flex-1">{children}</div>
-        </div>
-      );
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect("/login");
+  }
+  return (
+    <div className="flex w-full flex-1 flex-col lg:flex-row">
+      <AccountNavigation />
+      <div className="min-w-0 flex-1">{children}</div>
+    </div>
+  );
 }

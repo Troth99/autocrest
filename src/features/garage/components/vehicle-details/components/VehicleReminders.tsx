@@ -1,25 +1,30 @@
-import { CalendarDays, Plus, FileCheck2, ShieldCheck, Wrench } from "lucide-react";
+import { CalendarDays, ShieldCheck, Wrench } from "lucide-react";
 
-// Static preview data and layout.
+// Illustrative reminders only; these are not verified expiry dates.
 const reminders = [
-    { title: "Annual inspection", detail: "Due 20 November 2026", icon: FileCheck2 },
-    { title: "Car insurance", detail: "Expires 12 December 2026", icon: ShieldCheck },
-    { title: "Oil & filter change", detail: "At 120,000 km", icon: Wrench },
+  { title: "Next inspection", detail: "Annual technical inspection", date: "20 Nov 2026", icon: CalendarDays },
+  { title: "Insurance renewal", detail: "Review your policy before it expires", date: "12 Dec 2026", icon: ShieldCheck },
+  { title: "Oil & filter change", detail: "Follow your vehicle's service schedule", date: "Mileage based", icon: Wrench },
 ];
 
 export default function VehicleReminders() {
   return (
-    <section className="rounded-2xl border border-info-border bg-linear-to-br from-info-soft to-panel p-5 sm:p-6">
-        <div className="flex items-center gap-2"><CalendarDays className="size-5 text-info" aria-hidden="true" /><h2 className="text-lg font-semibold">Upcoming reminders</h2></div>
-        <p className="mt-2 text-xs leading-5 text-muted">A little planning keeps your car ready for the road.</p>
-        <div className="mt-4"><button type="button" disabled className="vehicle-detail-action" title="Add reminder is not connected yet"><Plus className="size-4" aria-hidden="true" /> Add reminder</button></div>
-        <ul className="mt-5 space-y-4">
-            {reminders.map(({ title, detail, icon: Icon }) => (
-                <li key={title} className="flex gap-3 rounded-xl border border-line bg-panel p-3">
-                    <Icon className="mt-0.5 size-4 shrink-0 text-info" aria-hidden="true" /><div><p className="text-sm font-medium">{title}</p><p className="mt-1 text-xs text-muted">{detail}</p></div>
-                </li>
-            ))}
-        </ul>
-    </section>
+    <div className="mt-6">
+      <h3 className="mb-4 text-xs font-semibold uppercase tracking-widest text-info">Upcoming · sample</h3>
+      <ol className="space-y-4">
+        {reminders.map(({ title, detail, date, icon: Icon }, index) => (
+          <li key={title} className="vehicle-timeline-row">
+            <p className="pt-1 text-xs font-medium text-muted sm:pt-4">{date}</p>
+            <div className={`vehicle-timeline-entry ${index === 0 ? "border-amber-500/50" : ""}`}>
+              <span className={`mt-0.5 flex size-10 shrink-0 items-center justify-center rounded-full border ${index === 0 ? "border-amber-500/40 bg-amber-500/10 text-amber-500" : "border-info-border bg-info-soft text-info"}`}><Icon className="size-5" aria-hidden="true" /></span>
+              <div className="min-w-0">
+                <div className="flex flex-wrap items-center gap-2"><p className="text-sm font-semibold">{title}</p>{index === 0 && <span className="rounded-md border border-amber-500/40 px-2 py-0.5 text-[10px] text-amber-500">Upcoming</span>}</div>
+                <p className="mt-1 text-xs leading-5 text-muted">{detail}</p>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
   );
 }

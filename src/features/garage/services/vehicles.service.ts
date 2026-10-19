@@ -101,7 +101,6 @@ export async function getVehicleById(
   supabase: SupabaseClient,
   vehicleId: string,
 ): Promise<Vehicle | null> {
-
   // Use the authenticated user from the supplied client, never an input user ID.
   const {
     data: { user },
@@ -114,7 +113,7 @@ export async function getVehicleById(
   }
 
   // Ensure the user is signed in before fetching vehicle details
-  if(!user) {
+  if (!user) {
     throw new Error("You must be signed in to view vehicle details.");
   }
 
@@ -140,4 +139,45 @@ export async function getVehicleById(
   }
 
   return data ?? null;
+}
+
+export async function updateVehicle(
+  supabase: SupabaseClient,
+  vehicleId: string,
+  input: unknown,
+) {
+  const values = addVehicleSchema.parse(input);
+
+  //getting the user if its logged in
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
+
+  if (authError) {
+    throw authError;
+  }
+
+  if (!user) {
+    throw new Error("You must be signe in to edit a vehicle. ");
+  }
+
+  const { data, error } = await supabase
+    .from("vehicles")
+    .update(values)
+    .eq("id", vehicleId)
+    .eq("user_id", user.id)
+    .is("archived_at", null)
+    .select("id")
+    .maybeSingle();
+
+  if (error) {
+    throw error;
+  }
+
+  if (!data) {
+    throw new Error("Vehicle not found or changes were not allowed.");
+  }
+
+  return data.id
 }
