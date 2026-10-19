@@ -4,6 +4,7 @@ import { ArrowLeft, CarFront, Gauge, Pencil, Star } from "lucide-react";
 import type { Vehicle } from "@/features/garage/types/vehicle";
 import VehiclePlate from "./VehiclePlate";
 import VehicleActionsMenu from "./VehicleActionsMenu";
+import VehiclePhotoUpload from "./VehiclePhotoUpload";
 
 type Props = {
   vehicle: Vehicle;
@@ -23,7 +24,8 @@ export default function VehicleHeading({ vehicle, photoUrl }: Props) {
 
   return (
     <div className="flex flex-wrap items-start gap-5">
-      <div className="vehicle-heading-photo">
+      <div className="w-full shrink-0 space-y-3 sm:w-72 lg:w-80">
+        <div className="vehicle-heading-photo">
         {photoUrl ? (
           <Image
             src={photoUrl}
@@ -39,13 +41,15 @@ export default function VehicleHeading({ vehicle, photoUrl }: Props) {
             <span className="text-xs text-muted">No photo added</span>
           </>
         )}
+        </div>
+        <VehiclePhotoUpload vehicleId={vehicle.id} hasPhoto={Boolean(photoUrl)} />
       </div>
       <div className="min-w-0 flex-1">
         <p className="vehicle-heading-eyebrow">My garage / Vehicle details</p>
         <h1 className="vehicle-heading-title">{name}</h1>
         <p className="mt-2 text-sm text-muted">{subtitle}</p>
         <div className="mt-4 flex flex-wrap items-center gap-3">
-          
+
           {vehicle.plate && (
             <VehiclePlate
               plate={vehicle.plate}

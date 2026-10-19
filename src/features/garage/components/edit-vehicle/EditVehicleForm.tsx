@@ -28,6 +28,7 @@ export function EditVehicleForm({ vehicle }: Props) {
     const [isSaving, setIsSaving] = useState<boolean>(false)
     const [saveError, setSaveError] = useState<string | null>(null);
 
+
     const initialValues = Object.fromEntries(
         Object.entries(vehicle).map(([key, value]) => [
             key,
@@ -76,6 +77,7 @@ export function EditVehicleForm({ vehicle }: Props) {
             </header>
 
             <form className="vehicle-form grid gap-5" onSubmit={formHandler}>
+
 
                 <div className="grid min-w-0 gap-5 xl:grid-cols-2">
                     <EditVehicleBasicFields register={register} />
