@@ -73,12 +73,12 @@
 
   .vehicle-timeline-row::before {
     content: "";
-    @apply absolute bottom-[-1rem] left-0 top-0 w-px bg-info-border sm:left-[102px];
+    @apply absolute -bottom-4 left-0 top-0 w-px bg-info-border sm:left-25.5;
   }
 
   .vehicle-timeline-row::after {
     content: "";
-    @apply absolute left-[-3px] top-5 size-[7px] rounded-full bg-info sm:left-[99px];
+    @apply absolute -left-0.75 top-5 size-1.75 rounded-full bg-info sm:left-24.75;
   }
 
   .vehicle-timeline-row:last-child::before {
