@@ -7,19 +7,18 @@ import { notFound } from "next/navigation";
 
 
 export default async function EditVehiclePage({ params }: { params: Promise<{ id: string }> }) {
-    const { id} = await params;
-
+    const { id } = await params;
     const supabase = await createClient();
     const vehicle = await getVehicleById(supabase, id)
 
-    if(!vehicle) {
+    if (!vehicle) {
         notFound()
     }
 
     const photos = await getVehiclePhotoUrls(supabase, [vehicle.id]);
 
- 
+
     return (
-      <EditVehicleForm />
+        <EditVehicleForm vehicle={vehicle} photoUrl={photos.urls[vehicle.id] ?? null} />
     )
 }
