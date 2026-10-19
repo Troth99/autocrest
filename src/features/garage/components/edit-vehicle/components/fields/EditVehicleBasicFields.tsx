@@ -1,11 +1,11 @@
+import type { EditVehicleFormRegister } from "@/features/garage/types/edit-vehicle-form";
 import { Input } from "@/shared/components/ui/input";
-import type { Vehicle } from "@/features/garage/types/vehicle";
 
 type Props = {
-    vehicle: Vehicle;
+    register: EditVehicleFormRegister;
 };
 
-export default function EditVehicleBasicFields({ vehicle }: Props) {
+export default function EditVehicleBasicFields({ register }: Props) {
     return (
         <fieldset className="content-card min-w-0 rounded-2xl p-4 sm:p-5">
             <legend className="sr-only">Basic details</legend>
@@ -16,24 +16,21 @@ export default function EditVehicleBasicFields({ vehicle }: Props) {
                     <span>Make</span>
                     <Input
                         id="make"
-                        name="make"
-                        defaultValue={vehicle.make ?? ""}
+                        {...register("make")}
                     />
                 </label>
                 <label htmlFor="model" className="grid gap-2 text-sm font-medium text-text-secondary">
                     <span>Model</span>
                     <Input
                         id="model"
-                        name="model"
-                        defaultValue={vehicle.model ?? ""}
+                        {...register("model")}
                     />
                 </label>
                 <label htmlFor="manufacture_year" className="grid gap-2 text-sm font-medium text-text-secondary">
                     <span>Manufacture year</span>
                     <Input
                         id="manufacture_year"
-                        name="manufacture_year"
-                        defaultValue={vehicle.manufacture_year ?? ""}
+                        {...register("manufacture_year")}
                         type="number"
                         min={1886}
                         step={1}
@@ -43,22 +40,21 @@ export default function EditVehicleBasicFields({ vehicle }: Props) {
                     <span>Trim / variant</span>
                     <Input
                         id="trim"
-                        name="trim"
-                        defaultValue={vehicle.trim ?? ""}
+                        {...register("trim")}
                     />
                 </label>
                 <label htmlFor="nickname" className="grid gap-2 text-sm font-medium text-text-secondary">
                     <span>Nickname</span>
                     <Input
                         id="nickname"
-                        name="nickname"
-                        defaultValue={vehicle.nickname ?? ""}
+                        {...register("nickname")}
                         placeholder="e.g. My daily driver"
                     />
                 </label>
                 <label htmlFor="vehicle_use" className="grid gap-2 text-sm font-medium text-text-secondary">
                     <span>Vehicle use</span>
-                    <select id="vehicle_use" name="vehicle_use" defaultValue={vehicle.vehicle_use ?? ""} className="form-select">
+                    <select id="vehicle_use"
+                        {...register("vehicle_use")} className="form-select">
                         <option value="" className="bg-panel text-text-primary">Not specified</option>
                         <option value="personal" className="bg-panel text-text-primary">Personal</option>
                         <option value="business" className="bg-panel text-text-primary">Business</option>

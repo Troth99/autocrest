@@ -1,11 +1,11 @@
+import type { EditVehicleFormRegister } from "@/features/garage/types/edit-vehicle-form";
 import { Input } from "@/shared/components/ui/input";
-import type { Vehicle } from "@/features/garage/types/vehicle";
 
 type Props = {
-    vehicle: Vehicle;
+    register: EditVehicleFormRegister;
 };
 
-export default function EditVehicleRegistrationFields({ vehicle }: Props) {
+export default function EditVehicleRegistrationFields({ register }: Props) {
     return (
         <fieldset className="content-card min-w-0 rounded-2xl p-4 sm:p-5">
             <legend className="sr-only">Registration</legend>
@@ -16,32 +16,28 @@ export default function EditVehicleRegistrationFields({ vehicle }: Props) {
                     <span>Registration plate</span>
                     <Input
                         id="plate"
-                        name="plate"
-                        defaultValue={vehicle.plate ?? ""}
+                        {...register("plate")}
                     />
                 </label>
                 <label htmlFor="vin" className="grid gap-2 text-sm font-medium text-text-secondary">
                     <span>VIN</span>
                     <Input
                         id="vin"
-                        name="vin"
-                        defaultValue={vehicle.vin ?? ""}
+                        {...register("vin")}
                     />
                 </label>
                 <label htmlFor="registration_certificate_number" className="grid gap-2 text-sm font-medium text-text-secondary">
                     <span>Certificate number</span>
                     <Input
                         id="registration_certificate_number"
-                        name="registration_certificate_number"
-                        defaultValue={vehicle.registration_certificate_number ?? ""}
+                        {...register("registration_certificate_number")}
                     />
                 </label>
                 <label htmlFor="registration_country_code" className="grid gap-2 text-sm font-medium text-text-secondary">
                     <span>Registration country code</span>
                     <Input
                         id="registration_country_code"
-                        name="registration_country_code"
-                        defaultValue={vehicle.registration_country_code ?? ""}
+                        {...register("registration_country_code")}
                         placeholder="e.g. BG"
                     />
                 </label>
@@ -49,8 +45,7 @@ export default function EditVehicleRegistrationFields({ vehicle }: Props) {
                     <span>First registration date</span>
                     <Input
                         id="first_registration_date"
-                        name="first_registration_date"
-                        defaultValue={vehicle.first_registration_date ?? ""}
+                        {...register("first_registration_date")}
                         type="date"
                     />
                 </label>
