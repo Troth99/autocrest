@@ -2,7 +2,6 @@ import VehicleFieldError from "@/features/garage/components/add-vehicle/componen
 import type { VehicleFormErrors } from "@/features/garage/types/add-vehicle-form";
 import type { VehicleFormRegister } from "@/features/garage/types/add-vehicle-form";
 import type { VehicleDocumentFieldProps } from "@/features/garage/types/vehicle-document-form";
-import { Input } from "@/shared/components/ui/input";
 
 type Props = VehicleDocumentFieldProps & { errors: VehicleFormErrors; register: VehicleFormRegister };
 
@@ -20,7 +19,7 @@ export default function VehicleRegistrationFields({ values, onFieldChange, regis
           className="grid gap-2 text-sm font-medium text-text-secondary"
         >
           <span>Registration plate</span>
-          <Input
+          <input data-slot="input" className="native-input"
             id="plate"
             name="plate" value={values.plate} onChange={(event) => onFieldChange("plate", event.target.value)}
             type="text"
@@ -33,7 +32,7 @@ export default function VehicleRegistrationFields({ values, onFieldChange, regis
           className="grid gap-2 text-sm font-medium text-text-secondary"
         >
           <span>VIN</span>
-          <Input
+          <input data-slot="input" className="native-input"
             id="vin"
             name="vin" value={values.vin} onChange={(event) => onFieldChange("vin", event.target.value)}
             type="text"
@@ -46,7 +45,7 @@ export default function VehicleRegistrationFields({ values, onFieldChange, regis
           className="grid gap-2 text-sm font-medium text-text-secondary"
         >
           <span>Registration certificate number</span>
-          <Input
+          <input data-slot="input" className="native-input"
             id="registration_certificate_number"
             name="registration_certificate_number" value={values.registration_certificate_number} onChange={(event) => onFieldChange("registration_certificate_number", event.target.value)}
             type="text"
@@ -58,7 +57,7 @@ export default function VehicleRegistrationFields({ values, onFieldChange, regis
           className="grid gap-2 text-sm font-medium text-text-secondary"
         >
           <span>Registration country code</span>
-          <Input
+          <input data-slot="input" className="native-input"
             id="registration_country_code"
             {...register("registration_country_code")}
             type="text"
@@ -71,7 +70,7 @@ export default function VehicleRegistrationFields({ values, onFieldChange, regis
           className="grid gap-2 text-sm font-medium text-text-secondary"
         >
           <span>First registration date</span>
-          <Input
+          <input data-slot="input" className="native-input"
             id="first_registration_date"
             name="first_registration_date" value={values.first_registration_date} onChange={(event) => onFieldChange("first_registration_date", event.target.value)}
             type="date"

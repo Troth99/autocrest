@@ -1,10 +1,18 @@
 "use client";
 
 import { useEffect, useEffectEvent, useState } from "react";
-import type { VehicleMake, VehicleModel } from "@/features/garage/types/vehicle-catalog";
-import { getVehicleMakes, getVehicleModels } from "@/features/garage/services/vehicle-catalog.service";
+import type {
+  VehicleMake,
+  VehicleModel,
+} from "@/features/garage/types/vehicle-catalog";
+import {
+  getVehicleMakes,
+  getVehicleModels,
+} from "@/features/garage/services/vehicle-catalog.service";
 
-export default function useVehicleCatalog(onModelsReady: (models: VehicleModel[]) => void) {
+export default function useVehicleCatalog(
+  onModelsReady: (models: VehicleModel[]) => void,
+) {
   const [makes, setMakes] = useState<VehicleMake[]>([]);
   const [isLoadingMakes, setIsLoadingMakes] = useState(true);
   const [makesError, setMakesError] = useState<string | null>(null);
@@ -80,5 +88,14 @@ export default function useVehicleCatalog(onModelsReady: (models: VehicleModel[]
     };
   }, [selectedMake]);
 
-  return { makes, isLoadingMakes, makesError, selectedMake, models, isLoadingModels, modelsError, handleMakeChange };
+  return {
+    makes,
+    isLoadingMakes,
+    makesError,
+    selectedMake,
+    models,
+    isLoadingModels,
+    modelsError,
+    handleMakeChange,
+  };
 }

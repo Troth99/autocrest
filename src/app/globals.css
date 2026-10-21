@@ -9,6 +9,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
+:is(select, .select-trigger, [aria-haspopup="listbox"]):not(:disabled):not([aria-disabled="true"]):not([data-disabled]) {
+  cursor: pointer;
+}
+
 [data-slot="input"] {
   border-color: var(--border-input);
   background-color: var(--surface-input);

@@ -11,9 +11,11 @@ export default async function EditVehiclePage({ params }: { params: Promise<{ id
     const supabase = await createClient();
     const vehicle = await getVehicleById(supabase, id)
 
+
     if (!vehicle) {
         notFound()
     }
+
 
     const photos = await getVehiclePhotoUrls(supabase, [vehicle.id]);
 

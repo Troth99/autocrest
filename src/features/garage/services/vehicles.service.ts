@@ -1,6 +1,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Vehicle } from "@/features/garage/types/vehicle";
 import { addVehicleSchema } from "@/features/garage/validators/add-vehicle-validator";
+import { createUpdateMileageSchema } from "@/features/garage/validators/update-mileage-validator";
 
 export async function getVehicles(
   supabase: SupabaseClient,
@@ -164,7 +165,8 @@ export async function updateVehicle(
 
   const { data, error } = await supabase
     .from("vehicles")
-    .update(values)
+    // Mileage is owned by the mileage dialog; do not overwrite it from a stale edit form.
+    .update({ ...values, mileage_km: undefined, mileage_recorded_at: undefined })
     .eq("id", vehicleId)
     .eq("user_id", user.id)
     .is("archived_at", null)
@@ -179,5 +181,64 @@ export async function updateVehicle(
     throw new Error("Vehicle not found or changes were not allowed.");
   }
 
-  return data.id
+  return data.id;
+}
+
+export async function updateVehicleMileage(
+  supabase: SupabaseClient,
+  vehicleId: string,
+  input: unknown,
+) {
+
+  const vehicle = await getVehicleById(supabase, vehicleId);
+
+  if (!vehicle) {
+    throw new Error("Vehicle not found.");
+  }
+
+  const values = createUpdateMileageSchema(vehicle.mileage_km, vehicle.mileage_recorded_at).parse(input);
+
+  const recordedAt = `${values.mileage_recorded_at}T00:00:00.000Z`;
+
+  if (
+    values.mileage_km === vehicle.mileage_km &&
+    values.mileage_recorded_at === vehicle.mileage_recorded_at?.slice(0, 10)
+  ) {
+    throw new Error("There were no changes to save.");
+  }
+
+  const { data, error } = await supabase
+    .from("vehicles")
+    .update({
+      mileage_km: values.mileage_km,
+      mileage_recorded_at: recordedAt,
+      ...(values.mode !== "reading" ? {
+        mileage_adjustment: {
+          kind: values.mode,
+          reason: values.reason,
+          previous_mileage_km: vehicle.mileage_km,
+          previous_recorded_at: vehicle.mileage_recorded_at,
+          mileage_km: values.mileage_km,
+          recorded_at: recordedAt,
+          adjusted_at: new Date().toISOString(),
+        },
+      } : {}),
+    })
+    .eq("id", vehicleId)
+    .eq("user_id", vehicle.user_id)
+    .eq("mileage_km", vehicle.mileage_km)
+    .eq("updated_at", vehicle.updated_at)
+    .is("archived_at", null)
+    .select("id")
+    .maybeSingle();
+
+  if (error) throw error;
+
+  if (!data) {
+    throw new Error(
+      "Mileage could not be updated. Refresh the page and try again.",
+    );
+  }
+
+  return data.id;
 }
