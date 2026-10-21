@@ -53,7 +53,7 @@ export default function UpdateMileage({
             mode, reason, confirmed,
         });
         const errors: typeof fieldErrors = {};
-        
+
         if (!validation.success) {
             for (const issue of validation.error.issues) {
                 const field = issue.path[0] as keyof typeof errors;

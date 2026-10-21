@@ -76,11 +76,11 @@ export default function VehicleHeading({ vehicle, photoUrl, photoId }: Props) {
           <Pencil className="size-4" aria-hidden="true" />
           <span>Edit Vehicle</span>
         </Link>
-             <UpdateMileage
+        <UpdateMileage
           vehicleId={vehicle.id}
           currentMileage={vehicle.mileage_km}
           currentRecordedAt={vehicle.mileage_recorded_at}
-          />
+        />
         <VehicleActionsMenu isPrimary={vehicle.is_primary} />
       </div>
     </div>
