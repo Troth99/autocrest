@@ -4,7 +4,7 @@ import type { VehicleFormRegister, VehicleFormRegisterCheckbox } from "@/feature
 
 type Props = { errors: VehicleFormErrors; register: VehicleFormRegister; registerCheckbox: VehicleFormRegisterCheckbox };
 
-export default function VehicleAdditionalDetails({ errors, register, registerCheckbox }: Props) {
+export default function VehiclAdditionalDetails({ errors, register, registerCheckbox }: Props) {
   return (
     <fieldset className="content-card min-w-0 rounded-2xl p-4 sm:p-5">
       <legend className="sr-only">Additional details</legend>

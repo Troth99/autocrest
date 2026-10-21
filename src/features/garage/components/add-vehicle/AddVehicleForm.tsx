@@ -1,21 +1,20 @@
 "use client";
-
 import Link from "next/link";
 import { Check, X } from "lucide-react";
 import { Button, buttonVariants } from "@/shared/components/ui/button";
-import VehicleBasicFields from "@/features/garage/components/add-vehicle/components/fields/VehicleBasicFields";
-import VehicleRegistrationFields from "@/features/garage/components/add-vehicle/components/fields/VehicleRegistrationFields";
-import VehicleTechnicalFields from "@/features/garage/components/add-vehicle/components/fields/VehicleTechnicalFields";
-import VehicleMileageFields from "@/features/garage/components/add-vehicle/components/fields/VehicleMileageFields";
-import VehiclePurchaseFields from "@/features/garage/components/add-vehicle/components/fields/VehiclePurchaseFields";
-import VehicleFormHeader from "@/features/garage/components/add-vehicle/components/VehicleFormHeader";
-import VehicleAdditionalDetails from "@/features/garage/components/add-vehicle/components/fields/VehicleAdditionalDetails";
-import useVehicleDocumentAutofill from "@/features/garage/hooks/useVehicleDocumentAutofill";
-import VehiclePhotoFields from "@/features/garage/components/add-vehicle/components/fields/VehiclePhotoFields";
-import VehicleDocumentScan from "@/features/garage/components/add-vehicle/components/VehicleDocumentScan";
 import useAddVehicleForm from "@/features/garage/hooks/useAddVehicleForm";
 import useForm from "@/shared/hooks/useForm";
 import { initialValues } from "@/features/garage/constants/add-vehicle-form";
+import useVehicleDocumentAutofill from "../../hooks/useVehicleDocumentAutofill";
+import VehicleFormHeader from "./components/VehicleFormHeader";
+import VehicleDocumentScan from "./components/VehicleDocumentScan";
+import VehiclePhotoFields from "../vehicle-fields/VehiclePhotoFields";
+import VehicleBasicFields from "../vehicle-fields/VehicleBasicFields";
+import VehicleRegistrationFields from "../vehicle-fields/VehicleRegistrationFields";
+import VehicleTechnicalFields from "../vehicle-fields/VehicleTechnicalFields";
+import VehicleMileageFields from "../vehicle-fields/VehicleMileageFields";
+import VehiclePurchaseFields from "../vehicle-fields/VehiclePurchaseFields";
+import VehicleAdditionalDetails from "../vehicle-fields/VehicleAdditionalDetails";
 
 
 export default function AddVehicleForm() {

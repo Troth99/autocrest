@@ -1,24 +1,15 @@
-import VehicleMakeModelFields, { type VehicleMakeModelProps } from "@/features/garage/components/add-vehicle/components/fields/VehicleMakeModelFields";
+import type { ReactNode } from "react";
+import VehicleMakeModelFields, { type VehicleMakeModelProps } from "@/features/garage/components/vehicle-fields/VehicleMakeModelFields";
 import VehicleFieldError from "@/features/garage/components/add-vehicle/components/VehicleFieldError";
 import type { VehicleFormRegister } from "@/features/garage/types/add-vehicle-form";
 
-type Props = VehicleMakeModelProps & { register: VehicleFormRegister };
+type Props = { register: VehicleFormRegister } & (VehicleMakeModelProps | {
+  errors: VehicleMakeModelProps["errors"];
+  makeModelFields: ReactNode;
+});
 
-export default function VehicleBasicFields({
-  errors,
-  values,
-  onFieldChange,
-  makes,
-  selectedMake,
-  onMakeChange,
-  isLoadingMakes,
-  models,
-  selectedModel,
-  onModelChange,
-  isLoadingModels,
-  modelsError,
-  register,
-}: Props) {
+export default function VehicleBasicFields(props: Props) {
+  const { errors, register } = props;
   return (
     <fieldset className="content-card min-w-0 rounded-2xl p-4 sm:p-5">
       <legend className="sr-only">Basic information</legend>
@@ -27,20 +18,7 @@ export default function VehicleBasicFields({
         The essentials that identify your vehicle.
       </p>
       <div className="mt-4 grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-2">
-        <VehicleMakeModelFields
-          errors={errors}
-          values={values}
-          onFieldChange={onFieldChange}
-          makes={makes}
-          selectedMake={selectedMake}
-          onMakeChange={onMakeChange}
-          isLoadingMakes={isLoadingMakes}
-          models={models}
-          selectedModel={selectedModel}
-          onModelChange={onModelChange}
-          isLoadingModels={isLoadingModels}
-          modelsError={modelsError}
-        />
+        {"makeModelFields" in props ? props.makeModelFields : <VehicleMakeModelFields {...props} />}
         <label
           htmlFor="manufacture_year"
           className="grid gap-2 text-sm font-medium text-text-secondary"

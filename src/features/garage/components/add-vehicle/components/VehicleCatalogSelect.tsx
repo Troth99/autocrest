@@ -41,7 +41,7 @@ export default function VehicleCatalogSelect({ id, name, label, options, value, 
           <Combobox.Popup className="w-(--anchor-width) min-w-52 overflow-hidden rounded-xl border border-line bg-popover text-text-primary shadow-xl">
             <div className="relative border-b border-line p-2">
               <Search className="absolute left-4 top-1/2 size-4 -translate-y-1/2 text-muted" aria-hidden="true" />
-              
+
               <Combobox.Input aria-label={`Search ${label.toLowerCase()}`} placeholder={`Search ${label.toLowerCase()}...`} className="h-9 w-full rounded-lg border border-input bg-transparent pl-9 pr-3 text-sm outline-none focus-visible:border-ring" />
             </div>
             <Combobox.List className="max-h-[min(240px,var(--available-height))] overflow-y-auto overscroll-contain p-1">
