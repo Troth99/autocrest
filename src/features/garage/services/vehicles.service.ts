@@ -1,6 +1,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Vehicle } from "@/features/garage/types/vehicle";
 import { addVehicleSchema } from "@/features/garage/validators/add-vehicle-validator";
+import { updateMileageSchema } from "../validators/update-mileage-validator";
 
 export async function getVehicles(
   supabase: SupabaseClient,
@@ -179,5 +180,57 @@ export async function updateVehicle(
     throw new Error("Vehicle not found or changes were not allowed.");
   }
 
-  return data.id
+  return data.id;
+}
+
+export async function updateVehicleMileage(
+  supabase: SupabaseClient,
+  vehicleId: string,
+  input: unknown,
+) {
+
+  //Validate the values before paring them
+  const values = updateMileageSchema.parse(input);
+
+  const vehicle = await getVehicleById(supabase, vehicleId);
+
+  if (!vehicle) {
+    throw new Error("Vehicle not found.");
+  }
+
+  if (values.mileage_km < vehicle.mileage_km) {
+    throw new Error("New mileage cannot be lower than the current mileage.");
+  }
+
+  const recordedAt = `${values.mileage_recorded_at}T00:00:00.000Z`;
+
+  if (
+    values.mileage_km === vehicle.mileage_km &&
+    values.mileage_recorded_at === vehicle.mileage_recorded_at?.slice(0, 10)
+  ) {
+    throw new Error("There were no changes to save.");
+  }
+
+  const { data, error } = await supabase
+    .from("vehicles")
+    .update({
+      mileage_km: values.mileage_km,
+      mileage_recorded_at: recordedAt,
+    })
+    .eq("id", vehicleId)
+    .eq("user_id", vehicle.user_id)
+    .eq("mileage_km", vehicle.mileage_km)
+    .is("archived_at", null)
+    .select("id")
+    .maybeSingle();
+
+  if (error) throw error;
+
+  if (!data) {
+    throw new Error(
+      "Mileage could not be updated. Refresh the page and try again.",
+    );
+  }
+
+  return data.id;
 }
