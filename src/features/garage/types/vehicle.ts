@@ -58,6 +58,15 @@ export type Vehicle = {
   colour: string | null;
   seats: number | null;
   mileage_km: number;
+  mileage_adjustment?: {
+    kind: "correction" | "replacement";
+    reason: string;
+    previous_mileage_km: number;
+    previous_recorded_at: string | null;
+    mileage_km: number;
+    recorded_at: string;
+    adjusted_at: string;
+  } | null;
   mileage_recorded_at: string | null;
   description: string | null;
   is_primary: boolean;

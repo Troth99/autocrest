@@ -18,6 +18,9 @@ export default function VehicleOverview({ vehicle }: { vehicle: Vehicle }) {
           <div className="min-w-0">
             <dt className="text-xs text-muted">{label}</dt>
             <dd className="mt-1 wrap-break-word text-sm font-semibold capitalize">{formatVehicleValue(value)}</dd>
+            {label === "Mileage" && vehicle.mileage_adjustment && <dd className="mt-1 text-xs text-muted" title={vehicle.mileage_adjustment.reason}>
+              {vehicle.mileage_adjustment.kind === "replacement" ? "Odometer replaced" : "Mileage corrected"}
+            </dd>}
           </div>
         </div>
       ))}

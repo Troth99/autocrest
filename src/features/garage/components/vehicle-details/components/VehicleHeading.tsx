@@ -1,10 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, CarFront, Gauge, Pencil, Star } from "lucide-react";
+import { ArrowLeft, CarFront, Pencil, Star } from "lucide-react";
 import type { Vehicle } from "@/features/garage/types/vehicle";
 import VehiclePlate from "./VehiclePlate";
 import VehicleActionsMenu from "./VehicleActionsMenu";
 import VehiclePhotoUpload from "./VehiclePhotoUpload";
+import UpdateMileage from "./UpdateMileage";
 
 type Props = {
   vehicle: Vehicle;
@@ -75,14 +76,11 @@ export default function VehicleHeading({ vehicle, photoUrl, photoId }: Props) {
           <Pencil className="size-4" aria-hidden="true" />
           <span>Edit Vehicle</span>
         </Link>
-        <button
-          type="button"
-          disabled
-          title="Mileage updates are not connected yet"
-          className="vehicle-mileage-action"
-        >
-          <Gauge className="size-4" aria-hidden="true" /> Update mileage
-        </button>
+             <UpdateMileage
+          vehicleId={vehicle.id}
+          currentMileage={vehicle.mileage_km}
+          currentRecordedAt={vehicle.mileage_recorded_at}
+          />
         <VehicleActionsMenu isPrimary={vehicle.is_primary} />
       </div>
     </div>

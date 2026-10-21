@@ -13,7 +13,6 @@ import { useRouter } from "next/navigation";
 import VehicleBasicFields from "../vehicle-fields/VehicleBasicFields";
 import VehicleRegistrationFields from "@/features/garage/components/vehicle-fields/VehicleRegistrationFields";
 import VehicleTechnicalFields from "../vehicle-fields/VehicleTechnicalFields";
-import VehicleMileageFields from "../vehicle-fields/VehicleMileageFields";
 import VehiclePurchaseFields from "@/features/garage/components/vehicle-fields/VehiclePurchaseFields";
 import VehicleAdditionalDetails from "../vehicle-fields/VehicleAdditionalDetails";
 
@@ -177,8 +176,6 @@ export function EditVehicleForm({ vehicle }: Props) {
                     <VehicleTechnicalFields register={register} errors={fieldErrors} values={values} onFieldChange={handleFieldChange} />
 
                     <div className="grid content-start gap-5">
-                        <VehicleMileageFields register={register} errors={fieldErrors} />
-
                         <VehiclePurchaseFields register={register} errors={fieldErrors} />
                     </div>
 
