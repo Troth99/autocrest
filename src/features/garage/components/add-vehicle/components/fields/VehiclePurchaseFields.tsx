@@ -1,7 +1,6 @@
 import VehicleFieldError from "@/features/garage/components/add-vehicle/components/VehicleFieldError";
 import type { VehicleFormErrors } from "@/features/garage/types/add-vehicle-form";
 import type { VehicleFormRegister } from "@/features/garage/types/add-vehicle-form";
-import { Input } from "@/shared/components/ui/input";
 
 type Props = { errors: VehicleFormErrors; register: VehicleFormRegister };
 
@@ -19,7 +18,7 @@ export default function VehiclePurchaseFields({ errors, register }: Props) {
           className="grid gap-2 text-sm font-medium text-text-secondary"
         >
           <span>Purchase date</span>
-          <Input id="purchase_date" {...register("purchase_date")} type="date" aria-invalid={Boolean(errors.purchase_date)} aria-describedby={errors.purchase_date ? "purchase_date-error" : undefined} />
+          <input data-slot="input" className="native-input" id="purchase_date" {...register("purchase_date")} type="date" aria-invalid={Boolean(errors.purchase_date)} aria-describedby={errors.purchase_date ? "purchase_date-error" : undefined} />
 <VehicleFieldError field="purchase_date" message={errors.purchase_date} />
         </label>
         <label
@@ -27,7 +26,7 @@ export default function VehiclePurchaseFields({ errors, register }: Props) {
           className="grid gap-2 text-sm font-medium text-text-secondary"
         >
           <span>Purchase price</span>
-          <Input
+          <input data-slot="input" className="native-input"
             id="purchase_price"
             {...register("purchase_price")}
             type="number"
@@ -41,7 +40,7 @@ export default function VehiclePurchaseFields({ errors, register }: Props) {
           className="grid gap-2 text-sm font-medium text-text-secondary"
         >
           <span>Currency code</span>
-          <Input
+          <input data-slot="input" className="native-input"
             id="purchase_currency_code"
             {...register("purchase_currency_code")}
             type="text"

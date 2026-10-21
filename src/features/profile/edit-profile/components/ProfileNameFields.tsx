@@ -1,4 +1,4 @@
-﻿import { Input } from "@/shared/components/ui/input";
+
 import type { ProfileDetailsFieldsProps } from "@/features/profile/edit-profile/components/ProfileDetailsFields";
 
 type Props = Pick<ProfileDetailsFieldsProps, "register" | "errors" | "isSaving">;
@@ -9,7 +9,7 @@ export default function ProfileNameFields({ register, errors, isSaving }: Props)
               htmlFor="first-name"
             >
               First name
-              <Input
+              <input data-slot="input" className="native-input"
                 id="first-name"
                 aria-invalid={Boolean(errors.first_name)}
                 aria-describedby={
@@ -35,7 +35,7 @@ export default function ProfileNameFields({ register, errors, isSaving }: Props)
               htmlFor="last-name"
             >
               Last name
-              <Input
+              <input data-slot="input" className="native-input"
                 id="last-name"
                 aria-invalid={Boolean(errors.last_name)}
                 aria-describedby={

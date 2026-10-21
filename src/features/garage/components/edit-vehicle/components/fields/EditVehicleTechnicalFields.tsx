@@ -1,5 +1,4 @@
 import type { EditVehicleFormRegister } from "@/features/garage/types/edit-vehicle-form";
-import { Input } from "@/shared/components/ui/input";
 
 type Props = {
     register: EditVehicleFormRegister;
@@ -7,7 +6,6 @@ type Props = {
 
 export default function EditVehicleTechnicalFields({ register }: Props) {
 
-    //To change the dropdown menus
     return (
         <fieldset className="content-card min-w-0 rounded-2xl p-4 sm:p-5">
             <legend className="sr-only">Technical specifications</legend>
@@ -49,7 +47,9 @@ export default function EditVehicleTechnicalFields({ register }: Props) {
                 </label>
                 <label htmlFor="engine_cc" className="grid gap-2 text-sm font-medium text-text-secondary">
                     <span>Engine capacity (cc)</span>
-                    <Input
+                    <input
+                        data-slot="input"
+                        className="native-input"
                         id="engine_cc"
                         type="number"
                         min={1}
@@ -58,7 +58,9 @@ export default function EditVehicleTechnicalFields({ register }: Props) {
                 </label>
                 <label htmlFor="power_hp" className="grid gap-2 text-sm font-medium text-text-secondary">
                     <span>Power (hp)</span>
-                    <Input
+                    <input
+                        data-slot="input"
+                        className="native-input"
                         id="power_hp"
                         type="number"
                         min={1}
@@ -79,13 +81,17 @@ export default function EditVehicleTechnicalFields({ register }: Props) {
                 </label>
                 <label htmlFor="colour" className="grid gap-2 text-sm font-medium text-text-secondary">
                     <span>Colour</span>
-                    <Input
+                    <input
+                        data-slot="input"
+                        className="native-input"
                         id="colour" {...register("colour")}
                     />
                 </label>
                 <label htmlFor="seats" className="grid gap-2 text-sm font-medium text-text-secondary">
                     <span>Seats</span>
-                    <Input
+                    <input
+                        data-slot="input"
+                        className="native-input"
                         id="seats"
                         type="number"
                         min={1}

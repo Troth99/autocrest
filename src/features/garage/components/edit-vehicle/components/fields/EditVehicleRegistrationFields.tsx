@@ -1,5 +1,4 @@
 import type { EditVehicleFormRegister } from "@/features/garage/types/edit-vehicle-form";
-import { Input } from "@/shared/components/ui/input";
 
 type Props = {
     register: EditVehicleFormRegister;
@@ -14,28 +13,28 @@ export default function EditVehicleRegistrationFields({ register }: Props) {
             <div className="mt-4 grid items-start gap-4 sm:grid-cols-2">
                 <label htmlFor="plate" className="grid gap-2 text-sm font-medium text-text-secondary">
                     <span>Registration plate</span>
-                    <Input
+                    <input data-slot="input" className="native-input"
                         id="plate"
                         {...register("plate")}
                     />
                 </label>
                 <label htmlFor="vin" className="grid gap-2 text-sm font-medium text-text-secondary">
                     <span>VIN</span>
-                    <Input
+                    <input data-slot="input" className="native-input"
                         id="vin"
                         {...register("vin")}
                     />
                 </label>
                 <label htmlFor="registration_certificate_number" className="grid gap-2 text-sm font-medium text-text-secondary">
                     <span>Certificate number</span>
-                    <Input
+                    <input data-slot="input" className="native-input"
                         id="registration_certificate_number"
                         {...register("registration_certificate_number")}
                     />
                 </label>
                 <label htmlFor="registration_country_code" className="grid gap-2 text-sm font-medium text-text-secondary">
                     <span>Registration country code</span>
-                    <Input
+                    <input data-slot="input" className="native-input"
                         id="registration_country_code"
                         {...register("registration_country_code")}
                         placeholder="e.g. BG"
@@ -43,7 +42,7 @@ export default function EditVehicleRegistrationFields({ register }: Props) {
                 </label>
                 <label htmlFor="first_registration_date" className="grid gap-2 text-sm font-medium text-text-secondary">
                     <span>First registration date</span>
-                    <Input
+                    <input data-slot="input" className="native-input"
                         id="first_registration_date"
                         {...register("first_registration_date")}
                         type="date"

@@ -1,5 +1,4 @@
 import type { EditVehicleFormRegister } from "@/features/garage/types/edit-vehicle-form";
-import { Input } from "@/shared/components/ui/input";
 
 type Props = {
     register: EditVehicleFormRegister;
@@ -13,7 +12,7 @@ export default function EditVehicleMileageFields({ register }: Props) {
             <div className="mt-4 grid items-start gap-4 sm:grid-cols-2">
                 <label htmlFor="mileage_km" className="grid gap-2 text-sm font-medium text-text-secondary">
                     <span>Odometer (km)</span>
-                    <Input
+                    <input data-slot="input" className="native-input"
                         id="mileage_km"
                         type="number"
                         min={0}
@@ -22,7 +21,7 @@ export default function EditVehicleMileageFields({ register }: Props) {
                 </label>
                 <label htmlFor="mileage_recorded_at" className="grid gap-2 text-sm font-medium text-text-secondary">
                     <span>Recorded on</span>
-                    <Input
+                    <input data-slot="input" className="native-input"
                         id="mileage_recorded_at"
                         type="date" {...register("mileage_recorded_at")}
                     />

@@ -4,7 +4,6 @@ import { useId, useRef, useState, type FormEvent } from "react";
 import { Dialog } from "@base-ui/react/dialog";
 import { Check, LoaderCircle, ShieldAlert, X } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
-import { Input } from "@/shared/components/ui/input";
 import {
   disableMfaFactor,
   listMfaFactors,
@@ -206,7 +205,7 @@ export default function DisableTwoFactor({
                 <label htmlFor={inputId} className="text-sm font-semibold">
                   Authenticator code
                 </label>
-                <Input
+                <input data-slot="input"
                   id={inputId}
                   value={code}
                   onChange={(event) => setCode(event.target.value)}
@@ -215,7 +214,7 @@ export default function DisableTwoFactor({
                   autoComplete="one-time-code"
                   maxLength={6}
                   disabled={busy}
-                  className="h-12 text-center font-mono text-xl tracking-[0.35em] md:text-xl"
+                  className="native-input h-12 text-center font-mono text-xl tracking-[0.35em] md:text-xl"
                   aria-invalid={Boolean(error)}
                   aria-describedby={error ? `${inputId}-error` : undefined}
                 />

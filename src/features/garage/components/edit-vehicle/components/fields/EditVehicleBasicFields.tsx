@@ -1,5 +1,4 @@
 import type { EditVehicleFormRegister } from "@/features/garage/types/edit-vehicle-form";
-import { Input } from "@/shared/components/ui/input";
 
 type Props = {
     register: EditVehicleFormRegister;
@@ -14,21 +13,21 @@ export default function EditVehicleBasicFields({ register }: Props) {
             <div className="mt-4 grid items-start gap-4 sm:grid-cols-2">
                 <label htmlFor="make" className="grid gap-2 text-sm font-medium text-text-secondary">
                     <span>Make</span>
-                    <Input
+                    <input data-slot="input" className="native-input"
                         id="make"
                         {...register("make")}
                     />
                 </label>
                 <label htmlFor="model" className="grid gap-2 text-sm font-medium text-text-secondary">
                     <span>Model</span>
-                    <Input
+                    <input data-slot="input" className="native-input"
                         id="model"
                         {...register("model")}
                     />
                 </label>
                 <label htmlFor="manufacture_year" className="grid gap-2 text-sm font-medium text-text-secondary">
                     <span>Manufacture year</span>
-                    <Input
+                    <input data-slot="input" className="native-input"
                         id="manufacture_year"
                         {...register("manufacture_year")}
                         type="number"
@@ -38,14 +37,14 @@ export default function EditVehicleBasicFields({ register }: Props) {
                 </label>
                 <label htmlFor="trim" className="grid gap-2 text-sm font-medium text-text-secondary">
                     <span>Trim / variant</span>
-                    <Input
+                    <input data-slot="input" className="native-input"
                         id="trim"
                         {...register("trim")}
                     />
                 </label>
                 <label htmlFor="nickname" className="grid gap-2 text-sm font-medium text-text-secondary">
                     <span>Nickname</span>
-                    <Input
+                    <input data-slot="input" className="native-input"
                         id="nickname"
                         {...register("nickname")}
                         placeholder="e.g. My daily driver"

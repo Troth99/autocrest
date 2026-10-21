@@ -1,7 +1,6 @@
 
 
 import PhoneInput, { parsePhoneNumber } from "react-phone-number-input";
-import { Input } from "@/shared/components/ui/input";
 import PhoneCountrySelect from "./PhoneCountrySelect";
 
 type Props = {
@@ -30,7 +29,7 @@ export default function PhoneEditSelector({ value, onChange, error }: Props) {
               value={value || undefined}
               onChange={(nextValue) => onChange(nextValue ?? "")}
 
-              inputComponent={Input}
+              inputComponent="input"
               placeholder="Phone number"
             />
             <div role="alert" className="min-h-5 text-sm text-destructive">

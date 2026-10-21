@@ -4,7 +4,6 @@ import { useId, useRef, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { ShieldCheck } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
-import { Input } from "@/shared/components/ui/input";
 import { logoutUser } from "@/features/auth/services/auth.service";
 import { verifyMfaCode } from "@/features/auth/services/mfa.service";
 
@@ -63,7 +62,7 @@ export default function MfaLoginForm({ factors }: {
         )}
         <div className="grid gap-2">
           <label className="field-label" htmlFor={inputId}>Authenticator code</label>
-          <Input id={inputId} value={code} onChange={(event) => setCode(event.target.value)} inputMode="numeric" autoComplete="one-time-code" maxLength={6} placeholder="000000" disabled={busy || !factorId} className="h-12 text-center font-mono text-xl tracking-[0.35em] md:text-xl" aria-invalid={Boolean(error)} aria-describedby={error ? `${inputId}-error` : undefined} />
+          <input data-slot="input" id={inputId} value={code} onChange={(event) => setCode(event.target.value)} inputMode="numeric" autoComplete="one-time-code" maxLength={6} placeholder="000000" disabled={busy || !factorId} className="native-input h-12 text-center font-mono text-xl tracking-[0.35em] md:text-xl" aria-invalid={Boolean(error)} aria-describedby={error ? `${inputId}-error` : undefined} />
         </div>
         {error && <p id={`${inputId}-error`} role="alert" className="text-sm text-destructive">{error}</p>}
         <Button type="submit" size="lg" disabled={busy || !factorId} className="button-primary button-base h-12 w-full">{busy ? "Please wait..." : "Verify and continue"}</Button>

@@ -1,6 +1,5 @@
 ﻿import ProfileNameFields from "@/features/profile/edit-profile/components/ProfileNameFields";
 import type { ChangeEvent } from "react";
-import { Input } from "@/shared/components/ui/input";
 import PhoneEditSelector from "@/features/profile/edit-profile/components/PhoneEditSelector";
 import type { ProfileFormValues } from "@/features/profile/edit-profile/services/edit-profile.service";
 
@@ -44,7 +43,7 @@ export default function ProfileDetailsFields({
         htmlFor="username"
       >
         Username
-        <Input id="username" placeholder="username" {...register("username")} />
+        <input data-slot="input" className="native-input" id="username" placeholder="username" {...register("username")} />
       </label>
       <PhoneEditSelector
         value={values.phone}
@@ -56,7 +55,7 @@ export default function ProfileDetailsFields({
         htmlFor="location"
       >
         Location
-        <Input id="location" placeholder="City" {...register("city")} />
+        <input data-slot="input" className="native-input" id="location" placeholder="City" {...register("city")} />
       </label>
       <label className="grid gap-2 text-sm font-medium text-text-secondary sm:col-span-2">
         About

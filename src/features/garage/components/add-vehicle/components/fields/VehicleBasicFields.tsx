@@ -1,6 +1,5 @@
 import VehicleMakeModelFields, { type VehicleMakeModelProps } from "@/features/garage/components/add-vehicle/components/fields/VehicleMakeModelFields";
 import VehicleFieldError from "@/features/garage/components/add-vehicle/components/VehicleFieldError";
-import { Input } from "@/shared/components/ui/input";
 import type { VehicleFormRegister } from "@/features/garage/types/add-vehicle-form";
 
 type Props = VehicleMakeModelProps & { register: VehicleFormRegister };
@@ -47,41 +46,41 @@ export default function VehicleBasicFields({
           className="grid gap-2 text-sm font-medium text-text-secondary"
         >
           <span>Manufacture year *</span>
-          <Input
+          <input data-slot="input" className="native-input"
             id="manufacture_year"
             {...register("manufacture_year")}
             type="number"
             aria-required="true"
             placeholder="e.g. 2020"
             min={0}
-          aria-invalid={Boolean(errors.manufacture_year)} aria-describedby={errors.manufacture_year ? "manufacture_year-error" : undefined} />
-<VehicleFieldError field="manufacture_year" message={errors.manufacture_year} />
+            aria-invalid={Boolean(errors.manufacture_year)} aria-describedby={errors.manufacture_year ? "manufacture_year-error" : undefined} />
+          <VehicleFieldError field="manufacture_year" message={errors.manufacture_year} />
         </label>
         <label
           htmlFor="trim"
           className="grid gap-2 text-sm font-medium text-text-secondary"
         >
           <span>Trim / variant</span>
-          <Input
+          <input data-slot="input" className="native-input"
             id="trim"
             {...register("trim")}
             type="text"
             placeholder="e.g. 1.8 Hybrid Design"
-          aria-invalid={Boolean(errors.trim)} aria-describedby={errors.trim ? "trim-error" : undefined} />
-<VehicleFieldError field="trim" message={errors.trim} />
+            aria-invalid={Boolean(errors.trim)} aria-describedby={errors.trim ? "trim-error" : undefined} />
+          <VehicleFieldError field="trim" message={errors.trim} />
         </label>
         <label
           htmlFor="nickname"
           className="grid gap-2 text-sm font-medium text-text-secondary"
         >
           <span>Nickname</span>
-          <Input
+          <input data-slot="input" className="native-input"
             id="nickname"
             {...register("nickname")}
             type="text"
             placeholder="A name for your vehicle"
-          aria-invalid={Boolean(errors.nickname)} aria-describedby={errors.nickname ? "nickname-error" : undefined} />
-<VehicleFieldError field="nickname" message={errors.nickname} />
+            aria-invalid={Boolean(errors.nickname)} aria-describedby={errors.nickname ? "nickname-error" : undefined} />
+          <VehicleFieldError field="nickname" message={errors.nickname} />
         </label>
         <label
           htmlFor="vehicle_use"
@@ -106,7 +105,7 @@ export default function VehicleBasicFields({
               Mixed
             </option>
           </select>
-<VehicleFieldError field="vehicle_use" message={errors.vehicle_use} />
+          <VehicleFieldError field="vehicle_use" message={errors.vehicle_use} />
         </label>
       </div>
     </fieldset>

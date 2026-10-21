@@ -1,6 +1,5 @@
 import VehicleFieldError from "@/features/garage/components/add-vehicle/components/VehicleFieldError";
 import type { VehicleFormErrors } from "@/features/garage/types/add-vehicle-form";
-import { Input } from "@/shared/components/ui/input";
 import type { VehicleFormRegister } from "@/features/garage/types/add-vehicle-form";
 
 type Props = { errors: VehicleFormErrors;
@@ -21,7 +20,7 @@ export default function VehicleMileageFields({ errors, register }: Props) {
           className="grid gap-2 text-sm font-medium text-text-secondary"
         >
           <span>Current mileage (km) *</span>
-          <Input
+          <input data-slot="input" className="native-input"
             id="mileage_km"
             {...register("mileage_km")}
             type="number"
@@ -35,7 +34,7 @@ export default function VehicleMileageFields({ errors, register }: Props) {
           className="grid gap-2 text-sm font-medium text-text-secondary"
         >
           <span>Mileage recorded on</span>
-          <Input
+          <input data-slot="input" className="native-input"
             id="mileage_recorded_at"
             {...register("mileage_recorded_at")}
             type="date"
