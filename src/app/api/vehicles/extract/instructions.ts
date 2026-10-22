@@ -42,3 +42,4 @@ Normalize fuel_type only when supported by the printed information.
 Do not assume that petrol/electric means plug-in hybrid.
 Do not invent a manufacture year from the first registration date.
 `;
+
