@@ -23,7 +23,7 @@ export default function VehicleDetails({
       <section aria-label="Vehicle overview"
         className="section-card overflow-hidden bg-linear-to-br from-info-soft to-panel">
 
-        <VehicleHeading vehicle={vehicle} photoUrl={photoUrl} photoId={photoId}/>
+        <VehicleHeading vehicle={vehicle} photoUrl={photoUrl} photoId={photoId} />
 
         <VehicleOverview vehicle={vehicle} />
 

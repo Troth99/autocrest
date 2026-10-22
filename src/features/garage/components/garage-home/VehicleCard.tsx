@@ -13,18 +13,12 @@ export default function VehicleCard({ vehicle, photoUrl }: Props) {
   const details = [vehicle.manufacture_year, vehicle.trim, vehicle.transmission?.replaceAll("_", " ")]
     .filter((value) => value != null && value !== "")
     .join(" · ");
-  const specs = [
-    { label: "Mileage", value: `${vehicle.mileage_km.toLocaleString("en-GB")} km`, icon: Gauge },
-    { label: "Fuel", value: vehicle.fuel_type?.replaceAll("_", " "), icon: Fuel },
-    { label: "Power", value: vehicle.power_hp !== null ? `${vehicle.power_hp} hp` : null, icon: Cog },
-    { label: "Engine", value: vehicle.engine_cc !== null ? `${vehicle.engine_cc.toLocaleString("en-GB")} cc` : null, icon: Settings2 },
-  ];
 
   return (
     <article className="garage-vehicle-card flex h-full w-full min-w-0 flex-col overflow-hidden">
       <div className={`relative aspect-16/10 overflow-hidden border-b border-line ${photoUrl ? "" : "garage-vehicle-placeholder"}`}>
         {photoUrl ? (
-          <Image src={photoUrl} alt={name} fill unoptimized sizes="(max-width: 768px) 100vw, 680px" className="object-cover" />
+          <Image src={photoUrl} alt={name} loading="eager" fill unoptimized sizes="(max-width: 768px) 100vw, 680px" className="object-cover" />
         ) : (
           <div className="flex h-full flex-col items-center justify-center gap-3 text-info">
             <CarFront className="garage-car-motion size-16 stroke-[1.25]" aria-hidden="true" />
@@ -46,16 +40,45 @@ export default function VehicleCard({ vehicle, photoUrl }: Props) {
         <h3 className="wrap-break-word text-lg font-semibold tracking-tight text-text-primary">{name}</h3>
         {details && <p className="mt-1.5 text-sm capitalize text-muted">{details}</p>}
 
-        <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-4 border-t border-line pt-4 ">
-          {specs.map(({ label, value, icon: Icon }) => (
-            <div key={label} className="flex min-w-0 items-center gap-2.5">
-              <Icon className="size-5 shrink-0 stroke-[1.5] text-info" aria-hidden="true" />
-              <div className="min-w-0">
-                <dt className="detail-label">{label}</dt>
-                <dd className="mt-1 wrap-break-word text-sm font-semibold text-text-primary">{value ?? "Not provided"}</dd>
-              </div>
+        <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-4 border-t border-line pt-4">
+          <div className="flex min-w-0 items-center gap-2.5">
+            <Gauge className="size-5 shrink-0 stroke-[1.5] text-info" aria-hidden="true" />
+            <div className="min-w-0">
+              <dt className="detail-label">Mileage</dt>
+              <dd className="mt-1 wrap-break-word text-sm font-semibold text-text-primary">
+                {vehicle.mileage_km.toLocaleString("en-GB")} km
+              </dd>
             </div>
-          ))}
+          </div>
+          <div className="flex min-w-0 items-center gap-2.5">
+            <Fuel className="size-5 shrink-0 stroke-[1.5] text-info" aria-hidden="true" />
+            <div className="min-w-0">
+              <dt className="detail-label">Fuel</dt>
+              <dd className="mt-1 wrap-break-word text-sm font-semibold text-text-primary">
+                {vehicle.fuel_type?.replaceAll("_", " ") ?? "Not provided"}
+              </dd>
+            </div>
+          </div>
+          <div className="flex min-w-0 items-center gap-2.5">
+            <Cog className="size-5 shrink-0 stroke-[1.5] text-info" aria-hidden="true" />
+            <div className="min-w-0">
+              <dt className="detail-label">Power</dt>
+              <dd className="mt-1 wrap-break-word text-sm font-semibold text-text-primary">
+                {vehicle.power_hp !== null ? `${vehicle.power_hp} hp` : "Not provided"}
+              </dd>
+            </div>
+          </div>
+          <div className="flex min-w-0 items-center gap-2.5">
+            <Settings2 className="size-5 shrink-0 stroke-[1.5] text-info" aria-hidden="true" />
+            <div className="min-w-0">
+              <dt className="detail-label">Engine</dt>
+              <dd className="mt-1 wrap-break-word text-sm font-semibold text-text-primary">
+                {vehicle.engine_cc !== null
+                  ? `${vehicle.engine_cc.toLocaleString("en-GB")} cc`
+                  : "Not provided"}
+              </dd>
+            </div>
+          </div>
         </dl>
         <div className="mt-auto pt-5">
           <Link
