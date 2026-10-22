@@ -5,7 +5,7 @@ import type { Vehicle } from "@/features/garage/types/vehicle";
 import VehiclePlate from "./VehiclePlate";
 import VehicleActionsMenu from "./VehicleActionsMenu";
 import VehiclePhotoUpload from "./VehiclePhotoUpload";
-import UpdateMileage from "./UpdateMileage";
+import UpdateMileage from "./mileage/UpdateMileage";
 
 type Props = {
   vehicle: Vehicle;

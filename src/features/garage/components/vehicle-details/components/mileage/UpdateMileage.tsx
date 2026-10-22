@@ -7,6 +7,7 @@ import { Dialog } from "@base-ui/react/dialog";
 import { createClient } from "@/lib/supabase/client";
 import { updateVehicleMileage } from "@/features/garage/services/vehicles.service";
 import { createUpdateMileageSchema } from "@/features/garage/validators/update-mileage-validator";
+import OdometerPhotoScan from "./OdometerPhotoScan";
 
 type Props = {
     vehicleId: string;
@@ -100,6 +101,7 @@ export default function UpdateMileage({
                 type="button"
                 className="vehicle-mileage-action cursor-pointer"
             >
+
                 <Gauge className="size-4" aria-hidden="true" />
                 Update mileage
             </Dialog.Trigger>
@@ -115,11 +117,24 @@ export default function UpdateMileage({
                     </div>
                     <Dialog.Title className="pr-8 text-xl font-semibold tracking-tight">Update mileage</Dialog.Title>
                     <Dialog.Description className="mt-2 text-sm text-muted">Record your latest odometer reading.</Dialog.Description>
+
                     <form noValidate onSubmit={handleSubmit} className="vehicle-form mt-5 grid gap-4">
+
                         <p className="text-sm text-muted">
                             Current mileage: {currentMileage.toLocaleString()} km
                         </p>
-
+                        <OdometerPhotoScan
+                            disabled={isSaving}
+                            onReadingDetected={(mileageKm) => {
+                                setRecordedAt(today())
+                                setMileage(String(mileageKm));
+                                setFieldErrors((current) => ({
+                                    ...current,
+                                    mileage_km: undefined,
+                                }));
+                                setError(null);
+                            }}
+                        />
                         <label className="grid gap-2 text-sm">
                             Update type
                             <select className="form-select" value={mode} disabled={isSaving} onChange={(event) => {

@@ -1,18 +1,23 @@
 import VehicleCard from "@/features/garage/components/garage-home/VehicleCard";
 import GarageOverview from "@/features/garage/components/garage-home/GarageOverview";
 import { CarFront } from "lucide-react";
-import { getVehicles } from "@/features/garage/services/vehicles.service";
-import { getVehiclePhotoUrls } from "@/features/garage/services/vehicle-photo.service";
-import { createClient } from "@/lib/supabase/server";
 import AddVehicleButton from "@/features/garage/components/garage-home/AddVehicleButton";
 import Link from "next/link";
+import { Vehicle } from "./types/vehicle";
 
-export default async function GaragePage({ query = "" }: { query?: string }) {
-  const supabase = await createClient();
-  const vehicles = await getVehicles(supabase);
-
-  const photos = await getVehiclePhotoUrls(supabase, vehicles.map((vehicle) => vehicle.id));
-
+type Props = {
+  vehicles: Vehicle[];
+  photos: {
+    urls: Record<string, string>;
+    error: string | null;
+  };
+  query?: string;
+};
+export default async function GaragePage({
+  vehicles,
+  photos,
+  query = ""
+}: Props) {
 
   const matchingVehicles = vehicles.filter((vehicle) =>
     [vehicle.make, vehicle.model, vehicle.nickname, vehicle.plate].filter(Boolean).join(" ").toLocaleLowerCase().includes(query.toLocaleLowerCase()),
