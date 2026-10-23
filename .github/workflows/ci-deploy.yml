@@ -71,12 +71,15 @@ jobs:
         shell: bash
         run: |
           flags=()
+          branch_flags=()
           target=preview
           if [ "$GITHUB_REF" = 'refs/heads/main' ]; then
             target=production
             flags+=(--prod)
+          else
+            branch_flags+=(--git-branch="$GITHUB_REF_NAME")
           fi
-          vercel pull --yes --environment="$target" --git-branch="$GITHUB_REF_NAME" --token="$VERCEL_TOKEN"
+          vercel pull --yes --environment="$target" "${branch_flags[@]}" --token="$VERCEL_TOKEN"
           vercel build "${flags[@]}" --token="$VERCEL_TOKEN"
           deployment_url=$(vercel deploy --prebuilt "${flags[@]}" --token="$VERCEL_TOKEN")
           printf '### Vercel deployment\n\n%s\n' "$deployment_url" >> "$GITHUB_STEP_SUMMARY"
