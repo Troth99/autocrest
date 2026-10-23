@@ -250,3 +250,16 @@ export async function updateVehicleMileage(
 
   return data.id;
 }
+
+export async function setPrimaryVehicle(
+  supabase: SupabaseClient,
+  vehicleId: string,
+): Promise<void> {
+  const { error } = await supabase.rpc("set_primary_vehicle", {
+    p_vehicle_id: vehicleId,
+  });
+
+  if (error) {
+    throw error;
+  }
+}

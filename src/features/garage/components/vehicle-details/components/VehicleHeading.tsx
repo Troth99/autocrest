@@ -81,7 +81,7 @@ export default function VehicleHeading({ vehicle, photoUrl, photoId }: Props) {
           currentMileage={vehicle.mileage_km}
           currentRecordedAt={vehicle.mileage_recorded_at}
         />
-        <VehicleActionsMenu isPrimary={vehicle.is_primary} />
+        <VehicleActionsMenu vehicleId={vehicle.id} isPrimary={vehicle.is_primary} />
       </div>
     </div>
   );

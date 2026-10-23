@@ -56,3 +56,33 @@ This repo is a Next.js 16 App Router app with TypeScript, Tailwind, and Supabase
 - before changing any code, check the existing codebase for similar patterns and follow them.
 - do not add libraries or dependencies unless absolutely necessary; prefer using existing utilities and helpers.
 - after working on a feature, show what changes were made.
+- 
+## Teaching workflow
+- When I ask for step-by-step help, give one small change at a time.
+- Name the exact file and insertion point.
+- Explain briefly why the change is needed.
+- When I say "done", continue to the next step.
+- When I ask you to make the changes, edit the files directly.
+
+## Code quality
+- Keep state local unless multiple components need to share it.
+- Extract custom hooks when they reuse meaningful behavior,
+  not simply because state variable names repeat.
+- Prefer clear, specific names over generic abstractions.
+- Follow the existing error and loading patterns.
+
+## Database changes
+- Clearly distinguish local migrations from applied Supabase changes.
+- Store database schema and function changes in migration files.
+- Enforce vehicle ownership using authenticated users and RLS.
+- Use transactions for changes that must succeed or fail together.
+
+## UI behavior
+- Disable actions while saving and show useful error messages.
+- Preserve the current design unless I request a visual change.
+- Keep keyboard navigation and accessible labels working.
+
+## Verification
+- Run checks appropriate to the change.
+- State what was checked and what still needs browser or Supabase testing.
+- Do not claim a feature works live based only on TypeScript checks.
