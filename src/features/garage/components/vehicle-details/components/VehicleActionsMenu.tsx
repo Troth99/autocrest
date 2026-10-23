@@ -13,6 +13,7 @@ import { getVehicleById, setPrimaryVehicle } from "@/features/garage/services/ve
 import { downloadVehicleReport } from "@/features/garage/components/vehicle-report/download-vehicle-report";
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import DeleteVehicleDialog from "@/features/garage/components/vehicle-details/components/DeleteVehicleDialog";
 
 export default function VehicleActionsMenu({
   vehicleId,
@@ -27,6 +28,7 @@ export default function VehicleActionsMenu({
   const [isSaving, setIsSaving] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
   const [exportError, setExportError] = useState<string | null>(null);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   const handleSetPrimary = async () => {
     if (isPrimary || isSaving) return;
@@ -59,50 +61,64 @@ export default function VehicleActionsMenu({
     }
   }
 
+  function handleOpenDelete() {
+    setIsDeleteOpen(true);
+  }
   return (
     <>
-    <DropdownMenu>
-      <DropdownMenuTrigger
-        aria-label={isExporting ? "Generating PDF" : "More vehicle actions"}
-        aria-busy={isExporting}
-        className="button-base button-secondary border p-2.5 cursor-pointer"
-      >
-        {isExporting ? (
-          <LoaderCircle className="size-5 animate-spin" aria-hidden="true" />
-        ) : (
-          <MoreHorizontal className="size-5" aria-hidden="true" />
-        )}
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" sideOffset={8} className="w-60 rounded-xl p-2">
-
-        <DropdownMenuItem
-          disabled={isPrimary || isSaving}
-          onClick={handleSetPrimary}
-          className=" cursor-pointer gap-2 px-3 py-2.5">
-          <Star className="size-4" aria-hidden="true" />
-          {isSaving ? "Saving..." : "Set as primary"}
-          {isPrimary && (
-            <span className="ml-auto text-[10px]">Already primary</span>
-          )}
-        </DropdownMenuItem>
-
-        <DropdownMenuItem
-          onClick={exportHandler}
-          disabled={isExporting}
-            className="cursor-pointer gap-2 px-3 py-2.5"
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          aria-label={isExporting ? "Generating PDF" : "More vehicle actions"}
+          aria-busy={isExporting}
+          className="button-base button-secondary border p-2.5 cursor-pointer"
         >
-          <Download className="size-4" aria-hidden="true" /> {isExporting ? "Generating PDF..." : "Export history"}
-        </DropdownMenuItem>
+          {isExporting ? (
+            <LoaderCircle className="size-5 animate-spin" aria-hidden="true" />
+          ) : (
+            <MoreHorizontal className="size-5" aria-hidden="true" />
+          )}
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" sideOffset={8} className="w-60 rounded-xl p-2">
 
-        <DropdownMenuSeparator />
-        <DropdownMenuItem disabled variant="destructive" className="gap-2 px-3 py-2.5">
-          <Trash2 className="size-4" aria-hidden="true" /> Remove vehicle
-          <span className="ml-auto text-[10px]">Coming soon</span>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-    {isExporting && <p role="status" className="sr-only">Generating PDF...</p>}
-    {exportError && <p role="alert" className="text-sm text-destructive">{exportError}</p>}
+          <DropdownMenuItem
+            disabled={isPrimary || isSaving}
+            onClick={handleSetPrimary}
+            className=" cursor-pointer gap-2 px-3 py-2.5">
+            <Star className="size-4" aria-hidden="true" />
+            {isSaving ? "Saving..." : "Set as primary"}
+            {isPrimary && (
+              <span className="ml-auto text-[10px]">Already primary</span>
+            )}
+          </DropdownMenuItem>
+
+          <DropdownMenuItem
+            onClick={exportHandler}
+            disabled={isExporting}
+            className="cursor-pointer gap-2 px-3 py-2.5"
+          >
+            <Download className="size-4" aria-hidden="true" /> {isExporting ? "Generating PDF..." : "Export history"}
+          </DropdownMenuItem>
+
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            onClick={handleOpenDelete}
+            variant="destructive"
+            className="cursor-pointer gap-2 px-3 py-2.5"
+          >
+            <Trash2 className="size-4" aria-hidden="true" /> Remove vehicle
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      
+      {isExporting && <p role="status" className="sr-only">Generating PDF...</p>}
+
+      {exportError && <p role="alert" className="text-sm text-destructive">{exportError}</p>}
+
+      <DeleteVehicleDialog
+        open={isDeleteOpen}
+        onOpenChange={setIsDeleteOpen}
+        vehicleId={vehicleId}
+      />
     </>
   );
 }
