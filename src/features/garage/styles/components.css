@@ -192,6 +192,22 @@
     @apply font-semibold tracking-widest;
   }
 
+  .vehicle-summary-grid {
+    @apply mt-6 flex overflow-x-auto rounded-xl border border-line bg-panel/60 py-4;
+  }
+
+  .vehicle-summary-card {
+    @apply flex min-w-44 flex-1 items-start gap-3 px-5 py-1;
+  }
+
+  .vehicle-summary-card + .vehicle-summary-card {
+    @apply border-l border-line;
+  }
+
+  .vehicle-summary-icon {
+    @apply mt-1 size-5 shrink-0 stroke-[1.5] text-info;
+  }
+
   .vehicle-back-link {
     @apply flex items-center justify-between rounded-xl border border-line px-4 py-3 text-sm;
     @apply text-text-secondary transition-colors hover:border-info-border hover:bg-info-soft;

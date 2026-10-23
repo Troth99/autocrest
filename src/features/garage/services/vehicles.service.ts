@@ -250,3 +250,64 @@ export async function updateVehicleMileage(
 
   return data.id;
 }
+
+export async function setPrimaryVehicle(
+  supabase: SupabaseClient,
+  vehicleId: string,
+): Promise<void> {
+  const { error } = await supabase.rpc("set_primary_vehicle", {
+    p_vehicle_id: vehicleId,
+  });
+
+  if (error) {
+    throw error;
+  }
+}
+
+export async function deleteVehicle(
+  supabase: SupabaseClient,
+  vehicleId: string,
+): Promise<void> {
+  // Verify ownership before deleting any files.
+  const vehicle = await getVehicleById(supabase, vehicleId);
+
+  if (!vehicle) {
+    throw new Error("Vehicle not found.");
+  }
+
+  const { data: photos, error: photosError } = await supabase
+    .from("vehicle_photos")
+    .select("storage_path")
+    .eq("vehicle_id", vehicleId);
+
+  if (photosError) throw photosError;
+
+  const paths = (photos ?? []).map((photo) => photo.storage_path);
+
+  if (paths.length > 0) {
+    const { error: storageError } = await supabase.storage
+      .from("vehicle-photos")
+      .remove(paths);
+
+    if (storageError) {
+      throw new Error("Could not remove the vehicle photos. Please try again.");
+    }
+  }
+
+  // Related photo records are removed by ON DELETE CASCADE.
+  const { data: deleted, error: deleteError } = await supabase
+    .from("vehicles")
+    .delete()
+    .eq("id", vehicleId)
+    .eq("user_id", vehicle.user_id)
+    .select("id")
+    .maybeSingle();
+
+  if (deleteError || !deleted) {
+    throw new Error(
+      paths.length > 0
+        ? "Photos were removed, but the vehicle could not be deleted. Please try again."
+        : "Could not delete the vehicle. Please try again.",
+    );
+  }
+}
