@@ -18,6 +18,7 @@ export default function VehicleDetails({
     photoUrl?: string | null
     photoId?: string | null
   }) {
+    
   return (
     <div className="space-y-6">
       <section aria-label="Vehicle overview"

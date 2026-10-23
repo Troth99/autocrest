@@ -35,7 +35,7 @@ export default function VehicleHeading({ vehicle, photoUrl, photoId }: Props) {
               fill
               unoptimized
               sizes="(min-width: 1024px) 320px, (min-width: 640px) 288px, 100vw"
-              className="object-cover"
+              className="object-cover "
             />
           ) : (
             <>
