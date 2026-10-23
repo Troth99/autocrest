@@ -1,0 +1,82 @@
+name: CI and Vercel deploy
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  checks:
+    name: Lint, types and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      NEXT_TELEMETRY_DISABLED: '1'
+      # Build-only placeholders: CI never needs live database credentials.
+      NEXT_PUBLIC_SUPABASE_URL: https://ci-placeholder.supabase.co
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ci-placeholder-key
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npx next typegen
+      - run: npx tsc --noEmit
+      - run: npm run build
+
+  deploy:
+    name: Deploy to Vercel
+    needs: checks
+    # PR code (including forks) never receives deployment credentials.
+    if: github.event_name != 'pull_request' && github.ref_type == 'branch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      NEXT_TELEMETRY_DISABLED: '1'
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - name: Check deployment configuration
+        shell: bash
+        run: |
+          for name in VERCEL_TOKEN VERCEL_ORG_ID VERCEL_PROJECT_ID; do
+            if [ -z "${!name}" ]; then
+              echo "::error::Missing GitHub Actions secret: $name. See docs/deployment.md."
+              exit 1
+            fi
+          done
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      - name: Pull settings, build and deploy
+        shell: bash
+        run: |
+          flags=()
+          target=preview
+          if [ "$GITHUB_REF" = 'refs/heads/main' ]; then
+            target=production
+            flags+=(--prod)
+          fi
+          vercel pull --yes --environment="$target" --git-branch="$GITHUB_REF_NAME" --token="$VERCEL_TOKEN"
+          vercel build "${flags[@]}" --token="$VERCEL_TOKEN"
+          deployment_url=$(vercel deploy --prebuilt "${flags[@]}" --token="$VERCEL_TOKEN")
+          printf '### Vercel deployment\n\n%s\n' "$deployment_url" >> "$GITHUB_STEP_SUMMARY"
