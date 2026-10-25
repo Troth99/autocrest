@@ -72,7 +72,7 @@
   }
 
   .header-nav-account {
-    @apply w-full flex-wrap lg:px-10;
+    @apply w-full flex-wrap;
   }
 
   .header-nav-link {

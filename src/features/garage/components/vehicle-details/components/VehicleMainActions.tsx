@@ -1,5 +1,7 @@
 import { FileCheck2, ReceiptText, Wrench } from "lucide-react";
 
+
+//To implement functionalities
 export default function VehicleMainActions() {
   return (
     <div role="group" aria-label="Add vehicle records" className="grid gap-3 sm:grid-cols-3">
