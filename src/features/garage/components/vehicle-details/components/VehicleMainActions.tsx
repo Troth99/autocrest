@@ -1,21 +1,15 @@
 "use client"
 
 import { FileCheck2, ReceiptText, Wrench } from "lucide-react";
-import { useState } from "react";
-import Modal from "@/shared/components/Modal/Modal";
-import AddService from "./vehicle-records/AddServices";
+import Link from "next/link";
 
 
-//To implement functionalities
-export default function VehicleMainActions() {
-  const [isOpen, setIsOpen] = useState(false);
+type Props = {
+  vehicleId: string;
+};
 
-  const modalOpenHandler = () => {
-    setIsOpen(true)
-  }
-  const modalCloseHandler = () => {
-    setIsOpen(false)
-  }
+export default function VehicleMainActions({ vehicleId  }: Props) {
+
   return (
     <div
       role="group"
@@ -23,18 +17,16 @@ export default function VehicleMainActions() {
       className="grid gap-3 sm:grid-cols-3"
 
     >
-      <button
-        type="button"
-        className="button-base button-primary justify-center gap-2 px-3 py-3.5 text-sm disabled:cursor-not-allowed cursor-pointer"
-        onClick={modalOpenHandler}
+
+      <Link
+        href={`/vehicles/${vehicleId}/services/new`}
+        className="button-base button-primary justify-center gap-2 px-3 py-3.5 text-sm"
       >
         <Wrench className="size-5 shrink-0" aria-hidden="true" />
         Add service
-      </button>
-      
-      <Modal title="Add service" isOpen={isOpen} onClose={modalCloseHandler}>
-        <AddService onClose={modalCloseHandler} />
-      </Modal>
+      </Link>
+
+
 
       <button
         type="button"

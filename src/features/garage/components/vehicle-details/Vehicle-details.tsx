@@ -34,7 +34,7 @@ export default function VehicleDetails({
           aria-labelledby="vehicle-history-heading"
           className="section-card min-w-0">
 
-          <VehicleMainActions />
+          <VehicleMainActions vehicleId={vehicle.id}/>
 
           <div className="mt-6 border-t border-line pt-6">
             <div
