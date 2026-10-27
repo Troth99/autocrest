@@ -2,7 +2,7 @@
 
 import { FileCheck2, ReceiptText, Wrench } from "lucide-react";
 import { useState } from "react";
-import Modal from "../../../../../shared/components/Modal/Modal";
+import Modal from "@/shared/components/Modal/Modal";
 import AddService from "./vehicle-records/AddServices";
 
 
@@ -32,7 +32,7 @@ export default function VehicleMainActions() {
         Add service
       </button>
       
-      <Modal isOpen={isOpen} onClose={modalCloseHandler}>
+      <Modal title="Add service" isOpen={isOpen} onClose={modalCloseHandler}>
         <AddService onClose={modalCloseHandler} />
       </Modal>
 

@@ -9,27 +9,7 @@ export default function AddService({ onClose }: Props) {
 
     return (
 
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" >
-            <section
-                role="dialog"
-                aria-modal="true"
-                aria-labelledby="add-service-title"
-                className="w-full max-w-lg rounded-2xl border border-white/10 bg-slate-900 p-6 text-white"
-            >
-                <header className="mb-6 flex items-center justify-between">
-                    <h2 id="add-service-title" className="text-xl font-semibold">
-                        Add service
-                    </h2>
-
-                    <button
-                        type="button"
-                        aria-label="Close modal"
-                        className="rounded-lg px-3 py-1 text-slate-400 hover:bg-white/5 cursor-pointer"
-                        onClick={onClose}
-                    >
-                        ✕
-                    </button>
-                </header>
+        <>
 
                 <div className="space-y-4">
                     <div className="space-y-2">
@@ -113,8 +93,7 @@ export default function AddService({ onClose }: Props) {
                         Save service
                     </button>
                 </footer>
-            </section>
-        </div>
+        </>
 
     )
 }
