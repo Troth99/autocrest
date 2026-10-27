@@ -20,7 +20,7 @@ export default function OdometerPhotoScan(
     const [error, setError] = useState<string | null>(null);
 
 
-    async function handleScan() {
+    async function scanHandler() {
         if (!photo || isScanning || disabled) return;
 
         setIsScanning(true);
@@ -76,7 +76,7 @@ export default function OdometerPhotoScan(
                     <button
                         type="button"
                         disabled={disabled || isScanning}
-                        onClick={handleScan}
+                        onClick={scanHandler}
                         className="button-base button-primary cursor-pointer px-4 py-3 text-sm disabled:cursor-not-allowed"
                     >
                         {isScanning ? "Scanning..." : "Read mileage"}

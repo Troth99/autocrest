@@ -128,7 +128,7 @@ export default function VehicleDocumentScan({ onExtracted }: {
                                         JPEG, PNG or WebP. Maximum 5 MB.
                                     </span>
                                 </span>
-                                <span className="shrink-0 rounded-lg bg-accent px-3 py-2 text-xs font-semibold text-ink">
+                                <span className="shrink-0 rounded-lg bg-accent px-3 py-2 text-xs font-semibold text-ink cursor-pin">
                                     {frontFile ? "Change photo" : "Choose photo"}
                                 </span>
                             </label>

@@ -30,7 +30,7 @@ export default function ThemeSelector() {
       ? theme
       : "system");
 
-  function handleThemeChange(nextTheme: ThemeOption) {
+  function themeChangeHandler(nextTheme: ThemeOption) {
     setPendingTheme(nextTheme);
     setTheme(nextTheme);
   }
@@ -57,7 +57,7 @@ export default function ThemeSelector() {
             <DropdownMenuItem
               className="cursor-pointer"
               disabled={!mounted}
-              onClick={() => handleThemeChange("system")}
+              onClick={() => themeChangeHandler("system")}
             >
               <Laptop />
               System
@@ -68,7 +68,7 @@ export default function ThemeSelector() {
             <DropdownMenuItem
               className="cursor-pointer"
               disabled={!mounted}
-              onClick={() => handleThemeChange("light")}
+              onClick={() => themeChangeHandler("light")}
             >
               <Sun />
               Light
@@ -79,7 +79,7 @@ export default function ThemeSelector() {
             <DropdownMenuItem
               className="cursor-pointer"
               disabled={!mounted}
-              onClick={() => handleThemeChange("dark")}
+              onClick={() => themeChangeHandler("dark")}
             >
               <Moon />
               Dark

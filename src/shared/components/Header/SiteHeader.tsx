@@ -13,7 +13,7 @@ export default function SiteHeader({ user }: { user: CurrentUser | null }) {
   return (
     <header className="sticky top-0 z-10 border-b border-line bg-dark-800">
       <nav
-        className={`header-nav ${isAccountPage ? "header-nav-account" : "max-w-6xl"}`}
+        className={`header-nav max-w-7xl ${isAccountPage ? "header-nav-account" : ""}`}
       >
         <Link href="/" className="flex shrink-0 items-center gap-2">
           <svg viewBox="0 0 36 32" className="h-8 w-9 shrink-0 text-accent-text" fill="currentColor" aria-hidden="true">
@@ -29,7 +29,7 @@ export default function SiteHeader({ user }: { user: CurrentUser | null }) {
           <div className="header-search">
             <GarageSearch />
           </div>
-          ) : (
+        ) : (
           <div className="hidden items-center gap-6 md:flex">
             <a href="#modules" className="header-nav-link">
               Modules
@@ -43,7 +43,7 @@ export default function SiteHeader({ user }: { user: CurrentUser | null }) {
           </div>
         )}
 
-        <div className="flex shrink-0 items-center gap-5 lg:mr-30">
+        <div className="flex shrink-0 items-center gap-5 lg:translate-x-3">
           {isAccountPage && <GarageHeaderTools />}
           {user ? (
             <UserMenu

@@ -18,72 +18,115 @@ export default function VehicleBasicFields(props: Props) {
         The essentials that identify your vehicle.
       </p>
       <div className="mt-4 grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-2">
-        {"makeModelFields" in props ? props.makeModelFields : <VehicleMakeModelFields {...props} />}
+        {"makeModelFields" in props ? props.makeModelFields : <VehicleMakeModelFields
+          {...props}
+        />}
         <label
           htmlFor="manufacture_year"
           className="grid gap-2 text-sm font-medium text-text-secondary"
         >
           <span>Manufacture year *</span>
-          <input data-slot="input" className="native-input"
+          <input
+            data-slot="input"
+            className="native-input"
             id="manufacture_year"
             {...register("manufacture_year")}
             type="number"
             aria-required="true"
             placeholder="e.g. 2020"
             min={0}
-            aria-invalid={Boolean(errors.manufacture_year)} aria-describedby={errors.manufacture_year ? "manufacture_year-error" : undefined} />
-          <VehicleFieldError field="manufacture_year" message={errors.manufacture_year} />
+            aria-invalid={Boolean(errors.manufacture_year)}
+            aria-describedby={errors.manufacture_year ? "manufacture_year-error" : undefined}
+          />
+          <VehicleFieldError
+            field="manufacture_year"
+            message={errors.manufacture_year}
+          />
         </label>
+
         <label
           htmlFor="trim"
           className="grid gap-2 text-sm font-medium text-text-secondary"
         >
           <span>Trim / variant</span>
-          <input data-slot="input" className="native-input"
+          <input
+            data-slot="input"
+            className="native-input"
             id="trim"
             {...register("trim")}
             type="text"
             placeholder="e.g. 1.8 Hybrid Design"
-            aria-invalid={Boolean(errors.trim)} aria-describedby={errors.trim ? "trim-error" : undefined} />
-          <VehicleFieldError field="trim" message={errors.trim} />
+            aria-invalid={Boolean(errors.trim)}
+            aria-describedby={errors.trim ? "trim-error" : undefined}
+          />
+          <VehicleFieldError
+            field="trim"
+            message={errors.trim}
+          />
         </label>
+
         <label
           htmlFor="nickname"
           className="grid gap-2 text-sm font-medium text-text-secondary"
         >
           <span>Nickname</span>
-          <input data-slot="input" className="native-input"
+          <input
+            data-slot="input"
+            className="native-input"
             id="nickname"
             {...register("nickname")}
             type="text"
             placeholder="A name for your vehicle"
-            aria-invalid={Boolean(errors.nickname)} aria-describedby={errors.nickname ? "nickname-error" : undefined} />
-          <VehicleFieldError field="nickname" message={errors.nickname} />
+            aria-invalid={Boolean(errors.nickname)}
+            aria-describedby={errors.nickname ? "nickname-error" : undefined}
+          />
+          <VehicleFieldError
+            field="nickname"
+            message={errors.nickname}
+          />
         </label>
+
         <label
           htmlFor="vehicle_use"
           className="grid gap-2 text-sm font-medium text-text-secondary"
         >
           <span>Vehicle use</span>
-          <select aria-invalid={Boolean(errors.vehicle_use)} aria-describedby={errors.vehicle_use ? "vehicle_use-error" : undefined}
+          <select
+            aria-invalid={Boolean(errors.vehicle_use)}
+            aria-describedby={errors.vehicle_use ? "vehicle_use-error" : undefined}
             id="vehicle_use"
             {...register("vehicle_use")}
             className="form-select"
           >
-            <option value="" className="bg-panel text-text-primary">
+            <option
+              value=""
+              className="bg-panel text-text-primary"
+            >
               Not specified
             </option>
-            <option value="personal" className="bg-panel text-text-primary">
+            <option
+              value="personal"
+              className="bg-panel text-text-primary"
+            >
               Personal
             </option>
-            <option value="business" className="bg-panel text-text-primary">
+            <option
+              value="business"
+              className="bg-panel text-text-primary"
+            >
               Business
             </option>
-            <option value="mixed" className="bg-panel text-text-primary">
+            <option
+              value="mixed"
+              className="bg-panel text-text-primary"
+            >
               Mixed
             </option>
           </select>
-          <VehicleFieldError field="vehicle_use" message={errors.vehicle_use} />
+          <VehicleFieldError
+            field="vehicle_use"
+            message={errors.vehicle_use}
+          />
         </label>
       </div>
     </fieldset>

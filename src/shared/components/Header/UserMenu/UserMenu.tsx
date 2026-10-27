@@ -39,7 +39,7 @@ export default function UserMenu({
   const router = useRouter();
 
 
-  async function handleLogout() {
+  async function logOutHandler() {
     setIsLoggingOut(true);
 
     try {
@@ -95,7 +95,7 @@ export default function UserMenu({
           variant="destructive"
           className="cursor-pointer transition-[background-color,color,transform] duration-200 hover:translate-x-0.5 hover:bg-destructive/10 motion-reduce:transition-none motion-reduce:hover:translate-x-0"
           disabled={isLoggingOut}
-          onClick={handleLogout}
+          onClick={logOutHandler}
         >
           <LogOut />
           {isLoggingOut ? "Logging out..." : "Log out"}

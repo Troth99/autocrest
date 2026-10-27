@@ -13,7 +13,7 @@ import { getVehicleById, setPrimaryVehicle } from "@/features/garage/services/ve
 import { downloadVehicleReport } from "@/features/garage/components/vehicle-report/download-vehicle-report";
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import DeleteVehicleDialog from "@/features/garage/components/vehicle-details/components/DeleteVehicleDialog";
+import DeleteVehicleDialog from "@/features/garage/components/vehicle-details/components/actions/DeleteVehicleDialog";
 
 export default function VehicleActionsMenu({
   vehicleId,
@@ -30,7 +30,7 @@ export default function VehicleActionsMenu({
   const [exportError, setExportError] = useState<string | null>(null);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
-  const handleSetPrimary = async () => {
+  async function setPrimaryHandler() {
     if (isPrimary || isSaving) return;
 
     setIsSaving(true);
@@ -82,7 +82,7 @@ export default function VehicleActionsMenu({
 
           <DropdownMenuItem
             disabled={isPrimary || isSaving}
-            onClick={handleSetPrimary}
+            onClick={setPrimaryHandler}
             className=" cursor-pointer gap-2 px-3 py-2.5">
             <Star className="size-4" aria-hidden="true" />
             {isSaving ? "Saving..." : "Set as primary"}
@@ -109,7 +109,7 @@ export default function VehicleActionsMenu({
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      
+
       {isExporting && <p role="status" className="sr-only">Generating PDF...</p>}
 
       {exportError && <p role="alert" className="text-sm text-destructive">{exportError}</p>}

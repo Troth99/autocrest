@@ -3,9 +3,9 @@ import Link from "next/link";
 import { ArrowLeft, CarFront, Pencil, Star } from "lucide-react";
 import type { Vehicle } from "@/features/garage/types/vehicle";
 import VehiclePlate from "./VehiclePlate";
-import VehicleActionsMenu from "./VehicleActionsMenu";
+import VehicleActionsMenu from "../actions/VehicleActionsMenu";
 import VehiclePhotoUpload from "./VehiclePhotoUpload";
-import UpdateMileage from "./mileage/UpdateMileage";
+import UpdateMileage from "../mileage/UpdateMileage";
 
 type Props = {
   vehicle: Vehicle;
@@ -13,7 +13,11 @@ type Props = {
   photoId?: string | null;
 };
 
-export default function VehicleHeading({ vehicle, photoUrl, photoId }: Props) {
+export default function VehicleHeading({ 
+  vehicle, 
+  photoUrl, 
+  photoId 
+}: Props) {
   const name = `${vehicle.make} ${vehicle.model}`;
 
   const subtitle = [

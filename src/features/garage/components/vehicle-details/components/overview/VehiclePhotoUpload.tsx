@@ -82,7 +82,7 @@ export default function VehiclePhotoUpload({ vehicleId, hasPhoto, photoId }: Pro
         <button
           type="button"
           disabled={isUploading || isRemoving}
-          className="vehicle-detail-action bg-panel"
+          className="vehicle-detail-action bg-panel cursor-pointer"
           onClick={() => inputRef.current?.click()}
           title="JPG, PNG or WebP, maximum 2 MB"
         >

@@ -4,7 +4,11 @@ import type { VehicleFormRegister, VehicleFormRegisterCheckbox } from "@/feature
 
 type Props = { errors: VehicleFormErrors; register: VehicleFormRegister; registerCheckbox: VehicleFormRegisterCheckbox };
 
-export default function VehiclAdditionalDetails({ errors, register, registerCheckbox }: Props) {
+export default function VehiclAdditionalDetails({
+  errors,
+  register,
+  registerCheckbox,
+}: Props) {
   return (
     <fieldset className="content-card min-w-0 rounded-2xl p-4 sm:p-5">
       <legend className="sr-only">Additional details</legend>
@@ -17,13 +21,18 @@ export default function VehiclAdditionalDetails({ errors, register, registerChec
         <textarea
           id="description"
           {...register("description")}
-          aria-invalid={Boolean(errors.description)} aria-describedby={errors.description ? "description-error" : undefined}
+          aria-invalid={Boolean(errors.description)}
+          aria-describedby={errors.description ? "description-error" : undefined}
           rows={4}
           placeholder="Notes about your vehicle, modifications, or anything else you want to remember."
           className="form-textarea"
         />
-        <VehicleFieldError field="description" message={errors.description} />
+        <VehicleFieldError
+          field="description"
+          message={errors.description}
+        />
       </label>
+
       <label
         htmlFor="is_primary"
         className="mt-5 flex items-start gap-3 text-sm text-text-secondary"
@@ -40,7 +49,10 @@ export default function VehiclAdditionalDetails({ errors, register, registerChec
             The vehicle you use most often.
           </span>
         </span>
-        <VehicleFieldError field="is_primary" message={errors.is_primary} />
+        <VehicleFieldError
+          field="is_primary"
+          message={errors.is_primary}
+        />
       </label>
     </fieldset>
   );

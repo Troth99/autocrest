@@ -1,11 +1,11 @@
-import VehicleHeading from "./components/VehicleHeading";
-import VehicleOverview from "./components/VehicleOverview";
-import VehicleMainActions from "./components/VehicleMainActions";
-import VehicleSpecifications from "./components/VehicleSpecifications";
-import VehicleRegistration from "./components/VehicleRegistration";
-import VehicleActivity from "./components/VehicleActivity";
-import VehicleReminders from "./components/VehicleReminders";
-import VehicleNotes from "./components/VehicleNotes";
+import VehicleHeading from "./components/overview/VehicleHeading";
+import VehicleOverview from "./components/overview/VehicleOverview";
+import VehicleMainActions from "./components/actions/VehicleMainActions";
+import VehicleSpecifications from "./components/information/VehicleSpecifications";
+import VehicleRegistration from "./components/information/VehicleRegistration";
+import VehicleActivity from "./components/history/VehicleActivity";
+import VehicleReminders from "./components/history/VehicleReminders";
+import VehicleNotes from "./components/information/VehicleNotes";
 import type { Vehicle } from "@/features/garage/types/vehicle";
 
 export default function VehicleDetails({
@@ -34,7 +34,7 @@ export default function VehicleDetails({
           aria-labelledby="vehicle-history-heading"
           className="section-card min-w-0">
 
-          <VehicleMainActions />
+          <VehicleMainActions vehicleId={vehicle.id}/>
 
           <div className="mt-6 border-t border-line pt-6">
             <div
