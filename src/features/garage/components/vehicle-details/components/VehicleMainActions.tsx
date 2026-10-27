@@ -2,7 +2,8 @@
 
 import { FileCheck2, ReceiptText, Wrench } from "lucide-react";
 import { useState } from "react";
-import Modal from "./vehicle-records/Modal";
+import Modal from "../../../../../shared/components/Modal/Modal";
+import AddService from "./vehicle-records/AddServices";
 
 
 //To implement functionalities
@@ -30,7 +31,10 @@ export default function VehicleMainActions() {
         <Wrench className="size-5 shrink-0" aria-hidden="true" />
         Add service
       </button>
-      <Modal isOpen={isOpen} onClose={modalCloseHandler} />
+      
+      <Modal isOpen={isOpen} onClose={modalCloseHandler}>
+        <AddService onClose={modalCloseHandler} />
+      </Modal>
 
       <button
         type="button"
