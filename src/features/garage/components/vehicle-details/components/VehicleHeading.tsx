@@ -13,7 +13,11 @@ type Props = {
   photoId?: string | null;
 };
 
-export default function VehicleHeading({ vehicle, photoUrl, photoId }: Props) {
+export default function VehicleHeading({ 
+  vehicle, 
+  photoUrl, 
+  photoId 
+}: Props) {
   const name = `${vehicle.make} ${vehicle.model}`;
 
   const subtitle = [

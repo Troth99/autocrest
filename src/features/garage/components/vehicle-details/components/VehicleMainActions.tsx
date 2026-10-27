@@ -1,20 +1,56 @@
+"use client"
+
 import { FileCheck2, ReceiptText, Wrench } from "lucide-react";
+import { useState } from "react";
+import Modal from "./vehicle-records/Modal";
 
 
 //To implement functionalities
 export default function VehicleMainActions() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const modalOpenHandler = () => {
+    setIsOpen(true)
+  }
+  const modalCloseHandler = () => {
+    setIsOpen(false)
+  }
   return (
-    <div role="group" aria-label="Add vehicle records" className="grid gap-3 sm:grid-cols-3">
-      {[
-        { label: "Add service", icon: Wrench },
-        { label: "Add expense", icon: ReceiptText },
-        { label: "Add document", icon: FileCheck2 },
-      ].map(({ label, icon: Icon }, index) => (
-        <button key={label} type="button" disabled title={label + " is not connected yet"}
-          className={`button-base justify-center gap-2 px-3 py-3.5 text-sm disabled:cursor-not-allowed ${index === 0 ? "button-primary" : "button-secondary border"}`}>
-          <Icon className="size-5 shrink-0" aria-hidden="true" /> {label}
-        </button>
-      ))}
+    <div
+      role="group"
+      aria-label="Add vehicle records"
+      className="grid gap-3 sm:grid-cols-3"
+
+    >
+      <button
+        type="button"
+        className="button-base button-primary justify-center gap-2 px-3 py-3.5 text-sm disabled:cursor-not-allowed cursor-pointer"
+        onClick={modalOpenHandler}
+      >
+        <Wrench className="size-5 shrink-0" aria-hidden="true" />
+        Add service
+      </button>
+      <Modal isOpen={isOpen} onClose={modalCloseHandler} />
+
+      <button
+        type="button"
+        disabled
+        title="Add expense is not connected yet"
+        className="button-base button-secondary justify-center gap-2 border px-3 py-3.5 text-sm disabled:cursor-not-allowed"
+      >
+        <ReceiptText className="size-5 shrink-0" aria-hidden="true" />
+        Add expense
+      </button>
+
+      <button
+        type="button"
+        disabled
+        title="Add document is not connected yet"
+        className="button-base button-secondary justify-center gap-2 border px-3 py-3.5 text-sm disabled:cursor-not-allowed"
+      >
+        <FileCheck2 className="size-5 shrink-0" aria-hidden="true" />
+        Add document
+      </button>
     </div>
   );
 }
