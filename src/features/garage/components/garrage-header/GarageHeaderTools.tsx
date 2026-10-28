@@ -60,7 +60,7 @@ export default function GarageHeaderTools() {
   const router = useRouter();
   return (
     <>
-      <DropdownMenu>
+      <DropdownMenu modal={false}>
         <DropdownMenuTrigger className="action-button cursor-pointer gap-2 px-3 py-2.5 transition-colors hover:bg-accent-strong focus-visible:outline-2 focus-visible:outline-focus sm:px-4">
           <Plus className="size-4" aria-hidden="true" />
           Add
@@ -78,6 +78,7 @@ export default function GarageHeaderTools() {
             <CarFront className="size-5" /> Add vehicle
           </DropdownMenuItem>
           <DropdownMenuSeparator />
+          
           {[
             { label: "Fuel entry", icon: Fuel },
             { label: "Expense", icon: ReceiptText },
