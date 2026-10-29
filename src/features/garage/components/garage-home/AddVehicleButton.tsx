@@ -1,6 +1,7 @@
 "use client";
 
 import { ChevronDown, Plus } from "lucide-react";
+import Link from "next/link";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,7 +16,11 @@ export default function AddVehicleButton() {
 
   return (
     <DropdownMenu modal={false}>
-      <DropdownMenuTrigger className="action-button cursor-pointer">
+      <DropdownMenuTrigger
+        // Prepare the selected vehicle type before navigation.
+        onPointerEnter={() => router.prefetch("/vehicles/add?type=car")}
+        onFocus={() => router.prefetch("/vehicles/add?type=car")}
+        className="action-button cursor-pointer">
         <Plus className="size-4" aria-hidden="true" />
         Add vehicle
         <ChevronDown className="size-4" aria-hidden="true" />
@@ -23,7 +28,7 @@ export default function AddVehicleButton() {
 
       <DropdownMenuContent align="start" sideOffset={8} className="w-64">
         <DropdownMenuItem
-          onClick={() => router.push("/vehicles/add?type=car")}
+          render={<Link href="/vehicles/add?type=car" prefetch />}
           className="cursor-pointer px-4 py-2.5"
         >
           Car
