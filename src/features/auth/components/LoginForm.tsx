@@ -85,7 +85,7 @@ export default function LoginForm() {
         </p>
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-2">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,13rem),1fr))] gap-3">
         <Button
           className="oauth-button oauth-button-google h-11 cursor-pointer"
           type="button"

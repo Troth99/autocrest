@@ -5,7 +5,7 @@ const REMEMBER_ME_COOKIE = "autocrest-remember-me";
 const REMEMBER_ME_MAX_AGE = 60 * 60 * 24 * 10; //10 days
 
 export async function updateSession(request: NextRequest) {
-  const supabaseResponse = NextResponse.next({ request });
+  let supabaseResponse = NextResponse.next({ request });
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -16,6 +16,13 @@ export async function updateSession(request: NextRequest) {
           return request.cookies.getAll();
         },
         setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value }) => {
+            
+            request.cookies.set(name, value);
+          });
+          
+          supabaseResponse = NextResponse.next({ request });
+
           const rememberMe =
             request.cookies.get(REMEMBER_ME_COOKIE)?.value === "true";
 
@@ -24,12 +31,12 @@ export async function updateSession(request: NextRequest) {
               supabaseResponse.cookies.set(name, value, options);
               return;
             }
-
             if (rememberMe) {
               supabaseResponse.cookies.set(name, value, {
                 ...options,
                 maxAge: REMEMBER_ME_MAX_AGE,
               });
+
               return;
             }
 
