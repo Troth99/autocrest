@@ -2,14 +2,19 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import MfaLoginForm from "@/features/auth/components/MfaLoginForm";
 
-export default async function VerifyTwoFactorPage() {
+export default async function VerifyTwoFactorPage({ searchParams }: {
+  searchParams: Promise<{ next?: string }>;
+}) {
+  const { next } = await searchParams;
+  // Only the recovery destination is accepted; arbitrary redirect URLs are ignored.
+  const nextPath = next === "/reset-password" ? "/reset-password" : "/";
   const supabase = await createClient();
   const { data: { user }, error: userError } = await supabase.auth.getUser();
   if (userError || !user) redirect("/login");
 
   const { data: assurance, error } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
   if (error) throw error;
-  if (assurance.currentLevel === "aal2" || assurance.nextLevel !== "aal2") redirect("/");
+  if (assurance.currentLevel === "aal2" || assurance.nextLevel !== "aal2") redirect(nextPath);
 
   const { data: factors, error: factorsError } = await supabase.auth.mfa.listFactors();
   if (factorsError) throw factorsError;
@@ -19,7 +24,7 @@ export default async function VerifyTwoFactorPage() {
 
   return (
     <main className="mx-auto flex min-h-screen max-w-md items-center px-6 py-16">
-      <MfaLoginForm factors={totpFactors} />
+      <MfaLoginForm factors={totpFactors} nextPath={nextPath} />
     </main>
   );
 }

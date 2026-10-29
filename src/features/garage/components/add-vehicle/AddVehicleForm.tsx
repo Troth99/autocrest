@@ -2,10 +2,9 @@
 import Link from "next/link";
 import { Check, X } from "lucide-react";
 import { Button, buttonVariants } from "@/shared/components/ui/button";
-import useAddVehicleForm from "@/features/garage/hooks/useAddVehicleForm";
+import useAddVehicleController from "@/features/garage/hooks/useAddVehicleController";
 import useForm from "@/shared/hooks/useForm";
 import { initialValues } from "@/features/garage/constants/add-vehicle-form";
-import useVehicleDocumentAutofill from "../../hooks/useVehicleDocumentAutofill";
 import VehicleFormHeader from "./components/VehicleFormHeader";
 import VehicleDocumentScan from "./components/VehicleDocumentScan";
 import VehiclePhotoFields from "../vehicle-fields/VehiclePhotoFields";
@@ -18,26 +17,21 @@ import VehicleAdditionalDetails from "../vehicle-fields/VehicleAdditionalDetails
 
 
 export default function AddVehicleForm() {
-
-
   const {
     makes, isLoadingMakes, makesError, selectedMake,
     models, selectedModel, isLoadingModels, modelsError,
     documentValues, handleFieldChange, handleDocumentExtracted,
-    handleMakeChange, handleModelChange,
-  } = useVehicleDocumentAutofill();
-
-  const {
+    handleMakeChange, handleModelChange, handleFormChange,
     photoFile, setPhotoFile, photoError, setPhotoError,
-    isSubmitting, submitError, setSubmitError,
-    fieldErrors, setFieldErrors, savedVehicleId, handleAddCar,
-  } = useAddVehicleForm({ documentValues, selectedMake, selectedModel, makes, models });
+    isSubmitting, submitError, fieldErrors, savedVehicleId,
+    handleAddCar,
+  } = useAddVehicleController();
 
-  const {
-    register,
-    registerCheckbox,
-    formHandler,
-  } = useForm(handleAddCar, initialValues);
+  // Keep input registration and submission wiring in the form component.
+  const { register, registerCheckbox, formHandler } = useForm(
+    handleAddCar,
+    initialValues,
+  );
 
   return (
     <main className="page-shell">
@@ -52,23 +46,13 @@ export default function AddVehicleForm() {
         noValidate
         className="vehicle-form grid gap-4"
         onSubmit={formHandler}
-        onChange={(event) => {
-          const target = event.target;
-          if (!(target instanceof HTMLInputElement || target instanceof HTMLSelectElement || target instanceof HTMLTextAreaElement)) return;
-          const field = target.name === "custom_make" ? "make" : target.name === "custom_model" ? "model" : target.name;
-          setFieldErrors((current) => ({ ...current, [field]: undefined }));
-          setSubmitError(null);
-        }}
+        onChange={handleFormChange}
       >
 
         <input type="hidden" name="vehicle_type" value="car" />
 
         <fieldset disabled={isSubmitting || Boolean(savedVehicleId)} className="contents">
-          <VehicleDocumentScan onExtracted={(details) => {
-            handleDocumentExtracted(details);
-            setFieldErrors({});
-            setSubmitError(null);
-          }} />
+          <VehicleDocumentScan onExtracted={handleDocumentExtracted} />
         </fieldset>
 
         <VehiclePhotoFields
@@ -85,19 +69,11 @@ export default function AddVehicleForm() {
             onFieldChange={handleFieldChange}
             makes={makes}
             selectedMake={selectedMake}
-            onMakeChange={(makeId) => {
-              handleMakeChange(makeId);
-              setFieldErrors((current) => ({ ...current, make: undefined, model: undefined }));
-              setSubmitError(null);
-            }}
+            onMakeChange={handleMakeChange}
             isLoadingMakes={isLoadingMakes}
             models={models}
             selectedModel={selectedModel}
-            onModelChange={(modelId) => {
-              handleModelChange(modelId);
-              setFieldErrors((current) => ({ ...current, model: undefined }));
-              setSubmitError(null);
-            }}
+            onModelChange={handleModelChange}
             isLoadingModels={isLoadingModels}
             modelsError={modelsError}
           />

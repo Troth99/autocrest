@@ -112,7 +112,8 @@ export default function DisableTwoFactor({
           ref={triggerRef}
           type="button"
           variant="outline"
-          className="mt-4 cursor-pointer "
+          className="two-factor-disable-button"
+          disabled={busy}
           onClick={async () => {
             setResult(null);
             setFactors([]);
@@ -122,6 +123,7 @@ export default function DisableTwoFactor({
             await loadFactors();
           }}
         >
+          <ShieldAlert className="size-4" aria-hidden="true" />
           Disable 2FA
         </Button>
         }

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import GarageHeaderTools, {
   GarageSearch,
 } from "@/features/garage/components/garrage-header/GarageHeaderTools";
@@ -8,7 +9,10 @@ import type { CurrentUser } from "@/shared/types/currentUser";
 import UserMenu from "@/shared/components/Header/UserMenu/UserMenu";
 
 export default function SiteHeader({ user }: { user: CurrentUser | null }) {
-  const isAccountPage = Boolean(user);
+  const pathname = usePathname();
+  // Recovery sessions should not look like a normal signed-in dashboard.
+  const isRecoveryPage = pathname === "/forgot-password" || pathname === "/reset-password" || pathname === "/verify-2fa";
+  const isAccountPage = Boolean(user) && !isRecoveryPage;
 
   return (
     <header className="sticky top-0 z-10 border-b border-line bg-dark-800">
@@ -25,7 +29,7 @@ export default function SiteHeader({ user }: { user: CurrentUser | null }) {
           <span className="text-xl font-semibold tracking-tight text-text-primary">AutoCrest</span>
         </Link>
 
-        {isAccountPage ? (
+        {!isRecoveryPage && (isAccountPage ? (
           <div className="header-search">
             <GarageSearch />
           </div>
@@ -41,9 +45,9 @@ export default function SiteHeader({ user }: { user: CurrentUser | null }) {
               Timeline
             </a>
           </div>
-        )}
+        ))}
 
-        <div className="flex max-w-full shrink-0 flex-wrap items-center gap-2 sm:gap-5 lg:translate-x-3">
+        {!isRecoveryPage && <div className="flex max-w-full shrink-0 flex-wrap items-center gap-2 sm:gap-5 lg:translate-x-3">
           {isAccountPage && <GarageHeaderTools />}
           {user ? (
             <UserMenu
@@ -64,7 +68,7 @@ export default function SiteHeader({ user }: { user: CurrentUser | null }) {
               </Link>
             </>
           )}
-        </div>
+        </div>}
       </nav>
     </header>
   );

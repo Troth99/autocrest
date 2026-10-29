@@ -1,63 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Button } from "@/shared/components/ui/button";
-import { loginUser, registerUser } from "@/features/auth/services/auth.service";
-import useForm from "@/shared/hooks/useForm";
 import { PasswordField } from "./PasswordField";
 import { FieldError } from "@/shared/components/FieldError/FieldError";
-import {
-  validateRegisterForm,
-  type RegisterFormValues,
-} from "@/features/auth/validators/register.validator";
-
-const initialValues: RegisterFormValues = {
-  username: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
-};
+import useRegisterForm from "@/features/auth/hooks/useRegisterForm";
 
 export default function RegisterForm() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const router = useRouter();
-
-  const { register, formHandler, errors, setErrors } = useForm(
-    registerHandler,
-    initialValues,
-    validateRegisterForm,
-  );
-
-  async function registerHandler(values: RegisterFormValues) {
-    setIsSubmitting(true);
-
-    try {
-      await registerUser({
-        username: values.username.trim(),
-        email: values.email.trim(),
-        password: values.password,
-      });
-
-      await loginUser({
-        email: values.email.trim(),
-        password: values.password,
-      });
-     
-      router.push('/')
-      router.refresh()
-
-    } catch (error) {
-      setErrors({
-        email:
-          error instanceof Error ? error.message : "Something went wrong.",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  }
+  const { register, formHandler, errors, isSubmitting } = useRegisterForm();
 
   return (
     <section className="auth-form-card" aria-labelledby="register-title">

@@ -1,77 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Button } from "@/shared/components/ui/button";
 import { PasswordField } from "./PasswordField";
 import { FieldError } from "@/shared/components/FieldError/FieldError";
-import useForm from "@/shared/hooks/useForm";
-import {
-  loginUser,
-  logInWithFacebook,
-  logInWithGoogle,
-} from "@/features/auth/services/auth.service";
-import {
-  validateLoginForm,
-  type LoginFormValues,
-} from "@/features/auth/validators/login.validator";
+import useLoginForm from "@/features/auth/hooks/useLoginForm";
 import { FacebookIcon, GoogleIcon } from "./icons/AuthProviderIcons";
 
-const initialValues: LoginFormValues = {
-  email: "",
-  password: "",
-  rememberMe: false,
-};
-export default function LoginForm() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const router = useRouter();
-
-  const { register, registerCheckbox, formHandler, errors, setErrors } =
-    useForm(loginHandler, initialValues, validateLoginForm);
-
-  async function loginHandler(values: LoginFormValues) {
-    setIsSubmitting(true);
-
-    try {
-      await loginUser(values);
-      router.replace("/verify-2fa");
-      router.refresh();
-    } catch (error) {
-      console.error(error);
-      setErrors({
-        email: "Invalid email or password.",
-        password: "Invalid email or password.",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  }
-
-  async function googleLoginHandler() {
-    setIsSubmitting(true);
-
-    try {
-      await logInWithGoogle();
-    } catch (error) {
-      console.error(error);
-      setIsSubmitting(false);
-    }
-  }
-
-  async function facebookLoginHandler() {
-    setIsSubmitting(true);
-
-    try {
-      await logInWithFacebook();
-    } catch (error) {
-      console.error(error);
-      setIsSubmitting(false);
-    }
-  }
+export default function LoginForm({ passwordReset = false }: { passwordReset?: boolean }) {
+  const { register, registerCheckbox, formHandler, errors, isSubmitting, googleLoginHandler, facebookLoginHandler } = useLoginForm();
 
   return (
     <section className="auth-form-card" aria-labelledby="login-title">
+      {passwordReset && (
+        <p role="status" className="mb-6 rounded-xl border border-accent/25 bg-accent/5 p-4 text-sm text-accent-text">
+          Your password has been reset. Sign in with your new password.
+        </p>
+      )}
       <div className="mb-7">
         <span className="text-xs font-semibold uppercase tracking-[0.15em] text-info">AUTOCREST ACCOUNT</span>
         <h1
