@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   Bell,
   CarFront,
@@ -9,6 +10,7 @@ import {
   ReceiptText,
   Search,
   Wrench,
+  Warehouse,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import {
@@ -60,6 +62,13 @@ export default function GarageHeaderTools() {
   const router = useRouter();
   return (
     <>
+      <Link
+        href="/garrage"
+        className="button-base button-secondary gap-2 border px-3 py-2.5 text-sm"
+      >
+        <Warehouse className="size-4" aria-hidden="true" />
+        My Garage
+      </Link>
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger className="action-button cursor-pointer gap-2 px-3 py-2.5 transition-colors hover:bg-accent-strong focus-visible:outline-2 focus-visible:outline-focus sm:px-4">
           <Plus className="size-4" aria-hidden="true" />
