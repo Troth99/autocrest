@@ -11,7 +11,7 @@ export default function HowItWorksSection() {
     <section id="how-it-works" className="mx-auto max-w-6xl px-6 py-16 sm:py-24">
       <div className="mx-auto max-w-2xl text-center">
         <span className="eyebrow">SIMPLE BY DESIGN</span>
-        <h2 className="mt-4 text-3xl font-semibold tracking-[-0.045em] text-text-primary sm:text-4xl">One clear place for your vehicle&apos;s life</h2>
+        <h2 className="page-title mt-4">One clear place for your vehicle&apos;s life</h2>
         <p className="mt-4 text-sm leading-6 text-muted sm:text-base">No automotive expertise needed. Just capture what happens and let AutoCrest keep it organised.</p>
       </div>
       <div className="mt-10 grid gap-4 md:grid-cols-3">

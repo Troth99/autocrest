@@ -1,5 +1,62 @@
 /* Profile component styles. Keep layout-specific utilities in JSX. */
 @layer components {
+  .profile-detail-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-block: 1rem;
+  }
+
+  .profile-detail-icon { color: var(--text-subtle); }
+  .profile-detail-icon > svg,
+  .profile-status-icon > svg { width: 1rem; height: 1rem; }
+
+  .profile-detail-label {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .profile-detail-value {
+    max-width: 58%;
+    margin-left: auto;
+    overflow: hidden;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .profile-status-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-2xl);
+    background-color: color-mix(in oklab, var(--surface-input) 45%, transparent);
+    padding: 1rem;
+  }
+
+  .profile-status-icon {
+    display: flex;
+    width: 2.25rem;
+    height: 2.25rem;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-xl);
+    background-color: var(--info-soft);
+    color: var(--info);
+  }
+
+  .profile-status-icon[data-tone="good"] {
+    background-color: color-mix(in oklab, var(--accent) 10%, transparent);
+    color: var(--accent-text);
+  }
+
   .profile-danger-icon {
     @apply flex size-10 shrink-0 items-center justify-center rounded-2xl bg-destructive/10;
     @apply text-destructive [&>svg]:size-5;

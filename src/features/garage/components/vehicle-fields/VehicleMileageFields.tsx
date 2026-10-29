@@ -12,16 +12,16 @@ export default function VehicleMileageFields({
   register,
 }: Props) {
   return (
-    <fieldset className="content-card min-w-0 rounded-2xl p-4 sm:p-5">
+    <fieldset className="content-card vehicle-form-section">
       <legend className="sr-only">Mileage</legend>
       <h2 className="section-title">Mileage</h2>
       <p className="mt-1 text-sm text-muted">
         Your current odometer reading, in kilometres.
       </p>
-      <div className="mt-4 grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-2">
+      <div className="vehicle-fields-grid">
         <label
           htmlFor="mileage_km"
-          className="grid gap-2 text-sm font-medium text-text-secondary"
+          className="form-field"
         >
           <span>Current mileage (km) *</span>
           <input
@@ -43,7 +43,7 @@ export default function VehicleMileageFields({
 
         <label
           htmlFor="mileage_recorded_at"
-          className="grid gap-2 text-sm font-medium text-text-secondary"
+          className="form-field"
         >
           <span>Mileage recorded on</span>
           <input

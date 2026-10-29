@@ -58,7 +58,7 @@ export default function VehiclePhotoFields({
   }
 
   return (
-    <fieldset className="content-card min-w-0 rounded-2xl p-4 sm:p-5">
+    <fieldset className="content-card vehicle-form-section">
       <legend className="sr-only">Vehicle photo</legend>
       <h2 className="section-title">Vehicle photo</h2>
       <p

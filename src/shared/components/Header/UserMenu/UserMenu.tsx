@@ -52,8 +52,8 @@ export default function UserMenu({
   }
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger className="cursor-pointer rounded-full outline-none transition-[transform,box-shadow] duration-200 hover:scale-105 hover:shadow-[0_0_18px_rgb(56_189_248/28%)] focus-visible:ring-2 focus-visible:ring-ring/50 motion-reduce:transition-none motion-reduce:hover:scale-100">
+    <DropdownMenu modal={false}>
+      <DropdownMenuTrigger className="cursor-pointer  rounded-full outline-none transition-[transform,box-shadow] duration-200 hover:scale-105 hover:shadow-[0_0_18px_rgb(56_189_248/28%)] focus-visible:ring-2 focus-visible:ring-ring/50 motion-reduce:transition-none motion-reduce:hover:scale-100">
         <Avatar>
           {avatarUrl && <AvatarImage src={avatarUrl} alt={username} />}
           <AvatarFallback className="bg-info-soft text-info">
@@ -61,7 +61,7 @@ export default function UserMenu({
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56">
+      <DropdownMenuContent align="end" className="w-56 mt-4">
         <DropdownMenuGroup>
           <DropdownMenuLabel>
             <div className="flex flex-col">

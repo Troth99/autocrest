@@ -5,7 +5,7 @@ type Props = Pick<ProfileDetailsFieldsProps, "register" | "errors" | "isSaving">
 export default function ProfileNameFields({ register, errors, isSaving }: Props) {
   return (<>
             <label
-              className="grid gap-2 text-sm font-medium text-text-secondary"
+              className="form-field"
               htmlFor="first-name"
             >
               First name
@@ -31,7 +31,7 @@ export default function ProfileNameFields({ register, errors, isSaving }: Props)
               )}
             </label>
             <label
-              className="grid gap-2 text-sm font-medium text-text-secondary"
+              className="form-field"
               htmlFor="last-name"
             >
               Last name

@@ -21,7 +21,7 @@ export default function Loading() {
         <main
             role="status"
             aria-busy="true"
-            className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-10"
+            className="page-shell"
         >
             <span className="sr-only">Loading vehicle details...</span>
 

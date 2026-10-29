@@ -1,6 +1,6 @@
 export default function ServiceReminder() {
     return (
-        <details className="content-card min-w-0 rounded-2xl p-4 sm:p-5">
+        <details className="content-card vehicle-form-section">
             <summary className="cursor-pointer text-sm font-semibold">
                 Next service reminder
             </summary>

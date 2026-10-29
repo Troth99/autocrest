@@ -11,7 +11,7 @@ export default function VehicleOverview({ vehicle }: { vehicle: Vehicle }) {
 
         <div className="min-w-0">
           <dt className="text-xs text-muted">Mileage</dt>
-          <dd className="mt-1.5 wrap-break-word text-base font-semibold text-text-primary">
+          <dd className="vehicle-summary-value">
             {vehicle.mileage_km.toLocaleString("en-GB")} km
           </dd>
 
@@ -34,7 +34,7 @@ export default function VehicleOverview({ vehicle }: { vehicle: Vehicle }) {
 
         <div className="min-w-0">
           <dt className="text-xs text-muted">Fuel</dt>
-          <dd className="mt-1.5 wrap-break-word text-base font-semibold text-text-primary">
+          <dd className="vehicle-summary-value">
             {formatVehicleValue(vehicle.fuel_type?.replaceAll("_", " "))}
           </dd>
         </div>
@@ -46,7 +46,7 @@ export default function VehicleOverview({ vehicle }: { vehicle: Vehicle }) {
 
         <div className="min-w-0">
           <dt className="text-xs text-muted">Transmission</dt>
-          <dd className="mt-1.5 wrap-break-word text-base font-semibold text-text-primary">
+          <dd className="vehicle-summary-value">
             {formatVehicleValue(vehicle.transmission?.replaceAll("_", " "))}
           </dd>
         </div>
@@ -58,7 +58,7 @@ export default function VehicleOverview({ vehicle }: { vehicle: Vehicle }) {
 
         <div className="min-w-0">
           <dt className="text-xs text-muted">Power</dt>
-          <dd className="mt-1.5 wrap-break-word text-base font-semibold text-text-primary">
+          <dd className="vehicle-summary-value">
             {formatVehicleValue(
               vehicle.power_hp != null ? `${vehicle.power_hp} hp` : null,
             )}
@@ -72,7 +72,7 @@ export default function VehicleOverview({ vehicle }: { vehicle: Vehicle }) {
 
         <div className="min-w-0">
           <dt className="text-xs text-muted">Registration country</dt>
-          <dd className="mt-1.5 wrap-break-word text-base font-semibold text-text-primary">
+          <dd className="vehicle-summary-value">
             {formatVehicleValue(vehicle.registration_country_code)}
           </dd>
         </div>

@@ -11,12 +11,9 @@ export default function StatusRow({
   description: string;
   tone: "good" | "neutral";
 }) {
-  const isGood = tone === "good";
   return (
-    <div className="flex items-center gap-3 rounded-2xl border border-line bg-input/45 p-4">
-      <span
-        className={`flex size-9 shrink-0 items-center justify-center rounded-xl ${isGood ? "bg-accent/10 text-accent-text" : "bg-info-soft text-info"} [&>svg]:size-4`}
-      >
+    <div className="profile-status-card">
+      <span className="profile-status-icon" data-tone={tone}>
         {icon}
       </span>
       <div className="min-w-0">

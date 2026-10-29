@@ -134,7 +134,7 @@ export function EditVehicleForm({ vehicle }: Props) {
     };
 
     return (
-        <main className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-10">
+        <main className="page-shell">
             <Link href={detailsUrl} className="mb-6 inline-flex items-center gap-2 text-sm text-muted hover:text-info">
                 <ArrowLeft className="size-4" aria-hidden="true" /> Back to vehicle details
             </Link>

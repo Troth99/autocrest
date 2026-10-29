@@ -32,16 +32,16 @@ export default function VehicleRegistrationFields({
   }
 
   return (
-    <fieldset className="content-card min-w-0 rounded-2xl p-4 sm:p-5">
+    <fieldset className="content-card vehicle-form-section">
       <legend className="sr-only">Registration</legend>
       <h2 className="section-title">Registration</h2>
       <p className="mt-1 text-sm text-muted">
         Details from your vehicle registration documents.
       </p>
-      <div className="mt-4 grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-2">
+      <div className="vehicle-fields-grid">
         <label
           htmlFor="plate"
-          className="grid gap-2 text-sm font-medium text-text-secondary"
+          className="form-field"
         >
           <span>Registration plate</span>
           <input
@@ -64,7 +64,7 @@ export default function VehicleRegistrationFields({
 
         <label
           htmlFor="vin"
-          className="grid gap-2 text-sm font-medium text-text-secondary"
+          className="form-field"
         >
           <span>VIN</span>
           <input
@@ -87,7 +87,7 @@ export default function VehicleRegistrationFields({
 
         <label
           htmlFor="registration_certificate_number"
-          className="grid gap-2 text-sm font-medium text-text-secondary"
+          className="form-field"
         >
           <span>Registration certificate number</span>
           <input
@@ -109,7 +109,7 @@ export default function VehicleRegistrationFields({
 
         <label
           htmlFor="registration_country_code"
-          className="grid gap-2 text-sm font-medium text-text-secondary"
+          className="form-field"
         >
           <span>Registration country code</span>
           <input
@@ -130,7 +130,7 @@ export default function VehicleRegistrationFields({
 
         <label
           htmlFor="first_registration_date"
-          className="grid gap-2 text-sm font-medium text-text-secondary"
+          className="form-field"
         >
           <span>First registration date</span>
           <input

@@ -10,10 +10,10 @@ export default function DetailRow({
   value: ReactNode;
 }) {
   return (
-    <div className="flex items-center gap-3 py-4 first:pt-4 last:pb-4">
-      <span className="text-subtle [&>svg]:size-4">{icon}</span>
-      <dt className="text-sm text-muted">{label}</dt>
-      <dd className="ml-auto max-w-[58%] truncate text-right text-sm font-semibold text-text-primary">
+    <div className="profile-detail-row">
+      <span className="profile-detail-icon">{icon}</span>
+      <dt className="profile-detail-label">{label}</dt>
+      <dd className="profile-detail-value">
         {value}
       </dd>
     </div>

@@ -11,19 +11,19 @@ type Props = { register: VehicleFormRegister } & (VehicleMakeModelProps | {
 export default function VehicleBasicFields(props: Props) {
   const { errors, register } = props;
   return (
-    <fieldset className="content-card min-w-0 rounded-2xl p-4 sm:p-5">
+    <fieldset className="content-card vehicle-form-section">
       <legend className="sr-only">Basic information</legend>
       <h2 className="section-title">Basic information</h2>
       <p className="mt-1 text-sm text-muted">
         The essentials that identify your vehicle.
       </p>
-      <div className="mt-4 grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-2">
+      <div className="vehicle-fields-grid">
         {"makeModelFields" in props ? props.makeModelFields : <VehicleMakeModelFields
           {...props}
         />}
         <label
           htmlFor="manufacture_year"
-          className="grid gap-2 text-sm font-medium text-text-secondary"
+          className="form-field"
         >
           <span>Manufacture year *</span>
           <input
@@ -46,7 +46,7 @@ export default function VehicleBasicFields(props: Props) {
 
         <label
           htmlFor="trim"
-          className="grid gap-2 text-sm font-medium text-text-secondary"
+          className="form-field"
         >
           <span>Trim / variant</span>
           <input
@@ -67,7 +67,7 @@ export default function VehicleBasicFields(props: Props) {
 
         <label
           htmlFor="nickname"
-          className="grid gap-2 text-sm font-medium text-text-secondary"
+          className="form-field"
         >
           <span>Nickname</span>
           <input
@@ -88,7 +88,7 @@ export default function VehicleBasicFields(props: Props) {
 
         <label
           htmlFor="vehicle_use"
-          className="grid gap-2 text-sm font-medium text-text-secondary"
+          className="form-field"
         >
           <span>Vehicle use</span>
           <select
@@ -100,25 +100,21 @@ export default function VehicleBasicFields(props: Props) {
           >
             <option
               value=""
-              className="bg-panel text-text-primary"
             >
               Not specified
             </option>
             <option
               value="personal"
-              className="bg-panel text-text-primary"
             >
               Personal
             </option>
             <option
               value="business"
-              className="bg-panel text-text-primary"
             >
               Business
             </option>
             <option
               value="mixed"
-              className="bg-panel text-text-primary"
             >
               Mixed
             </option>

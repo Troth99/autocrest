@@ -41,38 +41,38 @@ export default function VehicleCard({ vehicle, photoUrl }: Props) {
         {details && <p className="mt-1.5 text-sm capitalize text-muted">{details}</p>}
 
         <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-4 border-t border-line pt-4">
-          <div className="flex min-w-0 items-center gap-2.5">
-            <Gauge className="size-5 shrink-0 stroke-[1.5] text-info" aria-hidden="true" />
+          <div className="vehicle-card-stat">
+            <Gauge className="vehicle-card-stat-icon" aria-hidden="true" />
             <div className="min-w-0">
               <dt className="detail-label">Mileage</dt>
-              <dd className="mt-1 wrap-break-word text-sm font-semibold text-text-primary">
+              <dd className="vehicle-card-stat-value">
                 {vehicle.mileage_km.toLocaleString("en-GB")} km
               </dd>
             </div>
           </div>
-          <div className="flex min-w-0 items-center gap-2.5">
-            <Fuel className="size-5 shrink-0 stroke-[1.5] text-info" aria-hidden="true" />
+          <div className="vehicle-card-stat">
+            <Fuel className="vehicle-card-stat-icon" aria-hidden="true" />
             <div className="min-w-0">
               <dt className="detail-label">Fuel</dt>
-              <dd className="mt-1 wrap-break-word text-sm font-semibold text-text-primary">
+              <dd className="vehicle-card-stat-value">
                 {vehicle.fuel_type?.replaceAll("_", " ") ?? "Not provided"}
               </dd>
             </div>
           </div>
-          <div className="flex min-w-0 items-center gap-2.5">
-            <Cog className="size-5 shrink-0 stroke-[1.5] text-info" aria-hidden="true" />
+          <div className="vehicle-card-stat">
+            <Cog className="vehicle-card-stat-icon" aria-hidden="true" />
             <div className="min-w-0">
               <dt className="detail-label">Power</dt>
-              <dd className="mt-1 wrap-break-word text-sm font-semibold text-text-primary">
+              <dd className="vehicle-card-stat-value">
                 {vehicle.power_hp !== null ? `${vehicle.power_hp} hp` : "Not provided"}
               </dd>
             </div>
           </div>
-          <div className="flex min-w-0 items-center gap-2.5">
-            <Settings2 className="size-5 shrink-0 stroke-[1.5] text-info" aria-hidden="true" />
+          <div className="vehicle-card-stat">
+            <Settings2 className="vehicle-card-stat-icon" aria-hidden="true" />
             <div className="min-w-0">
               <dt className="detail-label">Engine</dt>
-              <dd className="mt-1 wrap-break-word text-sm font-semibold text-text-primary">
+              <dd className="vehicle-card-stat-value">
                 {vehicle.engine_cc !== null
                   ? `${vehicle.engine_cc.toLocaleString("en-GB")} cc`
                   : "Not provided"}

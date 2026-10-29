@@ -58,7 +58,7 @@ export default function VehicleMakeModelFields({
         {selectedMake === "other" ? (
           <label
             htmlFor="custom-make"
-            className="grid gap-2 text-sm font-medium text-text-secondary"
+            className="form-field"
           >
             Make name *
             <input
@@ -87,7 +87,7 @@ export default function VehicleMakeModelFields({
         {selectedMake === "other" ? (
           <label
             htmlFor="custom-model"
-            className="grid gap-2 text-sm font-medium text-text-secondary"
+            className="form-field"
           >
             Model *
             <input
@@ -124,7 +124,7 @@ export default function VehicleMakeModelFields({
             {selectedModel === "other" ? (
               <label
                 htmlFor="custom-model"
-                className="grid gap-2 text-sm font-medium text-text-secondary"
+                className="form-field"
               >
                 Model name *
                 <input

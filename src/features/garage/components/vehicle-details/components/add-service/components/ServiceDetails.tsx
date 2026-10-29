@@ -7,7 +7,7 @@ export default function ServiceDetails() {
 
             <div className="grid gap-4 sm:grid-cols-2">
                 <div className="grid gap-2">
-                    <label htmlFor="service-type" className="text-sm font-medium text-text-secondary">
+                    <label htmlFor="service-type" className="form-field-label">
                         Service type *
                     </label>
                     <select id="service-type" className="form-select" required>
@@ -25,7 +25,7 @@ export default function ServiceDetails() {
                 </div>
 
                 <div className="grid gap-2">
-                    <label htmlFor="visit-reason" className="text-sm font-medium text-text-secondary">
+                    <label htmlFor="visit-reason" className="form-field-label">
                         Reason for visit
                     </label>
                     <select id="visit-reason" className="form-select">
@@ -40,7 +40,7 @@ export default function ServiceDetails() {
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
                 <div className="grid gap-2">
-                    <label htmlFor="service-date" className="text-sm font-medium text-text-secondary">
+                    <label htmlFor="service-date" className="form-field-label">
                         Date *
                     </label>
                     <input data-slot="input"
@@ -51,7 +51,7 @@ export default function ServiceDetails() {
                 </div>
 
                 <div className="grid gap-2">
-                    <label htmlFor="service-mileage" className="text-sm font-medium text-text-secondary">
+                    <label htmlFor="service-mileage" className="form-field-label">
                         Mileage (km) *
                     </label>
                     <input data-slot="input"
@@ -65,7 +65,7 @@ export default function ServiceDetails() {
                 </div>
             </div>
             <div className="grid gap-2">
-                <label htmlFor="service-provider" className="text-sm font-medium text-text-secondary">
+                <label htmlFor="service-provider" className="form-field-label">
                     Workshop / mechanic
                 </label>
                 <input data-slot="input"
@@ -77,7 +77,7 @@ export default function ServiceDetails() {
             </div>
 
             <div className="grid gap-2">
-                <label htmlFor="service-work" className="text-sm font-medium text-text-secondary">
+                <label htmlFor="service-work" className="form-field-label">
                     Work performed
                 </label>
                 <textarea

@@ -22,7 +22,7 @@ export default function AddService({ vehicleId }: Props) {
                     </p>
                 </header>
                 <form className="vehicle-form grid min-w-0 gap-4">
-                    <fieldset className="content-card min-w-0 space-y-4 rounded-2xl p-4 sm:p-5">
+                    <fieldset className="content-card vehicle-form-section space-y-4">
                         <legend className="sr-only">
                             Service details
                         </legend>
@@ -30,7 +30,7 @@ export default function AddService({ vehicleId }: Props) {
 
                     </fieldset>
 
-                    <fieldset className="content-card min-w-0 space-y-4 rounded-2xl p-4 sm:p-5">
+                    <fieldset className="content-card vehicle-form-section space-y-4">
                         <ServiceCost />
                     </fieldset>
 

@@ -15,7 +15,7 @@ export function normalizePhoneNumber(value: string | null | undefined): string {
 
 export default function PhoneEditSelector({ value, onChange, error }: Props) {
     return (
-          <div className="grid gap-2 text-sm font-medium text-text-secondary">
+          <div className="form-field">
             <label htmlFor="phone">Phone number</label>
 
             <PhoneInput

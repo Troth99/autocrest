@@ -39,7 +39,7 @@ export default function ProfileDetailsFields({
         isSaving={isSaving}
       />{" "}
       <label
-        className="grid gap-2 text-sm font-medium text-text-secondary"
+        className="form-field"
         htmlFor="username"
       >
         Username
@@ -51,7 +51,7 @@ export default function ProfileDetailsFields({
         onChange={onPhoneChange}
       />
       <label
-        className="grid gap-2 text-sm font-medium text-text-secondary"
+        className="form-field"
         htmlFor="location"
       >
         Location

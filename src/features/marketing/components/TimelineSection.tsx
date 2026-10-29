@@ -14,7 +14,7 @@ export default function TimelineSection() {
       <div className="grid items-center gap-10 lg:grid-cols-[.9fr_1.1fr] lg:gap-16">
         <div>
           <span className="eyebrow">BUILT FOR CLARITY</span>
-          <h2 className="mt-4 text-3xl font-semibold tracking-[-0.045em] text-text-primary sm:text-4xl">Know what happened. Know what comes next.</h2>
+          <h2 className="page-title mt-4">Know what happened. Know what comes next.</h2>
           <p className="mt-5 text-sm leading-7 text-muted sm:text-base">AutoCrest turns everyday vehicle ownership into a history you can understand, trust, and use to make the next decision.</p>
           <ul className="mt-7 space-y-3">
             {benefits.map((benefit) => (
@@ -39,7 +39,7 @@ export default function TimelineSection() {
       </div>
 
       <div className="timeline-callout">
-        <h2 className="text-3xl font-semibold tracking-[-0.045em] text-text-primary sm:text-4xl">Start building your vehicle&apos;s story.</h2>
+        <h2 className="page-title">Start building your vehicle&apos;s story.</h2>
         <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-text-secondary sm:text-base">Bring every important detail together and always know what your vehicle needs next.</p>
         <Link href="/register" className="button-primary button-base mt-7 gap-2 px-5 py-3 text-sm">Create your free garage <ArrowRight className="size-4" /></Link>
       </div>

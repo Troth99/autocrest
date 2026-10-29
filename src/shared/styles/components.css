@@ -1,5 +1,49 @@
 /* Shared visual patterns. Keep layout-specific utilities in JSX. */
 @layer components {
+  .page-shell {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding: 2rem 1rem;
+  }
+
+  .page-title {
+    color: var(--text-primary);
+    font-size: 1.875rem;
+    font-weight: 600;
+    line-height: 2.25rem;
+    letter-spacing: -0.045em;
+  }
+
+  .form-field-label,
+  .form-field {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.25rem;
+  }
+
+  .form-field {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .form-select option {
+    background-color: var(--surface-panel);
+    color: var(--text-primary);
+  }
+
+  @media (min-width: 40rem) {
+    .page-shell {
+      padding: 2.5rem 1.5rem;
+    }
+
+    .page-title {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+    }
+  }
+
   .account-navigation {
     @apply border-b border-line bg-panel px-3 py-4 lg:w-52 lg:shrink-0 lg:border-b-0 lg:border-r;
     @apply lg:px-4 lg:py-8;

@@ -28,7 +28,7 @@ export default async function GaragePage({
     <main className="mx-auto w-full max-w-7xl px-4 py-7 sm:px-6 sm:py-8">
       <div className="mb-6 flex flex-wrap items-end justify-between gap-5 xl:mr-86">
         <div>
-          <h1 className="text-3xl font-semibold tracking-[-0.045em] text-text-primary sm:text-4xl">
+          <h1 className="page-title">
             My Garage
           </h1>
           <p className="mt-2 section-description sm:text-base">
