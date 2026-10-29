@@ -16,6 +16,17 @@ export default async function IsDashboardLayout({
   if (!user) {
     redirect("/login");
   }
+
+  const { data: assurance, error } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel()
+
+  if (error) {
+    throw error
+  }
+
+  //check if account has enabled 2FA
+  if (assurance.nextLevel === "aal2" && assurance.currentLevel !== "aal2") {
+    redirect("/verify-2fa");
+  }
   return (
     <div className="flex w-full flex-1 flex-col lg:flex-row">
       <AccountNavigation />

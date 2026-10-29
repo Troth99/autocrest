@@ -24,6 +24,26 @@ export async function POST(request: Request) {
     );
   }
 
+  // Check whether this session still requires two-factor verification.
+  const { data: assurance, error: assuranceError } =
+    await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+
+  // Stop scanning if the session security check fails.
+  if (assuranceError) {
+    return Response.json(
+      { error: "Could not verify your session. Please try again." },
+      { status: 503 },
+    );
+  }
+
+  // Block scanning until the user completes their enabled 2FA.
+  if (assurance.nextLevel === "aal2" && assurance.currentLevel !== "aal2") {
+    return Response.json(
+      { error: "Please complete two-factor authentication first." },
+      { status: 403 },
+    );
+  }
+
   // Read the API key on the server without exposing it to the browser.
   const apiKey = process.env.GEMINI_API_KEY || process.env.OPEN_GEMINI_API_KEY;
   if (!apiKey) {

@@ -9,8 +9,6 @@ export default function Loading() {
             aria-busy="true"
             className="mx-auto w-full max-w-310 px-4 py-10 sm:px-6 sm:py-12 lg:px-8"
         >
-            <span className="sr-only">Loading profile...</span>
-
             <div className="mb-8">
                 <Skeleton className="h-6 w-24" />
                 <Skeleton className="mt-4 h-10 w-40" />

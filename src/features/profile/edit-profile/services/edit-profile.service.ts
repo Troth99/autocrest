@@ -11,7 +11,7 @@ export type ProfileFormValues = {
 
 export async function updateProfile(userId: string, values: ProfileFormValues) {
   const supabase = createClient();
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("profiles")
     .update({
       full_name: values.full_name || null,
@@ -21,7 +21,14 @@ export async function updateProfile(userId: string, values: ProfileFormValues) {
       avatar_url: values.avatar_url || null,
       bio: values.bio || null,
     })
-    .eq("id", userId);
+    .eq("id", userId)
+    .select("id")
+    .maybeSingle();
 
-  if (error) throw error;
+  // Confirm that a profile was actually updated before reporting success.
+  if (!data) {
+    throw new Error(
+      "Your profile could not be updated. Refresh the page and try again.",
+    );
+  }
 }
