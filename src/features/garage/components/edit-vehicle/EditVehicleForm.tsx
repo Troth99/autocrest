@@ -1,26 +1,18 @@
 "use client";
+
 import Link from "next/link";
 import { ArrowLeft, Check, X } from "lucide-react";
-
 import { Button, buttonVariants } from "@/shared/components/ui/button";
 import type { Vehicle } from "@/features/garage/types/vehicle";
+import useEditVehicleForm from "@/features/garage/hooks/useEditVehicleForm";
 import useForm from "@/shared/hooks/useForm";
-import type { EditVehicleFormValues } from "@/features/garage/types/edit-vehicle-form";
-import { createClient } from "@/lib/supabase/client";
-import { updateVehicle } from "../../services/vehicles.service";
-import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
-import VehicleBasicFields from "../vehicle-fields/VehicleBasicFields";
-import VehicleRegistrationFields from "@/features/garage/components/vehicle-fields/VehicleRegistrationFields";
-import VehicleTechnicalFields from "../vehicle-fields/VehicleTechnicalFields";
-import VehiclePurchaseFields from "@/features/garage/components/vehicle-fields/VehiclePurchaseFields";
-import VehicleAdditionalDetails from "../vehicle-fields/VehicleAdditionalDetails";
-
-import { initialValues as addVehicleInitialValues } from "@/features/garage/constants/add-vehicle-form";
-import type { VehicleFormErrors } from "@/features/garage/types/add-vehicle-form";
+import { getEditVehicleInitialValues } from "@/features/garage/utils/getEditVehicleInitialValues";
 import type { VehicleDocumentFormValues } from "@/features/garage/types/vehicle-document-form";
-import useVehicleCatalog from "@/features/garage/hooks/useVehicleCatalog";
-import { VehicleModel } from "../../types/vehicle-catalog";
+import VehicleBasicFields from "@/features/garage/components/vehicle-fields/VehicleBasicFields";
+import VehicleRegistrationFields from "@/features/garage/components/vehicle-fields/VehicleRegistrationFields";
+import VehicleTechnicalFields from "@/features/garage/components/vehicle-fields/VehicleTechnicalFields";
+import VehiclePurchaseFields from "@/features/garage/components/vehicle-fields/VehiclePurchaseFields";
+import VehicleAdditionalDetails from "@/features/garage/components/vehicle-fields/VehicleAdditionalDetails";
 
 type Props = {
     vehicle: Vehicle;
@@ -29,109 +21,31 @@ type Props = {
 
 export function EditVehicleForm({ vehicle }: Props) {
     const detailsUrl = `/vehicles/${vehicle.id}`;
+
     const name = `${vehicle.make} ${vehicle.model}`;
-    const router = useRouter();
-    const [isSaving, setIsSaving] = useState<boolean>(false)
-    const [saveError, setSaveError] = useState<string | null>(null);
-    const [selectedModel, setSelectedModel] = useState("");
-
-    const hasInitializedModel = useRef<boolean>(false);
-    const hasInitializedMake = useRef<boolean>(false);
-
-    const selectedModelAndMakeHandler = (availableModels: VehicleModel[],) => {
-        if (hasInitializedModel.current) return
-        // Keep initialization pending if loading failed.
-
-        if (availableModels.length === 0) return
-        hasInitializedModel.current = true;
-        const savedModel = availableModels.find(
-            (model) =>
-                model.name.trim().toLowerCase() ===
-                vehicle.model.trim().toLowerCase(),
-        );
-        setSelectedModel(savedModel?.id ?? "other");
-
-    }
 
     const {
-        makes,
-        models,
-        selectedMake,
-        isLoadingMakes,
-        isLoadingModels,
-        makesError,
-        modelsError,
-        handleMakeChange,
-    } = useVehicleCatalog(selectedModelAndMakeHandler);
+        makes, models, selectedMake, selectedModel,
+        isLoadingMakes, isLoadingModels, modelsError,
+        handleMakeChange: changeCatalogMake, handleModelChange, handleEditVehicle,
+        isSaving, saveError, fieldErrors,
+    } = useEditVehicleForm(vehicle);
 
-    useEffect(() => {
-
-        if (
-            isLoadingMakes || makesError || hasInitializedMake.current
-        ) return
-
-        hasInitializedMake.current = true
-
-        const savedMake = makes.find(
-            (make) =>
-                make.name.trim().toLowerCase() === vehicle.make.trim().toLowerCase(),
-        );
-        handleMakeChange(savedMake?.id ?? "other");
-
-    }, [makes, isLoadingMakes, makesError, vehicle.make, handleMakeChange])
-
-    const initialValues = {
-        ...addVehicleInitialValues,
-        ...Object.fromEntries(
-            Object.entries(vehicle).map(([key, value]) => [
-                key,
-                typeof value === "boolean" ? value : String(value ?? ""),
-            ]),
-        ),
-    } as EditVehicleFormValues;
-
-    initialValues.mileage_recorded_at =
-        vehicle.mileage_recorded_at?.slice(0, 10) ?? "";
-    initialValues.custom_make = vehicle.make;
-    initialValues.custom_model = vehicle.model;
-
-    async function handleEditVehicle(values: EditVehicleFormValues) {
-        if (isSaving || isLoadingMakes || isLoadingModels) return;
-        setIsSaving(true);
-        setSaveError(null);
-        try {
-            const supabase = createClient();
-
-            // Resolve catalog selections just as the add-vehicle form does.
-            const make = selectedMake === "other"
-                ? values.custom_make
-                : (makes.find((item) => item.id === selectedMake)?.name ?? "");
-            const model = selectedMake === "other" || selectedModel === "other"
-                ? values.custom_model
-                : (models.find((item) => item.id === selectedModel)?.name ?? "");
-
-            await updateVehicle(supabase, vehicle.id, { ...values, make, model });
-
-        } catch (error) {
-            setSaveError(
-                error instanceof Error ? error.message : "Could not update the vehicle."
-            )
-            setIsSaving(false)
-            return
-        }
-        router.push(detailsUrl);
-        router.refresh();
-    }
-
-    const { values, setFieldValue, register, registerCheckbox, formHandler } = useForm(
+    const { values, register, registerCheckbox, formHandler, setFieldValue } = useForm(
         handleEditVehicle,
-        initialValues,
+        getEditVehicleInitialValues(vehicle),
     );
 
-    const fieldErrors: VehicleFormErrors = {};
-    const handleFieldChange = (field: keyof VehicleDocumentFormValues, value: string) => {
+    function handleMakeChange(makeId: string) {
+        if (makeId === selectedMake) return;
+        changeCatalogMake(makeId);
+        // A new make invalidates the previous manually entered model.
+        setFieldValue("custom_model", "");
+    }
+
+    function handleFieldChange(field: keyof VehicleDocumentFormValues, value: string) {
         setFieldValue(field, value);
-    };
+    }
 
     return (
         <main className="page-shell">
@@ -155,18 +69,11 @@ export function EditVehicleForm({ vehicle }: Props) {
                         onFieldChange={handleFieldChange}
                         makes={makes}
                         selectedMake={selectedMake}
-                        onMakeChange={(makeId) => {
-                            if (makeId === selectedMake) return;
-                            hasInitializedModel.current = true;
-                            handleMakeChange(makeId);
-                            setSelectedModel("");
-                            setFieldValue("custom_model", "");
-
-                        }}
+                        onMakeChange={handleMakeChange}
                         isLoadingMakes={isLoadingMakes}
                         models={models}
                         selectedModel={selectedModel}
-                        onModelChange={setSelectedModel}
+                        onModelChange={handleModelChange}
                         isLoadingModels={isLoadingModels}
                         modelsError={modelsError}
                     />

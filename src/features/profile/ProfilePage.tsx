@@ -5,7 +5,6 @@ import PersonalInformationCard from "./components/PersonalInformationCard";
 import CompleteYourSetup from "./components/ProfileCompletion";
 import ProfileHero from "./components/ProfileHero";
 import { useCurrentUser } from "@/shared/context/CurrentUserContext";
-
 export default function ProfilePage() {
   const { user } = useCurrentUser();
 
@@ -35,9 +34,9 @@ export default function ProfilePage() {
 
   const lastSignIn = lastSignInAt
     ? new Intl.DateTimeFormat("en-GB", {
-      dateStyle: "medium",
-      timeStyle: "short",
-    }).format(new Date(lastSignInAt))
+        dateStyle: "medium",
+        timeStyle: "short",
+      }).format(new Date(lastSignInAt))
     : "Not available";
 
   const signInMethod =

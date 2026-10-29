@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   Bell,
   CarFront,
@@ -9,6 +10,7 @@ import {
   ReceiptText,
   Search,
   Wrench,
+  Warehouse,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import {
@@ -60,8 +62,19 @@ export default function GarageHeaderTools() {
   const router = useRouter();
   return (
     <>
+      <Link
+        href="/garrage"
+        className="button-base button-secondary gap-2 border px-3 py-2.5 text-sm"
+      >
+        <Warehouse className="size-4" aria-hidden="true" />
+        My Garage
+      </Link>
       <DropdownMenu modal={false}>
-        <DropdownMenuTrigger className="action-button cursor-pointer gap-2 px-3 py-2.5 transition-colors hover:bg-accent-strong focus-visible:outline-2 focus-visible:outline-focus sm:px-4">
+        <DropdownMenuTrigger
+          // Prepare the form while the user opens the Add menu.
+          onPointerEnter={() => router.prefetch("/vehicles/add")}
+          onFocus={() => router.prefetch("/vehicles/add")}
+          className="action-button cursor-pointer gap-2 px-3 py-2.5 transition-colors hover:bg-accent-strong focus-visible:outline-2 focus-visible:outline-focus sm:px-4">
           <Plus className="size-4" aria-hidden="true" />
           Add
           <ChevronDown className="size-4" aria-hidden="true" />
@@ -72,13 +85,13 @@ export default function GarageHeaderTools() {
           className="w-64 rounded-2xl p-2"
         >
           <DropdownMenuItem
-            onClick={() => router.push("/vehicles/add")}
+            render={<Link href="/vehicles/add" prefetch />}
             className="cursor-pointer gap-3 rounded-xl px-3 py-3"
           >
             <CarFront className="size-5" /> Add vehicle
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          
+
           {[
             { label: "Fuel entry", icon: Fuel },
             { label: "Expense", icon: ReceiptText },

@@ -1,5 +1,7 @@
 "use client";
 
+import { getVehicleFieldErrors } from "@/features/garage/validators/getVehicleFieldErrors";
+import { resolveVehicleMakeModel } from "@/features/garage/utils/resolveVehicleMakeModel";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
@@ -85,26 +87,18 @@ export default function useAddVehicleForm({
     setFieldErrors({});
 
     try {
-      const make =
-        selectedMake === "other"
-          ? submittedValues.custom_make
-          : (makes.find((item) => item.id === selectedMake)?.name ?? "");
-
-      const model =
-        selectedMake === "other" || selectedModel === "other"
-          ? submittedValues.custom_model
-          : (models.find((item) => item.id === selectedModel)?.name ?? "");
+      const { make, model } = resolveVehicleMakeModel(submittedValues, {
+        selectedMake,
+        selectedModel,
+        makes,
+        models,
+      });
 
       const input = { ...submittedValues, make, model };
       const validation = addVehicleSchema.safeParse(input);
 
       if (!validation.success) {
-        const errors: VehicleFormErrors = {};
-        for (const issue of validation.error.issues) {
-          const field = issue.path[0] as keyof VehicleFormErrors;
-          if (!errors[field]) errors[field] = issue.message;
-        }
-        setFieldErrors(errors);
+        setFieldErrors(getVehicleFieldErrors(validation.error));
         setSubmitError("Please correct the highlighted fields.");
         return;
       }

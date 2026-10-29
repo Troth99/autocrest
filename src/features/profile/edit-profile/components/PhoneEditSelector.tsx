@@ -1,6 +1,6 @@
 
 
-import PhoneInput, { parsePhoneNumber } from "react-phone-number-input";
+import PhoneInput from "react-phone-number-input";
 import PhoneCountrySelect from "./PhoneCountrySelect";
 
 type Props = {
@@ -8,10 +8,6 @@ type Props = {
   onChange: (value: string) => void;
   error: string | null;
 };
-
-export function normalizePhoneNumber(value: string | null | undefined): string {
-  return value ? (parsePhoneNumber(value, "BG")?.number ?? "") : "";
-}
 
 export default function PhoneEditSelector({ value, onChange, error }: Props) {
     return (

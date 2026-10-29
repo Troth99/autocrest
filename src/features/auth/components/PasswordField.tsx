@@ -33,6 +33,8 @@ export function PasswordField({
           autoComplete="new-password"
           className="form-input pr-12"
           {...props}
+          aria-invalid={Boolean(error) || props["aria-invalid"]}
+          aria-describedby={error ? `${id}-error` : props["aria-describedby"]}
         />
         <Button
           type="button"
@@ -45,7 +47,7 @@ export function PasswordField({
           {showPassword ? <EyeOff /> : <Eye />}
         </Button>
       </div>
-      <FieldError message={error} />
+      {error && <div id={`${id}-error`} role="alert"><FieldError message={error} /></div>}
     </div>
   );
 }

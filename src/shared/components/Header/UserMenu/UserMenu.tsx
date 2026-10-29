@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   LogOut,
@@ -53,7 +54,11 @@ export default function UserMenu({
 
   return (
     <DropdownMenu modal={false}>
-      <DropdownMenuTrigger className="cursor-pointer  rounded-full outline-none transition-[transform,box-shadow] duration-200 hover:scale-105 hover:shadow-[0_0_18px_rgb(56_189_248/28%)] focus-visible:ring-2 focus-visible:ring-ring/50 motion-reduce:transition-none motion-reduce:hover:scale-100">
+      <DropdownMenuTrigger
+        // Start loading the profile before the user selects it from the menu.
+        onPointerEnter={() => router.prefetch("/profile")}
+        onFocus={() => router.prefetch("/profile")}
+        className="cursor-pointer  rounded-full outline-none transition-[transform,box-shadow] duration-200 hover:scale-105 hover:shadow-[0_0_18px_rgb(56_189_248/28%)] focus-visible:ring-2 focus-visible:ring-ring/50 motion-reduce:transition-none motion-reduce:hover:scale-100">
         <Avatar>
           {avatarUrl && <AvatarImage src={avatarUrl} alt={username} />}
           <AvatarFallback className="bg-info-soft text-info">
@@ -77,7 +82,7 @@ export default function UserMenu({
         <DropdownMenuSeparator />
         <DropdownMenuItem
           className="cursor-pointer transition-[background-color,color,transform] duration-200 hover:translate-x-0.5 hover:bg-info-soft motion-reduce:transition-none motion-reduce:hover:translate-x-0"
-          onClick={() => router.push("/profile")}
+          render={<Link href="/profile" prefetch />}
         >
           <UserIcon />
           Profile
@@ -90,7 +95,7 @@ export default function UserMenu({
           Settings
         </DropdownMenuItem>
         <ThemeSelector />
-         <DropdownMenuSeparator />
+        <DropdownMenuSeparator />
         <DropdownMenuItem
           variant="destructive"
           className="cursor-pointer transition-[background-color,color,transform] duration-200 hover:translate-x-0.5 hover:bg-destructive/10 motion-reduce:transition-none motion-reduce:hover:translate-x-0"

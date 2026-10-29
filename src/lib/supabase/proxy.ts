@@ -5,7 +5,7 @@ const REMEMBER_ME_COOKIE = "autocrest-remember-me";
 const REMEMBER_ME_MAX_AGE = 60 * 60 * 24 * 10; //10 days
 
 export async function updateSession(request: NextRequest) {
-  const supabaseResponse = NextResponse.next({ request });
+  let supabaseResponse = NextResponse.next({ request });
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -15,11 +15,23 @@ export async function updateSession(request: NextRequest) {
         getAll() {
           return request.cookies.getAll();
         },
-        setAll(cookiesToSet) {
+
+        setAll(cookiesToSet, headers) {
+          // Pass refreshed cookies to the current server request.
+          cookiesToSet.forEach(({ name, value }) => {
+            request.cookies.set(name, value);
+          });
+          supabaseResponse = NextResponse.next({ request });
+          // Prevent caching responses containing session cookies.
+          Object.entries(headers).forEach(([name, value]) => {
+            supabaseResponse.headers.set(name, value);
+          });
+
           const rememberMe =
             request.cookies.get(REMEMBER_ME_COOKIE)?.value === "true";
 
           cookiesToSet.forEach(({ name, value, options }) => {
+            // Preserve cookie deletion so Remember me cannot extend its lifetime.
             if (options.maxAge === 0) {
               supabaseResponse.cookies.set(name, value, options);
               return;

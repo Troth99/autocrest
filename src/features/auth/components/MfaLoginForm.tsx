@@ -7,8 +7,9 @@ import { Button } from "@/shared/components/ui/button";
 import { logoutUser } from "@/features/auth/services/auth.service";
 import { verifyMfaCode } from "@/features/auth/services/mfa.service";
 
-export default function MfaLoginForm({ factors }: {
+export default function MfaLoginForm({ factors, nextPath = "/" }: {
   factors: { id: string; name: string }[];
+  nextPath?: "/" | "/reset-password";
 }) {
   const router = useRouter();
   const inputId = useId();
@@ -39,7 +40,7 @@ export default function MfaLoginForm({ factors }: {
       if (!factors.some((factor) => factor.id === factorId)) throw new Error("Select an authenticator to continue.");
       await verifyMfaCode(factorId, code);
       setCode("");
-      router.replace("/");
+      router.replace(nextPath);
       router.refresh();
     });
   }
