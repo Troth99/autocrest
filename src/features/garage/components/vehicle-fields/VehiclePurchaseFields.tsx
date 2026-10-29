@@ -9,16 +9,16 @@ export default function VehiclePurchaseFields({
   register,
 }: Props) {
   return (
-    <fieldset className="content-card min-w-0 rounded-2xl p-4 sm:p-5">
+    <fieldset className="content-card vehicle-form-section">
       <legend className="sr-only">Purchase details</legend>
       <h2 className="section-title">Purchase details</h2>
       <p className="mt-1 text-sm text-muted">
         Optional information about when you bought your vehicle.
       </p>
-      <div className="mt-4 grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-2">
+      <div className="vehicle-fields-grid">
         <label
           htmlFor="purchase_date"
-          className="grid gap-2 text-sm font-medium text-text-secondary"
+          className="form-field"
         >
           <span>Purchase date</span>
           <input
@@ -38,7 +38,7 @@ export default function VehiclePurchaseFields({
 
         <label
           htmlFor="purchase_price"
-          className="grid gap-2 text-sm font-medium text-text-secondary"
+          className="form-field"
         >
           <span>Purchase price</span>
           <input
@@ -60,7 +60,7 @@ export default function VehiclePurchaseFields({
 
         <label
           htmlFor="purchase_currency_code"
-          className="grid gap-2 text-sm font-medium text-text-secondary"
+          className="form-field"
         >
           <span>Currency code</span>
           <input

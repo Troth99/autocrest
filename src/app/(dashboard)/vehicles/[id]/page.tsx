@@ -18,7 +18,7 @@ export default async function VehiclePage({ params }: { params: Promise<{ id: st
     const photos = await getVehiclePhotoUrls(supabase, [vehicle.id]);
 
     return (
-        <main className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-10">
+        <main className="page-shell">
             {photos.error && <p role="alert" className="mb-4 text-sm text-muted">{photos.error} Refresh to try again.</p>}
             <VehicleDetails
                 vehicle={vehicle}

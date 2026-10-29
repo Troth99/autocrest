@@ -88,7 +88,7 @@ export default function VehicleCatalogSelect({
       filter={filterOptions}
       disabled={disabled}
     >
-      <Combobox.Label className="text-sm font-medium text-text-secondary">
+      <Combobox.Label className="form-field-label">
         {label} *
       </Combobox.Label>
 

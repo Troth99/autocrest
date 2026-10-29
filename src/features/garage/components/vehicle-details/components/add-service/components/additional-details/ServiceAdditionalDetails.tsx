@@ -4,14 +4,14 @@ import ServiceWarranty from "./ServiceWarranty";
 
 export default function ServiceAdditionalDetails() {
     return (
-        <details className="content-card min-w-0 rounded-2xl p-4 sm:p-5">
+        <details className="content-card vehicle-form-section">
             <summary className="cursor-pointer text-sm font-semibold">
                 Additional details
             </summary>
 
             <div className="mt-5 space-y-5">
                 <div className="grid gap-2">
-                    <label htmlFor="service-symptoms" className="text-sm font-medium text-text-secondary">
+                    <label htmlFor="service-symptoms" className="form-field-label">
                         Symptoms before service
                     </label>
                     <textarea
@@ -27,7 +27,7 @@ export default function ServiceAdditionalDetails() {
                 <ServiceFluids />
 
                 <div className="grid gap-2">
-                    <label htmlFor="service-result" className="text-sm font-medium text-text-secondary">
+                    <label htmlFor="service-result" className="form-field-label">
                         Service outcome
                     </label>
                     <select id="service-result" className="form-select">
@@ -39,7 +39,7 @@ export default function ServiceAdditionalDetails() {
                 </div>
 
                 <div className="grid gap-2">
-                    <label htmlFor="service-reference" className="text-sm font-medium text-text-secondary">
+                    <label htmlFor="service-reference" className="form-field-label">
                         Invoice / work order number
                     </label>
                     <input data-slot="input"
@@ -53,7 +53,7 @@ export default function ServiceAdditionalDetails() {
                 <ServiceWarranty />
 
                 <div className="grid gap-2">
-                    <label htmlFor="recommended-work" className="text-sm font-medium text-text-secondary">
+                    <label htmlFor="recommended-work" className="form-field-label">
                         Recommended future repairs
                     </label>
                     <textarea
@@ -65,7 +65,7 @@ export default function ServiceAdditionalDetails() {
                 </div>
 
                 <div className="grid gap-2">
-                    <label htmlFor="service-notes" className="text-sm font-medium text-text-secondary">
+                    <label htmlFor="service-notes" className="form-field-label">
                         Additional notes
                     </label>
                     <textarea

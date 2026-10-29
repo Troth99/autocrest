@@ -108,7 +108,7 @@ export default function EditProfilePage() {
   return (
     <main className="mx-auto w-full max-w-7xl px-5 py-8 sm:px-8 sm:py-10">
       <div>
-        <h1 className="text-3xl font-semibold tracking-[-0.045em] text-text-primary sm:text-4xl">
+        <h1 className="page-title">
           Update your profile
         </h1>
         <p className="mt-2 text-sm leading-6 text-muted sm:text-base">

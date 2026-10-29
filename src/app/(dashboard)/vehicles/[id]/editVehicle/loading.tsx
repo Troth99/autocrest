@@ -23,7 +23,7 @@ function SkeletonSection() {
 
 export default function Loading() {
     return (
-        <main role="status" className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-10">
+        <main role="status" className="page-shell">
             <span className="sr-only">Loading edit form...</span>
             <div aria-hidden="true" className="space-y-6 motion-safe:animate-pulse">
                 <div className="h-10 w-64 max-w-full rounded-lg bg-info-soft" />

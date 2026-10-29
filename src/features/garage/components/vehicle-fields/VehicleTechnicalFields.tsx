@@ -42,17 +42,17 @@ export default function VehicleTechnicalFields({
   }
 
   return (
-    <fieldset className="content-card min-w-0 rounded-2xl p-4 sm:p-5">
+    <fieldset className="content-card vehicle-form-section">
       <legend className="sr-only">Technical specifications</legend>
       <h2 className="section-title">Technical specifications</h2>
       <p className="mt-1 text-sm text-muted">
         Engine, drivetrain and appearance. Leave unknown details blank.
       </p>
 
-      <div className="mt-4 grid items-start gap-4 sm:grid-cols-2">
+      <div className="vehicle-fields-grid">
         <label
           htmlFor="fuel_type"
-          className="grid gap-2 text-sm font-medium text-text-secondary"
+          className="form-field"
         >
           <span>Fuel type *</span>
           <select
@@ -67,39 +67,30 @@ export default function VehicleTechnicalFields({
           >
             <option
               value=""
-              className="bg-panel text-text-primary"
             >Choose a fuel type</option>
             <option
               value="petrol"
-              className="bg-panel text-text-primary"
             >Petrol</option>
             <option
               value="diesel"
-              className="bg-panel text-text-primary"
             >Diesel</option>
             <option
               value="electric"
-              className="bg-panel text-text-primary"
             >Electric</option>
             <option
               value="hybrid"
-              className="bg-panel text-text-primary"
             >Hybrid</option>
             <option
               value="plug_in_hybrid"
-              className="bg-panel text-text-primary"
             >Plug-in hybrid</option>
             <option
               value="lpg"
-              className="bg-panel text-text-primary"
             >LPG</option>
             <option
               value="cng"
-              className="bg-panel text-text-primary"
             >CNG</option>
             <option
               value="other"
-              className="bg-panel text-text-primary"
             >Other</option>
           </select>
           <VehicleFieldError
@@ -110,7 +101,7 @@ export default function VehicleTechnicalFields({
 
         <label
           htmlFor="transmission"
-          className="grid gap-2 text-sm font-medium text-text-secondary"
+          className="form-field"
         >
           <span>Transmission *</span>
           <select
@@ -123,19 +114,15 @@ export default function VehicleTechnicalFields({
           >
             <option
               value=""
-              className="bg-panel text-text-primary"
             >Choose a transmission</option>
             <option
               value="manual"
-              className="bg-panel text-text-primary"
             >Manual</option>
             <option
               value="automatic"
-              className="bg-panel text-text-primary"
             >Automatic</option>
             <option
               value="semi_automatic"
-              className="bg-panel text-text-primary"
             >Semi-automatic</option>
           </select>
           <VehicleFieldError
@@ -146,7 +133,7 @@ export default function VehicleTechnicalFields({
 
         <label
           htmlFor="drivetrain"
-          className="grid gap-2 text-sm font-medium text-text-secondary"
+          className="form-field"
         >
           <span>Drivetrain</span>
           <select
@@ -158,23 +145,18 @@ export default function VehicleTechnicalFields({
           >
             <option
               value=""
-              className="bg-panel text-text-primary"
             >Not specified</option>
             <option
               value="fwd"
-              className="bg-panel text-text-primary"
             >FWD</option>
             <option
               value="rwd"
-              className="bg-panel text-text-primary"
             >RWD</option>
             <option
               value="awd"
-              className="bg-panel text-text-primary"
             >AWD</option>
             <option
               value="4wd"
-              className="bg-panel text-text-primary"
             >4WD</option>
           </select>
           <VehicleFieldError
@@ -185,7 +167,7 @@ export default function VehicleTechnicalFields({
 
         <label
           htmlFor="engine_cc"
-          className="grid gap-2 text-sm font-medium text-text-secondary"
+          className="form-field"
         >
           <span>Engine capacity (cc)</span>
           <input
@@ -209,7 +191,7 @@ export default function VehicleTechnicalFields({
 
         <label
           htmlFor="power_hp"
-          className="grid gap-2 text-sm font-medium text-text-secondary"
+          className="form-field"
         >
           <span>Power (hp)</span>
           <input
@@ -234,7 +216,7 @@ export default function VehicleTechnicalFields({
 
         <label
           htmlFor="euro_standard"
-          className="grid gap-2 text-sm font-medium text-text-secondary"
+          className="form-field"
         >
           <span>Emissions standard</span>
           <select
@@ -248,31 +230,24 @@ export default function VehicleTechnicalFields({
           >
             <option
               value=""
-              className="bg-panel text-text-primary"
             >Not specified</option>
             <option
               value="euro_1"
-              className="bg-panel text-text-primary"
             >Euro 1</option>
             <option
               value="euro_2"
-              className="bg-panel text-text-primary"
             >Euro 2</option>
             <option
               value="euro_3"
-              className="bg-panel text-text-primary"
             >Euro 3</option>
             <option
               value="euro_4"
-              className="bg-panel text-text-primary"
             >Euro 4</option>
             <option
               value="euro_5"
-              className="bg-panel text-text-primary"
             >Euro 5</option>
             <option
               value="euro_6"
-              className="bg-panel text-text-primary"
             >Euro 6</option>
           </select>
           <VehicleFieldError
@@ -283,7 +258,7 @@ export default function VehicleTechnicalFields({
 
         <label
           htmlFor="colour"
-          className="grid gap-2 text-sm font-medium text-text-secondary"
+          className="form-field"
         >
           <span>Colour</span>
           <input
@@ -304,7 +279,7 @@ export default function VehicleTechnicalFields({
 
         <label
           htmlFor="seats"
-          className="grid gap-2 text-sm font-medium text-text-secondary"
+          className="form-field"
         >
           <span>Seats</span>
           <input

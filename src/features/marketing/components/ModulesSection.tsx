@@ -14,7 +14,7 @@ export default function ModulesSection() {
       <div className="mx-auto max-w-6xl px-6">
         <div className="max-w-2xl">
           <span className="eyebrow">EVERYDAY OWNERSHIP</span>
-          <h2 className="mt-4 text-3xl font-semibold tracking-[-0.045em] text-text-primary sm:text-4xl">Everything your vehicle needs, organised.</h2>
+          <h2 className="page-title mt-4">Everything your vehicle needs, organised.</h2>
           <p className="mt-4 text-sm leading-6 text-muted sm:text-base">From the first service to the next sale, AutoCrest helps you understand the complete picture.</p>
         </div>
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

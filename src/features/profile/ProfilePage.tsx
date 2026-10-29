@@ -58,7 +58,7 @@ export default function ProfilePage() {
       <div className="mb-8">
         <div>
           <span className="eyebrow">ACCOUNT</span>
-          <h1 className="mt-4 text-3xl font-semibold tracking-[-0.045em] text-text-primary sm:text-4xl">
+          <h1 className="page-title mt-4">
             Profile
           </h1>
           <p className="mt-2 max-w-xl text-sm leading-6 text-muted sm:text-base">

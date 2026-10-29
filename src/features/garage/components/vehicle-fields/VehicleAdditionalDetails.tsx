@@ -10,7 +10,7 @@ export default function VehiclAdditionalDetails({
   registerCheckbox,
 }: Props) {
   return (
-    <fieldset className="content-card min-w-0 rounded-2xl p-4 sm:p-5">
+    <fieldset className="content-card vehicle-form-section">
       <legend className="sr-only">Additional details</legend>
       <h2 className="section-title">Additional details</h2>
       <label
