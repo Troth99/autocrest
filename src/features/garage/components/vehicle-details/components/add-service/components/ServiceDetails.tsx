@@ -10,7 +10,7 @@ export default function ServiceDetails() {
                     <label htmlFor="service-type" className="form-field-label">
                         Service type *
                     </label>
-                    <select id="service-type" className="form-select" required>
+                    <select id="service-type" className="form-select">
                         <option value="">Select service</option>
                         <option value="oil">Oil & filters</option>
                         <option value="brakes">Brakes</option>

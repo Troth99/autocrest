@@ -1,8 +1,12 @@
+"use client"
 import Link from "next/link";
 import ServiceAdditionalDetails from "./components/additional-details/ServiceAdditionalDetails";
 import ServiceCost from "./components/ServiceCost";
 import ServiceDetails from "./components/ServiceDetails";
 import ServiceReminder from "./components/ServiceReminder";
+import useForm from "@/shared/hooks/useForm";
+import { initialValues as initialServiceValues } from "@/features/garage/constants/add-service-form";
+import { AddServiceFormValues } from "@/features/garage/types/add-service-form";
 
 type Props = {
     vehicleId: string
@@ -10,6 +14,13 @@ type Props = {
 export default function AddService({ vehicleId }: Props) {
 
 
+    async function addServiceHandler(values : AddServiceFormValues ) {
+   
+        console.log("adding service")
+
+    }
+
+    const {register, formHandler} = useForm(addServiceHandler, initialServiceValues)
 
     return (
         <main className="mx-auto w-full min-w-0 max-w-4xl px-4 py-8 sm:px-6 sm:py-10">
@@ -21,7 +32,7 @@ export default function AddService({ vehicleId }: Props) {
                         Record maintenance or a repair for your vehicle.
                     </p>
                 </header>
-                <form className="vehicle-form grid min-w-0 gap-4">
+                <form className="vehicle-form grid min-w-0 gap-4" onSubmit={formHandler}>
                     <fieldset className="content-card vehicle-form-section space-y-4">
                         <legend className="sr-only">
                             Service details
@@ -46,10 +57,8 @@ export default function AddService({ vehicleId }: Props) {
                         </Link>
 
                         <button
-                            type="button"
-                            disabled
-                            title="Coming soon"
-                            className="button-base button-primary  px-5 py-2.5 cursor-not-allowed"
+                            type="submit"
+                            className="button-base button-primary  px-5 py-2.5"
                         >
                             Save service
                         </button>
