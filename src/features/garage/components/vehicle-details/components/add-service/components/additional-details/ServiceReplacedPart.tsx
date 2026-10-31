@@ -1,7 +1,9 @@
+import { FieldError } from "@/shared/components/FieldError/FieldError";
 import { Props as VehicleAddServiceProps } from "@/features/garage/types/add-service-form";
 
 export default function ServiceReplacedPart({
-    register
+    register,
+    errors,
 }: VehicleAddServiceProps) {
     return (
         <fieldset className="space-y-4 rounded-xl border border-line p-4">
@@ -20,6 +22,7 @@ export default function ServiceReplacedPart({
                     className="native-input"
                     {...register("partName")}
                 />
+                <FieldError message={errors.partName} />
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
@@ -33,6 +36,7 @@ export default function ServiceReplacedPart({
                         placeholder="Manufacturer"
                         className="native-input"
                     />
+                    <FieldError message={errors.partBrand} />
                 </div>
 
                 <div className="grid gap-2">
@@ -45,6 +49,7 @@ export default function ServiceReplacedPart({
                         placeholder="Catalogue number"
                         className="native-input"
                     />
+                    <FieldError message={errors.partNumber} />
                 </div>
             </div>
 
@@ -60,6 +65,7 @@ export default function ServiceReplacedPart({
                     placeholder="1"
                     className="native-input"
                 />
+                <FieldError message={errors.partQuantity} />
             </div>
         </fieldset>
     );

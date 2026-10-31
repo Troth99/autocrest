@@ -1,8 +1,10 @@
+import { FieldError } from "@/shared/components/FieldError/FieldError";
 import type { VehicleServiceSectionProps } from "@/features/garage/types/add-service-form";
 
 
 export default function ServiceDetails({
     register,
+    errors,
     values,
 }: VehicleServiceSectionProps) {
 
@@ -33,6 +35,7 @@ export default function ServiceDetails({
                         <option value="bodywork">Bodywork & accessories</option>
                         <option value="other">Other</option>
                     </select>
+                    <FieldError message={errors.serviceType} />
                     {values.serviceType === "other" && (
                         <div className="grid gap-2">
                             <label htmlFor="custom-service-type" className="form-field-label">
@@ -49,6 +52,7 @@ export default function ServiceDetails({
                                 className="native-input"
                                 {...register("customServiceType")}
                             />
+                            <FieldError message={errors.customServiceType} />
                         </div>
                     )}
                 </div>
@@ -65,6 +69,7 @@ export default function ServiceDetails({
                         <option value="recall">Manufacturer recall</option>
                         <option value="other">Other</option>
                     </select>
+                    <FieldError message={errors.visitReason} />
                     {values.visitReason === "other" && (
                         <div className="grid gap-2">
                             <label htmlFor="custom-visit-reason" className="form-field-label">
@@ -81,6 +86,7 @@ export default function ServiceDetails({
                                 className="native-input"
                                 {...register("customVisitReason")}
                             />
+                            <FieldError message={errors.customVisitReason} />
                         </div>
                     )}
                 </div>
@@ -96,6 +102,7 @@ export default function ServiceDetails({
                         className="native-input"
                         {...register("serviceDate")}
                     />
+                    <FieldError message={errors.serviceDate} />
                 </div>
 
                 <div className="grid gap-2">
@@ -111,6 +118,7 @@ export default function ServiceDetails({
                         className="native-input"
                         {...register("mileage")}
                     />
+                    <FieldError message={errors.mileage} />
                 </div>
             </div>
             <div className="grid gap-2">
@@ -124,6 +132,7 @@ export default function ServiceDetails({
                     className="native-input"
                     {...register("provider")}
                 />
+                <FieldError message={errors.provider} />
             </div>
 
             <div className="grid gap-2">
@@ -137,6 +146,7 @@ export default function ServiceDetails({
                     className="form-textarea"
                     {...register("workPerformed")}
                 />
+                <FieldError message={errors.workPerformed} />
             </div>
 
         </>

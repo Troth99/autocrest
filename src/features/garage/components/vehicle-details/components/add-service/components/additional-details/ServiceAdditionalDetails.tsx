@@ -1,3 +1,4 @@
+import { FieldError } from "@/shared/components/FieldError/FieldError";
 import ServiceReplacedPart from "./ServiceReplacedPart";
 import ServiceFluids from "./ServiceFluids";
 import ServiceWarranty from "./ServiceWarranty";
@@ -6,6 +7,7 @@ import type { VehicleServiceSectionProps } from "@/features/garage/types/add-ser
 
 export default function ServiceAdditionalDetails({
     register,
+    errors,
     values,
 }: VehicleServiceSectionProps) {
     return (
@@ -30,11 +32,12 @@ export default function ServiceAdditionalDetails({
                         className="form-textarea"
                         {...register("symptoms")}
                     />
+                    <FieldError message={errors.symptoms} />
                 </div>
 
-                <ServiceReplacedPart register={register} />
+                <ServiceReplacedPart register={register} errors={errors} />
 
-                <ServiceFluids register={register} values={values} />
+                <ServiceFluids register={register} errors={errors} values={values} />
 
                 <div className="grid gap-2">
                     <label htmlFor="service-result" className="form-field-label">
@@ -46,6 +49,7 @@ export default function ServiceAdditionalDetails({
                         <option value="partial">Partially resolved</option>
                         <option value="follow-up">Follow-up visit needed</option>
                     </select>
+                    <FieldError message={errors.serviceOutcome} />
                 </div>
 
                 <div className="grid gap-2">
@@ -59,9 +63,10 @@ export default function ServiceAdditionalDetails({
                         className="native-input"
                         {...register("invoiceNumber")}
                     />
+                    <FieldError message={errors.invoiceNumber} />
                 </div>
 
-                <ServiceWarranty register={register} />
+                <ServiceWarranty register={register} errors={errors} />
 
                 <div className="grid gap-2">
                     <label htmlFor="recommended-work" className="form-field-label">
@@ -73,6 +78,7 @@ export default function ServiceAdditionalDetails({
                         placeholder="e.g. Replace front brake discs at the next visit."
                         className="form-textarea"
                     />
+                    <FieldError message={errors.recommendedWork} />
                 </div>
 
                 <div className="grid gap-2">
@@ -85,6 +91,7 @@ export default function ServiceAdditionalDetails({
                         placeholder="Any other details you want to keep."
                         className="form-textarea"
                     />
+                    <FieldError message={errors.notes} />
                 </div>
             </div>
         </details>

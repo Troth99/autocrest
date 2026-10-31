@@ -1,7 +1,9 @@
+import { FieldError } from "@/shared/components/FieldError/FieldError";
 import type { VehicleServiceSectionProps } from "@/features/garage/types/add-service-form";
 
 export default function ServiceFluids({
     register,
+    errors,
     values,
 }: VehicleServiceSectionProps) {
     return (
@@ -24,6 +26,7 @@ export default function ServiceFluids({
                     <option value="coolant">Coolant</option>
                     <option value="other">Other</option>
                 </select>
+                <FieldError message={errors.fluidType} />
             </div>
 
             {values.fluidType === "other" && (
@@ -42,6 +45,7 @@ export default function ServiceFluids({
                         className="native-input"
                         {...register("customFluidType")}
                     />
+                    <FieldError message={errors.customFluidType} />
                 </div>
             )}
 
@@ -56,6 +60,7 @@ export default function ServiceFluids({
                         placeholder="e.g. 5W-30, manufacturer approval"
                         className="native-input"
                     />
+                    <FieldError message={errors.fluidSpecification} />
                 </div>
 
                 <div className="grid gap-2">
@@ -70,6 +75,7 @@ export default function ServiceFluids({
                         placeholder="4.50"
                         className="native-input"
                     />
+                    <FieldError message={errors.fluidQuantity} />
                 </div>
             </div>
         </fieldset>

@@ -1,7 +1,9 @@
+import { FieldError } from "@/shared/components/FieldError/FieldError";
 import type { Props as VehicleAddServiceProps } from "@/features/garage/types/add-service-form";
 
 export default function ServiceReminder({
-    register
+    register,
+    errors,
 }: VehicleAddServiceProps) {
     return (
         <details className="content-card vehicle-form-section">
@@ -23,6 +25,7 @@ export default function ServiceReminder({
                         type="date"
                         className="native-input"
                     />
+                    <FieldError message={errors.nextServiceDate} />
                 </div>
 
                 <div className="grid gap-2">
@@ -37,6 +40,7 @@ export default function ServiceReminder({
                         placeholder="160000"
                         className="native-input"
                     />
+                    <FieldError message={errors.nextServiceMileage} />
                 </div>
             </div>
         </details>

@@ -1,7 +1,9 @@
+import { FieldError } from "@/shared/components/FieldError/FieldError";
 import { Props as VehicleAddServiceProps } from "@/features/garage/types/add-service-form";
 
 export default function ServiceCost({
-        register
+        register,
+    errors,
     }: VehicleAddServiceProps) {
     return (
         <>
@@ -21,6 +23,7 @@ export default function ServiceCost({
                         className="native-input"
                         {...register("partsCost")}
                     />
+                    <FieldError message={errors.partsCost} />
                 </div>
 
                 <div className="grid gap-2">
@@ -36,6 +39,7 @@ export default function ServiceCost({
                         className="native-input"
                          {...register("laborCost")}
                     />
+                    <FieldError message={errors.laborCost} />
                 </div>
             </div>
 

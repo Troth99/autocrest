@@ -1,7 +1,9 @@
+import { FieldError } from "@/shared/components/FieldError/FieldError";
 import type { Props as VehicleAddServiceProps } from "@/features/garage/types/add-service-form";
 
 export default function ServiceWarranty({
-    register
+    register,
+    errors,
 }: VehicleAddServiceProps) {
     return (
         <fieldset className="space-y-4 rounded-xl border border-line p-4">
@@ -19,6 +21,7 @@ export default function ServiceWarranty({
                         type="date"
                         className="native-input"
                     />
+                    <FieldError message={errors.warrantyDate} />
                 </div>
 
                 <div className="grid gap-2">
@@ -33,6 +36,7 @@ export default function ServiceWarranty({
                         placeholder="170000"
                         className="native-input"
                     />
+                    <FieldError message={errors.warrantyMileage} />
                 </div>
             </div>
         </fieldset>
