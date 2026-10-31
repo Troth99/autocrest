@@ -1,6 +1,8 @@
 export const initialValues = {
   serviceType: "",
+  customServiceType: "",
   visitReason: "",
+  customVisitReason: "",
   serviceDate: "",
   mileage: "",
   provider: "",
@@ -16,6 +18,7 @@ export const initialValues = {
   partQuantity: "",
 
   fluidType: "",
+  customFluidType: "",
   fluidSpecification: "",
   fluidQuantity: "",
 

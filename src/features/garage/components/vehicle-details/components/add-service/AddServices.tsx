@@ -9,7 +9,7 @@ import { initialValues as initialServiceValues } from "@/features/garage/constan
 import { AddServiceFormValues } from "@/features/garage/types/add-service-form";
 
 type Props = {
-    vehicleId: string
+    vehicleId: string;
 }
 export default function AddService({ vehicleId }: Props) {
 
@@ -20,16 +20,18 @@ export default function AddService({ vehicleId }: Props) {
         console.log(print)
     }
 
-    const {register, formHandler} = useForm(addServiceHandler, initialServiceValues)
+    const {register, formHandler, values} = useForm(addServiceHandler, initialServiceValues)
 
     return (
         <main className="mx-auto w-full min-w-0 max-w-4xl px-4 py-8 sm:px-6 sm:py-10">
             <div className="min-w-0">
                 <header className="mb-6">
                     <p className="vehicle-heading-eyebrow">My garage / Service</p>
-                    <h1 className="text-3xl font-semibold tracking-tight text-text-primary">Add service</h1>
+                    <h1 className="text-3xl font-semibold tracking-tight text-text-primary">
+                        Add car service
+                    </h1>
                     <p className="mt-2 text-sm text-muted">
-                        Record maintenance or a repair for your vehicle.
+                        Record maintenance or a repair. Start with the service type, date and mileage.
                     </p>
                 </header>
                 <form className="vehicle-form grid min-w-0 gap-4" onSubmit={formHandler}>
@@ -37,7 +39,7 @@ export default function AddService({ vehicleId }: Props) {
                         <legend className="sr-only">
                             Service details
                         </legend>
-                        <ServiceDetails register={register}/>
+                        <ServiceDetails register={register} values={values} />
 
                     </fieldset>
 
@@ -45,7 +47,7 @@ export default function AddService({ vehicleId }: Props) {
                         <ServiceCost  register={register}/>
                     </fieldset>
 
-                    <ServiceAdditionalDetails register={register} />
+                    <ServiceAdditionalDetails register={register} values={values} />
 
                     <ServiceReminder register={register} />
 

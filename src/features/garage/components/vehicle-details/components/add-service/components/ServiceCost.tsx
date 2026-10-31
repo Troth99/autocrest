@@ -5,7 +5,7 @@ export default function ServiceCost({
     }: VehicleAddServiceProps) {
     return (
         <>
-            <h2 className="section-title">Cost</h2>
+            <h2 className="section-title">Cost (optional)</h2>
 
             <div className="grid gap-4 sm:grid-cols-2">
                 <div className="grid gap-2">

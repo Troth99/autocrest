@@ -1,17 +1,22 @@
 import ServiceReplacedPart from "./ServiceReplacedPart";
 import ServiceFluids from "./ServiceFluids";
 import ServiceWarranty from "./ServiceWarranty";
-import { Props as VehicleAddServiceProps } from "@/features/garage/types/add-service-form";
+import type { VehicleServiceSectionProps } from "@/features/garage/types/add-service-form";
 
 
 export default function ServiceAdditionalDetails({
-    register
-}: VehicleAddServiceProps) {
+    register,
+    values,
+}: VehicleServiceSectionProps) {
     return (
         <details className="content-card vehicle-form-section">
             <summary className="cursor-pointer text-sm font-semibold">
-                Additional details
+                Additional details (optional)
             </summary>
+
+            <p className="mt-2 text-xs text-muted">
+                Add parts, fluids, warranty information or notes when you need them.
+            </p>
 
             <div className="mt-5 space-y-5">
                 <div className="grid gap-2">
@@ -29,7 +34,7 @@ export default function ServiceAdditionalDetails({
 
                 <ServiceReplacedPart register={register} />
 
-                <ServiceFluids register={register} />
+                <ServiceFluids register={register} values={values} />
 
                 <div className="grid gap-2">
                     <label htmlFor="service-result" className="form-field-label">

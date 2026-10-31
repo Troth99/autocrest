@@ -11,3 +11,7 @@ export type VehicleServiceRegister = ReturnType<
 export type Props = {
     register: VehicleServiceRegister;
 };
+
+export type VehicleServiceSectionProps = Props & {
+    values: AddServiceFormValues;
+};

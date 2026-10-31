@@ -1,8 +1,9 @@
-import type { Props as VehicleAddServiceProps } from "@/features/garage/types/add-service-form";
+import type { VehicleServiceSectionProps } from "@/features/garage/types/add-service-form";
 
 export default function ServiceFluids({
-    register
-}: VehicleAddServiceProps) {
+    register,
+    values,
+}: VehicleServiceSectionProps) {
     return (
         <fieldset className="space-y-4 rounded-xl border border-line p-4">
             <legend className="px-2 text-sm font-semibold">
@@ -17,11 +18,32 @@ export default function ServiceFluids({
                     <option value="">Select fluid</option>
                     <option value="engine-oil">Engine oil</option>
                     <option value="transmission-oil">Transmission oil</option>
+                    <option value="gear-oil">Gear / differential oil</option>
+                    <option value="power-steering-fluid">Power steering fluid</option>
                     <option value="brake-fluid">Brake fluid</option>
                     <option value="coolant">Coolant</option>
                     <option value="other">Other</option>
                 </select>
             </div>
+
+            {values.fluidType === "other" && (
+                <div className="grid gap-2">
+                    <label htmlFor="custom-fluid-type" className="text-sm">
+                        Specify fluid *
+                    </label>
+                    <input
+                        data-slot="input"
+                        id="custom-fluid-type"
+                        type="text"
+                        required
+                        pattern={".*\\S.*"}
+                        title="Enter the fluid type."
+                        placeholder="Enter the fluid type"
+                        className="native-input"
+                        {...register("customFluidType")}
+                    />
+                </div>
+            )}
 
             <div className="grid gap-4 sm:grid-cols-2">
                 <div className="grid gap-2">
