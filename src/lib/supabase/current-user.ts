@@ -3,12 +3,12 @@ import type { CurrentUser } from "@/shared/types/currentUser";
 
 export type UserProfile = {
   username: string | null;
-  full_name: string | null;
+  fullName: string | null;
   phone: string | null;
-  country_code: string | null;
+  countryCode: string | null;
   region: string | null;
   city: string | null;
-  avatar_url: string | null;
+  avatarUrl: string | null;
   bio: string | null;
 };
 
@@ -20,7 +20,7 @@ export function toCurrentUser(
 
   const metadata = user.user_metadata ?? {};
   const fullName =
-    profile?.full_name?.trim() ||
+    profile?.fullName?.trim() ||
     metadata.full_name ||
     metadata.name ||
     null;
@@ -30,7 +30,7 @@ export function toCurrentUser(
     user.email?.split("@")[0] ||
     "user";
   const avatarUrl =
-    profile?.avatar_url?.trim() ||
+    profile?.avatarUrl?.trim() ||
     metadata.avatar_url ||
     metadata.picture ||
     null;
@@ -43,7 +43,7 @@ export function toCurrentUser(
     username,
     avatarUrl,
     phone: profile?.phone || null,
-    countryCode: profile?.country_code || null,
+    countryCode: profile?.countryCode || null,
     region: profile?.region || null,
     city: profile?.city || null,
     bio: profile?.bio || null,

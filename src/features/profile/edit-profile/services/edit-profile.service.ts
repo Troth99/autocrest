@@ -1,11 +1,11 @@
 import { createClient } from "@/lib/supabase/client";
 
 export type ProfileFormValues = {
-  full_name: string;
+  fullName: string;
   username: string;
   phone: string;
   city: string;
-  avatar_url: string;
+  avatarUrl: string;
   bio: string;
 };
 
@@ -16,11 +16,11 @@ export async function updateProfile(userId: string, values: ProfileFormValues) {
   const { data, error } = await supabase
     .from("profiles")
     .update({
-      full_name: values.full_name || null,
+      fullName: values.fullName || null,
       username: values.username || null,
       phone: values.phone || null,
       city: values.city || null,
-      avatar_url: values.avatar_url || null,
+      avatarUrl: values.avatarUrl || null,
       bio: values.bio || null,
     })
     .eq("id", userId)

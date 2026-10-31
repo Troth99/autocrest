@@ -1,14 +1,14 @@
 export type VehicleDocumentFormValues = {
-  custom_make: string;
-  custom_model: string;
+  customMake: string;
+  customModel: string;
   plate: string;
   vin: string;
-  registration_certificate_number: string;
-  first_registration_date: string;
-  engine_cc: string;
-  power_hp: string;
-  fuel_type: string;
-  euro_standard: string;
+  registrationCertificateNumber: string;
+  firstRegistrationDate: string;
+  engineCc: string;
+  powerHp: string;
+  fuelType: string;
+  euroStandard: string;
   colour: string;
   seats: string;
 };

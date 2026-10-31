@@ -17,16 +17,16 @@ export default function useEditProfileForm() {
   const [firstName = "", ...remainingNames] = (
     user?.fullName?.trim() || ""
   ).split(/\s+/);
-  const initialValues: Omit<ProfileFormValues, "full_name"> & {
-    first_name: string;
-    last_name: string;
+  const initialValues: Omit<ProfileFormValues, "fullName"> & {
+    firstName: string;
+    lastName: string;
   } = {
-    first_name: firstName,
-    last_name: remainingNames.join(" "),
+    firstName: firstName,
+    lastName: remainingNames.join(" "),
     username: user?.username ?? "",
     phone: normalizePhoneNumber(user?.phone),
     city: user?.city ?? "",
-    avatar_url: user?.avatarUrl ?? "",
+    avatarUrl: user?.avatarUrl ?? "",
     bio: user?.bio ?? "",
   };
 
@@ -60,14 +60,14 @@ export default function useEditProfileForm() {
     try {
       const avatarUrl = avatarFile
         ? await uploadAvatar(user.id, avatarFile)
-        : values.avatar_url;
-      const { first_name, last_name, ...profileValues } = values;
+        : values.avatarUrl;
+      const { firstName, lastName, ...profileValues } = values;
       await updateProfile(user.id, {
         ...profileValues,
-        full_name: [first_name.trim(), last_name.trim()]
+        fullName: [firstName.trim(), lastName.trim()]
           .filter(Boolean)
           .join(" "),
-        avatar_url: avatarUrl,
+        avatarUrl: avatarUrl,
       });
 
       router.push("/profile");
@@ -89,14 +89,14 @@ export default function useEditProfileForm() {
       const fieldErrors: Partial<typeof initialValues> = {};
       for (const issue of result.error.issues) {
         const field = issue.path[0];
-        if (field === "first_name" || field === "last_name")
+        if (field === "firstName" || field === "lastName")
           fieldErrors[field] = issue.message;
       }
       return fieldErrors;
     },
   );
 
-  const fullName = [values.first_name.trim(), values.last_name.trim()]
+  const fullName = [values.firstName.trim(), values.lastName.trim()]
     .filter(Boolean)
     .join(" ");
 

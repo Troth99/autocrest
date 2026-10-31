@@ -10,7 +10,7 @@ type Props = {
 
 export default function VehicleCard({ vehicle, photoUrl }: Props) {
   const name = `${vehicle.make} ${vehicle.model}`;
-  const details = [vehicle.manufacture_year, vehicle.trim, vehicle.transmission?.replaceAll("_", " ")]
+  const details = [vehicle.manufactureYear, vehicle.trim, vehicle.transmission?.replaceAll("_", " ")]
     .filter((value) => value != null && value !== "")
     .join(" · ");
 
@@ -25,7 +25,7 @@ export default function VehicleCard({ vehicle, photoUrl }: Props) {
             <span className="detail-label">No photo added</span>
           </div>
         )}
-        {vehicle.is_primary && (
+        {vehicle.isPrimary && (
           <span className="vehicle-card-primary">
             <Check className="size-3.5" aria-hidden="true" /> Primary
           </span>
@@ -46,7 +46,7 @@ export default function VehicleCard({ vehicle, photoUrl }: Props) {
             <div className="min-w-0">
               <dt className="detail-label">Mileage</dt>
               <dd className="vehicle-card-stat-value">
-                {vehicle.mileage_km.toLocaleString("en-GB")} km
+                {vehicle.mileageKm.toLocaleString("en-GB")} km
               </dd>
             </div>
           </div>
@@ -55,7 +55,7 @@ export default function VehicleCard({ vehicle, photoUrl }: Props) {
             <div className="min-w-0">
               <dt className="detail-label">Fuel</dt>
               <dd className="vehicle-card-stat-value">
-                {vehicle.fuel_type?.replaceAll("_", " ") ?? "Not provided"}
+                {vehicle.fuelType?.replaceAll("_", " ") ?? "Not provided"}
               </dd>
             </div>
           </div>
@@ -64,7 +64,7 @@ export default function VehicleCard({ vehicle, photoUrl }: Props) {
             <div className="min-w-0">
               <dt className="detail-label">Power</dt>
               <dd className="vehicle-card-stat-value">
-                {vehicle.power_hp !== null ? `${vehicle.power_hp} hp` : "Not provided"}
+                {vehicle.powerHp !== null ? `${vehicle.powerHp} hp` : "Not provided"}
               </dd>
             </div>
           </div>
@@ -73,8 +73,8 @@ export default function VehicleCard({ vehicle, photoUrl }: Props) {
             <div className="min-w-0">
               <dt className="detail-label">Engine</dt>
               <dd className="vehicle-card-stat-value">
-                {vehicle.engine_cc !== null
-                  ? `${vehicle.engine_cc.toLocaleString("en-GB")} cc`
+                {vehicle.engineCc !== null
+                  ? `${vehicle.engineCc.toLocaleString("en-GB")} cc`
                   : "Not provided"}
               </dd>
             </div>

@@ -3,9 +3,9 @@ import type { ChangeEvent } from "react";
 import PhoneEditSelector from "@/features/profile/edit-profile/components/PhoneEditSelector";
 import type { ProfileFormValues } from "@/features/profile/edit-profile/services/edit-profile.service";
 
-export type EditProfileFormValues = Omit<ProfileFormValues, "full_name"> & {
-  first_name: string;
-  last_name: string;
+export type EditProfileFormValues = Omit<ProfileFormValues, "fullName"> & {
+  firstName: string;
+  lastName: string;
 };
 export type ProfileDetailsFieldsProps = {
   register: (field: keyof EditProfileFormValues) => {

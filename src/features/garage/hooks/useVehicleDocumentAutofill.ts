@@ -10,7 +10,7 @@ import {
   findDocumentMake,
   findDocumentModel,
   getDocumentModelName,
-} from "@/features/garage/services/vehicle-document-form";
+} from "@/features/garage/utils/vehicle-document-form";
 
 /** Manages editable document fields and matches scanned makes/models to the catalog. */
 export default function useVehicleDocumentAutofill() {
@@ -19,16 +19,16 @@ export default function useVehicleDocumentAutofill() {
   // Keep input values as strings so scanned details can also be edited manually.
   const [documentValues, setDocumentValues] =
     useState<VehicleDocumentFormValues>({
-      custom_make: "",
-      custom_model: "",
+      customMake: "",
+      customModel: "",
       plate: "",
       vin: "",
-      registration_certificate_number: "",
-      first_registration_date: "",
-      engine_cc: "",
-      power_hp: "",
-      fuel_type: "",
-      euro_standard: "",
+      registrationCertificateNumber: "",
+      firstRegistrationDate: "",
+      engineCc: "",
+      powerHp: "",
+      fuelType: "",
+      euroStandard: "",
       colour: "",
       seats: "",
     });
@@ -62,7 +62,7 @@ export default function useVehicleDocumentAutofill() {
       catalogMake,
     );
     setSelectedModel(match?.id ?? "other");
-    handleFieldChange("custom_model", match ? "" : name);
+    handleFieldChange("customModel", match ? "" : name);
   }
 
   // Apply extracted fields, then resolve the make and its corresponding model.
@@ -74,11 +74,11 @@ export default function useVehicleDocumentAutofill() {
     if (details.make !== null) {
       const make = findDocumentMake(details.make, makes);
       handleMakeChange(make?.id ?? "other");
-      handleFieldChange("custom_make", make ? "" : details.make);
+      handleFieldChange("customMake", make ? "" : details.make);
       // An unmatched make uses manual make/model inputs instead of the catalog.
       if (!make) {
         if (details.model !== null)
-          handleFieldChange("custom_model", details.model);
+          handleFieldChange("customModel", details.model);
       } else {
         const modelName = getDocumentModelName(
           details.model,
@@ -100,7 +100,7 @@ export default function useVehicleDocumentAutofill() {
       // If the scan has no make, try its model against the currently selected make.
     } else if (details.model !== null && selectedMake) {
       if (selectedMake === "other")
-        handleFieldChange("custom_model", details.model);
+        handleFieldChange("customModel", details.model);
       else if (isLoadingModels) pendingModel.current = { name: details.model };
       else applyModel(details.model, models);
     }
@@ -112,7 +112,7 @@ export default function useVehicleDocumentAutofill() {
     if (makeId === selectedMake) return;
     catalog.handleMakeChange(makeId);
     setSelectedModel("");
-    handleFieldChange("custom_model", "");
+    handleFieldChange("customModel", "");
   }
 
   // Finish a queued scan match once the catalog supplies the make's models.

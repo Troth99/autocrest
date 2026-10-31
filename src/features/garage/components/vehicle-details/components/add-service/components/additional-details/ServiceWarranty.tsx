@@ -29,14 +29,14 @@ export default function ServiceWarranty({
                         Odometer limit (km)
                     </label>
                     <input data-slot="input"
-                        id="warranty-mileage" {...register("warrantyMileage")}
+                        id="warranty-mileage" {...register("warrantyMileageKm")}
                         type="number"
                         min="0"
                         step="1"
                         placeholder="170000"
                         className="native-input"
                     />
-                    <FieldError message={errors.warrantyMileage} />
+                    <FieldError message={errors.warrantyMileageKm} />
                 </div>
             </div>
         </fieldset>

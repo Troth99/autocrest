@@ -13,17 +13,17 @@ Do not extract owner names, addresses or personal identifiers.
 Map the document codes:
 D.1 -> make
 D.3 -> model (commercial description)
-D.2 -> type_variant_version
+D.2 -> typeVariantVersion
 E -> vin
-A -> registration_plate
-B -> first_registration_date, formatted YYYY-MM-DD
-P.1 -> engine_cc
-P.2 -> power_kw (keep kW, do not convert)
-P.3 -> fuel_type
+A -> registrationPlate
+B -> firstRegistrationDate, formatted YYYY-MM-DD
+P.1 -> engineCc
+P.2 -> powerKw (keep kW, do not convert)
+P.3 -> fuelType
 R -> colour
 S.1 -> seats
-J -> vehicle_category
-V.9 -> environmental_class (preserve the printed text)
+J -> vehicleCategory
+V.9 -> environmentalClass (preserve the printed text)
 
 If D.1 visibly contains both make and model and D.3 is empty, split the
 printed D.1 text into make and model. For example RENAULT LAGUNA ->
@@ -35,10 +35,10 @@ when unambiguous; otherwise preserve the printed name for manual review.
 Do not return duplicate bilingual names or placeholder asterisks as names.
 Missing fields in either part must remain null. Do not infer unseen details.
 
-Extract registration_certificate_number only when clearly identified
+Extract registrationCertificateNumber only when clearly identified
 as the document number. It is not the registration plate or VIN.
 
-Normalize fuel_type only when supported by the printed information.
+Normalize fuelType only when supported by the printed information.
 Do not assume that petrol/electric means plug-in hybrid.
 Do not invent a manufacture year from the first registration date.
 `;

@@ -22,10 +22,10 @@ export async function getVehicles(
   const { data, error } = await supabase
     .from("vehicles")
     .select("*")
-    .eq("user_id", user.id)
-    .is("archived_at", null)
-    .order("is_primary", { ascending: false })
-    .order("created_at", { ascending: false })
+    .eq("userId", user.id)
+    .is("archivedAt", null)
+    .order("isPrimary", { ascending: false })
+    .order("createdAt", { ascending: false })
     .overrideTypes<Vehicle[]>();
 
   if (error) {
@@ -53,8 +53,8 @@ export async function addVehicle(supabase: SupabaseClient, input: unknown) {
     .from("vehicles")
     .insert({
       ...values,
-      user_id: user.id,
-      vehicle_type: "car",
+      userId: user.id,
+      vehicleType: "car",
     })
     .select("id")
     .single();
@@ -122,8 +122,8 @@ export async function getVehicleById(
     .from("vehicles")
     .select("*")
     .eq("id", vehicleId)
-    .eq("user_id", user.id)
-    .is("archived_at", null)
+    .eq("userId", user.id)
+    .is("archivedAt", null)
     .maybeSingle<Vehicle>();
 
   if (error) {
@@ -168,12 +168,12 @@ export async function updateVehicle(
     // Mileage is owned by the mileage dialog; do not overwrite it from a stale edit form.
     .update({
       ...values,
-      mileage_km: undefined,
-      mileage_recorded_at: undefined,
+      mileageKm: undefined,
+      mileageRecordedAt: undefined,
     })
     .eq("id", vehicleId)
-    .eq("user_id", user.id)
-    .is("archived_at", null)
+    .eq("userId", user.id)
+    .is("archivedAt", null)
     .select("id")
     .maybeSingle();
 
@@ -200,15 +200,15 @@ export async function updateVehicleMileage(
   }
 
   const values = createUpdateMileageSchema(
-    vehicle.mileage_km,
-    vehicle.mileage_recorded_at,
+    vehicle.mileageKm,
+    vehicle.mileageRecordedAt,
   ).parse(input);
 
-  const recordedAt = `${values.mileage_recorded_at}T00:00:00.000Z`;
+  const recordedAt = `${values.mileageRecordedAt}T00:00:00.000Z`;
 
   if (
-    values.mileage_km === vehicle.mileage_km &&
-    values.mileage_recorded_at === vehicle.mileage_recorded_at?.slice(0, 10)
+    values.mileageKm === vehicle.mileageKm &&
+    values.mileageRecordedAt === vehicle.mileageRecordedAt?.slice(0, 10)
   ) {
     throw new Error("There were no changes to save.");
   }
@@ -216,27 +216,27 @@ export async function updateVehicleMileage(
   const { data, error } = await supabase
     .from("vehicles")
     .update({
-      mileage_km: values.mileage_km,
-      mileage_recorded_at: recordedAt,
+      mileageKm: values.mileageKm,
+      mileageRecordedAt: recordedAt,
       ...(values.mode !== "reading"
         ? {
-            mileage_adjustment: {
+            mileageAdjustment: {
               kind: values.mode,
               reason: values.reason,
-              previous_mileage_km: vehicle.mileage_km,
-              previous_recorded_at: vehicle.mileage_recorded_at,
-              mileage_km: values.mileage_km,
-              recorded_at: recordedAt,
-              adjusted_at: new Date().toISOString(),
+              previousMileageKm: vehicle.mileageKm,
+              previousRecordedAt: vehicle.mileageRecordedAt,
+              mileageKm: values.mileageKm,
+              recordedAt: recordedAt,
+              adjustedAt: new Date().toISOString(),
             },
           }
         : {}),
     })
     .eq("id", vehicleId)
-    .eq("user_id", vehicle.user_id)
-    .eq("mileage_km", vehicle.mileage_km)
-    .eq("updated_at", vehicle.updated_at)
-    .is("archived_at", null)
+    .eq("userId", vehicle.userId)
+    .eq("mileageKm", vehicle.mileageKm)
+    .eq("updatedAt", vehicle.updatedAt)
+    .is("archivedAt", null)
     .select("id")
     .maybeSingle();
 
@@ -277,12 +277,12 @@ export async function deleteVehicle(
 
   const { data: photos, error: photosError } = await supabase
     .from("vehicle_photos")
-    .select("storage_path")
-    .eq("vehicle_id", vehicleId);
+    .select("storagePath")
+    .eq("vehicleId", vehicleId);
 
   if (photosError) throw photosError;
 
-  const paths = (photos ?? []).map((photo) => photo.storage_path);
+  const paths = (photos ?? []).map((photo) => photo.storagePath);
 
   if (paths.length > 0) {
     const { error: storageError } = await supabase.storage
@@ -299,7 +299,7 @@ export async function deleteVehicle(
     .from("vehicles")
     .delete()
     .eq("id", vehicleId)
-    .eq("user_id", vehicle.user_id)
+    .eq("userId", vehicle.userId)
     .select("id")
     .maybeSingle();
 

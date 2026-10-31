@@ -33,7 +33,7 @@ export default function EditProfilePage() {
           name={fullName || user.name}
           email={user.email}
           phone={values.phone}
-          avatarUrl={avatarPreview || values.avatar_url || null}
+          avatarUrl={avatarPreview || values.avatarUrl || null}
         />
         <form
           className="profile-edit-form"
@@ -50,7 +50,7 @@ export default function EditProfilePage() {
           <ProfileAvatarSelector
             avatarPreview={avatarPreview}
             avatarFile={avatarFile}
-            avatarUrl={values.avatar_url}
+            avatarUrl={values.avatarUrl}
             initials={getInitials(fullName || user.name, user.email ?? "")}
             isSaving={isSaving}
             avatarError={avatarError}

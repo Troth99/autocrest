@@ -74,12 +74,12 @@ export const addVehicleSchema = z
     seats: optionalPositiveInteger,
     plate: optionalText,
     vin: optionalText,
-    registration_certificate_number: optionalText,
-    registration_country_code: optionalCode(2, "BG"),
-    purchase_currency_code: optionalCode(3, "EUR"),
+    registrationCertificateNumber: optionalText,
+    registrationCountryCode: optionalCode(2, "BG"),
+    purchaseCurrencyCode: optionalCode(3, "EUR"),
     description: optionalText,
-    is_primary: z.boolean(),
-    manufacture_year: z
+    isPrimary: z.boolean(),
+    manufactureYear: z
       .string()
       .trim()
       .min(1, "Manufacture year is required.")
@@ -95,17 +95,17 @@ export const addVehicleSchema = z
             "Manufacture year is too far in the future.",
           ),
       ),
-    engine_cc: optionalPositiveInteger,
-    power_hp: optionalPositiveInteger,
-    purchase_price: optionalPrice,
-    first_registration_date: optionalDate,
-    purchase_date: optionalDate,
+    engineCc: optionalPositiveInteger,
+    powerHp: optionalPositiveInteger,
+    purchasePrice: optionalPrice,
+    firstRegistrationDate: optionalDate,
+    purchaseDate: optionalDate,
     // Store the date-only mileage input as an explicit UTC timestamp.
-    mileage_recorded_at: optionalDate.transform((value) =>
+    mileageRecordedAt: optionalDate.transform((value) =>
       value === null ? null : `${value}T00:00:00.000Z`,
     ),
-    vehicle_use: optionalChoice(["personal", "business", "mixed"]),
-    fuel_type: z.enum(
+    vehicleUse: optionalChoice(["personal", "business", "mixed"]),
+    fuelType: z.enum(
       [
         "petrol",
         "diesel",
@@ -122,7 +122,7 @@ export const addVehicleSchema = z
       error: "Choose a transmission.",
     }),
     drivetrain: optionalChoice(["fwd", "rwd", "awd", "4wd"]),
-    euro_standard: optionalChoice([
+    euroStandard: optionalChoice([
       "euro_1",
       "euro_2",
       "euro_3",
@@ -130,7 +130,7 @@ export const addVehicleSchema = z
       "euro_5",
       "euro_6",
     ]),
-    mileage_km: z
+    mileageKm: z
       .string()
       .trim()
       .min(1, "Mileage is required.")
@@ -140,9 +140,9 @@ export const addVehicleSchema = z
   })
   .refine(
     (values) =>
-      values.purchase_price === null || values.purchase_currency_code !== null,
+      values.purchasePrice === null || values.purchaseCurrencyCode !== null,
     {
       message: "Choose a currency when entering a purchase price.",
-      path: ["purchase_currency_code"],
+      path: ["purchaseCurrencyCode"],
     },
   );

@@ -74,12 +74,12 @@ export default function useAddVehicleForm({
     const submittedValues: AddVehicleFormValues = {
       ...values,
       ...documentValues,
-      make_id: selectedMake,
-      model_id: selectedMake === "other" ? "" : selectedModel,
-      custom_make: selectedMake === "other" ? documentValues.custom_make : "",
-      custom_model:
+      makeId: selectedMake,
+      modelId: selectedMake === "other" ? "" : selectedModel,
+      customMake: selectedMake === "other" ? documentValues.customMake : "",
+      customModel:
         selectedMake === "other" || selectedModel === "other"
-          ? documentValues.custom_model
+          ? documentValues.customModel
           : "",
     };
 

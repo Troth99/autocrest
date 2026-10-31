@@ -40,7 +40,7 @@ export function EditVehicleForm({ vehicle }: Props) {
         if (makeId === selectedMake) return;
         changeCatalogMake(makeId);
         // A new make invalidates the previous manually entered model.
-        setFieldValue("custom_model", "");
+        setFieldValue("customModel", "");
     }
 
     function handleFieldChange(field: keyof VehicleDocumentFormValues, value: string) {

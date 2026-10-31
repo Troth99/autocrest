@@ -1,16 +1,11 @@
-export type VehicleServiceType = "maintenance" | "repair" | "inspection" | "tyres" | "other";
+import type { output } from "zod";
+import type { addServiceSchema } from "@/features/garage/validators/add-service-validator";
 
-export type VehicleServiceRecord = {
+export type VehicleServiceType = output<typeof addServiceSchema>["serviceType"];
+
+export type VehicleServiceRecord = output<typeof addServiceSchema> & {
   id: string;
-  vehicle_id: string;
-  service_type: VehicleServiceType;
-  title: string;
-  performed_on: string;
-  mileage_km: number | null;
-  service_provider: string | null;
-  description: string | null;
-  next_service_on: string | null;
-  next_service_mileage_km: number | null;
-  created_at: string;
-  updated_at: string;
+  vehicleId: string;
+  currencyCode: string;
+  createdAt: string;
 };

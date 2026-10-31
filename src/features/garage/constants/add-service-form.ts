@@ -4,7 +4,7 @@ export const initialValues = {
   visitReason: "",
   customVisitReason: "",
   serviceDate: "",
-  mileage: "",
+  mileageKm: "",
   provider: "",
   workPerformed: "",
 
@@ -25,10 +25,10 @@ export const initialValues = {
   serviceOutcome: "",
   invoiceNumber: "",
   warrantyDate: "",
-  warrantyMileage: "",
+  warrantyMileageKm: "",
   recommendedWork: "",
   notes: "",
 
   nextServiceDate: "",
-  nextServiceMileage: "",
+  nextServiceMileageKm: "",
 };

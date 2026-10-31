@@ -34,11 +34,11 @@ export default function VehicleMakeModelFields({
 }: VehicleMakeModelProps) {
 
   function handleCustomMakeChange(event: ChangeEvent<HTMLInputElement>) {
-    onFieldChange("custom_make", event.target.value);
+    onFieldChange("customMake", event.target.value);
   }
 
   function handleCustomModelChange(event: ChangeEvent<HTMLInputElement>) {
-    onFieldChange("custom_model", event.target.value);
+    onFieldChange("customModel", event.target.value);
   }
 
   return (
@@ -46,7 +46,7 @@ export default function VehicleMakeModelFields({
       <div className="grid gap-2">
         <VehicleCatalogSelect
           id="make"
-          name="make_id"
+          name="makeId"
           label="Make"
           options={makes}
           value={selectedMake}
@@ -65,8 +65,8 @@ export default function VehicleMakeModelFields({
               data-slot="input"
               className="native-input"
               id="custom-make"
-              name="custom_make"
-              value={values.custom_make}
+              name="customMake"
+              value={values.customMake}
               onChange={handleCustomMakeChange}
               placeholder="Enter your vehicle make"
               aria-required="true"
@@ -94,8 +94,8 @@ export default function VehicleMakeModelFields({
               data-slot="input"
               className="native-input"
               id="custom-model"
-              name="custom_model"
-              value={values.custom_model}
+              name="customModel"
+              value={values.customModel}
               onChange={handleCustomModelChange}
               placeholder="Enter your vehicle model"
               aria-required="true"
@@ -112,7 +112,7 @@ export default function VehicleMakeModelFields({
             <VehicleCatalogSelect
               key={selectedMake}
               id="model"
-              name="model_id"
+              name="modelId"
               label="Model"
               options={models}
               value={selectedModel}
@@ -131,8 +131,8 @@ export default function VehicleMakeModelFields({
                   data-slot="input"
                   className="native-input"
                   id="custom-model"
-                  name="custom_model"
-                  value={values.custom_model}
+                  name="customModel"
+                  value={values.customModel}
                   onChange={handleCustomModelChange}
                   placeholder="Enter your vehicle model"
                   aria-required="true"

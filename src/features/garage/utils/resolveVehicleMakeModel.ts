@@ -9,15 +9,15 @@ type Selection = {
 
 // Both forms save catalog names, or the manual names entered for Other.
 export function resolveVehicleMakeModel(
-  values: { custom_make: string; custom_model: string },
+  values: { customMake: string; customModel: string },
   { selectedMake, selectedModel, makes, models }: Selection,
 ) {
   return {
     make: selectedMake === "other"
-      ? values.custom_make
+      ? values.customMake
       : (makes.find((item) => item.id === selectedMake)?.name ?? ""),
     model: selectedMake === "other" || selectedModel === "other"
-      ? values.custom_model
+      ? values.customModel
       : (models.find((item) => item.id === selectedModel)?.name ?? ""),
   };
 }

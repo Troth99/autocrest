@@ -116,9 +116,9 @@ export default function ServiceDetails({
                         step="1"
                         placeholder="150000"
                         className="native-input"
-                        {...register("mileage")}
+                        {...register("mileageKm")}
                     />
-                    <FieldError message={errors.mileage} />
+                    <FieldError message={errors.mileageKm} />
                 </div>
             </div>
             <div className="grid gap-2">

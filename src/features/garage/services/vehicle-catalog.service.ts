@@ -16,8 +16,8 @@ export async function getVehicleMakes(
   // Fetch vehicle makes from the database based on the provided vehicle type
   const { data, error } = await supabase
     .from("vehicle_makes")
-    .select("id, name, vehicle_type")
-    .eq("vehicle_type", vehicleType)
+    .select("id, name, vehicleType")
+    .eq("vehicleType", vehicleType)
     .order("name", { ascending: true });
 
   if (error) throw error;
@@ -34,8 +34,8 @@ export async function getVehicleModels(
 
   const { data, error } = await supabase
     .from("vehicle_models")
-    .select("id, make_id, name")
-    .eq("make_id", makeId)
+    .select("id, makeId, name")
+    .eq("makeId", makeId)
     .order("name", { ascending: true });
 
   if (error) throw error;

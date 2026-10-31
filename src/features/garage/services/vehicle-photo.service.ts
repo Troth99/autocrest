@@ -30,7 +30,7 @@ export async function uploadVehiclePhoto(
     .from("vehicles")
     .select("id")
     .eq("id", vehicleId)
-    .eq("user_id", user.id)
+    .eq("userId", user.id)
     .single();
   if (vehicleError || !vehicle)
     throw new Error("This vehicle is not available for photo upload.");
@@ -48,10 +48,10 @@ export async function uploadVehiclePhoto(
   const { error: metadataError } = await supabase
     .from("vehicle_photos")
     .insert({
-      vehicle_id: vehicleId,
-      storage_path: path,
-      is_primary: true,
-      sort_order: 0,
+      vehicleId: vehicleId,
+      storagePath: path,
+      isPrimary: true,
+      sortOrder: 0,
     });
   if (metadataError) {
     // Remove only the file created by this attempt if its database link failed.
@@ -75,7 +75,7 @@ export async function getVehiclePhotoUrls(
   // Store the selected photo's identity separately from its temporary URL.
   const selectedPhotos: Record<
     string,
-    Pick<VehiclePhoto, "id" | "storage_path">
+    Pick<VehiclePhoto, "id" | "storagePath">
   > = {};
   if (vehicleIds.length === 0) return { urls, selectedPhotos, error: null };
 
@@ -83,20 +83,20 @@ export async function getVehiclePhotoUrls(
   // Prefer primary photos, then sort order, then the newest upload.
   const { data, error } = await supabase
     .from("vehicle_photos")
-    .select("id, vehicle_id, storage_path, is_primary, sort_order, created_at")
-    .in("vehicle_id", vehicleIds)
-    .order("is_primary", { ascending: false })
-    .order("sort_order", { ascending: true })
-    .order("created_at", { ascending: false })
+    .select("id, vehicleId, storagePath, isPrimary, sortOrder, createdAt")
+    .in("vehicleId", vehicleIds)
+    .order("isPrimary", { ascending: false })
+    .order("sortOrder", { ascending: true })
+    .order("createdAt", { ascending: false })
     .overrideTypes<
       Pick<
         VehiclePhoto,
         | "id"
-        | "vehicle_id"
-        | "storage_path"
-        | "is_primary"
-        | "sort_order"
-        | "created_at"
+        | "vehicleId"
+        | "storagePath"
+        | "isPrimary"
+        | "sortOrder"
+        | "createdAt"
       >[]
     >();
   if (error) return { urls, selectedPhotos, error: "Vehicle photos could not be loaded." };
@@ -105,12 +105,12 @@ export async function getVehiclePhotoUrls(
   const primary = new Map<string, string>();
 
   for (const photo of data ?? []) {
-    if (!primary.has(photo.vehicle_id)) {
-      primary.set(photo.vehicle_id, photo.storage_path);
+    if (!primary.has(photo.vehicleId)) {
+      primary.set(photo.vehicleId, photo.storagePath);
 
-      selectedPhotos[photo.vehicle_id] = {
+      selectedPhotos[photo.vehicleId] = {
         id: photo.id,
-        storage_path: photo.storage_path,
+        storagePath: photo.storagePath,
       };
     }
   }
@@ -165,7 +165,7 @@ export async function removeVehiclePhoto(
     .from("vehicles")
     .select("id")
     .eq("id", vehicleId)
-    .eq("user_id", user.id)
+    .eq("userId", user.id)
     .single();
 
   if (vehicleError || !vehicle) {
@@ -175,9 +175,9 @@ export async function removeVehiclePhoto(
   // Read the actual storage path from the selected database record.
   const { data: photo, error: photoError } = await supabase
     .from("vehicle_photos")
-    .select("id, storage_path")
+    .select("id, storagePath")
     .eq("id", photoId)
-    .eq("vehicle_id", vehicleId)
+    .eq("vehicleId", vehicleId)
     .single();
 
   if (photoError || !photo) {
@@ -186,7 +186,7 @@ export async function removeVehiclePhoto(
 
   const { error: storageError } = await supabase.storage
     .from(VEHICLE_PHOTO_BUCKET)
-    .remove([photo.storage_path]);
+    .remove([photo.storagePath]);
 
   if (storageError) {
     throw new Error("Could not remove the photo file.");
@@ -196,7 +196,7 @@ export async function removeVehiclePhoto(
     .from("vehicle_photos")
     .delete()
     .eq("id", photoId)
-    .eq("vehicle_id", vehicleId)
+    .eq("vehicleId", vehicleId)
     .select("id")
     .maybeSingle();
 

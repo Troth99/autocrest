@@ -49,7 +49,7 @@ export default function AddVehicleForm() {
         onChange={handleFormChange}
       >
 
-        <input type="hidden" name="vehicle_type" value="car" />
+        <input type="hidden" name="vehicleType" value="car" />
 
         <fieldset disabled={isSubmitting || Boolean(savedVehicleId)} className="contents">
           <VehicleDocumentScan onExtracted={handleDocumentExtracted} />

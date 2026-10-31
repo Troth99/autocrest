@@ -4,14 +4,14 @@ import type { Vehicle } from "@/features/garage/types/vehicle";
 
 export default function VehicleSpecifications({ vehicle }: { vehicle: Vehicle }) {
     const specs = [
-        ["Make", vehicle.make], ["Model", vehicle.model], ["Year", vehicle.manufacture_year],
+        ["Make", vehicle.make], ["Model", vehicle.model], ["Year", vehicle.manufactureYear],
         ["Variant", vehicle.trim], ["Nickname", vehicle.nickname],
-        ["Fuel type", vehicle.fuel_type?.replaceAll("_", " ")],
+        ["Fuel type", vehicle.fuelType?.replaceAll("_", " ")],
         ["Transmission", vehicle.transmission?.replaceAll("_", " ")],
         ["Drivetrain", vehicle.drivetrain?.toUpperCase()],
-        ["Engine capacity", vehicle.engine_cc != null ? `${vehicle.engine_cc.toLocaleString("en-GB")} cc` : null],
-        ["Power", vehicle.power_hp != null ? `${vehicle.power_hp} hp` : null],
-        ["Emissions standard", vehicle.euro_standard?.replaceAll("_", " ")],
+        ["Engine capacity", vehicle.engineCc != null ? `${vehicle.engineCc.toLocaleString("en-GB")} cc` : null],
+        ["Power", vehicle.powerHp != null ? `${vehicle.powerHp} hp` : null],
+        ["Emissions standard", vehicle.euroStandard?.replaceAll("_", " ")],
         ["Colour", vehicle.colour], ["Seats", vehicle.seats],
     ] as const;
     return (

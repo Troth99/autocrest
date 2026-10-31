@@ -4,16 +4,16 @@ export type FuelQuantityUnit = "litres" | "kwh" | "kg";
 
 export type VehicleFuelLog = {
   id: string;
-  vehicle_id: string;
-  expense_id: string | null;
-  filled_on: string;
-  mileage_km: number;
-  fuel_type: FuelType;
+  vehicleId: string;
+  expenseId: string | null;
+  filledOn: string;
+  mileageKm: number;
+  fuelType: FuelType;
   quantity: number;
-  quantity_unit: FuelQuantityUnit;
-  is_full_tank: boolean;
+  quantityUnit: FuelQuantityUnit;
+  isFullTank: boolean;
   station: string | null;
   notes: string | null;
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
 };

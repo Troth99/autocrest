@@ -41,7 +41,7 @@ export default function UpdateMileage({
     const [reason, setReason] = useState("");
     const [confirmed, setConfirmed] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [fieldErrors, setFieldErrors] = useState<Partial<Record<"mileage_km" | "mileage_recorded_at" | "reason" | "confirmed", string>>>({});
+    const [fieldErrors, setFieldErrors] = useState<Partial<Record<"mileageKm" | "mileageRecordedAt" | "reason" | "confirmed", string>>>({});
     const errorId = useId();
 
     async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
@@ -50,8 +50,8 @@ export default function UpdateMileage({
 
         setError(null);
         const validation = createUpdateMileageSchema(currentMileage, currentRecordedAt).safeParse({
-            mileage_km: mileage,
-            mileage_recorded_at: recordedAt,
+            mileageKm: mileage,
+            mileageRecordedAt: recordedAt,
             mode, reason, confirmed,
         });
         const errors: typeof fieldErrors = {};
@@ -68,8 +68,8 @@ export default function UpdateMileage({
 
         try {
             await updateVehicleMileage(createClient(), vehicleId, {
-                mileage_km: mileage,
-                mileage_recorded_at: recordedAt,
+                mileageKm: mileage,
+                mileageRecordedAt: recordedAt,
                 mode, reason, confirmed,
             });
 
@@ -102,13 +102,13 @@ export default function UpdateMileage({
 
     function handleMileageChange(event: ChangeEvent<HTMLInputElement>) {
         setMileage(event.target.value);
-        setFieldErrors((current) => ({ ...current, mileage_km: undefined }));
+        setFieldErrors((current) => ({ ...current, mileageKm: undefined }));
         setError(null);
     }
 
     function handleRecordedAtChange(event: ChangeEvent<HTMLInputElement>) {
         setRecordedAt(event.target.value);
-        setFieldErrors((current) => ({ ...current, mileage_recorded_at: undefined }));
+        setFieldErrors((current) => ({ ...current, mileageRecordedAt: undefined }));
         setError(null);
     }
 
@@ -122,7 +122,7 @@ export default function UpdateMileage({
     function handleReadingDetected(mileageKm: number) {
         setRecordedAt(today());
         setMileage(String(mileageKm));
-        setFieldErrors((current) => ({ ...current, mileage_km: undefined }));
+        setFieldErrors((current) => ({ ...current, mileageKm: undefined }));
         setError(null);
     }
 
@@ -196,11 +196,11 @@ export default function UpdateMileage({
                         required
                         value={mileage}
                         disabled={isSaving}
-                        aria-invalid={Boolean(fieldErrors.mileage_km)}
-                        aria-describedby={fieldErrors.mileage_km ? `${errorId}-mileage` : undefined}
+                        aria-invalid={Boolean(fieldErrors.mileageKm)}
+                        aria-describedby={fieldErrors.mileageKm ? `${errorId}-mileage` : undefined}
                         onChange={handleMileageChange}
                     />
-                    {fieldErrors.mileage_km && <span id={`${errorId}-mileage`} role="alert" className="text-sm text-destructive">{fieldErrors.mileage_km}</span>}
+                    {fieldErrors.mileageKm && <span id={`${errorId}-mileage`} role="alert" className="text-sm text-destructive">{fieldErrors.mileageKm}</span>}
                 </label>
 
                 <label className="grid gap-2 text-sm">
@@ -212,11 +212,11 @@ export default function UpdateMileage({
                         required
                         value={recordedAt}
                         disabled={isSaving}
-                        aria-invalid={Boolean(fieldErrors.mileage_recorded_at)}
-                        aria-describedby={fieldErrors.mileage_recorded_at ? `${errorId}-date` : undefined}
+                        aria-invalid={Boolean(fieldErrors.mileageRecordedAt)}
+                        aria-describedby={fieldErrors.mileageRecordedAt ? `${errorId}-date` : undefined}
                         onChange={handleRecordedAtChange}
                     />
-                    {fieldErrors.mileage_recorded_at && <span id={`${errorId}-date`} role="alert" className="text-sm text-destructive">{fieldErrors.mileage_recorded_at}</span>}
+                    {fieldErrors.mileageRecordedAt && <span id={`${errorId}-date`} role="alert" className="text-sm text-destructive">{fieldErrors.mileageRecordedAt}</span>}
                 </label>
 
                 {mode !== "reading" && <>

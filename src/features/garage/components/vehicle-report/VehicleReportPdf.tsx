@@ -89,11 +89,11 @@ export default function VehicleReportPdf({
                         </View>
                         <View style={styles.row} wrap={false}>
                             <Text style={styles.label}>Manufacture year</Text>
-                            <Text>{String(vehicle.manufacture_year ?? "Not provided")}</Text>
+                            <Text>{String(vehicle.manufactureYear ?? "Not provided")}</Text>
                         </View>
                         <View style={styles.row} wrap={false}>
                             <Text style={styles.label}>Vehicle type</Text>
-                            <Text>{vehicle.vehicle_type}</Text>
+                            <Text>{vehicle.vehicleType}</Text>
                         </View>
                         <View style={styles.row} wrap={false}>
                             <Text style={styles.label}>Trim</Text>
@@ -114,7 +114,7 @@ export default function VehicleReportPdf({
                     <View style={styles.grid}>
                         <View style={styles.row} wrap={false}>
                             <Text style={styles.label}>Fuel type</Text>
-                            <Text>{vehicle.fuel_type?.replaceAll("_", " ") ?? "Not provided"}</Text>
+                            <Text>{vehicle.fuelType?.replaceAll("_", " ") ?? "Not provided"}</Text>
                         </View>
                         <View style={styles.row} wrap={false}>
                             <Text style={styles.label}>Transmission</Text>
@@ -126,15 +126,15 @@ export default function VehicleReportPdf({
                         </View>
                         <View style={styles.row} wrap={false}>
                             <Text style={styles.label}>Engine capacity</Text>
-                            <Text>{vehicle.engine_cc != null ? `${vehicle.engine_cc} cc` : "Not provided"}</Text>
+                            <Text>{vehicle.engineCc != null ? `${vehicle.engineCc} cc` : "Not provided"}</Text>
                         </View>
                         <View style={styles.row} wrap={false}>
                             <Text style={styles.label}>Power</Text>
-                            <Text>{vehicle.power_hp != null ? `${vehicle.power_hp} hp` : "Not provided"}</Text>
+                            <Text>{vehicle.powerHp != null ? `${vehicle.powerHp} hp` : "Not provided"}</Text>
                         </View>
                         <View style={styles.row} wrap={false}>
                             <Text style={styles.label}>Emissions standard</Text>
-                            <Text>{vehicle.euro_standard?.replaceAll("_", " ").toUpperCase() ?? "Not provided"}</Text>
+                            <Text>{vehicle.euroStandard?.replaceAll("_", " ").toUpperCase() ?? "Not provided"}</Text>
                         </View>
                     </View>
                 </View>
@@ -143,29 +143,29 @@ export default function VehicleReportPdf({
                     <View style={styles.grid}>
                         <View style={styles.row} wrap={false}>
                             <Text style={styles.label}>First registration</Text>
-                            <Text>{vehicle.first_registration_date ?? "Not provided"}</Text>
+                            <Text>{vehicle.firstRegistrationDate ?? "Not provided"}</Text>
                         </View>
                         <View style={styles.row} wrap={false}>
                             <Text style={styles.label}>Registration country</Text>
-                            <Text>{vehicle.registration_country_code ?? "Not provided"}</Text>
+                            <Text>{vehicle.registrationCountryCode ?? "Not provided"}</Text>
                         </View>
                         <View style={styles.row} wrap={false}>
                             <Text style={styles.label}>Registration certificate number</Text>
-                            <Text>{vehicle.registration_certificate_number ?? "Not provided"}</Text>
+                            <Text>{vehicle.registrationCertificateNumber ?? "Not provided"}</Text>
                         </View>
                         <View style={styles.row} wrap={false}>
                             <Text style={styles.label}>Purchase date</Text>
-                            <Text>{vehicle.purchase_date ?? "Not provided"}</Text>
+                            <Text>{vehicle.purchaseDate ?? "Not provided"}</Text>
                         </View>
                         <View style={styles.row} wrap={false}>
                             <Text style={styles.label}>Purchase price</Text>
-                            <Text>{vehicle.purchase_price != null
-                                ? `${vehicle.purchase_price.toLocaleString("en-GB")} ${vehicle.purchase_currency_code ?? ""}`.trim()
+                            <Text>{vehicle.purchasePrice != null
+                                ? `${vehicle.purchasePrice.toLocaleString("en-GB")} ${vehicle.purchaseCurrencyCode ?? ""}`.trim()
                                 : "Not provided"}</Text>
                         </View>
                         <View style={styles.row} wrap={false}>
                             <Text style={styles.label}>Vehicle use</Text>
-                            <Text>{vehicle.vehicle_use ?? "Not provided"}</Text>
+                            <Text>{vehicle.vehicleUse ?? "Not provided"}</Text>
                         </View>
                     </View>
                 </View>
@@ -174,11 +174,11 @@ export default function VehicleReportPdf({
                     <View style={styles.grid}>
                         <View style={styles.row} wrap={false}>
                             <Text style={styles.label}>Current odometer reading</Text>
-                            <Text>{`${vehicle.mileage_km.toLocaleString("en-GB")} km`}</Text>
+                            <Text>{`${vehicle.mileageKm.toLocaleString("en-GB")} km`}</Text>
                         </View>
                         <View style={styles.row} wrap={false}>
                             <Text style={styles.label}>Mileage recorded on</Text>
-                            <Text>{vehicle.mileage_recorded_at?.slice(0, 10) ?? "Not provided"}</Text>
+                            <Text>{vehicle.mileageRecordedAt?.slice(0, 10) ?? "Not provided"}</Text>
                         </View>
                     </View>
                 </View>

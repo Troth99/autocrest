@@ -20,44 +20,44 @@ export default function VehicleMileageFields({
       </p>
       <div className="vehicle-fields-grid">
         <label
-          htmlFor="mileage_km"
+          htmlFor="mileageKm"
           className="form-field"
         >
           <span>Current mileage (km) *</span>
           <input
             data-slot="input"
             className="native-input"
-            id="mileage_km"
-            {...register("mileage_km")}
+            id="mileageKm"
+            {...register("mileageKm")}
             type="number"
             placeholder="e.g. 85000"
             min={0}
-            aria-invalid={Boolean(errors.mileage_km)}
-            aria-describedby={errors.mileage_km ? "mileage_km-error" : undefined}
+            aria-invalid={Boolean(errors.mileageKm)}
+            aria-describedby={errors.mileageKm ? "mileageKm-error" : undefined}
           />
           <VehicleFieldError
-            field="mileage_km"
-            message={errors.mileage_km}
+            field="mileageKm"
+            message={errors.mileageKm}
           />
         </label>
 
         <label
-          htmlFor="mileage_recorded_at"
+          htmlFor="mileageRecordedAt"
           className="form-field"
         >
           <span>Mileage recorded on</span>
           <input
             data-slot="input"
             className="native-input"
-            id="mileage_recorded_at"
-            {...register("mileage_recorded_at")}
+            id="mileageRecordedAt"
+            {...register("mileageRecordedAt")}
             type="date"
-            aria-invalid={Boolean(errors.mileage_recorded_at)}
-            aria-describedby={errors.mileage_recorded_at ? "mileage_recorded_at-error" : undefined}
+            aria-invalid={Boolean(errors.mileageRecordedAt)}
+            aria-describedby={errors.mileageRecordedAt ? "mileageRecordedAt-error" : undefined}
           />
           <VehicleFieldError
-            field="mileage_recorded_at"
-            message={errors.mileage_recorded_at}
+            field="mileageRecordedAt"
+            message={errors.mileageRecordedAt}
           />
         </label>
       </div>

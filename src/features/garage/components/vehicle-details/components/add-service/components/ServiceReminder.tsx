@@ -33,14 +33,14 @@ export default function ServiceReminder({
                         Due at mileage (km)
                     </label>
                     <input data-slot="input"
-                        id="next-service-mileage" {...register("nextServiceMileage")}
+                        id="next-service-mileage" {...register("nextServiceMileageKm")}
                         type="number"
                         min="0"
                         step="1"
                         placeholder="160000"
                         className="native-input"
                     />
-                    <FieldError message={errors.nextServiceMileage} />
+                    <FieldError message={errors.nextServiceMileageKm} />
                 </div>
             </div>
         </details>

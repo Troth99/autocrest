@@ -12,15 +12,15 @@ export default function VehicleOverview({ vehicle }: { vehicle: Vehicle }) {
         <div className="min-w-0">
           <dt className="text-xs text-muted">Mileage</dt>
           <dd className="vehicle-summary-value">
-            {vehicle.mileage_km.toLocaleString("en-GB")} km
+            {vehicle.mileageKm.toLocaleString("en-GB")} km
           </dd>
 
-          {vehicle.mileage_adjustment && (
+          {vehicle.mileageAdjustment && (
             <dd
               className="mt-1 text-xs text-muted"
-              title={vehicle.mileage_adjustment.reason}
+              title={vehicle.mileageAdjustment.reason}
             >
-              {vehicle.mileage_adjustment.kind === "replacement"
+              {vehicle.mileageAdjustment.kind === "replacement"
                 ? "Odometer replaced"
                 : "Mileage corrected"}
             </dd>
@@ -35,7 +35,7 @@ export default function VehicleOverview({ vehicle }: { vehicle: Vehicle }) {
         <div className="min-w-0">
           <dt className="text-xs text-muted">Fuel</dt>
           <dd className="vehicle-summary-value">
-            {formatVehicleValue(vehicle.fuel_type?.replaceAll("_", " "))}
+            {formatVehicleValue(vehicle.fuelType?.replaceAll("_", " "))}
           </dd>
         </div>
       </div>
@@ -60,7 +60,7 @@ export default function VehicleOverview({ vehicle }: { vehicle: Vehicle }) {
           <dt className="text-xs text-muted">Power</dt>
           <dd className="vehicle-summary-value">
             {formatVehicleValue(
-              vehicle.power_hp != null ? `${vehicle.power_hp} hp` : null,
+              vehicle.powerHp != null ? `${vehicle.powerHp} hp` : null,
             )}
           </dd>
         </div>
@@ -73,7 +73,7 @@ export default function VehicleOverview({ vehicle }: { vehicle: Vehicle }) {
         <div className="min-w-0">
           <dt className="text-xs text-muted">Registration country</dt>
           <dd className="vehicle-summary-value">
-            {formatVehicleValue(vehicle.registration_country_code)}
+            {formatVehicleValue(vehicle.registrationCountryCode)}
           </dd>
         </div>
       </div>
