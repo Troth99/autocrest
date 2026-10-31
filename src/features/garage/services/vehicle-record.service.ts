@@ -13,3 +13,7 @@ export async function addVehicleService(
 
   if (error) throw error;
 }
+
+export async function getVehicleReports() {
+  
+}
