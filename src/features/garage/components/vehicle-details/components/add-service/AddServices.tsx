@@ -16,8 +16,8 @@ export default function AddService({ vehicleId }: Props) {
 
     async function addServiceHandler(values : AddServiceFormValues ) {
    
-        console.log("adding service")
-
+        const print = Object.values(values)
+        console.log(print)
     }
 
     const {register, formHandler} = useForm(addServiceHandler, initialServiceValues)
@@ -37,17 +37,17 @@ export default function AddService({ vehicleId }: Props) {
                         <legend className="sr-only">
                             Service details
                         </legend>
-                        <ServiceDetails />
+                        <ServiceDetails register={register}/>
 
                     </fieldset>
 
                     <fieldset className="content-card vehicle-form-section space-y-4">
-                        <ServiceCost />
+                        <ServiceCost  register={register}/>
                     </fieldset>
 
-                    <ServiceAdditionalDetails />
+                    <ServiceAdditionalDetails register={register} />
 
-                    <ServiceReminder />
+                    <ServiceReminder register={register} />
 
                     <footer className="flex justify-end gap-3 border-t border-line pt-4">
                         <Link href={`/vehicles/${vehicleId}`}

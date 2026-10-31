@@ -1,5 +1,9 @@
+import { Props as VehicleAddServiceProps } from "@/features/garage/types/add-service-form";
 
-export default function ServiceDetails() {
+
+export default function ServiceDetails({
+    register
+}: VehicleAddServiceProps) {
 
     return (
         <>
@@ -10,7 +14,7 @@ export default function ServiceDetails() {
                     <label htmlFor="service-type" className="form-field-label">
                         Service type *
                     </label>
-                    <select id="service-type" className="form-select">
+                    <select id="service-type" className="form-select" {...register("serviceType")}>
                         <option value="">Select service</option>
                         <option value="oil">Oil & filters</option>
                         <option value="brakes">Brakes</option>
@@ -25,10 +29,10 @@ export default function ServiceDetails() {
                 </div>
 
                 <div className="grid gap-2">
-                    <label htmlFor="visit-reason" className="form-field-label">
+                    <label htmlFor="visit-reason" className="form-field-label" >
                         Reason for visit
                     </label>
-                    <select id="visit-reason" className="form-select">
+                    <select id="visit-reason" className="form-select" {...register("visitReason")}>
                         <option value="">Select reason</option>
                         <option value="scheduled">Scheduled maintenance</option>
                         <option value="repair">Repair</option>
@@ -47,6 +51,7 @@ export default function ServiceDetails() {
                         id="service-date"
                         type="date"
                         className="native-input"
+                        {...register("serviceDate")}
                     />
                 </div>
 
@@ -61,6 +66,7 @@ export default function ServiceDetails() {
                         step="1"
                         placeholder="150000"
                         className="native-input"
+                        {...register("mileage")}
                     />
                 </div>
             </div>
@@ -73,6 +79,7 @@ export default function ServiceDetails() {
                     type="text"
                     placeholder="Workshop name or DIY"
                     className="native-input"
+                    {...register("provider")}
                 />
             </div>
 
@@ -85,6 +92,7 @@ export default function ServiceDetails() {
                     rows={3}
                     placeholder="Describe what was checked, repaired or replaced."
                     className="form-textarea"
+                    {...register("workPerformed")}
                 />
             </div>
 

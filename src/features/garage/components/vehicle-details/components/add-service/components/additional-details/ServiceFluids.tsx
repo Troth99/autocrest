@@ -1,4 +1,8 @@
-export default function ServiceFluids() {
+import type { Props as VehicleAddServiceProps } from "@/features/garage/types/add-service-form";
+
+export default function ServiceFluids({
+    register
+}: VehicleAddServiceProps) {
     return (
         <fieldset className="space-y-4 rounded-xl border border-line p-4">
             <legend className="px-2 text-sm font-semibold">
@@ -9,7 +13,7 @@ export default function ServiceFluids() {
                 <label htmlFor="fluid-type" className="text-sm">
                     Fluid type
                 </label>
-                <select id="fluid-type" className="form-select">
+                <select id="fluid-type" {...register("fluidType")} className="form-select">
                     <option value="">Select fluid</option>
                     <option value="engine-oil">Engine oil</option>
                     <option value="transmission-oil">Transmission oil</option>
@@ -25,7 +29,7 @@ export default function ServiceFluids() {
                         Brand / specification
                     </label>
                     <input data-slot="input"
-                        id="fluid-specification"
+                        id="fluid-specification" {...register("fluidSpecification")}
                         type="text"
                         placeholder="e.g. 5W-30, manufacturer approval"
                         className="native-input"
@@ -37,7 +41,7 @@ export default function ServiceFluids() {
                         Quantity (liters)
                     </label>
                     <input data-slot="input"
-                        id="fluid-quantity"
+                        id="fluid-quantity" {...register("fluidQuantity")}
                         type="number"
                         min="0"
                         step="0.01"

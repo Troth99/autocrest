@@ -1,4 +1,8 @@
-export default function ServiceReminder() {
+import type { Props as VehicleAddServiceProps } from "@/features/garage/types/add-service-form";
+
+export default function ServiceReminder({
+    register
+}: VehicleAddServiceProps) {
     return (
         <details className="content-card vehicle-form-section">
             <summary className="cursor-pointer text-sm font-semibold">
@@ -15,7 +19,7 @@ export default function ServiceReminder() {
                         Due date
                     </label>
                     <input data-slot="input"
-                        id="next-service-date"
+                        id="next-service-date" {...register("nextServiceDate")}
                         type="date"
                         className="native-input"
                     />
@@ -26,7 +30,7 @@ export default function ServiceReminder() {
                         Due at mileage (km)
                     </label>
                     <input data-slot="input"
-                        id="next-service-mileage"
+                        id="next-service-mileage" {...register("nextServiceMileage")}
                         type="number"
                         min="0"
                         step="1"

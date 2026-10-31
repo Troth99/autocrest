@@ -1,4 +1,8 @@
-export default function ServiceCost() {
+import { Props as VehicleAddServiceProps } from "@/features/garage/types/add-service-form";
+
+export default function ServiceCost({
+        register
+    }: VehicleAddServiceProps) {
     return (
         <>
             <h2 className="section-title">Cost</h2>
@@ -15,6 +19,7 @@ export default function ServiceCost() {
                         step="0.01"
                         placeholder="0.00"
                         className="native-input"
+                        {...register("partsCost")}
                     />
                 </div>
 
@@ -29,6 +34,7 @@ export default function ServiceCost() {
                         step="0.01"
                         placeholder="0.00"
                         className="native-input"
+                         {...register("laborCost")}
                     />
                 </div>
             </div>

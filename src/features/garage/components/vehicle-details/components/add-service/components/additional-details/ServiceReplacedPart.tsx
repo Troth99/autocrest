@@ -1,4 +1,8 @@
-export default function ServiceReplacedPart() {
+import { Props as VehicleAddServiceProps } from "@/features/garage/types/add-service-form";
+
+export default function ServiceReplacedPart({
+    register
+}: VehicleAddServiceProps) {
     return (
         <fieldset className="space-y-4 rounded-xl border border-line p-4">
             <legend className="px-2 text-sm font-semibold">
@@ -14,6 +18,7 @@ export default function ServiceReplacedPart() {
                     type="text"
                     placeholder="e.g. Oil filter"
                     className="native-input"
+                    {...register("partName")}
                 />
             </div>
 
@@ -23,7 +28,7 @@ export default function ServiceReplacedPart() {
                         Brand
                     </label>
                     <input data-slot="input"
-                        id="part-brand"
+                        id="part-brand" {...register("partBrand")}
                         type="text"
                         placeholder="Manufacturer"
                         className="native-input"
@@ -35,7 +40,7 @@ export default function ServiceReplacedPart() {
                         Part number
                     </label>
                     <input data-slot="input"
-                        id="part-number"
+                        id="part-number" {...register("partNumber")}
                         type="text"
                         placeholder="Catalogue number"
                         className="native-input"
@@ -48,7 +53,7 @@ export default function ServiceReplacedPart() {
                     Quantity
                 </label>
                 <input data-slot="input"
-                    id="part-quantity"
+                    id="part-quantity" {...register("partQuantity")}
                     type="number"
                     min="1"
                     step="1"
