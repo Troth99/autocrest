@@ -55,7 +55,7 @@ export default function DeleteVehicleDialog({
             onOpenChange={handleOpenChange}
             backdropClassName="fixed inset-0 z-50 bg-black/65"
             popupProps={{
-                className: "modal-position max-w-md rounded-2xl border border-line bg-panel p-6 text-text-primary shadow-2xl",
+                className: "modal-position w-[calc(100%-2rem)] max-w-md rounded-2xl border border-line bg-panel p-6 text-text-primary shadow-2xl",
             }}
         >
             <Dialog.Title className="text-xl font-semibold">

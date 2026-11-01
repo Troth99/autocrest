@@ -49,7 +49,7 @@ export default function TwoFactorSetupDialog({
         backdropClassName="fixed inset-0 z-50 bg-black/65 transition-opacity duration-200 data-ending-style:opacity-0 motion-reduce:transition-none"
         popupProps={{
             finalFocus: triggerRef,
-            className: "modal-position card-base max-h-[calc(100dvh-2rem)] max-w-lg overflow-y-auto text-text-primary shadow-2xl outline-none transition-[opacity,scale] duration-200 data-starting-style:scale-95 data-starting-style:opacity-0 data-ending-style:scale-95 data-ending-style:opacity-0 motion-reduce:transition-none",
+            className: "modal-position w-[calc(100%-2rem)] card-base max-h-[calc(100dvh-2rem)] max-w-lg overflow-y-auto text-text-primary shadow-2xl outline-none transition-[opacity,scale] duration-200 data-starting-style:scale-95 data-starting-style:opacity-0 data-ending-style:scale-95 data-ending-style:opacity-0 motion-reduce:transition-none",
         }}
     >
       <Dialog.Close

@@ -104,7 +104,7 @@ export default function DisableTwoFactor({
         backdropClassName="fixed inset-0 z-50 bg-black/65"
         popupProps={{
             finalFocus: triggerRef,
-            className: "modal-position max-h-[calc(100dvh-2rem)] max-w-lg overflow-y-auto rounded-3xl border border-line bg-panel p-6 text-text-primary shadow-2xl outline-none sm:p-8",
+            className: "modal-position w-[calc(100%-2rem)] max-h-[calc(100dvh-2rem)] max-w-lg overflow-y-auto rounded-3xl border border-line bg-panel p-6 text-text-primary shadow-2xl outline-none sm:p-8",
             "aria-busy": busy,
         }}
         trigger={

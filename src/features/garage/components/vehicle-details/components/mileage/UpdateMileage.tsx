@@ -141,7 +141,7 @@ export default function UpdateMileage({
         <Modal isOpen={isOpen} onOpenChange={handleOpenChange}
             backdropClassName="fixed inset-0 z-50 bg-black/65"
             popupProps={{
-                className: "modal-position max-h-[calc(100dvh-2rem)] max-w-md overflow-y-auto rounded-2xl border border-line bg-panel p-6 text-text-primary shadow-2xl",
+                className: "modal-position w-[calc(100%-2rem)] max-h-[calc(100dvh-2rem)] max-w-md overflow-y-auto rounded-2xl border border-line bg-panel p-6 text-text-primary shadow-2xl",
             }}
             trigger={
                 <Dialog.Trigger
