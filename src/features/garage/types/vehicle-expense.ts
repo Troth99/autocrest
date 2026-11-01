@@ -16,18 +16,18 @@ export type VehicleExpenseCategory =
 // rather than duplicating amounts and causing double counting.
 export type VehicleExpense = {
   id: string;
-  vehicle_id: string;
+  vehicleId: string;
   category: VehicleExpenseCategory;
   title: string;
   amount: number;
-  currency_code: string;
-  incurred_on: string;
-  mileage_km: number | null;
+  currencyCode: string;
+  incurredOn: string;
+  mileageKm: number | null;
   vendor: string | null;
-  service_record_id: string | null;
-  document_id: string | null;
-  receipt_storage_path: string | null;
+  serviceRecordId: string | null;
+  documentId: string | null;
+  receiptStoragePath: string | null;
   notes: string | null;
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
 };

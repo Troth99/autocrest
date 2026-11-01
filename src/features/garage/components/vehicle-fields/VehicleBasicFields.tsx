@@ -22,25 +22,25 @@ export default function VehicleBasicFields(props: Props) {
           {...props}
         />}
         <label
-          htmlFor="manufacture_year"
+          htmlFor="manufactureYear"
           className="form-field"
         >
           <span>Manufacture year *</span>
           <input
             data-slot="input"
             className="native-input"
-            id="manufacture_year"
-            {...register("manufacture_year")}
+            id="manufactureYear"
+            {...register("manufactureYear")}
             type="number"
             aria-required="true"
             placeholder="e.g. 2020"
             min={0}
-            aria-invalid={Boolean(errors.manufacture_year)}
-            aria-describedby={errors.manufacture_year ? "manufacture_year-error" : undefined}
+            aria-invalid={Boolean(errors.manufactureYear)}
+            aria-describedby={errors.manufactureYear ? "manufactureYear-error" : undefined}
           />
           <VehicleFieldError
-            field="manufacture_year"
-            message={errors.manufacture_year}
+            field="manufactureYear"
+            message={errors.manufactureYear}
           />
         </label>
 
@@ -87,15 +87,15 @@ export default function VehicleBasicFields(props: Props) {
         </label>
 
         <label
-          htmlFor="vehicle_use"
+          htmlFor="vehicleUse"
           className="form-field"
         >
           <span>Vehicle use</span>
           <select
-            aria-invalid={Boolean(errors.vehicle_use)}
-            aria-describedby={errors.vehicle_use ? "vehicle_use-error" : undefined}
-            id="vehicle_use"
-            {...register("vehicle_use")}
+            aria-invalid={Boolean(errors.vehicleUse)}
+            aria-describedby={errors.vehicleUse ? "vehicleUse-error" : undefined}
+            id="vehicleUse"
+            {...register("vehicleUse")}
             className="form-select"
           >
             <option
@@ -120,8 +120,8 @@ export default function VehicleBasicFields(props: Props) {
             </option>
           </select>
           <VehicleFieldError
-            field="vehicle_use"
-            message={errors.vehicle_use}
+            field="vehicleUse"
+            message={errors.vehicleUse}
           />
         </label>
       </div>

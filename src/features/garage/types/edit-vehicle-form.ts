@@ -3,7 +3,7 @@ import type { AddVehicleFormValues } from "@/features/garage/types/add-vehicle-f
 import type { Vehicle } from "@/features/garage/types/vehicle";
 
 export type EditVehicleFormValues = AddVehicleFormValues & {
-  [Key in keyof Vehicle]: Key extends "is_primary" ? boolean : string;
+  [Key in keyof Vehicle]: Key extends "isPrimary" ? boolean : string;
 };
 
 export type EditVehicleFormRegister = ReturnType<

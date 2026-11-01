@@ -21,9 +21,9 @@ export default function useAddVehicleController() {
     )
       return;
     const field =
-      target.name === "custom_make"
+      target.name === "customMake"
         ? "make"
-        : target.name === "custom_model"
+        : target.name === "customModel"
           ? "model"
           : target.name;
     submission.setFieldErrors((current) => ({

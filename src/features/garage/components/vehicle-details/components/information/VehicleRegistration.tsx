@@ -4,10 +4,10 @@ import type { Vehicle } from "@/features/garage/types/vehicle";
 
 export default function VehicleRegistration({ vehicle }: { vehicle: Vehicle }) {
   const fields = [
-    ["Registration plate", vehicle.plate], ["Country", vehicle.registration_country_code],
-    ["First registration", vehicle.first_registration_date], ["VIN", vehicle.vin],
-    ["Certificate number", vehicle.registration_certificate_number],
-    ["Vehicle use", vehicle.vehicle_use],
+    ["Registration plate", vehicle.plate], ["Country", vehicle.registrationCountryCode],
+    ["First registration", vehicle.firstRegistrationDate], ["VIN", vehicle.vin],
+    ["Certificate number", vehicle.registrationCertificateNumber],
+    ["Vehicle use", vehicle.vehicleUse],
   ] as const;
   return (
     <section className="section-card">
@@ -20,7 +20,7 @@ export default function VehicleRegistration({ vehicle }: { vehicle: Vehicle }) {
           </div>
         ))}
       </dl>
-      <p className="mt-4 border-t border-line pt-4 text-xs leading-5 text-muted">Document uploads and insurance records are coming soon.</p>
+      <p className="mt-4 border-t border-line pt-4 field-description">Document uploads and insurance records are coming soon.</p>
     </section>
   );
 }

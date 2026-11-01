@@ -10,17 +10,17 @@ export type VehicleDocumentType =
 
 export type VehicleDocument = {
   id: string;
-  vehicle_id: string;
-  document_type: VehicleDocumentType;
+  vehicleId: string;
+  documentType: VehicleDocumentType;
   title: string;
-  document_number: string | null;
+  documentNumber: string | null;
   provider: string | null;
-  issued_on: string | null;
-  valid_from: string | null;
-  valid_until: string | null;
+  issuedOn: string | null;
+  validFrom: string | null;
+  validUntil: string | null;
   // Metadata may be recorded before a file is uploaded.
-  storage_path: string | null;
+  storagePath: string | null;
   notes: string | null;
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
 };

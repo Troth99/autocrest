@@ -15,7 +15,7 @@ export default function VehiclAdditionalDetails({
       <h2 className="section-title">Additional details</h2>
       <label
         htmlFor="description"
-        className="mt-4 grid gap-2 text-sm font-medium text-text-secondary"
+        className="mt-4 form-field"
       >
         Description
         <textarea
@@ -34,12 +34,12 @@ export default function VehiclAdditionalDetails({
       </label>
 
       <label
-        htmlFor="is_primary"
+        htmlFor="isPrimary"
         className="mt-5 flex items-start gap-3 text-sm text-text-secondary"
       >
         <input
-          id="is_primary"
-          {...registerCheckbox("is_primary")}
+          id="isPrimary"
+          {...registerCheckbox("isPrimary")}
           type="checkbox"
           className="mt-1 size-4 accent-info"
         />
@@ -50,8 +50,8 @@ export default function VehiclAdditionalDetails({
           </span>
         </span>
         <VehicleFieldError
-          field="is_primary"
-          message={errors.is_primary}
+          field="isPrimary"
+          message={errors.isPrimary}
         />
       </label>
     </fieldset>

@@ -12,8 +12,8 @@ export function getEditVehicleInitialValues(vehicle: Vehicle): EditVehicleFormVa
         typeof value === "boolean" ? value : String(value ?? ""),
       ]),
     ),
-    mileage_recorded_at: vehicle.mileage_recorded_at?.slice(0, 10) ?? "",
-    custom_make: vehicle.make,
-    custom_model: vehicle.model,
+    mileageRecordedAt: vehicle.mileageRecordedAt?.slice(0, 10) ?? "",
+    customMake: vehicle.make,
+    customModel: vehicle.model,
   } as EditVehicleFormValues;
 }

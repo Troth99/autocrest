@@ -3,6 +3,7 @@ import { getVehicleById } from "@/features/garage/services/vehicles.service";
 import { getVehiclePhotoUrls } from "@/features/garage/services/vehicle-photo.service";
 import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
+import { getVehicleReports } from "@/features/garage/services/vehicle-record.service";
 
 
 export default async function VehiclePage({ params }: { params: Promise<{ id: string }> }) {
@@ -16,6 +17,7 @@ export default async function VehiclePage({ params }: { params: Promise<{ id: st
     }
 
     const photos = await getVehiclePhotoUrls(supabase, [vehicle.id]);
+    const vehicleServices = await getVehicleReports(supabase, vehicle.id);
 
     return (
         <main className="page-shell">
@@ -24,6 +26,7 @@ export default async function VehiclePage({ params }: { params: Promise<{ id: st
                 vehicle={vehicle}
                 photoUrl={photos.urls[vehicle.id] ?? null}
                 photoId={photos.selectedPhotos[vehicle.id]?.id ?? null}
+                vehicleServices={vehicleServices}
             />
         </main>
     )

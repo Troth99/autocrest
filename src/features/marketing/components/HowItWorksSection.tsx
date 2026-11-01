@@ -12,17 +12,17 @@ export default function HowItWorksSection() {
       <div className="mx-auto max-w-2xl text-center">
         <span className="eyebrow">SIMPLE BY DESIGN</span>
         <h2 className="page-title mt-4">One clear place for your vehicle&apos;s life</h2>
-        <p className="mt-4 text-sm leading-6 text-muted sm:text-base">No automotive expertise needed. Just capture what happens and let AutoCrest keep it organised.</p>
+        <p className="mt-4 section-description sm:text-base">No automotive expertise needed. Just capture what happens and let AutoCrest keep it organised.</p>
       </div>
       <div className="mt-10 grid gap-4 md:grid-cols-3">
         {steps.map(({ step, title, description, icon: Icon }) => (
-          <article key={step} className="content-card rounded-3xl p-6 sm:p-7">
+          <article key={step} className="panel-card p-6 sm:p-7">
             <div className="flex items-center justify-between">
               <span className="flex size-11 items-center justify-center rounded-2xl bg-info-soft text-info"><Icon className="size-5" /></span>
               <span className="text-xs font-bold tracking-[0.16em] text-accent-text">{step}</span>
             </div>
             <h3 className="mt-7 text-lg font-semibold tracking-[-0.025em] text-text-primary">{title}</h3>
-            <p className="mt-3 text-sm leading-6 text-muted">{description}</p>
+            <p className="mt-3 section-description">{description}</p>
           </article>
         ))}
       </div>

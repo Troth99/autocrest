@@ -24,11 +24,11 @@ export default function VehicleRegistrationFields({
   }
 
   function handleRegistrationCertificateNumberChange(event: ChangeEvent<HTMLInputElement>) {
-    onFieldChange("registration_certificate_number", event.target.value);
+    onFieldChange("registrationCertificateNumber", event.target.value);
   }
 
   function handleFirstRegistrationDateChange(event: ChangeEvent<HTMLInputElement>) {
-    onFieldChange("first_registration_date", event.target.value);
+    onFieldChange("firstRegistrationDate", event.target.value);
   }
 
   return (
@@ -86,67 +86,67 @@ export default function VehicleRegistrationFields({
         </label>
 
         <label
-          htmlFor="registration_certificate_number"
+          htmlFor="registrationCertificateNumber"
           className="form-field"
         >
           <span>Registration certificate number</span>
           <input
             data-slot="input"
             className="native-input"
-            id="registration_certificate_number"
-            name="registration_certificate_number"
-            value={values.registration_certificate_number}
+            id="registrationCertificateNumber"
+            name="registrationCertificateNumber"
+            value={values.registrationCertificateNumber}
             onChange={handleRegistrationCertificateNumberChange}
             type="text"
-            aria-invalid={Boolean(errors.registration_certificate_number)}
-            aria-describedby={errors.registration_certificate_number ? "registration_certificate_number-error" : undefined}
+            aria-invalid={Boolean(errors.registrationCertificateNumber)}
+            aria-describedby={errors.registrationCertificateNumber ? "registrationCertificateNumber-error" : undefined}
           />
           <VehicleFieldError
-            field="registration_certificate_number"
-            message={errors.registration_certificate_number}
+            field="registrationCertificateNumber"
+            message={errors.registrationCertificateNumber}
           />
         </label>
 
         <label
-          htmlFor="registration_country_code"
+          htmlFor="registrationCountryCode"
           className="form-field"
         >
           <span>Registration country code</span>
           <input
             data-slot="input"
             className="native-input"
-            id="registration_country_code"
-            {...register("registration_country_code")}
+            id="registrationCountryCode"
+            {...register("registrationCountryCode")}
             type="text"
             placeholder="e.g. BG"
-            aria-invalid={Boolean(errors.registration_country_code)}
-            aria-describedby={errors.registration_country_code ? "registration_country_code-error" : undefined}
+            aria-invalid={Boolean(errors.registrationCountryCode)}
+            aria-describedby={errors.registrationCountryCode ? "registrationCountryCode-error" : undefined}
           />
           <VehicleFieldError
-            field="registration_country_code"
-            message={errors.registration_country_code}
+            field="registrationCountryCode"
+            message={errors.registrationCountryCode}
           />
         </label>
 
         <label
-          htmlFor="first_registration_date"
+          htmlFor="firstRegistrationDate"
           className="form-field"
         >
           <span>First registration date</span>
           <input
             data-slot="input"
             className="native-input"
-            id="first_registration_date"
-            name="first_registration_date"
-            value={values.first_registration_date}
+            id="firstRegistrationDate"
+            name="firstRegistrationDate"
+            value={values.firstRegistrationDate}
             onChange={handleFirstRegistrationDateChange}
             type="date"
-            aria-invalid={Boolean(errors.first_registration_date)}
-            aria-describedby={errors.first_registration_date ? "first_registration_date-error" : undefined}
+            aria-invalid={Boolean(errors.firstRegistrationDate)}
+            aria-describedby={errors.firstRegistrationDate ? "firstRegistrationDate-error" : undefined}
           />
           <VehicleFieldError
-            field="first_registration_date"
-            message={errors.first_registration_date}
+            field="firstRegistrationDate"
+            message={errors.firstRegistrationDate}
           />
         </label>
       </div>

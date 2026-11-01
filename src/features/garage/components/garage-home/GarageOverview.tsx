@@ -42,7 +42,7 @@ export default function GarageOverview() {
 
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-center justify-between gap-2"><h3 className="text-xs font-semibold text-text-primary">{title}</h3><span className="rounded-full bg-info-soft px-2 py-1 text-[9px] text-muted">Coming soon</span></div>
-              <p className="mt-2 text-xs leading-5 text-muted">{description}</p>
+              <p className="mt-2 field-description">{description}</p>
               <span className="sr-only">{items.join(". ")}</span>
             </div>
           </section>

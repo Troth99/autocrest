@@ -60,7 +60,7 @@ export default function ProfilePage() {
           <h1 className="page-title mt-4">
             Profile
           </h1>
-          <p className="mt-2 max-w-xl text-sm leading-6 text-muted sm:text-base">
+          <p className="mt-2 max-w-xl section-description sm:text-base">
             Your identity and account security in one place.
           </p>
         </div>

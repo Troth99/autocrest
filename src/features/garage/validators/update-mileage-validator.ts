@@ -16,7 +16,7 @@ export function getMileageDateError(date: string, previousDate: string | null) {
 
 // Shared input validation used before saving a mileage update.
 export const updateMileageSchema = z.object({
-  mileage_km: z
+  mileageKm: z
     .string()
     .trim()
     .min(1, "Enter the new mileage.")
@@ -25,7 +25,7 @@ export const updateMileageSchema = z.object({
     .transform(Number)
     .pipe(z.number().int().min(0).max(2147483647, "Mileage is too large.")),
   // Require a real calendar date in YYYY-MM-DD format.
-  mileage_recorded_at: z.iso.date({
+  mileageRecordedAt: z.iso.date({
     error: "Choose a valid recorded date.",
   }),
   mode: z.enum(["reading", "correction", "replacement"]).default("reading"),
@@ -43,22 +43,22 @@ export function createUpdateMileageSchema(
   previousDate: string | null = null,
 ) {
   return updateMileageSchema.superRefine((values, context) => {
-    if (values.mode === "reading" && values.mileage_km < currentMileage) {
+    if (values.mode === "reading" && values.mileageKm < currentMileage) {
       context.addIssue({
         code: "custom",
         message: `Mileage cannot be lower than ${currentMileage.toLocaleString()} km.`,
-        path: ["mileage_km"],
+        path: ["mileageKm"],
       });
     }
     const dateError = getMileageDateError(
-      values.mileage_recorded_at,
+      values.mileageRecordedAt,
       values.mode === "correction" ? null : previousDate,
     );
     if (dateError)
       context.addIssue({
         code: "custom",
         message: dateError,
-        path: ["mileage_recorded_at"],
+        path: ["mileageRecordedAt"],
       });
     if (values.mode !== "reading") {
       if (!values.reason)

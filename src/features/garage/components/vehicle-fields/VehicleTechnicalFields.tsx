@@ -18,19 +18,19 @@ export default function VehicleTechnicalFields({
   errors,
 }: Props) {
   function handleFuelTypeChange(event: ChangeEvent<HTMLSelectElement>) {
-    onFieldChange("fuel_type", event.target.value);
+    onFieldChange("fuelType", event.target.value);
   }
 
   function handleEngineCcChange(event: ChangeEvent<HTMLInputElement>) {
-    onFieldChange("engine_cc", event.target.value);
+    onFieldChange("engineCc", event.target.value);
   }
 
   function handlePowerHpChange(event: ChangeEvent<HTMLInputElement>) {
-    onFieldChange("power_hp", event.target.value);
+    onFieldChange("powerHp", event.target.value);
   }
 
   function handleEuroStandardChange(event: ChangeEvent<HTMLSelectElement>) {
-    onFieldChange("euro_standard", event.target.value);
+    onFieldChange("euroStandard", event.target.value);
   }
 
   function handleColourChange(event: ChangeEvent<HTMLInputElement>) {
@@ -51,17 +51,17 @@ export default function VehicleTechnicalFields({
 
       <div className="vehicle-fields-grid">
         <label
-          htmlFor="fuel_type"
+          htmlFor="fuelType"
           className="form-field"
         >
           <span>Fuel type *</span>
           <select
-            aria-invalid={Boolean(errors.fuel_type)}
-            aria-describedby={errors.fuel_type ? "fuel_type-error" : undefined}
-            id="fuel_type"
+            aria-invalid={Boolean(errors.fuelType)}
+            aria-describedby={errors.fuelType ? "fuelType-error" : undefined}
+            id="fuelType"
             aria-required="true"
-            name="fuel_type"
-            value={values.fuel_type}
+            name="fuelType"
+            value={values.fuelType}
             onChange={handleFuelTypeChange}
             className="form-select"
           >
@@ -94,8 +94,8 @@ export default function VehicleTechnicalFields({
             >Other</option>
           </select>
           <VehicleFieldError
-            field="fuel_type"
-            message={errors.fuel_type}
+            field="fuelType"
+            message={errors.fuelType}
           />
         </label>
 
@@ -166,65 +166,65 @@ export default function VehicleTechnicalFields({
         </label>
 
         <label
-          htmlFor="engine_cc"
+          htmlFor="engineCc"
           className="form-field"
         >
           <span>Engine capacity (cc)</span>
           <input
             data-slot="input"
             className="native-input"
-            id="engine_cc"
-            name="engine_cc"
-            value={values.engine_cc}
+            id="engineCc"
+            name="engineCc"
+            value={values.engineCc}
             onChange={handleEngineCcChange}
             type="number"
             placeholder="e.g. 1798"
             min={1}
-            aria-invalid={Boolean(errors.engine_cc)}
-            aria-describedby={errors.engine_cc ? "engine_cc-error" : undefined}
+            aria-invalid={Boolean(errors.engineCc)}
+            aria-describedby={errors.engineCc ? "engineCc-error" : undefined}
           />
           <VehicleFieldError
-            field="engine_cc"
-            message={errors.engine_cc}
+            field="engineCc"
+            message={errors.engineCc}
           />
         </label>
 
         <label
-          htmlFor="power_hp"
+          htmlFor="powerHp"
           className="form-field"
         >
           <span>Power (hp)</span>
           <input
             data-slot="input"
             className="native-input"
-            id="power_hp"
-            name="power_hp"
-            value={values.power_hp}
+            id="powerHp"
+            name="powerHp"
+            value={values.powerHp}
             onChange={handlePowerHpChange}
             type="number"
             placeholder="e.g. 122"
             min={1}
             step={1}
-            aria-invalid={Boolean(errors.power_hp)}
-            aria-describedby={errors.power_hp ? "power_hp-error" : undefined}
+            aria-invalid={Boolean(errors.powerHp)}
+            aria-describedby={errors.powerHp ? "powerHp-error" : undefined}
           />
           <VehicleFieldError
-            field="power_hp"
-            message={errors.power_hp}
+            field="powerHp"
+            message={errors.powerHp}
           />
         </label>
 
         <label
-          htmlFor="euro_standard"
+          htmlFor="euroStandard"
           className="form-field"
         >
           <span>Emissions standard</span>
           <select
-            aria-invalid={Boolean(errors.euro_standard)}
-            aria-describedby={errors.euro_standard ? "euro_standard-error" : undefined}
-            id="euro_standard"
-            name="euro_standard"
-            value={values.euro_standard}
+            aria-invalid={Boolean(errors.euroStandard)}
+            aria-describedby={errors.euroStandard ? "euroStandard-error" : undefined}
+            id="euroStandard"
+            name="euroStandard"
+            value={values.euroStandard}
             onChange={handleEuroStandardChange}
             className="form-select"
           >
@@ -251,8 +251,8 @@ export default function VehicleTechnicalFields({
             >Euro 6</option>
           </select>
           <VehicleFieldError
-            field="euro_standard"
-            message={errors.euro_standard}
+            field="euroStandard"
+            message={errors.euroStandard}
           />
         </label>
 

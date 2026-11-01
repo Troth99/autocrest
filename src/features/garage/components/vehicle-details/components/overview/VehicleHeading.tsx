@@ -21,7 +21,7 @@ export default function VehicleHeading({
   const name = `${vehicle.make} ${vehicle.model}`;
 
   const subtitle = [
-    vehicle.manufacture_year,
+    vehicle.manufactureYear,
     vehicle.trim,
     vehicle.nickname
   ]
@@ -59,10 +59,10 @@ export default function VehicleHeading({
           {vehicle.plate && (
             <VehiclePlate
               plate={vehicle.plate}
-              countryCode={vehicle.registration_country_code}
+              countryCode={vehicle.registrationCountryCode}
             />
           )}
-          {vehicle.is_primary && (
+          {vehicle.isPrimary && (
             <span className="vehicle-heading-primary">
               <Star className="size-3.5" aria-hidden="true" /> Primary
             </span>
@@ -82,10 +82,10 @@ export default function VehicleHeading({
         </Link>
         <UpdateMileage
           vehicleId={vehicle.id}
-          currentMileage={vehicle.mileage_km}
-          currentRecordedAt={vehicle.mileage_recorded_at}
+          currentMileage={vehicle.mileageKm}
+          currentRecordedAt={vehicle.mileageRecordedAt}
         />
-        <VehicleActionsMenu vehicleId={vehicle.id} isPrimary={vehicle.is_primary} />
+        <VehicleActionsMenu vehicleId={vehicle.id} isPrimary={vehicle.isPrimary} />
       </div>
     </div>
   );

@@ -19,7 +19,7 @@ export default function ForgotPasswordForm({ invalidLink = false }: { invalidLin
     <section aria-labelledby={`${inputId}-title`}>
       <span className="eyebrow">ACCOUNT RECOVERY</span>
       <h1 id={`${inputId}-title`} className="auth-form-title mt-4">Forgot your password?</h1>
-      <p className="mt-3 text-sm leading-6 text-muted">Enter your email and we will send you a password reset link.</p>
+      <p className="mt-3 section-description">Enter your email and we will send you a password reset link.</p>
       {invalidLink && !success && (
         <p role="alert" className="mt-5 text-sm text-destructive">This reset link is invalid or has expired. Request a new link and open it in the browser where you requested it.</p>
       )}

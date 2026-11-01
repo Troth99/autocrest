@@ -11,7 +11,7 @@ export default function AccountSecurityCard({
   lastSignIn: string;
 }) {
   return (
-    <section id="account-security" className="content-card rounded-3xl p-6 sm:p-7">
+    <section id="account-security" className="panel-card p-6 sm:p-7">
       <SectionHeading
         icon={<ShieldCheck />}
         title="Account security"

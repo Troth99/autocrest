@@ -2,21 +2,21 @@ import { z } from "zod";
 
 export const profileNameSchema = z
   .object({
-    first_name: z.string().trim(),
-    last_name: z.string().trim(),
+    firstName: z.string().trim(),
+    lastName: z.string().trim(),
   })
-  .superRefine(({ first_name, last_name }, context) => {
-    if (first_name && !last_name) {
+  .superRefine(({ firstName, lastName }, context) => {
+    if (firstName && !lastName) {
       context.addIssue({
         code: "custom",
-        path: ["last_name"],
+        path: ["lastName"],
         message: "Enter your last name, or clear your first name.",
       });
     }
-    if (last_name && !first_name) {
+    if (lastName && !firstName) {
       context.addIssue({
         code: "custom",
-        path: ["first_name"],
+        path: ["firstName"],
         message: "Enter your first name, or clear your last name.",
       });
     }

@@ -78,6 +78,7 @@ This repo is a Next.js 16 App Router app with TypeScript, Tailwind, and Supabase
 - Use transactions for changes that must succeed or fail together.
 
 ## UI behavior
+- Before adding Tailwind classes or new CSS rules, check `src/shared/styles/components.css`, `src/app/globals.css`, the relevant feature's `styles/components.css`, and similar components for existing reusable styles. Reuse matching classes instead of duplicating their utility combinations. Add a new reusable style only when no existing style fits and the same visual pattern is used in multiple places; keep one-off layout and spacing utilities in the component. See `src/shared/styles/README.md` for the existing style catalog.
 - Disable actions while saving and show useful error messages.
 - Preserve the current design unless I request a visual change.
 - Keep keyboard navigation and accessible labels working.

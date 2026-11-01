@@ -17,65 +17,65 @@ export default function VehiclePurchaseFields({
       </p>
       <div className="vehicle-fields-grid">
         <label
-          htmlFor="purchase_date"
+          htmlFor="purchaseDate"
           className="form-field"
         >
           <span>Purchase date</span>
           <input
             data-slot="input"
             className="native-input"
-            id="purchase_date"
-            {...register("purchase_date")}
+            id="purchaseDate"
+            {...register("purchaseDate")}
             type="date"
-            aria-invalid={Boolean(errors.purchase_date)}
-            aria-describedby={errors.purchase_date ? "purchase_date-error" : undefined}
+            aria-invalid={Boolean(errors.purchaseDate)}
+            aria-describedby={errors.purchaseDate ? "purchaseDate-error" : undefined}
           />
           <VehicleFieldError
-            field="purchase_date"
-            message={errors.purchase_date}
+            field="purchaseDate"
+            message={errors.purchaseDate}
           />
         </label>
 
         <label
-          htmlFor="purchase_price"
+          htmlFor="purchasePrice"
           className="form-field"
         >
           <span>Purchase price</span>
           <input
             data-slot="input"
             className="native-input"
-            id="purchase_price"
-            {...register("purchase_price")}
+            id="purchasePrice"
+            {...register("purchasePrice")}
             type="number"
             min={0}
             step="0.01"
-            aria-invalid={Boolean(errors.purchase_price)}
-            aria-describedby={errors.purchase_price ? "purchase_price-error" : undefined}
+            aria-invalid={Boolean(errors.purchasePrice)}
+            aria-describedby={errors.purchasePrice ? "purchasePrice-error" : undefined}
           />
           <VehicleFieldError
-            field="purchase_price"
-            message={errors.purchase_price}
+            field="purchasePrice"
+            message={errors.purchasePrice}
           />
         </label>
 
         <label
-          htmlFor="purchase_currency_code"
+          htmlFor="purchaseCurrencyCode"
           className="form-field"
         >
           <span>Currency code</span>
           <input
             data-slot="input"
             className="native-input"
-            id="purchase_currency_code"
-            {...register("purchase_currency_code")}
+            id="purchaseCurrencyCode"
+            {...register("purchaseCurrencyCode")}
             type="text"
             placeholder="e.g. EUR"
-            aria-invalid={Boolean(errors.purchase_currency_code)}
-            aria-describedby={errors.purchase_currency_code ? "purchase_currency_code-error" : undefined}
+            aria-invalid={Boolean(errors.purchaseCurrencyCode)}
+            aria-describedby={errors.purchaseCurrencyCode ? "purchaseCurrencyCode-error" : undefined}
           />
           <VehicleFieldError
-            field="purchase_currency_code"
-            message={errors.purchase_currency_code}
+            field="purchaseCurrencyCode"
+            message={errors.purchaseCurrencyCode}
           />
         </label>
       </div>

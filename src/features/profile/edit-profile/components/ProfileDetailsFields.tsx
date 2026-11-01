@@ -3,9 +3,9 @@ import type { ChangeEvent } from "react";
 import PhoneEditSelector from "@/features/profile/edit-profile/components/PhoneEditSelector";
 import type { ProfileFormValues } from "@/features/profile/edit-profile/services/edit-profile.service";
 
-export type EditProfileFormValues = Omit<ProfileFormValues, "full_name"> & {
-  first_name: string;
-  last_name: string;
+export type EditProfileFormValues = Omit<ProfileFormValues, "fullName"> & {
+  firstName: string;
+  lastName: string;
 };
 export type ProfileDetailsFieldsProps = {
   register: (field: keyof EditProfileFormValues) => {
@@ -57,7 +57,7 @@ export default function ProfileDetailsFields({
         Location
         <input data-slot="input" className="native-input" id="location" placeholder="City" {...register("city")} />
       </label>
-      <label className="grid gap-2 text-sm font-medium text-text-secondary sm:col-span-2">
+      <label className="form-field sm:col-span-2">
         About
         <textarea
           id="bio"

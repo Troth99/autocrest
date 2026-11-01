@@ -126,7 +126,7 @@ export default function GarageHeaderTools() {
               Vehicle reminders
             </DropdownMenuLabel>
           </DropdownMenuGroup>
-          <p className="mt-2 text-sm leading-6 text-muted">
+          <p className="mt-2 section-description">
             Maintenance, insurance, and inspection reminders are coming soon.
           </p>
         </DropdownMenuContent>

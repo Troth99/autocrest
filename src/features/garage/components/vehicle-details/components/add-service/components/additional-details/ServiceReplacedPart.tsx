@@ -1,6 +1,12 @@
-export default function ServiceReplacedPart() {
+import { FieldError } from "@/shared/components/FieldError/FieldError";
+import { Props as VehicleAddServiceProps } from "@/features/garage/types/add-service-form";
+
+export default function ServiceReplacedPart({
+    register,
+    errors,
+}: VehicleAddServiceProps) {
     return (
-        <fieldset className="space-y-4 rounded-xl border border-line p-4">
+        <fieldset className="space-y-4 service-detail-group">
             <legend className="px-2 text-sm font-semibold">
                 Replaced part
             </legend>
@@ -14,7 +20,9 @@ export default function ServiceReplacedPart() {
                     type="text"
                     placeholder="e.g. Oil filter"
                     className="native-input"
+                    {...register("partName")}
                 />
+                <FieldError message={errors.partName} />
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
@@ -23,11 +31,12 @@ export default function ServiceReplacedPart() {
                         Brand
                     </label>
                     <input data-slot="input"
-                        id="part-brand"
+                        id="part-brand" {...register("partBrand")}
                         type="text"
                         placeholder="Manufacturer"
                         className="native-input"
                     />
+                    <FieldError message={errors.partBrand} />
                 </div>
 
                 <div className="grid gap-2">
@@ -35,11 +44,12 @@ export default function ServiceReplacedPart() {
                         Part number
                     </label>
                     <input data-slot="input"
-                        id="part-number"
+                        id="part-number" {...register("partNumber")}
                         type="text"
                         placeholder="Catalogue number"
                         className="native-input"
                     />
+                    <FieldError message={errors.partNumber} />
                 </div>
             </div>
 
@@ -48,13 +58,14 @@ export default function ServiceReplacedPart() {
                     Quantity
                 </label>
                 <input data-slot="input"
-                    id="part-quantity"
+                    id="part-quantity" {...register("partQuantity")}
                     type="number"
                     min="1"
                     step="1"
                     placeholder="1"
                     className="native-input"
                 />
+                <FieldError message={errors.partQuantity} />
             </div>
         </fieldset>
     );

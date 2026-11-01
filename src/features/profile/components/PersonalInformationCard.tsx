@@ -19,7 +19,7 @@ export default function PersonalInformationCard({
   bio: string | null;
 }) {
   return (
-    <section id="personal-information" className="content-card rounded-3xl p-6 sm:p-7">
+    <section id="personal-information" className="panel-card p-6 sm:p-7">
       <SectionHeading
         icon={<UserRound />}
         title="Profile details"

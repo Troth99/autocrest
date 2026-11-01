@@ -23,7 +23,7 @@ export default function EditProfilePage() {
         <h1 className="page-title">
           Update your profile
         </h1>
-        <p className="mt-2 text-sm leading-6 text-muted sm:text-base">
+        <p className="mt-2 section-description sm:text-base">
           Update the information shown on your AutoCrest account.
         </p>
       </div>
@@ -33,7 +33,7 @@ export default function EditProfilePage() {
           name={fullName || user.name}
           email={user.email}
           phone={values.phone}
-          avatarUrl={avatarPreview || values.avatar_url || null}
+          avatarUrl={avatarPreview || values.avatarUrl || null}
         />
         <form
           className="profile-edit-form"
@@ -50,7 +50,7 @@ export default function EditProfilePage() {
           <ProfileAvatarSelector
             avatarPreview={avatarPreview}
             avatarFile={avatarFile}
-            avatarUrl={values.avatar_url}
+            avatarUrl={values.avatarUrl}
             initials={getInitials(fullName || user.name, user.email ?? "")}
             isSaving={isSaving}
             avatarError={avatarError}

@@ -66,7 +66,7 @@ export default function VehicleActionsMenu({
   }
   return (
     <>
-      <DropdownMenu>
+      <DropdownMenu modal={false}>
         <DropdownMenuTrigger
           aria-label={isExporting ? "Generating PDF" : "More vehicle actions"}
           aria-busy={isExporting}

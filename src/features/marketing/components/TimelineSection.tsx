@@ -29,7 +29,7 @@ export default function TimelineSection() {
         <div className="timeline-card">
           <p className="text-xs font-bold uppercase tracking-[0.14em] text-info">YOUR NEXT DECISION</p>
           <h3 className="mt-4 text-2xl font-semibold tracking-[-0.04em] text-text-primary">Service due soon</h3>
-          <p className="mt-2 text-sm leading-6 text-muted">Oil and filter service is due in approximately 1,200 km.</p>
+          <p className="mt-2 section-description">Oil and filter service is due in approximately 1,200 km.</p>
           <div className="mt-7 space-y-4 border-l border-line pl-5">
             <TimelineItem date="12 days ago" title="Mileage updated" detail="142,380 km recorded" />
             <TimelineItem date="2 months ago" title="Oil and filter service" detail="240.00 BGN logged" />

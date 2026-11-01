@@ -104,7 +104,7 @@ export default function DisableTwoFactor({
         backdropClassName="fixed inset-0 z-50 bg-black/65"
         popupProps={{
             finalFocus: triggerRef,
-            className: "fixed top-1/2 left-1/2 z-50 max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-3xl border border-line bg-panel p-6 text-text-primary shadow-2xl outline-none sm:p-8",
+            className: "modal-position w-[calc(100%-2rem)] max-h-[calc(100dvh-2rem)] max-w-lg overflow-y-auto rounded-3xl border border-line bg-panel p-6 text-text-primary shadow-2xl outline-none sm:p-8",
             "aria-busy": busy,
         }}
         trigger={
@@ -145,7 +145,7 @@ export default function DisableTwoFactor({
             : "Two-factor authentication disabled"
           : "Disable two-factor authentication?"}
       </Dialog.Title>
-      <Dialog.Description className="mt-2 text-sm leading-6 text-muted">
+      <Dialog.Description className="mt-2 section-description">
         {result
           ? result.stillEnabled
             ? "Your other authenticator is still enabled."
