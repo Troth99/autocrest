@@ -164,9 +164,9 @@ export default function VehicleDocumentScan({ onExtracted }: {
                     </div>
                 </div>
                 <aside className="border-t border-info-border pt-4 lg:border-t-0 lg:border-l lg:pl-5 lg:pt-1"><h3 className="text-xs font-semibold">
-                    Before you scan</h3><ul className="mt-3 space-y-2 text-xs leading-5 text-muted"><li>
+                    Before you scan</h3><ul className="mt-3 space-y-2 field-description"><li>
                         Registration document: Part I or Part II</li><li>Use a clear, well-lit photograph
-                        </li><li>Review and edit the extracted details</li></ul><p className="mt-4 text-xs leading-5 text-muted">Scanning fills the form. Your vehicle is saved when you select Add car.</p></aside>
+                        </li><li>Review and edit the extracted details</li></ul><p className="mt-4 field-description">Scanning fills the form. Your vehicle is saved when you select Add car.</p></aside>
             </div>
             <div role="status" aria-atomic="true">
                 {extractedDetails && !isScanning && (

@@ -13,7 +13,7 @@ export default function DangerZone() {
             <h2 className="text-lg font-semibold tracking text-text-primary">
               Danger zone
             </h2>
-            <p className="mt-1 text-sm leading-6 text-muted">
+            <p className="mt-1 section-description">
               Account deletion will be available here in a future update.
             </p>
           </div>

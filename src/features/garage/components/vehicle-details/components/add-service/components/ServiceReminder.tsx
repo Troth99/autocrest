@@ -6,10 +6,10 @@ export default function ServiceReminder({
     errors,
 }: VehicleAddServiceProps) {
     return (
-        <details className="content-card vehicle-form-section">
-            <summary className="cursor-pointer text-sm font-semibold">
+        <section aria-labelledby="next-service-reminder-heading" className="content-card vehicle-form-section">
+            <h2 id="next-service-reminder-heading" className="section-title">
                 Next service reminder (optional)
-            </summary>
+            </h2>
 
             <p className="mt-2 text-xs text-muted">
                 Set a date, a mileage target, or both.
@@ -43,6 +43,6 @@ export default function ServiceReminder({
                     <FieldError message={errors.nextServiceMileageKm} />
                 </div>
             </div>
-        </details>
+        </section>
     );
 }

@@ -69,9 +69,9 @@ export default function AddService({ vehicleId }: Props) {
                             <ServiceCost register={register} errors={errors} />
                         </fieldset>
 
-                        <ServiceAdditionalDetails register={register} errors={errors} values={values} />
-
                         <ServiceReminder register={register} errors={errors} />
+
+                        <ServiceAdditionalDetails register={register} errors={errors} values={values} />
 
                         {saveError && <p role="alert" className="text-sm text-red-400">{saveError}</p>}
 

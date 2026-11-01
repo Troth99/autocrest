@@ -57,7 +57,7 @@ export default function ProfileDetailsFields({
         Location
         <input data-slot="input" className="native-input" id="location" placeholder="City" {...register("city")} />
       </label>
-      <label className="grid gap-2 text-sm font-medium text-text-secondary sm:col-span-2">
+      <label className="form-field sm:col-span-2">
         About
         <textarea
           id="bio"

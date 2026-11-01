@@ -6,7 +6,7 @@ export default function ServiceReplacedPart({
     errors,
 }: VehicleAddServiceProps) {
     return (
-        <fieldset className="space-y-4 rounded-xl border border-line p-4">
+        <fieldset className="space-y-4 service-detail-group">
             <legend className="px-2 text-sm font-semibold">
                 Replaced part
             </legend>

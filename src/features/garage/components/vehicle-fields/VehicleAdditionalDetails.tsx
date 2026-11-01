@@ -15,7 +15,7 @@ export default function VehiclAdditionalDetails({
       <h2 className="section-title">Additional details</h2>
       <label
         htmlFor="description"
-        className="mt-4 grid gap-2 text-sm font-medium text-text-secondary"
+        className="mt-4 form-field"
       >
         Description
         <textarea

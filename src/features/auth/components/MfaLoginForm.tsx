@@ -50,7 +50,7 @@ export default function MfaLoginForm({ factors, nextPath = "/" }: {
       <span className="mb-5 flex size-12 items-center justify-center rounded-2xl bg-accent/10 text-accent-text"><ShieldCheck className="size-6" /></span>
       <span className="eyebrow">AUTOCREST ACCOUNT</span>
       <h1 id={`${inputId}-title`} className="mt-4 text-3xl font-semibold tracking-tight text-text-primary">Verify your sign-in</h1>
-      <p className="mt-3 text-sm leading-6 text-muted">Enter the six-digit code from your authenticator app to continue.</p>
+      <p className="mt-3 section-description">Enter the six-digit code from your authenticator app to continue.</p>
       {factors.length === 0 && <p role="alert" className="mt-4 text-sm text-destructive">No supported authenticator was found. Sign out and contact support if this continues.</p>}
       <form className="mt-6 grid gap-4" onSubmit={verify}>
         {factors.length > 1 && (

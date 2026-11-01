@@ -16,7 +16,7 @@ export default function Loading() {
             </div>
 
             <div className="grid gap-5 lg:grid-cols-[270px_minmax(0,1fr)]">
-                <div className="content-card rounded-3xl p-6">
+                <div className="panel-card p-6">
                     <Skeleton className="size-20" />
                     <Skeleton className="mt-5 h-6 w-36" />
                     <Skeleton className="mt-3 h-4 w-full" />
@@ -24,7 +24,7 @@ export default function Loading() {
                     <Skeleton className="mt-3 h-10 w-full" />
                 </div>
 
-                <div className="content-card rounded-3xl p-6">
+                <div className="panel-card p-6">
                     <Skeleton className="h-7 w-44" />
                     <Skeleton className="mt-3 h-4 w-full max-w-sm" />
 

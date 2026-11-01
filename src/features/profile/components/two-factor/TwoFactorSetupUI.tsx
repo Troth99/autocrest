@@ -49,7 +49,7 @@ export default function TwoFactorSetupDialog({
         backdropClassName="fixed inset-0 z-50 bg-black/65 transition-opacity duration-200 data-ending-style:opacity-0 motion-reduce:transition-none"
         popupProps={{
             finalFocus: triggerRef,
-            className: "card-base fixed top-1/2 left-1/2 z-50 max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 overflow-y-auto text-text-primary shadow-2xl outline-none transition-[opacity,scale] duration-200 data-starting-style:scale-95 data-starting-style:opacity-0 data-ending-style:scale-95 data-ending-style:opacity-0 motion-reduce:transition-none",
+            className: "modal-position card-base max-h-[calc(100dvh-2rem)] max-w-lg overflow-y-auto text-text-primary shadow-2xl outline-none transition-[opacity,scale] duration-200 data-starting-style:scale-95 data-starting-style:opacity-0 data-ending-style:scale-95 data-ending-style:opacity-0 motion-reduce:transition-none",
         }}
     >
       <Dialog.Close
@@ -67,7 +67,7 @@ export default function TwoFactorSetupDialog({
           ? "Two-factor authentication enabled"
           : "Set up two-factor authentication"}
       </Dialog.Title>
-      <Dialog.Description className="mt-2 text-sm leading-6 text-muted">
+      <Dialog.Description className="mt-2 section-description">
         {complete
           ? "Your authenticator app is connected to your AutoCrest account."
           : "Connect your authenticator app in two simple steps."}
@@ -103,7 +103,7 @@ export default function TwoFactorSetupDialog({
               </span>
               Scan the QR code
             </p>
-            <p className="mt-2 text-xs leading-5 text-muted">
+            <p className="mt-2 field-description">
               Open your authenticator app and add a new account.
             </p>
             {/* Supabase supplies a local SVG data URL; keep this secret out of image optimization. */}

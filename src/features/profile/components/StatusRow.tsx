@@ -18,7 +18,7 @@ export default function StatusRow({
       </span>
       <div className="min-w-0">
         <p className="text-sm font-semibold text-text-primary">{title}</p>
-        <p className="mt-1 text-xs leading-5 text-muted">{description}</p>
+        <p className="mt-1 field-description">{description}</p>
       </div>
     </div>
   );

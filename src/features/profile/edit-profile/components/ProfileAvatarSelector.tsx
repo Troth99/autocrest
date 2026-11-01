@@ -55,7 +55,7 @@ export default function ProfileAvatarSelector({
                   <p className="text-sm font-medium text-text-primary">
                     {avatarFile ? "Looking good!" : "Your photo, your profile"}
                   </p>
-                  <p id="avatar-help" className="mt-1 text-xs leading-5 text-muted">JPG, PNG or WebP. Max 2 MB.</p>
+                  <p id="avatar-help" className="mt-1 field-description">JPG, PNG or WebP. Max 2 MB.</p>
                 </div>
                 <input
                   ref={avatarInputRef}

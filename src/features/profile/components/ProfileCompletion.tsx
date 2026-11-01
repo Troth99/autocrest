@@ -28,7 +28,7 @@ export default function ProfileCompletion({
           <h2 id="setup-heading" className="section-title">
             Complete your profile
           </h2>
-          <p className="mt-1 text-xs leading-5 text-muted">
+          <p className="mt-1 field-description">
             A few details to make AutoCrest yours.
           </p>
         </div>

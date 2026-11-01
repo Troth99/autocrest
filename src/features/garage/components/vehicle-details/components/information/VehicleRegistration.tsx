@@ -20,7 +20,7 @@ export default function VehicleRegistration({ vehicle }: { vehicle: Vehicle }) {
           </div>
         ))}
       </dl>
-      <p className="mt-4 border-t border-line pt-4 text-xs leading-5 text-muted">Document uploads and insurance records are coming soon.</p>
+      <p className="mt-4 border-t border-line pt-4 field-description">Document uploads and insurance records are coming soon.</p>
     </section>
   );
 }

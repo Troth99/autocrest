@@ -7,7 +7,7 @@ export default function ServiceFluids({
     values,
 }: VehicleServiceSectionProps) {
     return (
-        <fieldset className="space-y-4 rounded-xl border border-line p-4">
+        <fieldset className="space-y-4 service-detail-group">
             <legend className="px-2 text-sm font-semibold">
                 Fluids used
             </legend>

@@ -23,7 +23,7 @@ export default function EditProfilePage() {
         <h1 className="page-title">
           Update your profile
         </h1>
-        <p className="mt-2 text-sm leading-6 text-muted sm:text-base">
+        <p className="mt-2 section-description sm:text-base">
           Update the information shown on your AutoCrest account.
         </p>
       </div>

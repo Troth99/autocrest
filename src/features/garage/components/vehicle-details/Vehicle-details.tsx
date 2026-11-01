@@ -7,18 +7,22 @@ import VehicleActivity from "./components/history/VehicleActivity";
 import VehicleReminders from "./components/history/VehicleReminders";
 import VehicleNotes from "./components/information/VehicleNotes";
 import type { Vehicle } from "@/features/garage/types/vehicle";
+import type { VehicleServiceRecord } from "@/features/garage/types/vehicle-service-record";
+import { ArrowRight } from "lucide-react";
 
 export default function VehicleDetails({
   vehicle,
   photoUrl,
-  photoId
+  photoId,
+  vehicleServices,
 }:
   {
     vehicle: Vehicle;
     photoUrl?: string | null
     photoId?: string | null
+    vehicleServices: VehicleServiceRecord[];
   }) {
-    
+
   return (
     <div className="space-y-6">
       <section aria-label="Vehicle overview"
@@ -34,22 +38,29 @@ export default function VehicleDetails({
           aria-labelledby="vehicle-history-heading"
           className="section-card min-w-0">
 
-          <VehicleMainActions vehicleId={vehicle.id}/>
+          <VehicleMainActions vehicleId={vehicle.id} />
 
           <div className="mt-6 border-t border-line pt-6">
+            <VehicleReminders vehicleServices={vehicleServices} />
             <div
-              className="flex flex-wrap items-center justify-between gap-3">
-              <h2 id="vehicle-history-heading"
-                className="text-xl font-semibold tracking-tight">
-                Maintenance &amp; History</h2>
-              <span
-                className="rounded-full border border-info-border bg-info-soft px-2.5 py-1 text-xs text-info">
-                Sample data</span>
+              className="mb-4 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-6">
+              <div>
+                <h2 id="vehicle-history-heading" className="text-lg font-semibold">Service history</h2>
+                <p className="mt-1 text-xs text-muted">Maintenance and repairs, newest first.</p>
+              </div>
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="rounded-full border border-line px-2.5 py-1 text-xs text-muted">
+                  {vehicleServices.length} {vehicleServices.length === 1 ? "record" : "records"}
+                </span>
+                {vehicleServices.length > 5 && (
+                  <button type="button" className="button-base button-secondary cursor-pointer gap-2 px-3 py-2 text-xs">
+                    View all services
+                    <ArrowRight className="size-4" aria-hidden="true" />
+                  </button>
+                )}
+              </div>
             </div>
-            <p className="mt-2 text-xs leading-5 text-muted">
-              Reminders and history below are examples. Record actions are coming soon.</p>
-            <VehicleReminders />
-            <VehicleActivity />
+            <VehicleActivity vehicleServices={vehicleServices} />
           </div>
         </section>
         <aside className="min-w-0 space-y-6">

@@ -15,14 +15,14 @@ export default function ModulesSection() {
         <div className="max-w-2xl">
           <span className="eyebrow">EVERYDAY OWNERSHIP</span>
           <h2 className="page-title mt-4">Everything your vehicle needs, organised.</h2>
-          <p className="mt-4 text-sm leading-6 text-muted sm:text-base">From the first service to the next sale, AutoCrest helps you understand the complete picture.</p>
+          <p className="mt-4 section-description sm:text-base">From the first service to the next sale, AutoCrest helps you understand the complete picture.</p>
         </div>
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {modules.map(({ title, description, icon: Icon, color }) => (
-            <article key={title} className="content-card rounded-3xl p-6">
+            <article key={title} className="panel-card p-6">
               <span className={`flex size-10 items-center justify-center rounded-2xl bg-input ${color}`}><Icon className="size-5" /></span>
               <h3 className="mt-5 text-base font-semibold text-text-primary">{title}</h3>
-              <p className="mt-2 text-sm leading-6 text-muted">{description}</p>
+              <p className="mt-2 section-description">{description}</p>
             </article>
           ))}
         </div>
