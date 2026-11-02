@@ -1,6 +1,7 @@
 import type { VehicleServiceRecord } from "@/features/garage/types/vehicle-service-record";
 import { vehicleServiceLabels } from "@/features/garage/constants/vehicle-service-labels";
 import { Bell, CalendarDays, Gauge, Plus } from "lucide-react";
+import { formatDate } from "@/shared/utils/formatDate";
 
 export default function VehicleReminders({ vehicleServices }: {
   vehicleServices: VehicleServiceRecord[];
@@ -53,9 +54,7 @@ export default function VehicleReminders({ vehicleServices }: {
                     <span className="inline-flex items-center gap-1.5">
                       <CalendarDays className="size-3.5" aria-hidden="true" />
                       <time dateTime={service.nextServiceDate}>
-                        {new Date(`${service.nextServiceDate}T00:00:00`).toLocaleDateString("en-GB", {
-                          day: "numeric", month: "short", year: "numeric",
-                        })}
+                        {formatDate(service.nextServiceDate)}
                       </time>
                     </span>
                   )}
