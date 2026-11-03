@@ -7,8 +7,7 @@ function saveRememberMePreference(rememberMe: boolean) {
   const maxAge = rememberMe ? `; Max-Age=${REMEMBER_ME_MAX_AGE}` : "";
 
   document.cookie =
-    `${REMEMBER_ME_COOKIE}=${rememberMe}` +
-    `; Path=/; SameSite=Lax${maxAge}`;
+    `${REMEMBER_ME_COOKIE}=${rememberMe}` + `; Path=/; SameSite=Lax${maxAge}`;
 }
 
 export type RegisterInput = {
@@ -22,6 +21,32 @@ export async function registerUser({
   password,
   username,
 }: RegisterInput): Promise<void> {
+  
+  async function isUsernameTaken(username: string): Promise<boolean> {
+    const supabase = createClient();
+    const { data, error } = await supabase.rpc("is_username_taken", {
+      candidate_username: username.trim(),
+    });
+
+    if (error || typeof data !== "boolean") {
+      throw new Error(
+        "Unable to check username availability. Please try again.",
+      );
+    }
+
+    return data;
+  }
+
+  username = username.trim();
+  // Check before signup so an already taken username is reported under Username.
+  if (await isUsernameTaken(username)) {
+    const error = new Error(
+      "This username is already taken. Please choose another one.",
+    );
+    error.name = "UsernameTakenError";
+    throw error;
+  }
+
   const supabase = createClient();
   const { data, error } = await supabase.auth.signUp({
     email,
@@ -32,6 +57,26 @@ export async function registerUser({
   });
 
   if (error) {
+    // If signup fails, check whether someone claimed the username between our check and insert.
+    if (error.message === "Database error saving new user") {
+      try {
+        if (await isUsernameTaken(username)) {
+          const usernameError = new Error(
+            "This username is already taken. Please choose another one.",
+          );
+          usernameError.name = "UsernameTakenError";
+          throw usernameError;
+        }
+      } catch (availabilityError) {
+        if (
+          availabilityError instanceof Error &&
+          availabilityError.name === "UsernameTakenError"
+        ) {
+          throw availabilityError;
+        }
+        // Preserve the signup error if the follow-up check is unavailable.
+      }
+    }
     throw error;
   }
 
@@ -99,4 +144,3 @@ export async function logInWithFacebook(): Promise<void> {
     throw error;
   }
 }
-
