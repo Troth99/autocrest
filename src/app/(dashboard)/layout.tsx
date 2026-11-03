@@ -1,3 +1,4 @@
+import SiteHeader from "@/shared/components/Header/SiteHeader";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import AccountNavigation from "@/app/(dashboard)/components/AccountNavigation";
@@ -28,9 +29,12 @@ export default async function IsDashboardLayout({
     redirect("/verify-2fa");
   }
   return (
-    <div className="flex w-full flex-1 flex-col lg:flex-row">
-      <AccountNavigation />
-      <div className="min-w-0 flex-1">{children}</div>
-    </div>
+    <>
+      <SiteHeader />
+      <div className="flex w-full flex-1 flex-col lg:flex-row">
+        <AccountNavigation />
+        <div className="min-w-0 flex-1">{children}</div>
+      </div>
+    </>
   );
 }

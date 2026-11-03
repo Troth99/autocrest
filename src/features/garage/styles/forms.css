@@ -1,0 +1,32 @@
+.vehicle-form :is([data-slot="input"], select, textarea, .select-trigger) {
+  border-color: var(--border-input);
+  background-color: var(--surface-input);
+  color: var(--text-primary);
+  font-size: 1rem;
+  padding-inline: 0.875rem;
+  transition: border-color 150ms, background-color 150ms, box-shadow 150ms;
+}
+.vehicle-form :is([data-slot="input"], select, .select-trigger) {
+  height: 2.75rem;
+}
+.vehicle-form [data-slot="input"]::placeholder, .vehicle-form textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 1;
+}
+.vehicle-form :is([data-slot="input"], select, textarea, .select-trigger):hover:not(:disabled) {
+  border-color: var(--border-input-hover);
+}
+.vehicle-form :is([data-slot="input"], select, textarea, .select-trigger):focus-visible {
+  border-color: var(--focus-ring);
+  background-color: var(--surface-input-focus);
+  box-shadow: 0 0 0 3px var(--info-soft);
+}
+.vehicle-form :is([data-slot="input"], select, textarea, .select-trigger):disabled {
+  background-color: var(--secondary);
+  color: var(--text-muted);
+  opacity: 0.65;
+}
+.vehicle-form :is([data-slot="input"], select, textarea, .select-trigger)[aria-invalid="true"] {
+  border-color: var(--destructive);
+}
+

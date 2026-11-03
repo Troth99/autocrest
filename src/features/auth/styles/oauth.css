@@ -1,0 +1,42 @@
+.oauth-button {
+  border-width: 1px;
+  box-shadow: 0 4px 12px rgb(15 23 42 / 8%);
+  font-weight: 650;
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease,
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease;
+}
+
+.oauth-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 9px 20px rgb(15 23 42 / 16%);
+}
+
+.oauth-button:active {
+  transform: translateY(0);
+}
+
+.oauth-button-google, .oauth-button-facebook, .oauth-button-apple, .oauth-button-microsoft {
+  border-color: var(--border-input);
+  background-color: var(--surface-panel);
+  color: var(--text-primary);
+}
+.oauth-button-google:hover, .oauth-button-facebook:hover, .oauth-button-apple:hover, .oauth-button-microsoft:hover {
+  border-color: var(--border-input-hover);
+  background-color: var(--info-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .oauth-button {
+    transition: none;
+  }
+
+  .oauth-button:hover,
+  .oauth-button:active {
+    transform: none;
+  }
+}
+

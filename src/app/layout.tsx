@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import SiteHeader from "@/shared/components/Header/SiteHeader";
 import SiteFooter from "@/shared/components/Footer/SiteFooter";
 import ThemeProvider from "@/shared/components/ThemeProvider/ThemeProvider";
 import { CurrentUserProvider } from "@/shared/context/CurrentUserContext";
@@ -37,7 +36,6 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         <ThemeProvider>
           <CurrentUserProvider initialUser={user} initialProfile={profile}>
-            <SiteHeader user={user} profile={profile} />
             {children}
             <SiteFooter />
           </CurrentUserProvider>

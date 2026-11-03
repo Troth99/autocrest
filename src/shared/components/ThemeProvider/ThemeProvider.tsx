@@ -14,6 +14,10 @@ export default function ThemeProvider({
       enableSystem
       storageKey="autocrest-theme"
       disableTransitionOnChange
+      // Only the server-rendered bootstrap needs to execute before hydration.
+      scriptProps={{
+        type: typeof window === "undefined" ? "text/javascript" : "text/plain",
+      }}
     >
       {children}
     </NextThemesProvider>

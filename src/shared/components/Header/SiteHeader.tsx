@@ -1,19 +1,24 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import GarageHeaderTools, {
   GarageSearch,
 } from "@/features/garage/components/garrage-header/GarageHeaderTools";
-import type { User } from "@supabase/supabase-js";
-import type { UserProfile } from "@/shared/types/currentUser";
 import UserMenu from "@/shared/components/Header/UserMenu/UserMenu";
+import { useCurrentUser } from "@/shared/context/CurrentUserContext";
 
-export default function SiteHeader({ user, profile }: { user: User | null; profile: UserProfile | null }) {
-  const pathname = usePathname();
+
+type SiteHeaderProps = {
+  showNavigation?: boolean;
+};
+
+export default function SiteHeader({
+  showNavigation = true,
+}: SiteHeaderProps) {
+  const { user, profile } = useCurrentUser();
+
   // Recovery sessions should not look like a normal signed-in dashboard.
-  const isRecoveryPage = pathname === "/forgot-password" || pathname === "/reset-password" || pathname === "/verify-2fa";
-  const isAccountPage = Boolean(user) && !isRecoveryPage;
+  const isAccountPage = Boolean(user) && showNavigation;
 
   return (
     <header className="sticky top-0 z-10 border-b border-line bg-dark-800">
@@ -30,7 +35,7 @@ export default function SiteHeader({ user, profile }: { user: User | null; profi
           <span className="text-xl font-semibold tracking-tight text-text-primary">AutoCrest</span>
         </Link>
 
-        {!isRecoveryPage && (isAccountPage ? (
+        {showNavigation && (isAccountPage ? (
           <div className="header-search">
             <GarageSearch />
           </div>
@@ -48,13 +53,13 @@ export default function SiteHeader({ user, profile }: { user: User | null; profi
           </div>
         ))}
 
-        {!isRecoveryPage && <div className="flex max-w-full shrink-0 flex-wrap items-center gap-2 sm:gap-5 lg:translate-x-3">
+        {showNavigation && <div className="flex max-w-full shrink-0 flex-wrap items-center gap-2 sm:gap-5 lg:translate-x-3">
           {isAccountPage && <GarageHeaderTools />}
           {user ? (
             <UserMenu
-              username={profile?.fullName?.trim() || user.user_metadata?.full_name || user.user_metadata?.name || profile?.username?.trim() || user.user_metadata?.username || user.email?.split("@")[0] || "Account"}
+              username={profile?.username || "Account"}
               email={user.email ?? ""}
-              avatarUrl={profile?.avatarUrl?.trim() || user.user_metadata?.avatar_url || user.user_metadata?.picture || null}
+              avatarUrl={profile?.avatarUrl || null}
             />
           ) : (
             <>
