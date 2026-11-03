@@ -30,8 +30,8 @@ export default function EditProfilePage() {
 
       <div className="mt-8 grid items-stretch gap-6 xl:grid-cols-[minmax(16rem,0.8fr)_minmax(0,1.6fr)]">
         <EditProfilePreview
-          name={fullName || user.name}
-          email={user.email}
+          name={fullName || (user.user_metadata?.full_name || user.user_metadata?.name || values.username || user.email?.split("@")[0] || "user")}
+          email={user.email ?? null}
           phone={values.phone}
           avatarUrl={avatarPreview || values.avatarUrl || null}
         />
@@ -51,7 +51,7 @@ export default function EditProfilePage() {
             avatarPreview={avatarPreview}
             avatarFile={avatarFile}
             avatarUrl={values.avatarUrl}
-            initials={getInitials(fullName || user.name, user.email ?? "")}
+            initials={getInitials(fullName || (user.user_metadata?.full_name || user.user_metadata?.name || values.username || user.email?.split("@")[0] || "user"), user.email ?? "")}
             isSaving={isSaving}
             avatarError={avatarError}
             avatarInputRef={avatarInputRef}

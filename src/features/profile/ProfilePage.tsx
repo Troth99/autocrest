@@ -6,23 +6,19 @@ import CompleteYourSetup from "./components/ProfileCompletion";
 import ProfileHero from "./components/ProfileHero";
 import { useCurrentUser } from "@/shared/context/CurrentUserContext";
 export default function ProfilePage() {
-  const { user } = useCurrentUser();
+  const { user, profile } = useCurrentUser();
 
   if (!user) return null;
-  const {
-    name,
-    username,
-    email: savedEmail,
-    avatarUrl,
-    phone,
-    countryCode,
-    region,
-    city,
-    bio,
-    provider,
-    createdAt,
-    lastSignInAt,
-  } = user;
+  const metadata = user.user_metadata ?? {};
+  const fullName = profile?.fullName?.trim() || metadata.full_name || metadata.name || null;
+  const username = profile?.username?.trim() || metadata.username || user.email?.split("@")[0] || "user";
+  const name = fullName || username;
+  const avatarUrl = profile?.avatarUrl?.trim() || metadata.avatar_url || metadata.picture || null;
+  const { phone = null, countryCode = null, region = null, city = null, bio = null } = profile ?? {};
+  const provider = user.app_metadata?.provider;
+  const createdAt = user.created_at;
+  const lastSignInAt = user.last_sign_in_at;
+  const savedEmail = user.email;
 
   const email = savedEmail ?? "No email available";
 
@@ -76,7 +72,7 @@ export default function ProfilePage() {
         </aside>
         <div className="min-w-0 lg:col-start-2 lg:row-start-1">
           <PersonalInformationCard
-            fullName={user.fullName}
+            fullName={fullName}
             username={username}
             email={email}
             phone={phone}
@@ -85,7 +81,7 @@ export default function ProfilePage() {
           />
         </div>
         <aside className="min-w-0 lg:col-start-1 lg:row-start-2 [&>section]:h-full">
-          <CompleteYourSetup user={user} />
+          <CompleteYourSetup user={{ fullName, username, avatarUrl, phone, city, bio }} />
         </aside>
         <div className="profile-details-layout">
           <AccountSecurityCard

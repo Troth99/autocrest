@@ -5,9 +5,8 @@ import SiteHeader from "@/shared/components/Header/SiteHeader";
 import SiteFooter from "@/shared/components/Footer/SiteFooter";
 import ThemeProvider from "@/shared/components/ThemeProvider/ThemeProvider";
 import { CurrentUserProvider } from "@/shared/context/CurrentUserContext";
-import { toCurrentUser } from "@/lib/supabase/current-user";
-import { createClient } from "@/lib/supabase/server";
 import "react-phone-number-input/style.css";
+import getCurrentUser from "@/shared/services/current-user.service";
 
 // Google Fonts configuration
 const geistSans = Geist({
@@ -27,21 +26,8 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
-  const supabase = await createClient();
+  const { user, profile } = await getCurrentUser();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  const { data: profile } = user
-    ? await supabase
-        .from("profiles")
-        .select("*")
-        .eq("id", user.id)
-        .maybeSingle()
-    : { data: null };
-
-  const currentUser = toCurrentUser(user, profile);
   return (
     <html
       lang="en"
@@ -50,8 +36,8 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <ThemeProvider>
-          <CurrentUserProvider initialUser={currentUser}>
-            <SiteHeader user={currentUser} />
+          <CurrentUserProvider initialUser={user} initialProfile={profile}>
+            <SiteHeader user={user} profile={profile} />
             {children}
             <SiteFooter />
           </CurrentUserProvider>

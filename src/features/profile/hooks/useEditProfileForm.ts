@@ -12,10 +12,10 @@ import { profileNameSchema } from "@/features/profile/validators/profile-name.va
 
 
 export default function useEditProfileForm() {
-  const { user } = useCurrentUser();
+  const { user, profile } = useCurrentUser();
 
   const [firstName = "", ...remainingNames] = (
-    user?.fullName?.trim() || ""
+    profile?.fullName?.trim() || user?.user_metadata?.full_name || user?.user_metadata?.name || ""
   ).split(/\s+/);
   const initialValues: Omit<ProfileFormValues, "fullName"> & {
     firstName: string;
@@ -23,11 +23,11 @@ export default function useEditProfileForm() {
   } = {
     firstName: firstName,
     lastName: remainingNames.join(" "),
-    username: user?.username ?? "",
-    phone: normalizePhoneNumber(user?.phone),
-    city: user?.city ?? "",
-    avatarUrl: user?.avatarUrl ?? "",
-    bio: user?.bio ?? "",
+    username: profile?.username?.trim() || user?.user_metadata?.username || user?.email?.split("@")[0] || "",
+    phone: normalizePhoneNumber(profile?.phone),
+    city: profile?.city ?? "",
+    avatarUrl: profile?.avatarUrl?.trim() || user?.user_metadata?.avatar_url || user?.user_metadata?.picture || "",
+    bio: profile?.bio ?? "",
   };
 
   const router = useRouter();

@@ -5,10 +5,11 @@ import { usePathname } from "next/navigation";
 import GarageHeaderTools, {
   GarageSearch,
 } from "@/features/garage/components/garrage-header/GarageHeaderTools";
-import type { CurrentUser } from "@/shared/types/currentUser";
+import type { User } from "@supabase/supabase-js";
+import type { UserProfile } from "@/shared/types/currentUser";
 import UserMenu from "@/shared/components/Header/UserMenu/UserMenu";
 
-export default function SiteHeader({ user }: { user: CurrentUser | null }) {
+export default function SiteHeader({ user, profile }: { user: User | null; profile: UserProfile | null }) {
   const pathname = usePathname();
   // Recovery sessions should not look like a normal signed-in dashboard.
   const isRecoveryPage = pathname === "/forgot-password" || pathname === "/reset-password" || pathname === "/verify-2fa";
@@ -51,9 +52,9 @@ export default function SiteHeader({ user }: { user: CurrentUser | null }) {
           {isAccountPage && <GarageHeaderTools />}
           {user ? (
             <UserMenu
-              username={user.name ?? user.email ?? "Account"}
+              username={profile?.fullName?.trim() || user.user_metadata?.full_name || user.user_metadata?.name || profile?.username?.trim() || user.user_metadata?.username || user.email?.split("@")[0] || "Account"}
               email={user.email ?? ""}
-              avatarUrl={user.avatarUrl}
+              avatarUrl={profile?.avatarUrl?.trim() || user.user_metadata?.avatar_url || user.user_metadata?.picture || null}
             />
           ) : (
             <>

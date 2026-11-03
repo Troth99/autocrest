@@ -1,31 +1,24 @@
 "use client";
 
-import { createContext, ReactNode, useContext, useState } from "react";
-import { CurrentUser, CurrentUserContextValue } from "../types/currentUser";
+import { createContext, ReactNode, useContext } from "react";
+import type { User } from "@supabase/supabase-js";
+import type { UserProfile } from "@/shared/types/currentUser";
 
-const CurrentUserContext = createContext<CurrentUserContextValue | undefined>(
+const CurrentUserContext = createContext<{ user: User | null; profile: UserProfile | null } | undefined>(
   undefined,
 );
 
 export function CurrentUserProvider({
   initialUser,
+  initialProfile,
   children,
 }: {
-  initialUser: CurrentUser | null;
+  initialUser: User | null;
+  initialProfile: UserProfile | null;
   children: ReactNode;
 }) {
-  const [user, setUser] = useState<CurrentUser | null>(initialUser);
-  const [previousInitialUser, setPreviousInitialUser] =
-    useState<CurrentUser | null>(initialUser);
-
-  // A route refresh supplies new server data while preserving client state.
-  if (initialUser !== previousInitialUser) {
-    setPreviousInitialUser(initialUser);
-    setUser(initialUser);
-  }
-
   return (
-    <CurrentUserContext.Provider value={{ user, setUser }}>
+    <CurrentUserContext.Provider value={{ user: initialUser, profile: initialProfile }}>
       {children}
     </CurrentUserContext.Provider>
   );
