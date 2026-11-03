@@ -57,26 +57,6 @@ export async function registerUser({
   });
 
   if (error) {
-    // If signup fails, check whether someone claimed the username between our check and insert.
-    if (error.message === "Database error saving new user") {
-      try {
-        if (await isUsernameTaken(username)) {
-          const usernameError = new Error(
-            "This username is already taken. Please choose another one.",
-          );
-          usernameError.name = "UsernameTakenError";
-          throw usernameError;
-        }
-      } catch (availabilityError) {
-        if (
-          availabilityError instanceof Error &&
-          availabilityError.name === "UsernameTakenError"
-        ) {
-          throw availabilityError;
-        }
-        // Preserve the signup error if the follow-up check is unavailable.
-      }
-    }
     throw error;
   }
 
