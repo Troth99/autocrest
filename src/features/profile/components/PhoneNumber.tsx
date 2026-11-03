@@ -1,4 +1,4 @@
-import { parsePhoneNumber } from "react-phone-number-input";
+import { parsePhoneNumberFromString as parsePhoneNumber } from "libphonenumber-js";
 import flags from "react-phone-number-input/flags";
 import countryNames from "react-phone-number-input/locale/en.json";
 

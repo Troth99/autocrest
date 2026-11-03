@@ -1,5 +1,3 @@
-"use client"
-
 import { FileCheck2, ReceiptText, Wrench } from "lucide-react";
 import Link from "next/link";
 

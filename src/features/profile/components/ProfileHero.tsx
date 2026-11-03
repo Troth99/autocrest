@@ -1,5 +1,3 @@
-"use client";
-
 import { CalendarDays, KeyRound, PencilLine } from "lucide-react";
 import Link from "next/link";
 import { getInitials } from "@/features/profile/utils/getInitials";
