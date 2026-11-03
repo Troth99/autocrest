@@ -13,10 +13,7 @@ export default function RegisterForm() {
     <section className="auth-form-card" aria-labelledby="register-title">
       <div className="mb-7">
         <span className="eyebrow">AUTOCREST ACCOUNT</span>
-        <h1
-          id="register-title"
-          className="auth-form-title"
-        >
+        <h1 id="register-title" className="auth-form-title">
           Create your <span className="text-accent-text">workspace</span>
         </h1>
         <p className="mt-3.5 text-[0.9375rem] leading-[1.55] text-muted">
@@ -70,7 +67,6 @@ export default function RegisterForm() {
           error={errors.confirmPassword}
           {...register("confirmPassword")}
         />
-    
 
         <label className="flex cursor-pointer items-start gap-2.5 text-xs leading-[1.45] text-muted">
           <input
@@ -94,7 +90,10 @@ export default function RegisterForm() {
 
       <p className="mt-5 text-center text-[0.8125rem] text-muted">
         Already have an account?{" "}
-        <Link href="/login" className="font-semibold text-info hover:text-info-strong">
+        <Link
+          href="/login"
+          className="font-semibold text-info hover:text-info-strong"
+        >
           Sign in{" "}
         </Link>
       </p>

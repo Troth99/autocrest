@@ -46,11 +46,12 @@ export default function TwoFactorSetupDialog({
         }
       }}
       disablePointerDismissal
-        backdropClassName="fixed inset-0 z-50 bg-black/65 transition-opacity duration-200 data-ending-style:opacity-0 motion-reduce:transition-none"
-        popupProps={{
-            finalFocus: triggerRef,
-            className: "modal-position w-[calc(100%-2rem)] card-base max-h-[calc(100dvh-2rem)] max-w-lg overflow-y-auto text-text-primary shadow-2xl outline-none transition-[opacity,scale] duration-200 data-starting-style:scale-95 data-starting-style:opacity-0 data-ending-style:scale-95 data-ending-style:opacity-0 motion-reduce:transition-none",
-        }}
+      backdropClassName="fixed inset-0 z-50 bg-black/65 transition-opacity duration-200 data-ending-style:opacity-0 motion-reduce:transition-none"
+      popupProps={{
+        finalFocus: triggerRef,
+        className:
+          "modal-position w-[calc(100%-2rem)] card-base max-h-[calc(100dvh-2rem)] max-w-lg overflow-y-auto text-text-primary shadow-2xl outline-none transition-[opacity,scale] duration-200 data-starting-style:scale-95 data-starting-style:opacity-0 data-ending-style:scale-95 data-ending-style:opacity-0 motion-reduce:transition-none",
+      }}
     >
       <Dialog.Close
         disabled={busy}
@@ -74,10 +75,7 @@ export default function TwoFactorSetupDialog({
       </Dialog.Description>
       {complete ? (
         <div className="mt-6">
-          <div
-            role="status"
-            className="two-factor-notice"
-          >
+          <div role="status" className="two-factor-notice">
             <Check className="size-5" />
             Setup complete
           </div>
@@ -91,11 +89,7 @@ export default function TwoFactorSetupDialog({
           </Button>
         </div>
       ) : setup ? (
-        <form
-          onSubmit={onVerify}
-          className="mt-6 space-y-5"
-          aria-busy={busy}
-        >
+        <form onSubmit={onVerify} className="mt-6 space-y-5" aria-busy={busy}>
           <div className="rounded-2xl border border-line bg-input/45 p-5">
             <p className="flex items-center gap-2 text-sm font-semibold">
               <span className="flex size-6 items-center justify-center rounded-full bg-info-soft text-xs text-info">

@@ -1,9 +1,33 @@
 import Image from "next/image";
 
 const euCountries = [
-  "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI",
-  "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU",
-  "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE",
+  "AT",
+  "BE",
+  "BG",
+  "HR",
+  "CY",
+  "CZ",
+  "DK",
+  "EE",
+  "FI",
+  "FR",
+  "DE",
+  "GR",
+  "HU",
+  "IE",
+  "IT",
+  "LV",
+  "LT",
+  "LU",
+  "MT",
+  "NL",
+  "PL",
+  "PT",
+  "RO",
+  "SK",
+  "SI",
+  "ES",
+  "SE",
 ];
 
 type Props = {
@@ -31,10 +55,14 @@ export default function VehiclePlate({ plate, countryCode }: Props) {
               aria-hidden="true"
             />
           )}
-          <span className="text-[10px] font-bold leading-none tracking-wide">{country}</span>
+          <span className="text-[10px] font-bold leading-none tracking-wide">
+            {country}
+          </span>
         </span>
       )}
-      <span className="self-center break-all px-3 py-2 font-mono text-xl font-bold tracking-wider sm:text-2xl">{plate}</span>
+      <span className="self-center break-all px-3 py-2 font-mono text-xl font-bold tracking-wider sm:text-2xl">
+        {plate}
+      </span>
     </span>
   );
 }

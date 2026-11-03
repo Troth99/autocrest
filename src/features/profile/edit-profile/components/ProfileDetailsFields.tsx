@@ -38,24 +38,30 @@ export default function ProfileDetailsFields({
         errors={errors}
         isSaving={isSaving}
       />{" "}
-      <label
-        className="form-field"
-        htmlFor="username"
-      >
+      <label className="form-field" htmlFor="username">
         Username
-        <input data-slot="input" className="native-input" id="username" placeholder="username" {...register("username")} />
+        <input
+          data-slot="input"
+          className="native-input"
+          id="username"
+          placeholder="username"
+          {...register("username")}
+        />
       </label>
       <PhoneEditSelector
         value={values.phone}
         error={phoneError}
         onChange={onPhoneChange}
       />
-      <label
-        className="form-field"
-        htmlFor="location"
-      >
+      <label className="form-field" htmlFor="location">
         Location
-        <input data-slot="input" className="native-input" id="location" placeholder="City" {...register("city")} />
+        <input
+          data-slot="input"
+          className="native-input"
+          id="location"
+          placeholder="City"
+          {...register("city")}
+        />
       </label>
       <label className="form-field sm:col-span-2">
         About

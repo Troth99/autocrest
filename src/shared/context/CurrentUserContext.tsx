@@ -5,9 +5,9 @@ import type { User } from "@supabase/supabase-js";
 import type { UserProfile } from "@/shared/types/currentUser";
 
 // Undefined means no provider is present; null means no user or profile is available.
-const CurrentUserContext = createContext<{ user: User | null; profile: UserProfile | null } | undefined>(
-  undefined,
-);
+const CurrentUserContext = createContext<
+  { user: User | null; profile: UserProfile | null } | undefined
+>(undefined);
 
 // Receives data loaded by RootLayout and shares it with descendant components.
 export function CurrentUserProvider({
@@ -21,7 +21,9 @@ export function CurrentUserProvider({
 }) {
   return (
     // Expose the data as user and profile to components rendered inside this provider.
-    <CurrentUserContext.Provider value={{ user: initialUser, profile: initialProfile }}>
+    <CurrentUserContext.Provider
+      value={{ user: initialUser, profile: initialProfile }}
+    >
       {children}
     </CurrentUserContext.Provider>
   );
@@ -33,9 +35,7 @@ export function useCurrentUser() {
 
   // Catch components that try to read this context outside its provider.
   if (!context) {
-    throw new Error(
-      "useCurrentUser must be used inside CurrentUserProvider",
-    );
+    throw new Error("useCurrentUser must be used inside CurrentUserProvider");
   }
 
   return context;

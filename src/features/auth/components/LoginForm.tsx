@@ -7,22 +7,36 @@ import { FieldError } from "@/shared/components/FieldError/FieldError";
 import useLoginForm from "@/features/auth/hooks/useLoginForm";
 import { FacebookIcon, GoogleIcon } from "./icons/AuthProviderIcons";
 
-export default function LoginForm({ passwordReset = false }: { passwordReset?: boolean }) {
-  const { register, registerCheckbox, formHandler, errors, isSubmitting, googleLoginHandler, facebookLoginHandler } = useLoginForm();
+export default function LoginForm({
+  passwordReset = false,
+}: {
+  passwordReset?: boolean;
+}) {
+  const {
+    register,
+    registerCheckbox,
+    formHandler,
+    errors,
+    isSubmitting,
+    googleLoginHandler,
+    facebookLoginHandler,
+  } = useLoginForm();
 
   return (
     <section className="auth-form-card" aria-labelledby="login-title">
       {passwordReset && (
-        <p role="status" className="mb-6 rounded-xl border border-accent/25 bg-accent/5 p-4 text-sm text-accent-text">
+        <p
+          role="status"
+          className="mb-6 rounded-xl border border-accent/25 bg-accent/5 p-4 text-sm text-accent-text"
+        >
           Your password has been reset. Sign in with your new password.
         </p>
       )}
       <div className="mb-7">
-        <span className="text-xs font-semibold uppercase tracking-[0.15em] text-info">AUTOCREST ACCOUNT</span>
-        <h1
-          id="login-title"
-          className="auth-form-title"
-        >
+        <span className="text-xs font-semibold uppercase tracking-[0.15em] text-info">
+          AUTOCREST ACCOUNT
+        </span>
+        <h1 id="login-title" className="auth-form-title">
           Welcome <span className="text-accent-text">back</span>
         </h1>
         <p className="mt-3.5 text-[0.9375rem] leading-[1.55] text-muted">

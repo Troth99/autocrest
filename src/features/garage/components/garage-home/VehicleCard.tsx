@@ -1,6 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, CarFront, Check, Cog, Fuel, Gauge, Settings2 } from "lucide-react";
+import {
+  ArrowUpRight,
+  CarFront,
+  Check,
+  Cog,
+  Fuel,
+  Gauge,
+  Settings2,
+} from "lucide-react";
 import type { Vehicle } from "@/features/garage/types/vehicle";
 
 type Props = {
@@ -10,18 +18,35 @@ type Props = {
 
 export default function VehicleCard({ vehicle, photoUrl }: Props) {
   const name = `${vehicle.make} ${vehicle.model}`;
-  const details = [vehicle.manufactureYear, vehicle.trim, vehicle.transmission?.replaceAll("_", " ")]
+  const details = [
+    vehicle.manufactureYear,
+    vehicle.trim,
+    vehicle.transmission?.replaceAll("_", " "),
+  ]
     .filter((value) => value != null && value !== "")
     .join(" · ");
 
   return (
     <article className="garage-vehicle-card flex h-full w-full min-w-0 flex-col overflow-hidden">
-      <div className={`relative aspect-16/10 overflow-hidden border-b border-line ${photoUrl ? "" : "garage-vehicle-placeholder"}`}>
+      <div
+        className={`relative aspect-16/10 overflow-hidden border-b border-line ${photoUrl ? "" : "garage-vehicle-placeholder"}`}
+      >
         {photoUrl ? (
-          <Image src={photoUrl} alt={name} loading="eager" fill unoptimized sizes="(max-width: 768px) 100vw, 680px" className="object-cover" />
+          <Image
+            src={photoUrl}
+            alt={name}
+            loading="eager"
+            fill
+            unoptimized
+            sizes="(max-width: 768px) 100vw, 680px"
+            className="object-cover"
+          />
         ) : (
           <div className="flex h-full flex-col items-center justify-center gap-3 text-info">
-            <CarFront className="garage-car-motion size-16 stroke-[1.25]" aria-hidden="true" />
+            <CarFront
+              className="garage-car-motion size-16 stroke-[1.25]"
+              aria-hidden="true"
+            />
             <span className="detail-label">No photo added</span>
           </div>
         )}
@@ -31,14 +56,16 @@ export default function VehicleCard({ vehicle, photoUrl }: Props) {
           </span>
         )}
         {vehicle.plate && (
-          <span className="vehicle-card-plate">
-            {vehicle.plate}
-          </span>
+          <span className="vehicle-card-plate">{vehicle.plate}</span>
         )}
       </div>
       <div className="flex flex-1 flex-col p-4">
-        <h3 className="wrap-break-word text-lg font-semibold tracking-tight text-text-primary">{name}</h3>
-        {details && <p className="mt-1.5 text-sm capitalize text-muted">{details}</p>}
+        <h3 className="wrap-break-word text-lg font-semibold tracking-tight text-text-primary">
+          {name}
+        </h3>
+        {details && (
+          <p className="mt-1.5 text-sm capitalize text-muted">{details}</p>
+        )}
 
         <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-4 border-t border-line pt-4">
           <div className="vehicle-card-stat">
@@ -64,7 +91,9 @@ export default function VehicleCard({ vehicle, photoUrl }: Props) {
             <div className="min-w-0">
               <dt className="detail-label">Power</dt>
               <dd className="vehicle-card-stat-value">
-                {vehicle.powerHp !== null ? `${vehicle.powerHp} hp` : "Not provided"}
+                {vehicle.powerHp !== null
+                  ? `${vehicle.powerHp} hp`
+                  : "Not provided"}
               </dd>
             </div>
           </div>
@@ -83,7 +112,8 @@ export default function VehicleCard({ vehicle, photoUrl }: Props) {
         <div className="mt-auto pt-5">
           <Link
             href={`/vehicles/${vehicle.id}`}
-            className="button-base button-primary flex w-full items-center justify-between px-4 py-3 text-sm"          >
+            className="button-base button-primary flex w-full items-center justify-between px-4 py-3 text-sm"
+          >
             <span>View details</span>
             <ArrowUpRight className="size-4" aria-hidden="true" />
           </Link>

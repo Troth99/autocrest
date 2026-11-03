@@ -9,10 +9,24 @@ import ProfileFormActions from "@/features/profile/edit-profile/components/Profi
 
 export default function EditProfilePage() {
   const {
-    user, fullName, values, register, formHandler, errors,
-    saveError, phoneError, setPhoneError, isSaving,
-    avatarFile, setAvatarFile, avatarPreview, setAvatarPreview,
-    avatarError, setAvatarError, avatarInputRef, setFieldValue,
+    user,
+    fullName,
+    values,
+    register,
+    formHandler,
+    errors,
+    saveError,
+    phoneError,
+    setPhoneError,
+    isSaving,
+    avatarFile,
+    setAvatarFile,
+    avatarPreview,
+    setAvatarPreview,
+    avatarError,
+    setAvatarError,
+    avatarInputRef,
+    setFieldValue,
   } = useEditProfileForm();
 
   if (!user) return null;
@@ -20,9 +34,7 @@ export default function EditProfilePage() {
   return (
     <main className="mx-auto w-full max-w-7xl px-5 py-8 sm:px-8 sm:py-10">
       <div>
-        <h1 className="page-title">
-          Update your profile
-        </h1>
+        <h1 className="page-title">Update your profile</h1>
         <p className="mt-2 section-description sm:text-base">
           Update the information shown on your AutoCrest account.
         </p>
@@ -30,15 +42,19 @@ export default function EditProfilePage() {
 
       <div className="mt-8 grid items-stretch gap-6 xl:grid-cols-[minmax(16rem,0.8fr)_minmax(0,1.6fr)]">
         <EditProfilePreview
-          name={fullName || (user.user_metadata?.full_name || user.user_metadata?.name || values.username || user.email?.split("@")[0] || "user")}
+          name={
+            fullName ||
+            user.user_metadata?.full_name ||
+            user.user_metadata?.name ||
+            values.username ||
+            user.email?.split("@")[0] ||
+            "user"
+          }
           email={user.email ?? null}
           phone={values.phone}
           avatarUrl={avatarPreview || values.avatarUrl || null}
         />
-        <form
-          className="profile-edit-form"
-          onSubmit={formHandler}
-        >
+        <form className="profile-edit-form" onSubmit={formHandler}>
           <div>
             <h2 className="text-xl font-semibold tracking-tight">
               Personal information
@@ -51,7 +67,15 @@ export default function EditProfilePage() {
             avatarPreview={avatarPreview}
             avatarFile={avatarFile}
             avatarUrl={values.avatarUrl}
-            initials={getInitials(fullName || (user.user_metadata?.full_name || user.user_metadata?.name || values.username || user.email?.split("@")[0] || "user"), user.email ?? "")}
+            initials={getInitials(
+              fullName ||
+                user.user_metadata?.full_name ||
+                user.user_metadata?.name ||
+                values.username ||
+                user.email?.split("@")[0] ||
+                "user",
+              user.email ?? "",
+            )}
             isSaving={isSaving}
             avatarError={avatarError}
             avatarInputRef={avatarInputRef}

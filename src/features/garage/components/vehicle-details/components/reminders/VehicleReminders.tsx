@@ -3,11 +3,16 @@ import { vehicleServiceLabels } from "@/features/garage/constants/vehicle-servic
 import { Bell, CalendarDays, Gauge, Plus } from "lucide-react";
 import { formatDate } from "@/shared/utils/formatDate";
 
-export default function VehicleReminders({ vehicleServices }: {
+export default function VehicleReminders({
+  vehicleServices,
+}: {
   vehicleServices: VehicleServiceRecord[];
 }) {
   const scheduledServices = vehicleServices
-    .filter((service) => service.nextServiceDate != null || service.nextServiceMileageKm != null)
+    .filter(
+      (service) =>
+        service.nextServiceDate != null || service.nextServiceMileageKm != null,
+    )
     .sort((a, b) => {
       if (!a.nextServiceDate) return b.nextServiceDate ? 1 : 0;
       if (!b.nextServiceDate) return -1;
@@ -19,14 +24,24 @@ export default function VehicleReminders({ vehicleServices }: {
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <div>
           <div className="flex items-center gap-2">
-            <h2 id="vehicle-reminders-heading" className="text-lg font-semibold">Reminders</h2>
+            <h2
+              id="vehicle-reminders-heading"
+              className="text-lg font-semibold"
+            >
+              Reminders
+            </h2>
             {scheduledServices.length > 0 && (
-              <span className="rounded-full bg-info-soft px-2 py-0.5 text-xs font-medium text-info">{scheduledServices.length}</span>
+              <span className="rounded-full bg-info-soft px-2 py-0.5 text-xs font-medium text-info">
+                {scheduledServices.length}
+              </span>
             )}
           </div>
           <p className="mt-1 text-xs text-muted">What to take care of next.</p>
         </div>
-        <button type="button" className="button-base button-primary shrink-0 cursor-pointer gap-1.5 px-4 py-2.5 text-xs">
+        <button
+          type="button"
+          className="button-base button-primary shrink-0 cursor-pointer gap-1.5 px-4 py-2.5 text-xs"
+        >
           <Plus className="size-4" aria-hidden="true" /> Add reminder
         </button>
       </div>
@@ -37,18 +52,26 @@ export default function VehicleReminders({ vehicleServices }: {
           </span>
           <div>
             <p className="text-sm font-medium">No reminders</p>
-            <p className="mt-1 field-description">Set a date or mileage when recording your next service.</p>
+            <p className="mt-1 field-description">
+              Set a date or mileage when recording your next service.
+            </p>
           </div>
         </div>
       ) : (
         <ul className="space-y-3">
           {scheduledServices.map((service) => (
-            <li key={service.id} className="flex items-start gap-3 rounded-2xl border border-info-border bg-info-soft/40 p-4">
+            <li
+              key={service.id}
+              className="flex items-start gap-3 rounded-2xl border border-info-border bg-info-soft/40 p-4"
+            >
               <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-info-soft text-info">
                 <Bell className="size-4" aria-hidden="true" />
               </span>
               <div className="min-w-0 flex-1">
-                <p className="wrap-break-word text-sm font-semibold">{service.customServiceType || vehicleServiceLabels[service.serviceType]}</p>
+                <p className="wrap-break-word text-sm font-semibold">
+                  {service.customServiceType ||
+                    vehicleServiceLabels[service.serviceType]}
+                </p>
                 <div className="mt-2 flex flex-wrap gap-x-4 gap-y-2 text-xs text-muted">
                   {service.nextServiceDate && (
                     <span className="inline-flex items-center gap-1.5">
@@ -61,12 +84,17 @@ export default function VehicleReminders({ vehicleServices }: {
                   {service.nextServiceMileageKm != null && (
                     <span className="inline-flex items-center gap-1.5">
                       <Gauge className="size-3.5" aria-hidden="true" />
-                      At {service.nextServiceMileageKm.toLocaleString("en-GB")} km
+                      At {service.nextServiceMileageKm.toLocaleString(
+                        "en-GB",
+                      )}{" "}
+                      km
                     </span>
                   )}
                 </div>
                 {service.recommendedWork && (
-                  <p className="mt-2 whitespace-pre-line wrap-break-word field-description">{service.recommendedWork}</p>
+                  <p className="mt-2 whitespace-pre-line wrap-break-word field-description">
+                    {service.recommendedWork}
+                  </p>
                 )}
               </div>
             </li>

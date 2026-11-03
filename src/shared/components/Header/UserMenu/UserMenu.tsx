@@ -3,11 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import {
-  LogOut,
-  Settings,
-  User as UserIcon,
-} from "lucide-react";
+import { LogOut, Settings, User as UserIcon } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -39,7 +35,6 @@ export default function UserMenu({
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const router = useRouter();
 
-
   async function logOutHandler() {
     setIsLoggingOut(true);
 
@@ -58,7 +53,8 @@ export default function UserMenu({
         // Start loading the profile before the user selects it from the menu.
         onPointerEnter={() => router.prefetch("/profile")}
         onFocus={() => router.prefetch("/profile")}
-        className="cursor-pointer  rounded-full outline-none transition-[transform,box-shadow] duration-200 hover:scale-105 hover:shadow-[0_0_18px_rgb(56_189_248/28%)] focus-visible:ring-2 focus-visible:ring-ring/50 motion-reduce:transition-none motion-reduce:hover:scale-100">
+        className="cursor-pointer  rounded-full outline-none transition-[transform,box-shadow] duration-200 hover:scale-105 hover:shadow-[0_0_18px_rgb(56_189_248/28%)] focus-visible:ring-2 focus-visible:ring-ring/50 motion-reduce:transition-none motion-reduce:hover:scale-100"
+      >
         <Avatar>
           {avatarUrl && <AvatarImage src={avatarUrl} alt={username} />}
           <AvatarFallback className="bg-info-soft text-info">

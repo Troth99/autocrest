@@ -101,14 +101,15 @@ export default function DisableTwoFactor({
           close();
         }
       }}
-        backdropClassName="fixed inset-0 z-50 bg-black/65"
-        popupProps={{
-            finalFocus: triggerRef,
-            className: "modal-position w-[calc(100%-2rem)] max-h-[calc(100dvh-2rem)] max-w-lg overflow-y-auto rounded-3xl border border-line bg-panel p-6 text-text-primary shadow-2xl outline-none sm:p-8",
-            "aria-busy": busy,
-        }}
-        trigger={
-            <Button
+      backdropClassName="fixed inset-0 z-50 bg-black/65"
+      popupProps={{
+        finalFocus: triggerRef,
+        className:
+          "modal-position w-[calc(100%-2rem)] max-h-[calc(100dvh-2rem)] max-w-lg overflow-y-auto rounded-3xl border border-line bg-panel p-6 text-text-primary shadow-2xl outline-none sm:p-8",
+        "aria-busy": busy,
+      }}
+      trigger={
+        <Button
           ref={triggerRef}
           type="button"
           variant="outline"
@@ -126,7 +127,7 @@ export default function DisableTwoFactor({
           <ShieldAlert className="size-4" aria-hidden="true" />
           Disable 2FA
         </Button>
-        }
+      }
     >
       <Dialog.Close
         disabled={busy}
@@ -209,7 +210,8 @@ export default function DisableTwoFactor({
             <label htmlFor={inputId} className="text-sm font-semibold">
               Authenticator code
             </label>
-            <input data-slot="input"
+            <input
+              data-slot="input"
               id={inputId}
               value={code}
               onChange={(event) => setCode(event.target.value)}

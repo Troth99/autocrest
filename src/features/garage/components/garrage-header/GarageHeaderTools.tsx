@@ -74,7 +74,8 @@ export default function GarageHeaderTools() {
           // Prepare the form while the user opens the Add menu.
           onPointerEnter={() => router.prefetch("/vehicles/add")}
           onFocus={() => router.prefetch("/vehicles/add")}
-          className="action-button cursor-pointer gap-2 px-3 py-2.5 transition-colors hover:bg-accent-strong focus-visible:outline-2 focus-visible:outline-focus sm:px-4">
+          className="action-button cursor-pointer gap-2 px-3 py-2.5 transition-colors hover:bg-accent-strong focus-visible:outline-2 focus-visible:outline-focus sm:px-4"
+        >
           <Plus className="size-4" aria-hidden="true" />
           Add
           <ChevronDown className="size-4" aria-hidden="true" />

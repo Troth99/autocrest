@@ -24,7 +24,9 @@ export default function ResetPasswordForm() {
       window.location.replace("/login?password_reset=success");
     } catch {
       // The password is already saved; retry only signing out, not the update.
-      setSignOutError("Your password has been reset, but we could not sign you out. Please try again.");
+      setSignOutError(
+        "Your password has been reset, but we could not sign you out. Please try again.",
+      );
       setIsSigningOut(false);
     }
   }
@@ -34,33 +36,80 @@ export default function ResetPasswordForm() {
     await finishRecovery();
   }
 
-  const { register, formHandler, errors, busy, success, error } = usePasswordRecoveryForm(
-    { newPassword: "", confirmPassword: "" }, validateResetPassword, submit,
-  );
+  const { register, formHandler, errors, busy, success, error } =
+    usePasswordRecoveryForm(
+      { newPassword: "", confirmPassword: "" },
+      validateResetPassword,
+      submit,
+    );
 
   return (
     <section aria-labelledby={`${inputId}-title`}>
       <span className="eyebrow">ACCOUNT RECOVERY</span>
-      <h1 id={`${inputId}-title`} className="auth-form-title mt-4">Choose a new password</h1>
+      <h1 id={`${inputId}-title`} className="auth-form-title mt-4">
+        Choose a new password
+      </h1>
       {success ? (
         <div className="mt-6 grid gap-5">
-          <p role="status" className="text-sm text-text-primary">Your password has been reset successfully.</p>
-          {signOutError && <p role="alert" className="text-sm text-destructive">{signOutError}</p>}
-          <Button type="button" disabled={isSigningOut} onClick={finishRecovery} className="button-base button-primary h-12 cursor-pointer">
-            {isSigningOut ? "Returning to sign in..." : "Sign out and continue to sign in"}
+          <p role="status" className="text-sm text-text-primary">
+            Your password has been reset successfully.
+          </p>
+          {signOutError && (
+            <p role="alert" className="text-sm text-destructive">
+              {signOutError}
+            </p>
+          )}
+          <Button
+            type="button"
+            disabled={isSigningOut}
+            onClick={finishRecovery}
+            className="button-base button-primary h-12 cursor-pointer"
+          >
+            {isSigningOut
+              ? "Returning to sign in..."
+              : "Sign out and continue to sign in"}
           </Button>
         </div>
       ) : (
-        <form noValidate onSubmit={formHandler} className="mt-6 grid gap-5" aria-busy={busy}>
+        <form
+          noValidate
+          onSubmit={formHandler}
+          className="mt-6 grid gap-5"
+          aria-busy={busy}
+        >
           <fieldset disabled={busy} className="grid gap-5">
-            <PasswordField id={`${inputId}-new`} label="New password" error={errors.newPassword} {...register("newPassword")} />
-            <PasswordField id={`${inputId}-confirm`} label="Confirm new password" hint={null} error={errors.confirmPassword} {...register("confirmPassword")} />
+            <PasswordField
+              id={`${inputId}-new`}
+              label="New password"
+              error={errors.newPassword}
+              {...register("newPassword")}
+            />
+            <PasswordField
+              id={`${inputId}-confirm`}
+              label="Confirm new password"
+              hint={null}
+              error={errors.confirmPassword}
+              {...register("confirmPassword")}
+            />
           </fieldset>
-          {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
-          <Button type="submit" disabled={busy} className="button-base button-primary h-12 cursor-pointer">
+          {error && (
+            <p role="alert" className="text-sm text-destructive">
+              {error}
+            </p>
+          )}
+          <Button
+            type="submit"
+            disabled={busy}
+            className="button-base button-primary h-12 cursor-pointer"
+          >
             {busy ? "Updating password..." : "Reset password"}
           </Button>
-          <Link href="/forgot-password" className="text-sm text-info underline underline-offset-4">Request a new reset link</Link>
+          <Link
+            href="/forgot-password"
+            className="text-sm text-info underline underline-offset-4"
+          >
+            Request a new reset link
+          </Link>
         </form>
       )}
     </section>
