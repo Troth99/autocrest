@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
-  const { user, profile } = await getCurrentUser();
+  const { user, profile, profileError } = await getCurrentUser();
 
   return (
     <html
@@ -35,7 +35,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <ThemeProvider>
-          <CurrentUserProvider initialUser={user} initialProfile={profile}>
+          <CurrentUserProvider initialUser={user} initialProfile={profile} initialProfileError={profileError}>
             {children}
             <SiteFooter />
           </CurrentUserProvider>

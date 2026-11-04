@@ -6,23 +6,33 @@ import type { UserProfile } from "@/shared/types/currentUser";
 
 // Undefined means no provider is present; null means no user or profile is available.
 const CurrentUserContext = createContext<
-  { user: User | null; profile: UserProfile | null } | undefined
+  {
+    user: User | null;
+    profile: UserProfile | null
+    profileError: string | null;
+  } | undefined
 >(undefined);
 
 // Receives data loaded by RootLayout and shares it with descendant components.
 export function CurrentUserProvider({
   initialUser,
   initialProfile,
+  initialProfileError,
   children,
 }: {
   initialUser: User | null;
   initialProfile: UserProfile | null;
+  initialProfileError: string | null;
   children: ReactNode;
 }) {
   return (
     // Expose the data as user and profile to components rendered inside this provider.
     <CurrentUserContext.Provider
-      value={{ user: initialUser, profile: initialProfile }}
+      value={{
+        user: initialUser,
+        profile: initialProfile,
+        profileError: initialProfileError
+      }}
     >
       {children}
     </CurrentUserContext.Provider>
