@@ -74,7 +74,7 @@ export default function VehicleHeading({
           <ArrowLeft className="size-4" aria-hidden="true" /> Back to my garage
         </Link>
         <Link
-          href={`/vehicles/${vehicle.id}/editVehicle`}
+          href={`/vehicles/${vehicle.id}/edit-vehicle`}
           className="vehicle-edit-action"
         >
           <Pencil className="size-4" aria-hidden="true" />

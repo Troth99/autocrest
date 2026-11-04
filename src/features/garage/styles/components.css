@@ -41,6 +41,27 @@
 }
 
 @layer components {
+  .maintenance-section-title {
+    @apply section-title flex items-center gap-3 text-info-strong;
+  }
+
+  .maintenance-section-icon {
+    @apply flex size-8 shrink-0 items-center justify-center rounded-lg border border-info-border;
+    @apply bg-info-soft text-info;
+  }
+
+  .maintenance-detail-label {
+    @apply text-xs font-semibold uppercase leading-5 tracking-widest text-info;
+  }
+
+  .maintenance-detail-value {
+    @apply mt-2 wrap-break-word text-base font-medium leading-7 text-text-primary;
+  }
+
+  .maintenance-detail-field {
+    @apply min-w-0 border-l-2 border-info-border pl-4;
+  }
+
   .vehicle-form-section {
     min-width: 0;
     border-radius: var(--radius-2xl);

@@ -39,7 +39,7 @@ export default function VehicleTypeSelection() {
           value === "car" ? (
             <Link
               key={value}
-              href={`/vehicles/add?type=${value}`}
+              href={`/vehicles/add-vehicle?type=${value}`}
               className="content-card rounded-2xl p-5 font-medium text-text-primary hover:bg-info-soft"
             >
               {label}

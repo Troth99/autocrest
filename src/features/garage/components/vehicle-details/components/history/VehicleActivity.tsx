@@ -2,6 +2,7 @@ import type { VehicleServiceRecord } from "@/features/garage/types/vehicle-servi
 import { vehicleServiceLabels } from "@/features/garage/constants/vehicle-service-labels";
 import { ArrowUpRight, Wrench } from "lucide-react";
 import { formatDate } from "@/shared/utils/formatDate";
+import Link from "next/link";
 
 export default function VehicleActivity({
   vehicleServices,
@@ -86,16 +87,14 @@ export default function VehicleActivity({
                         </>
                       )}
                     </p>
-                    <button
-                      type="button"
+                    <Link 
+                      href={`/vehicles/${service.vehicleId}/maintenance/${service.id}`}
+                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg border border-info-border bg-info-soft px-3 py-2 text-xs font-semibold text-info"
                       aria-label={`View details for ${getServiceLabel(service)} on ${service.serviceDate}`}
-                      disabled
-                      title="Details not available"
-                      className="inline-flex cursor-not-allowed items-center gap-1.5 rounded-lg border border-info-border bg-info-soft px-3 py-2 text-xs font-semibold text-info"
                     >
-                      View details
                       <ArrowUpRight className="size-3.5" aria-hidden="true" />
-                    </button>
+                      View details
+                    </Link>
                   </div>
                 </div>
               </div>

@@ -1,4 +1,4 @@
-import VehicleDetails from "@/features/garage/components/vehicle-details/Vehicle-details";
+import VehicleDetails from "@/features/garage/components/vehicle-details/VehicleDetails";
 import { getVehicleById } from "@/features/garage/services/vehicles.service";
 import { getVehiclePhotoUrls } from "@/features/garage/services/vehicle-photo.service";
 import { createClient } from "@/lib/supabase/server";

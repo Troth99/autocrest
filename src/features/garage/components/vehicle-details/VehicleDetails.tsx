@@ -43,7 +43,9 @@ export default function VehicleDetails({
           <VehicleMainActions vehicleId={vehicle.id} />
 
           <div className="mt-6 border-t border-line pt-6">
+
             <VehicleReminders vehicleServices={vehicleServices} />
+            
             <div className="mb-4 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-6">
               <div>
                 <h2
