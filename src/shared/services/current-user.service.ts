@@ -1,30 +1,32 @@
-import type { UserProfile } from "@/shared/types/currentUser";
+import type { AppUser } from "@/shared/types/currentUser";
 import "server-only";
-import type { User } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function getCurrentUser(): Promise<{
-  user: User | null;
-  profile: UserProfile | null;
+  user: AppUser | null;
   profileError: string | null;
 }> {
   const supabase = await createClient();
 
+  // Get the authenticated account, or null when nobody is signed in.
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
+  // Load custom fields for this account only when a user is signed in.
+  // maybeSingle allows a missing profile row without reporting a query error.
   const { data: profile, error: profileError } = user
     ? await supabase
         .from("profiles")
-        .select("*")
+        .select("username, fullName, phone, countryCode, region, city, avatarUrl, bio")
         .eq("id", user.id)
         .maybeSingle()
     : { data: null, error: null };
 
   return {
-    user,
-    profile,
+    // Merge Auth and profile data; profile fields override matching Auth fields.
+    user: user ? { ...user, ...profile } : null,
+    // Let consumers handle profile errors while keeping the Auth user available.
     profileError: profileError ? "Unable to load your profile" : null,
   };
 }

@@ -8,40 +8,21 @@ import ProfileHero from "./components/ProfileHero";
 import { useCurrentUser } from "@/shared/context/CurrentUserContext";
 
 export default function ProfilePage() {
-  const { user, profile, profileError } = useCurrentUser();
+  const { user, profileError } = useCurrentUser();
 
   if (profileError) {
     throw new Error(profileError);
   }
   if (!user) return null;
 
-  // Personal information, with account metadata as a fallback.
-  const metadata = user.user_metadata ?? {};
-  const fullName =
-    profile?.fullName?.trim() || metadata.full_name || metadata.name || null;
-  const username =
-    profile?.username?.trim() ||
-    metadata.username ||
-    user.email?.split("@")[0] ||
-    "user";
-  const name = fullName || username;
-  const email = user.email ?? "No email available";
-  const avatarUrl =
-    profile?.avatarUrl?.trim() || metadata.avatar_url || metadata.picture || null;
-  const {
-    phone = null,
-    countryCode = null,
-    region = null,
-    city = null,
-    bio = null,
-  } = profile ?? {};
-
   // Location shown in the personal information card.
-  const countryName = countryCode
-    ? (new Intl.DisplayNames(["en"], { type: "region" }).of(countryCode) ??
-      countryCode)
+  const countryName = user.countryCode
+    ? (new Intl.DisplayNames(["en"], { type: "region" }).of(user.countryCode) ??
+      user.countryCode)
     : null;
-  const location = [city, region, countryName].filter(Boolean).join(", ") || null;
+
+  const location =
+    [user.city, user.region, countryName].filter(Boolean).join(", ") || null;
 
   // Account dates and sign-in details.
   const memberSince = new Intl.DateTimeFormat("en-GB", {
@@ -66,8 +47,6 @@ export default function ProfilePage() {
     signInMethod = `${provider.charAt(0).toUpperCase()}${provider.slice(1)} account`;
   }
 
-  const completionDetails = { fullName, username, avatarUrl, phone, city, bio };
-
   return (
     <main className="mx-auto w-full max-w-310 flex-1 px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
       <div className="mb-8">
@@ -82,24 +61,24 @@ export default function ProfilePage() {
       <div className="grid gap-5 lg:grid-cols-[270px_minmax(0,1fr)] lg:items-stretch">
         <aside className="min-w-0 lg:col-start-1 lg:row-start-1">
           <ProfileHero
-            name={name}
-            email={email}
+            name={user.fullName || user.username || "user"}
+            email={user.email ?? "No email available"}
             memberSince={memberSince}
-            avatarUrl={avatarUrl}
+            avatarUrl={user.avatarUrl ?? null}
           />
         </aside>
         <div className="min-w-0 lg:col-start-2 lg:row-start-1">
           <PersonalInformationCard
-            fullName={fullName}
-            username={username}
-            email={email}
-            phone={phone}
+            fullName={user.fullName ?? null}
+            username={user.username || "user"}
+            email={user.email ?? "No email available"}
+            phone={user.phone ?? null}
             location={location}
-            bio={bio}
+            bio={user.bio ?? null}
           />
         </div>
         <aside className="min-w-0 lg:col-start-1 lg:row-start-2 [&>section]:h-full">
-          <CompleteYourSetup user={completionDetails} />
+          <CompleteYourSetup user={user} />
         </aside>
         <div className="profile-details-layout">
           <AccountSecurityCard

@@ -1,14 +1,12 @@
 "use client";
 
 import { createContext, ReactNode, useContext } from "react";
-import type { User } from "@supabase/supabase-js";
-import type { UserProfile } from "@/shared/types/currentUser";
+import type { AppUser } from "@/shared/types/currentUser";
 
-// Undefined means no provider is present; null means no user or profile is available.
+// Undefined means no provider is present; null means no user is signed in.
 const CurrentUserContext = createContext<
   {
-    user: User | null;
-    profile: UserProfile | null
+    user: AppUser | null;
     profileError: string | null;
   } | undefined
 >(undefined);
@@ -16,22 +14,19 @@ const CurrentUserContext = createContext<
 // Receives data loaded by RootLayout and shares it with descendant components.
 export function CurrentUserProvider({
   initialUser,
-  initialProfile,
   initialProfileError,
   children,
 }: {
-  initialUser: User | null;
-  initialProfile: UserProfile | null;
+  initialUser: AppUser | null;
   initialProfileError: string | null;
   children: ReactNode;
 }) {
   return (
-    // Expose the data as user and profile to components rendered inside this provider.
+    // Expose the combined user to components rendered inside this provider.
     <CurrentUserContext.Provider
       value={{
         user: initialUser,
-        profile: initialProfile,
-        profileError: initialProfileError
+        profileError: initialProfileError,
       }}
     >
       {children}
@@ -39,7 +34,7 @@ export function CurrentUserProvider({
   );
 }
 
-// Read the shared user and profile without passing them through props.
+// Read the shared user without passing it through props.
 export function useCurrentUser() {
   const context = useContext(CurrentUserContext);
 

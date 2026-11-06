@@ -12,7 +12,7 @@ type SiteHeaderProps = {
 };
 
 export default function SiteHeader({ showNavigation = true }: SiteHeaderProps) {
-  const { user, profile } = useCurrentUser();
+  const { user } = useCurrentUser();
 
   // Recovery sessions should not look like a normal signed-in dashboard.
   const isAccountPage = Boolean(user) && showNavigation;
@@ -63,9 +63,9 @@ export default function SiteHeader({ showNavigation = true }: SiteHeaderProps) {
             {isAccountPage && <GarageHeaderTools />}
             {user ? (
               <UserMenu
-                username={profile?.username || "Account"}
+                username={user.username || "Account"}
                 email={user.email ?? ""}
-                avatarUrl={profile?.avatarUrl || null}
+                avatarUrl={user.avatarUrl || null}
               />
             ) : (
               <>
