@@ -1,32 +1,24 @@
-"use client"
-
 import { FileCheck2, ReceiptText, Wrench } from "lucide-react";
 import Link from "next/link";
-
 
 type Props = {
   vehicleId: string;
 };
 
-export default function VehicleMainActions({ vehicleId  }: Props) {
-
+export default function VehicleMainActions({ vehicleId }: Props) {
   return (
     <div
       role="group"
       aria-label="Add vehicle records"
       className="grid gap-3 sm:grid-cols-3"
-
     >
-
       <Link
-        href={`/vehicles/${vehicleId}/services/new`}
+        href={`/vehicles/${vehicleId}/maintenance/add-record`}
         className="button-base button-primary justify-center gap-2 px-3 py-3.5 text-sm"
       >
         <Wrench className="size-5 shrink-0" aria-hidden="true" />
         Add service
       </Link>
-
-
 
       <button
         type="button"

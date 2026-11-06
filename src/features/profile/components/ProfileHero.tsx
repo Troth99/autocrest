@@ -1,5 +1,3 @@
-"use client";
-
 import { CalendarDays, KeyRound, PencilLine } from "lucide-react";
 import Link from "next/link";
 import { getInitials } from "@/features/profile/utils/getInitials";
@@ -15,20 +13,16 @@ export default function ProfileHero({
   email,
   memberSince,
   avatarUrl,
-
 }: {
   name: string;
   email: string;
   memberSince: string;
   avatarUrl: string | null;
-
 }) {
   const initials = getInitials(name, email);
 
   return (
     <section className="profile-hero">
-
-
       <div className="relative flex flex-col gap-4">
         <Avatar className="size-20 rounded-[1.7rem] ring-4 ring-info-soft after:rounded-[1.7rem] after:border-accent/35">
           {avatarUrl && (
@@ -47,11 +41,23 @@ export default function ProfileHero({
             <h2 className="truncate text-lg font-semibold tracking-[-0.04em] text-text-primary">
               {name}
             </h2>
-
           </div>
         </div>
         <p className="break-all text-xs text-muted">{email}</p>
-        <nav aria-label="Profile sections" className="grid gap-2 text-sm"><a href="#personal-information" className="rounded-lg bg-info-soft px-3 py-2 text-info">Personal information</a><a href="#account-security" className="rounded-lg px-3 py-2 text-muted hover:text-info">Account security</a></nav>
+        <nav aria-label="Profile sections" className="grid gap-2 text-sm">
+          <a
+            href="#personal-information"
+            className="rounded-lg bg-info-soft px-3 py-2 text-info"
+          >
+            Personal information
+          </a>
+          <a
+            href="#account-security"
+            className="rounded-lg px-3 py-2 text-muted hover:text-info"
+          >
+            Account security
+          </a>
+        </nav>
         <div className="border-line border-t pt-4">
           <p className="text-xs font-semibold uppercase tracking-[0.13em] text-subtle">
             With AutoCrest since
@@ -65,7 +71,8 @@ export default function ProfileHero({
           <Link
             href="/profile/edit"
             className={buttonVariants({
-              className: "w-full cursor-pointer bg-accent text-ink hover:bg-accent/85",
+              className:
+                "w-full cursor-pointer bg-accent text-ink hover:bg-accent/85",
             })}
           >
             <PencilLine />

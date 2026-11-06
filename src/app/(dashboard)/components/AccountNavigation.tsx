@@ -1,41 +1,21 @@
-"use client";
-
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import NavLink from "@/shared/components/NavLink/NavLink";
 import { CarFront, House, Settings, UserRound } from "lucide-react";
 
 export default function AccountNavigation() {
-  const pathname = usePathname();
   return (
-    <nav
-      aria-label="Account navigation"
-      className="account-navigation"
-    >
-      <p className="mb-5 hidden px-4 text-[10px] font-semibold uppercase tracking-[0.18em] text-subtle lg:block">YOUR WORKSPACE</p>
+    <nav aria-label="Account navigation" className="account-navigation">
+      <p className="mb-5 hidden px-4 text-[10px] font-semibold uppercase tracking-[0.18em] text-subtle lg:block">
+        YOUR WORKSPACE
+      </p>
       <div className="flex flex-wrap gap-2 lg:flex-col">
-        <Link
-          href="/profile"
-          aria-current={
-            pathname.startsWith("/profile") || pathname === "/change-password"
-              ? "page"
-              : undefined
-          }
-          className={`flex items-center gap-3 rounded-lg border-l-3 px-4 py-3 text-sm font-medium transition-colors ${pathname.startsWith("/profile") || pathname === "/change-password" ? "border-accent bg-info-soft text-info" : "border-transparent text-muted hover:bg-info-soft hover:text-text-primary"}`}
-        >
+        <NavLink href="/profile" additionalActivePaths={["/change-password"]}>
           <UserRound className="size-5 shrink-0" />
           Profile
-        </Link>
-        <Link
-          href="/garrage"
-          aria-current={pathname.startsWith("/garrage") ? "page" : undefined}
-          className={`flex items-center gap-3 rounded-lg border-l-3 px-4 py-3 text-sm font-medium transition-colors ${pathname.startsWith("/garrage")
-              ? "border-accent bg-info-soft text-info"
-              : "border-transparent text-muted hover:bg-info-soft hover:text-text-primary"
-            }`}
-        >
+        </NavLink>
+        <NavLink href="/garrage">
           <CarFront className="size-5 shrink-0" />
           My Garage
-        </Link>
+        </NavLink>
         {[
           { label: "Dashboard", icon: House },
           { label: "Settings", icon: Settings },

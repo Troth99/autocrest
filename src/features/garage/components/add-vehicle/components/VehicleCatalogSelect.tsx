@@ -31,7 +31,6 @@ export default function VehicleCatalogSelect({
   disabled,
   errorId,
 }: Props) {
-  
   function getOptionLabel(item: Option) {
     return item.name;
   }
@@ -88,9 +87,7 @@ export default function VehicleCatalogSelect({
       filter={filterOptions}
       disabled={disabled}
     >
-      <Combobox.Label className="form-field-label">
-        {label} *
-      </Combobox.Label>
+      <Combobox.Label className="form-field-label">{label} *</Combobox.Label>
 
       <Combobox.Trigger
         id={id}

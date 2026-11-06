@@ -5,7 +5,7 @@ import { toErrors } from "./zod-helpers";
 //register form validation schema
 export const registerSchema = z
   .object({
-    username: z.string().min(3, "Username must have at least 3 characters."),
+    username: z.string().trim().min(3, "Username must have at least 3 characters."),
     email: z.email("Invalid email address."),
     password: z.string().min(8, "Password must have at least 8 characters."),
     confirmPassword: z.string(),

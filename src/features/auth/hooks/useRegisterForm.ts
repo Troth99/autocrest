@@ -3,8 +3,14 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import useForm from "@/shared/hooks/useForm";
-import { loginUser, registerUser } from "@/features/auth/services/auth.service";
-import { validateRegisterForm, type RegisterFormValues } from "@/features/auth/validators/register.validator";
+import {
+  loginUser,
+  registerUser,
+} from "@/features/auth/services/auth.service";
+import {
+  validateRegisterForm,
+  type RegisterFormValues,
+} from "@/features/auth/validators/register.validator";
 
 const initialValues: RegisterFormValues = {
   username: "",
@@ -25,6 +31,7 @@ export default function useRegisterForm() {
   );
 
   async function registerHandler(values: RegisterFormValues) {
+    if (isSubmitting) return;
     setIsSubmitting(true);
 
     try {
@@ -38,17 +45,19 @@ export default function useRegisterForm() {
         email: values.email.trim(),
         password: values.password,
       });
-     
-      router.push('/')
-      router.refresh()
 
+      router.push("/");
+      router.refresh();
+      
     } catch (error) {
-      setErrors({
-        email:
-          error instanceof Error ? error.message : "Something went wrong.",
-      });
-    } finally {
       setIsSubmitting(false);
+      if (error instanceof Error && error.name === "UsernameTakenError") {
+        setErrors({ username: error.message });
+        return;
+      }
+      setErrors({
+        email: error instanceof Error ? error.message : "Something went wrong.",
+      });
     }
   }
 

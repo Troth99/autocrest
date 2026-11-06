@@ -16,21 +16,21 @@ type Props = {
 export default async function GaragePage({
   vehicles,
   photos,
-  query = ""
+  query = "",
 }: Props) {
-
   const matchingVehicles = vehicles.filter((vehicle) =>
-    [vehicle.make, vehicle.model, vehicle.nickname, vehicle.plate].filter(Boolean).join(" ").toLocaleLowerCase().includes(query.toLocaleLowerCase()),
+    [vehicle.make, vehicle.model, vehicle.nickname, vehicle.plate]
+      .filter(Boolean)
+      .join(" ")
+      .toLocaleLowerCase()
+      .includes(query.toLocaleLowerCase()),
   );
-
 
   return (
     <main className="mx-auto w-full max-w-7xl px-4 py-7 sm:px-6 sm:py-8">
       <div className="mb-6 flex flex-wrap items-end justify-between gap-5 xl:mr-86">
         <div>
-          <h1 className="page-title">
-            My Garage
-          </h1>
+          <h1 className="page-title">My Garage</h1>
           <p className="mt-2 section-description sm:text-base">
             Your vehicles, organised.
           </p>
@@ -42,8 +42,16 @@ export default async function GaragePage({
         <section className="min-w-0" aria-labelledby="vehicles-heading">
           {query && (
             <div className="garage-search-summary">
-              <p className="text-muted">{matchingVehicles.length} results for <span className="font-medium text-text-primary">“{query}”</span></p>
-              <Link href="/garrage" className="font-semibold text-info hover:text-info-strong">Clear search</Link>
+              <p className="text-muted">
+                {matchingVehicles.length} results for{" "}
+                <span className="font-medium text-text-primary">“{query}”</span>
+              </p>
+              <Link
+                href="/garrage"
+                className="font-semibold text-info hover:text-info-strong"
+              >
+                Clear search
+              </Link>
             </div>
           )}
           <div className="sr-only">
@@ -55,7 +63,11 @@ export default async function GaragePage({
             </span>
           </div>
 
-          {photos.error && <p role="alert" className="mb-4 text-sm text-muted">{photos.error} Refresh to try again.</p>}
+          {photos.error && (
+            <p role="alert" className="mb-4 text-sm text-muted">
+              {photos.error} Refresh to try again.
+            </p>
+          )}
 
           {vehicles.length === 0 ? (
             <div className="panel-card px-6 py-14 text-center">
@@ -75,17 +87,40 @@ export default async function GaragePage({
             </div>
           ) : matchingVehicles.length === 0 ? (
             <div className="panel-card px-6 py-14 text-center">
-              <h3 className="text-xl font-semibold text-text-primary">No matching vehicles</h3>
-              <p className="mt-2 section-description">Try a different vehicle name or registration plate.</p>
-              <Link href="/garrage" className="mt-5 inline-flex text-sm font-semibold text-info">Show all vehicles</Link>
+              <h3 className="text-xl font-semibold text-text-primary">
+                No matching vehicles
+              </h3>
+              <p className="mt-2 section-description">
+                Try a different vehicle name or registration plate.
+              </p>
+              <Link
+                href="/garrage"
+                className="mt-5 inline-flex text-sm font-semibold text-info"
+              >
+                Show all vehicles
+              </Link>
             </div>
           ) : (
-            <div className={matchingVehicles.length === 1
-              ? "grid grid-cols-1 justify-items-center gap-5"
-              : "grid gap-5 md:grid-cols-2"}>
+            <div
+              className={
+                matchingVehicles.length === 1
+                  ? "grid grid-cols-1 justify-items-center gap-5"
+                  : "grid gap-5 md:grid-cols-2"
+              }
+            >
               {matchingVehicles.map((vehicle) => (
-                <div key={vehicle.id} className={matchingVehicles.length === 1 ? "@container w-full max-w-170" : "@container min-w-0"}>
-                  <VehicleCard vehicle={vehicle} photoUrl={photos.urls[vehicle.id]} />
+                <div
+                  key={vehicle.id}
+                  className={
+                    matchingVehicles.length === 1
+                      ? "@container w-full max-w-170"
+                      : "@container min-w-0"
+                  }
+                >
+                  <VehicleCard
+                    vehicle={vehicle}
+                    photoUrl={photos.urls[vehicle.id]}
+                  />
                 </div>
               ))}
             </div>

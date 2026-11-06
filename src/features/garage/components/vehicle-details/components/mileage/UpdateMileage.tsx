@@ -11,256 +11,348 @@ import { createUpdateMileageSchema } from "@/features/garage/validators/update-m
 import OdometerPhotoScan from "./OdometerPhotoScan";
 
 type Props = {
-    vehicleId: string;
-    currentMileage: number;
-    currentRecordedAt: string | null;
+  vehicleId: string;
+  currentMileage: number;
+  currentRecordedAt: string | null;
 };
 
 //helper function to check if the mileage has been updated recently
 function today() {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
 
-    return `${year}-${month}-${day}`;
+  return `${year}-${month}-${day}`;
 }
 
-
 export default function UpdateMileage({
-    vehicleId,
-    currentMileage,
-    currentRecordedAt,
+  vehicleId,
+  currentMileage,
+  currentRecordedAt,
 }: Props) {
-    const router = useRouter();
-    const [isOpen, setIsOpen] = useState(false);
-    const [mileage, setMileage] = useState(String(currentMileage));
-    const [recordedAt, setRecordedAt] = useState(() => currentRecordedAt?.slice(0, 10) ?? today());
-    const [isSaving, setIsSaving] = useState(false);
-    const [mode, setMode] = useState<"reading" | "correction" | "replacement">("reading");
-    const [reason, setReason] = useState("");
-    const [confirmed, setConfirmed] = useState(false);
-    const [error, setError] = useState<string | null>(null);
-    const [fieldErrors, setFieldErrors] = useState<Partial<Record<"mileageKm" | "mileageRecordedAt" | "reason" | "confirmed", string>>>({});
-    const errorId = useId();
+  const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
+  const [mileage, setMileage] = useState(String(currentMileage));
+  const [recordedAt, setRecordedAt] = useState(
+    () => currentRecordedAt?.slice(0, 10) ?? today(),
+  );
+  const [isSaving, setIsSaving] = useState(false);
+  const [mode, setMode] = useState<"reading" | "correction" | "replacement">(
+    "reading",
+  );
+  const [reason, setReason] = useState("");
+  const [confirmed, setConfirmed] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<
+    Partial<
+      Record<"mileageKm" | "mileageRecordedAt" | "reason" | "confirmed", string>
+    >
+  >({});
+  const errorId = useId();
 
-    async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
-        event.preventDefault();
-        if (isSaving) return;
+  async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (isSaving) return;
 
-        setError(null);
-        const validation = createUpdateMileageSchema(currentMileage, currentRecordedAt).safeParse({
-            mileageKm: mileage,
-            mileageRecordedAt: recordedAt,
-            mode, reason, confirmed,
-        });
-        const errors: typeof fieldErrors = {};
+    setError(null);
+    const validation = createUpdateMileageSchema(
+      currentMileage,
+      currentRecordedAt,
+    ).safeParse({
+      mileageKm: mileage,
+      mileageRecordedAt: recordedAt,
+      mode,
+      reason,
+      confirmed,
+    });
+    const errors: typeof fieldErrors = {};
 
-        if (!validation.success) {
-            for (const issue of validation.error.issues) {
-                const field = issue.path[0] as keyof typeof errors;
-                if (!errors[field]) errors[field] = issue.message;
-            }
-        }
-        setFieldErrors(errors);
-        if (Object.keys(errors).length > 0) return;
-        setIsSaving(true);
-
-        try {
-            await updateVehicleMileage(createClient(), vehicleId, {
-                mileageKm: mileage,
-                mileageRecordedAt: recordedAt,
-                mode, reason, confirmed,
-            });
-
-            setIsOpen(false);
-            router.refresh();
-        } catch (error) {
-            setError(
-                error instanceof Error ? error.message : "Could not update mileage.",
-            );
-        } finally {
-            setIsSaving(false);
-        }
+    if (!validation.success) {
+      for (const issue of validation.error.issues) {
+        const field = issue.path[0] as keyof typeof errors;
+        if (!errors[field]) errors[field] = issue.message;
+      }
     }
+    setFieldErrors(errors);
+    if (Object.keys(errors).length > 0) return;
+    setIsSaving(true);
 
-    function handleOpenChange(open: boolean) {
-        if (isSaving) return;
+    try {
+      await updateVehicleMileage(createClient(), vehicleId, {
+        mileageKm: mileage,
+        mileageRecordedAt: recordedAt,
+        mode,
+        reason,
+        confirmed,
+      });
 
-        setIsOpen(open);
-
-        if (open) {
-            setMileage(String(currentMileage));
-            setRecordedAt(currentRecordedAt?.slice(0, 10) ?? today());
-            setError(null);
-            setFieldErrors({});
-            setMode("reading");
-            setReason("");
-            setConfirmed(false);
-        }
+      setIsOpen(false);
+      router.refresh();
+    } catch (error) {
+      setError(
+        error instanceof Error ? error.message : "Could not update mileage.",
+      );
+    } finally {
+      setIsSaving(false);
     }
+  }
 
-    function handleMileageChange(event: ChangeEvent<HTMLInputElement>) {
-        setMileage(event.target.value);
-        setFieldErrors((current) => ({ ...current, mileageKm: undefined }));
-        setError(null);
+  function handleOpenChange(open: boolean) {
+    if (isSaving) return;
+
+    setIsOpen(open);
+
+    if (open) {
+      setMileage(String(currentMileage));
+      setRecordedAt(currentRecordedAt?.slice(0, 10) ?? today());
+      setError(null);
+      setFieldErrors({});
+      setMode("reading");
+      setReason("");
+      setConfirmed(false);
     }
+  }
 
-    function handleRecordedAtChange(event: ChangeEvent<HTMLInputElement>) {
-        setRecordedAt(event.target.value);
-        setFieldErrors((current) => ({ ...current, mileageRecordedAt: undefined }));
-        setError(null);
-    }
+  function handleMileageChange(event: ChangeEvent<HTMLInputElement>) {
+    setMileage(event.target.value);
+    setFieldErrors((current) => ({ ...current, mileageKm: undefined }));
+    setError(null);
+  }
 
-    function handleModeChange(event: ChangeEvent<HTMLSelectElement>) {
-        setMode(event.target.value as typeof mode);
-        setConfirmed(false);
-        setFieldErrors({});
-        setError(null);
-    }
+  function handleRecordedAtChange(event: ChangeEvent<HTMLInputElement>) {
+    setRecordedAt(event.target.value);
+    setFieldErrors((current) => ({ ...current, mileageRecordedAt: undefined }));
+    setError(null);
+  }
 
-    function handleReadingDetected(mileageKm: number) {
-        setRecordedAt(today());
-        setMileage(String(mileageKm));
-        setFieldErrors((current) => ({ ...current, mileageKm: undefined }));
-        setError(null);
-    }
+  function handleModeChange(event: ChangeEvent<HTMLSelectElement>) {
+    setMode(event.target.value as typeof mode);
+    setConfirmed(false);
+    setFieldErrors({});
+    setError(null);
+  }
 
-    function handleReasonChange(event: ChangeEvent<HTMLTextAreaElement>) {
-        setReason(event.target.value);
-        setFieldErrors((current) => ({ ...current, reason: undefined }));
-        setError(null);
-    }
+  function handleReadingDetected(mileageKm: number) {
+    setRecordedAt(today());
+    setMileage(String(mileageKm));
+    setFieldErrors((current) => ({ ...current, mileageKm: undefined }));
+    setError(null);
+  }
 
-    function handleConfirmedChange(event: ChangeEvent<HTMLInputElement>) {
-        setConfirmed(event.target.checked);
-        setFieldErrors((current) => ({ ...current, confirmed: undefined }));
-    }
+  function handleReasonChange(event: ChangeEvent<HTMLTextAreaElement>) {
+    setReason(event.target.value);
+    setFieldErrors((current) => ({ ...current, reason: undefined }));
+    setError(null);
+  }
 
-    return (
-        <Modal isOpen={isOpen} onOpenChange={handleOpenChange}
-            backdropClassName="fixed inset-0 z-50 bg-black/65"
-            popupProps={{
-                className: "modal-position w-[calc(100%-2rem)] max-h-[calc(100dvh-2rem)] max-w-md overflow-y-auto rounded-2xl border border-line bg-panel p-6 text-text-primary shadow-2xl",
-            }}
-            trigger={
-                <Dialog.Trigger
-                    type="button"
-                    className="vehicle-mileage-action cursor-pointer"
-                >
+  function handleConfirmedChange(event: ChangeEvent<HTMLInputElement>) {
+    setConfirmed(event.target.checked);
+    setFieldErrors((current) => ({ ...current, confirmed: undefined }));
+  }
 
-                    <Gauge className="size-4" aria-hidden="true" />
-                    Update mileage
-                </Dialog.Trigger>
-            }
+  return (
+    <Modal
+      isOpen={isOpen}
+      onOpenChange={handleOpenChange}
+      backdropClassName="fixed inset-0 z-50 bg-black/65"
+      popupProps={{
+        className:
+          "modal-position w-[calc(100%-2rem)] max-h-[calc(100dvh-2rem)] max-w-md overflow-y-auto rounded-2xl border border-line bg-panel p-6 text-text-primary shadow-2xl",
+      }}
+      trigger={
+        <Dialog.Trigger
+          type="button"
+          className="vehicle-mileage-action cursor-pointer"
         >
-            <Dialog.Close disabled={isSaving} aria-label="Close mileage form" className="absolute top-4 right-4 cursor-pointer rounded-lg p-2 text-muted hover:bg-info-soft hover:text-text-primary disabled:cursor-not-allowed">
-                <X className="size-4" aria-hidden="true" />
-            </Dialog.Close>
-            <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-info-soft text-info">
-                <Gauge className="size-6" aria-hidden="true" />
-            </div>
-            <Dialog.Title className="pr-8 text-xl font-semibold tracking-tight">Update mileage</Dialog.Title>
-            <Dialog.Description className="mt-2 text-sm text-muted">Record your latest odometer reading.</Dialog.Description>
+          <Gauge className="size-4" aria-hidden="true" />
+          Update mileage
+        </Dialog.Trigger>
+      }
+    >
+      <Dialog.Close
+        disabled={isSaving}
+        aria-label="Close mileage form"
+        className="absolute top-4 right-4 cursor-pointer rounded-lg p-2 text-muted hover:bg-info-soft hover:text-text-primary disabled:cursor-not-allowed"
+      >
+        <X className="size-4" aria-hidden="true" />
+      </Dialog.Close>
+      <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-info-soft text-info">
+        <Gauge className="size-6" aria-hidden="true" />
+      </div>
+      <Dialog.Title className="pr-8 text-xl font-semibold tracking-tight">
+        Update mileage
+      </Dialog.Title>
+      <Dialog.Description className="mt-2 text-sm text-muted">
+        Record your latest odometer reading.
+      </Dialog.Description>
 
-            <form noValidate onSubmit={handleSubmit} className="vehicle-form mt-5 grid gap-4">
+      <form
+        noValidate
+        onSubmit={handleSubmit}
+        className="vehicle-form mt-5 grid gap-4"
+      >
+        <p className="text-sm text-muted">
+          Current mileage: {currentMileage.toLocaleString()} km
+        </p>
+        <OdometerPhotoScan
+          disabled={isSaving}
+          onReadingDetected={handleReadingDetected}
+        />
+        <label className="grid gap-2 text-sm">
+          Update type
+          <select
+            className="form-select"
+            value={mode}
+            disabled={isSaving}
+            onChange={handleModeChange}
+          >
+            <option value="reading">New reading</option>
+            <option value="correction">Correct an entry</option>
+            <option value="replacement">Odometer replaced</option>
+          </select>
+        </label>
+        {mode !== "reading" && (
+          <p className="text-sm text-muted">
+            {mode === "replacement"
+              ? "Enter the replacement odometer reading. This may be lower and does not represent the vehicle’s total distance."
+              : "Correct an incorrect reading or recorded date. Lower mileage and earlier dates are allowed."}
+          </p>
+        )}
 
-                <p className="text-sm text-muted">
-                    Current mileage: {currentMileage.toLocaleString()} km
-                </p>
-                <OdometerPhotoScan
-                    disabled={isSaving}
-                    onReadingDetected={handleReadingDetected}
-                />
-                <label className="grid gap-2 text-sm">
-                    Update type
-                    <select className="form-select" value={mode} disabled={isSaving} onChange={handleModeChange}>
-                        <option value="reading">New reading</option>
-                        <option value="correction">Correct an entry</option>
-                        <option value="replacement">Odometer replaced</option>
-                    </select>
-                </label>
-                {mode !== "reading" && <p className="text-sm text-muted">
-                    {mode === "replacement" ? "Enter the replacement odometer reading. This may be lower and does not represent the vehicle’s total distance." : "Correct an incorrect reading or recorded date. Lower mileage and earlier dates are allowed."}
-                </p>}
+        <label className="grid gap-2 text-sm">
+          New mileage (km)
+          <input
+            data-slot="input"
+            className="native-input"
+            type="number"
+            min={mode === "reading" ? currentMileage : 0}
+            max={2147483647}
+            step={1}
+            required
+            value={mileage}
+            disabled={isSaving}
+            aria-invalid={Boolean(fieldErrors.mileageKm)}
+            aria-describedby={
+              fieldErrors.mileageKm ? `${errorId}-mileage` : undefined
+            }
+            onChange={handleMileageChange}
+          />
+          {fieldErrors.mileageKm && (
+            <span
+              id={`${errorId}-mileage`}
+              role="alert"
+              className="text-sm text-destructive"
+            >
+              {fieldErrors.mileageKm}
+            </span>
+          )}
+        </label>
 
-                <label className="grid gap-2 text-sm">
-                    New mileage (km)
-                    <input
-                        data-slot="input"
-                        className="native-input"
-                        type="number"
-                        min={mode === "reading" ? currentMileage : 0}
-                        max={2147483647}
-                        step={1}
-                        required
-                        value={mileage}
-                        disabled={isSaving}
-                        aria-invalid={Boolean(fieldErrors.mileageKm)}
-                        aria-describedby={fieldErrors.mileageKm ? `${errorId}-mileage` : undefined}
-                        onChange={handleMileageChange}
-                    />
-                    {fieldErrors.mileageKm && <span id={`${errorId}-mileage`} role="alert" className="text-sm text-destructive">{fieldErrors.mileageKm}</span>}
-                </label>
+        <label className="grid gap-2 text-sm">
+          Recorded date
+          <input
+            data-slot="input"
+            className="native-input"
+            type="date"
+            required
+            value={recordedAt}
+            disabled={isSaving}
+            aria-invalid={Boolean(fieldErrors.mileageRecordedAt)}
+            aria-describedby={
+              fieldErrors.mileageRecordedAt ? `${errorId}-date` : undefined
+            }
+            onChange={handleRecordedAtChange}
+          />
+          {fieldErrors.mileageRecordedAt && (
+            <span
+              id={`${errorId}-date`}
+              role="alert"
+              className="text-sm text-destructive"
+            >
+              {fieldErrors.mileageRecordedAt}
+            </span>
+          )}
+        </label>
 
-                <label className="grid gap-2 text-sm">
-                    Recorded date
-                    <input
-                        data-slot="input"
-                        className="native-input"
-                        type="date"
-                        required
-                        value={recordedAt}
-                        disabled={isSaving}
-                        aria-invalid={Boolean(fieldErrors.mileageRecordedAt)}
-                        aria-describedby={fieldErrors.mileageRecordedAt ? `${errorId}-date` : undefined}
-                        onChange={handleRecordedAtChange}
-                    />
-                    {fieldErrors.mileageRecordedAt && <span id={`${errorId}-date`} role="alert" className="text-sm text-destructive">{fieldErrors.mileageRecordedAt}</span>}
-                </label>
+        {mode !== "reading" && (
+          <>
+            <label className="grid gap-2 text-sm">
+              Reason
+              <textarea
+                className="form-textarea"
+                rows={3}
+                maxLength={500}
+                value={reason}
+                disabled={isSaving}
+                aria-invalid={Boolean(fieldErrors.reason)}
+                aria-describedby={
+                  fieldErrors.reason ? `${errorId}-reason` : undefined
+                }
+                onChange={handleReasonChange}
+              />
+              {fieldErrors.reason && (
+                <span
+                  id={`${errorId}-reason`}
+                  role="alert"
+                  className="text-sm text-destructive"
+                >
+                  {fieldErrors.reason}
+                </span>
+              )}
+            </label>
+            <label className="flex items-start gap-2 text-sm">
+              <input
+                type="checkbox"
+                checked={confirmed}
+                disabled={isSaving}
+                className="mt-1 accent-accent"
+                aria-invalid={Boolean(fieldErrors.confirmed)}
+                aria-describedby={
+                  fieldErrors.confirmed ? `${errorId}-confirmed` : undefined
+                }
+                onChange={handleConfirmedChange}
+              />
+              I confirm this adjustment replaces the current mileage reading and
+              date.
+            </label>
+            {fieldErrors.confirmed && (
+              <p
+                id={`${errorId}-confirmed`}
+                role="alert"
+                className="text-sm text-destructive"
+              >
+                {fieldErrors.confirmed}
+              </p>
+            )}
+          </>
+        )}
 
-                {mode !== "reading" && <>
-                    <label className="grid gap-2 text-sm">
-                        Reason
-                        <textarea className="form-textarea" rows={3} maxLength={500} value={reason} disabled={isSaving}
-                            aria-invalid={Boolean(fieldErrors.reason)} aria-describedby={fieldErrors.reason ? `${errorId}-reason` : undefined}
-                            onChange={handleReasonChange} />
-                        {fieldErrors.reason && <span id={`${errorId}-reason`} role="alert" className="text-sm text-destructive">{fieldErrors.reason}</span>}
-                    </label>
-                    <label className="flex items-start gap-2 text-sm">
-                        <input type="checkbox" checked={confirmed} disabled={isSaving} className="mt-1 accent-accent"
-                            aria-invalid={Boolean(fieldErrors.confirmed)} aria-describedby={fieldErrors.confirmed ? `${errorId}-confirmed` : undefined}
-                            onChange={handleConfirmedChange} />
-                        I confirm this adjustment replaces the current mileage reading and date.
-                    </label>
-                    {fieldErrors.confirmed && <p id={`${errorId}-confirmed`} role="alert" className="text-sm text-destructive">{fieldErrors.confirmed}</p>}
-                </>}
+        {error && (
+          <p role="alert" className="text-sm text-destructive">
+            {error}
+          </p>
+        )}
 
-                {error && (
-                    <p role="alert" className="text-sm text-destructive">
-                        {error}
-                    </p>
-                )}
+        <div className="mt-2 flex justify-end gap-3 border-t border-line pt-4">
+          <button
+            type="submit"
+            disabled={isSaving}
+            className="button-base button-primary cursor-pointer px-5 py-2.5 disabled:cursor-not-allowed"
+          >
+            {isSaving ? "Saving..." : "Save"}
+          </button>
 
-                <div className="mt-2 flex justify-end gap-3 border-t border-line pt-4">
-                    <button
-                        type="submit"
-                        disabled={isSaving}
-                        className="button-base button-primary cursor-pointer px-5 py-2.5 disabled:cursor-not-allowed"
-                    >
-                        {isSaving ? "Saving..." : "Save"}
-                    </button>
-
-                    <button
-                        type="button"
-                        disabled={isSaving}
-                        className="button-base button-secondary cursor-pointer px-5 py-2.5 disabled:cursor-not-allowed"
-                        onClick={() => setIsOpen(false)}
-                    >
-                        Cancel
-                    </button>
-                </div>
-            </form>
-        </Modal>
-    );
+          <button
+            type="button"
+            disabled={isSaving}
+            className="button-base button-secondary cursor-pointer px-5 py-2.5 disabled:cursor-not-allowed"
+            onClick={() => setIsOpen(false)}
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </Modal>
+  );
 }

@@ -15,7 +15,11 @@ type Props = {
   photoId?: string | null;
 };
 
-export default function VehiclePhotoUpload({ vehicleId, hasPhoto, photoId }: Props) {
+export default function VehiclePhotoUpload({
+  vehicleId,
+  hasPhoto,
+  photoId,
+}: Props) {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const uploadInProgress = useRef(false);
@@ -61,7 +65,10 @@ export default function VehiclePhotoUpload({ vehicleId, hasPhoto, photoId }: Pro
   return (
     <div className="flex flex-col items-center gap-2">
       {error && (
-        <p role="alert" className="rounded-lg border border-line bg-panel p-2 text-xs text-destructive">
+        <p
+          role="alert"
+          className="rounded-lg border border-line bg-panel p-2 text-xs text-destructive"
+        >
           {error}
         </p>
       )}
@@ -87,11 +94,20 @@ export default function VehiclePhotoUpload({ vehicleId, hasPhoto, photoId }: Pro
           title="JPG, PNG or WebP, maximum 2 MB"
         >
           {isUploading ? (
-            <LoaderCircle className="size-4 motion-safe:animate-spin" aria-hidden="true" />
+            <LoaderCircle
+              className="size-4 motion-safe:animate-spin"
+              aria-hidden="true"
+            />
           ) : (
             <Camera className="size-4" aria-hidden="true" />
           )}
-          <span role="status">{isUploading ? "Uploading..." : hasPhoto ? "Change photo" : "Add photo"}</span>
+          <span role="status">
+            {isUploading
+              ? "Uploading..."
+              : hasPhoto
+                ? "Change photo"
+                : "Add photo"}
+          </span>
         </button>
         {hasPhoto && photoId && (
           <button
@@ -103,7 +119,10 @@ export default function VehiclePhotoUpload({ vehicleId, hasPhoto, photoId }: Pro
             className="vehicle-detail-action enabled:cursor-pointer enabled:hover:border-destructive enabled:hover:bg-destructive/10 enabled:hover:text-destructive focus-visible:outline-2 focus-visible:outline-destructive"
           >
             {isRemoving ? (
-              <LoaderCircle className="size-4 motion-safe:animate-spin" aria-hidden="true" />
+              <LoaderCircle
+                className="size-4 motion-safe:animate-spin"
+                aria-hidden="true"
+              />
             ) : (
               <X className="size-4" aria-hidden="true" />
             )}

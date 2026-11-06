@@ -5,7 +5,11 @@ import { TextSkeleton } from "@/shared/components/skeletons/text-skeleton";
 
 export default function ProfileSkeleton() {
   return (
-    <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-10 sm:py-14" role="status" aria-busy="true">
+    <main
+      className="mx-auto w-full max-w-6xl flex-1 px-6 py-10 sm:py-14"
+      role="status"
+      aria-busy="true"
+    >
       <span className="sr-only">Loading profile...</span>
       <Skeleton className="h-5 w-24" />
       <Skeleton className="mt-4 h-9 w-32 sm:h-10" />
@@ -14,7 +18,9 @@ export default function ProfileSkeleton() {
         <CardSkeleton className="space-y-5">
           <AvatarSkeleton size="lg" className="rounded-[1.7rem]" />
           <Skeleton className="h-8 w-2/3" />
-          <div className="border-t border-line pt-5"><TextSkeleton lines={2} /></div>
+          <div className="border-t border-line pt-5">
+            <TextSkeleton lines={2} />
+          </div>
           <div className="grid gap-2 pt-1">
             <Skeleton className="h-9 w-full" />
             <Skeleton className="h-9 w-full" />

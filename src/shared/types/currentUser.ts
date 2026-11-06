@@ -1,22 +1,13 @@
-export type CurrentUser = {
-  id: string;
-  email: string | null;
-  name: string;
-  fullName: string | null;
-  username: string;
-  avatarUrl: string | null;
-  phone: string | null;
-  countryCode: string | null;
-  region: string | null;
-  city: string | null;
-  bio: string | null;
-  provider: string | null;
-  emailConfirmed: boolean;
-  createdAt: string;
-  lastSignInAt: string | null;
-};
+import type { User } from "@supabase/supabase-js";
 
-export type CurrentUserContextValue = {
-  user: CurrentUser | null;
-  setUser: (user: CurrentUser | null) => void;
+export type AppUser = User & {
+  username?: string | null;
+  fullName?: string | null;
+  phone?: string | null;
+  countryCode?: string | null;
+  region?: string | null;
+  city?: string | null;
+  avatarUrl?: string | null;
+  bio?: string | null;
+  signInProvider?: "email" | "google" | "facebook" | null;
 };

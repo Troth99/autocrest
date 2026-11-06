@@ -1,65 +1,30 @@
 "use client";
+
 import AccountSecurityCard from "./components/AccountSecurityCard";
 import DangerZone from "./components/DangerZone";
 import PersonalInformationCard from "./components/PersonalInformationCard";
 import CompleteYourSetup from "./components/ProfileCompletion";
 import ProfileHero from "./components/ProfileHero";
+import { getProfileDisplayDetails } from "@/features/profile/utils/getProfileDisplayDetails";
 import { useCurrentUser } from "@/shared/context/CurrentUserContext";
+
 export default function ProfilePage() {
-  const { user } = useCurrentUser();
+  const { user, profileError } = useCurrentUser();
 
+  if (profileError) {
+    throw new Error(profileError);
+  }
   if (!user) return null;
-  const {
-    name,
-    username,
-    email: savedEmail,
-    avatarUrl,
-    phone,
-    countryCode,
-    region,
-    city,
-    bio,
-    provider,
-    createdAt,
-    lastSignInAt,
-  } = user;
 
-  const email = savedEmail ?? "No email available";
-
-  const memberSince = new Intl.DateTimeFormat("en-GB", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  }).format(new Date(createdAt));
-
-  const lastSignIn = lastSignInAt
-    ? new Intl.DateTimeFormat("en-GB", {
-        dateStyle: "medium",
-        timeStyle: "short",
-      }).format(new Date(lastSignInAt))
-    : "Not available";
-
-  const signInMethod =
-    provider === "email"
-      ? "Email and password"
-      : provider
-        ? `${provider.charAt(0).toUpperCase()}${provider.slice(1)} account`
-        : "Not available";
-  const countryName = countryCode
-    ? (new Intl.DisplayNames(["en"], { type: "region" }).of(countryCode) ??
-      countryCode)
-    : null;
-  const locationParts = [city, region, countryName].filter(Boolean);
-  const location = locationParts.length ? locationParts.join(", ") : null;
+  const { location, memberSince, lastSignIn, signInMethod } =
+    getProfileDisplayDetails(user);
 
   return (
     <main className="mx-auto w-full max-w-310 flex-1 px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
       <div className="mb-8">
         <div>
           <span className="eyebrow">ACCOUNT</span>
-          <h1 className="page-title mt-4">
-            Profile
-          </h1>
+          <h1 className="page-title mt-4">Profile</h1>
           <p className="mt-2 max-w-xl section-description sm:text-base">
             Your identity and account security in one place.
           </p>
@@ -68,20 +33,20 @@ export default function ProfilePage() {
       <div className="grid gap-5 lg:grid-cols-[270px_minmax(0,1fr)] lg:items-stretch">
         <aside className="min-w-0 lg:col-start-1 lg:row-start-1">
           <ProfileHero
-            name={name}
-            email={email}
+            name={user.fullName || user.username || "user"}
+            email={user.email ?? "No email available"}
             memberSince={memberSince}
-            avatarUrl={avatarUrl}
+            avatarUrl={user.avatarUrl ?? null}
           />
         </aside>
         <div className="min-w-0 lg:col-start-2 lg:row-start-1">
           <PersonalInformationCard
-            fullName={user.fullName}
-            username={username}
-            email={email}
-            phone={phone}
+            fullName={user.fullName ?? null}
+            username={user.username || "user"}
+            email={user.email ?? "No email available"}
+            phone={user.phone ?? null}
             location={location}
-            bio={bio}
+            bio={user.bio ?? null}
           />
         </div>
         <aside className="min-w-0 lg:col-start-1 lg:row-start-2 [&>section]:h-full">

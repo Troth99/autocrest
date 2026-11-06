@@ -8,7 +8,10 @@ type FormSkeletonProps = {
   showAvatar?: boolean;
 };
 
-export function FormSkeleton({ fields = 4, showAvatar = false }: FormSkeletonProps) {
+export function FormSkeleton({
+  fields = 4,
+  showAvatar = false,
+}: FormSkeletonProps) {
   return (
     <main
       className="mx-auto w-full max-w-3xl flex-1 px-6 py-10 sm:py-14"

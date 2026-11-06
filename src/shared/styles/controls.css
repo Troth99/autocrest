@@ -1,0 +1,13 @@
+:is(select, .select-trigger, [aria-haspopup="listbox"]):not(:disabled):not([aria-disabled="true"]):not([data-disabled]) {
+  cursor: pointer;
+}
+
+[data-slot="input"] {
+  border-color: var(--border-input);
+  background-color: var(--surface-input);
+  color: var(--text-primary);
+}
+[data-slot="input"]::placeholder { color: var(--text-muted); }
+[data-slot="input"]:focus-visible { border-color: var(--focus-ring); }
+[data-slot="input"][aria-invalid="true"] { border-color: var(--destructive); }
+

@@ -15,7 +15,7 @@ export default function useEditProfileForm() {
   const { user } = useCurrentUser();
 
   const [firstName = "", ...remainingNames] = (
-    user?.fullName?.trim() || ""
+    user?.fullName ?? ""
   ).split(/\s+/);
   const initialValues: Omit<ProfileFormValues, "fullName"> & {
     firstName: string;

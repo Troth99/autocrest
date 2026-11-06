@@ -18,8 +18,8 @@ export default function AddVehicleButton() {
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger
         // Prepare the selected vehicle type before navigation.
-        onPointerEnter={() => router.prefetch("/vehicles/add?type=car")}
-        onFocus={() => router.prefetch("/vehicles/add?type=car")}
+        onPointerEnter={() => router.prefetch("/vehicles/add-vehicle?type=car")}
+        onFocus={() => router.prefetch("/vehicles/add-vehicle?type=car")}
         className="action-button cursor-pointer">
         <Plus className="size-4" aria-hidden="true" />
         Add vehicle
@@ -28,7 +28,7 @@ export default function AddVehicleButton() {
 
       <DropdownMenuContent align="start" sideOffset={8} className="w-64">
         <DropdownMenuItem
-          render={<Link href="/vehicles/add?type=car" prefetch />}
+          render={<Link href="/vehicles/add-vehicle?type=car" prefetch />}
           className="cursor-pointer px-4 py-2.5"
         >
           Car

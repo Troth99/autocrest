@@ -2,9 +2,7 @@ import type { ProfileCompletionProps } from "@/features/profile/types/ProfileCom
 import Link from "next/link";
 import { ArrowRight, Check, Circle } from "lucide-react";
 
-export default function ProfileCompletion({
-  user,
-}: ProfileCompletionProps) {
+export default function ProfileCompletion({ user }: ProfileCompletionProps) {
   const fields = [
     { label: "Full name", value: user.fullName },
     { label: "Username", value: user.username },
@@ -14,10 +12,10 @@ export default function ProfileCompletion({
     { label: "Bio", value: user.bio },
   ];
   const steps = fields.map(({ label, value }) => ({
-      label,
-      complete: Boolean(value?.trim()),
-      href: "/profile/edit",
-    }));
+    label,
+    complete: Boolean(value?.trim()),
+    href: "/profile/edit",
+  }));
 
   const completedCount = steps.filter((step) => step.complete).length;
   const percentage = Math.round((completedCount / steps.length) * 100);

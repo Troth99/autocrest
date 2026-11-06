@@ -1,6 +1,12 @@
 "use client";
 
-import { Download, LoaderCircle, MoreHorizontal, Star, Trash2 } from "lucide-react";
+import {
+  Download,
+  LoaderCircle,
+  MoreHorizontal,
+  Star,
+  Trash2,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,7 +15,10 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
-import { getVehicleById, setPrimaryVehicle } from "@/features/garage/services/vehicles.service";
+import {
+  getVehicleById,
+  setPrimaryVehicle,
+} from "@/features/garage/services/vehicles.service";
 import { downloadVehicleReport } from "@/features/garage/components/vehicle-report/download-vehicle-report";
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
@@ -19,11 +28,9 @@ export default function VehicleActionsMenu({
   vehicleId,
   isPrimary,
 }: {
-  vehicleId: string
-  isPrimary: boolean
+  vehicleId: string;
+  isPrimary: boolean;
 }) {
-
-
   const router = useRouter();
   const [isSaving, setIsSaving] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
@@ -34,7 +41,6 @@ export default function VehicleActionsMenu({
     if (isPrimary || isSaving) return;
 
     setIsSaving(true);
-
 
     try {
       await setPrimaryVehicle(createClient(), vehicleId);
@@ -59,7 +65,7 @@ export default function VehicleActionsMenu({
     } finally {
       setIsExporting(false);
     }
-  }
+  };
 
   function handleOpenDelete() {
     setIsDeleteOpen(true);
@@ -78,12 +84,16 @@ export default function VehicleActionsMenu({
             <MoreHorizontal className="size-5" aria-hidden="true" />
           )}
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" sideOffset={8} className="w-60 rounded-xl p-2">
-
+        <DropdownMenuContent
+          align="end"
+          sideOffset={8}
+          className="w-60 rounded-xl p-2"
+        >
           <DropdownMenuItem
             disabled={isPrimary || isSaving}
             onClick={setPrimaryHandler}
-            className=" cursor-pointer gap-2 px-3 py-2.5">
+            className=" cursor-pointer gap-2 px-3 py-2.5"
+          >
             <Star className="size-4" aria-hidden="true" />
             {isSaving ? "Saving..." : "Set as primary"}
             {isPrimary && (
@@ -96,7 +106,8 @@ export default function VehicleActionsMenu({
             disabled={isExporting}
             className="cursor-pointer gap-2 px-3 py-2.5"
           >
-            <Download className="size-4" aria-hidden="true" /> {isExporting ? "Generating PDF..." : "Export history"}
+            <Download className="size-4" aria-hidden="true" />{" "}
+            {isExporting ? "Generating PDF..." : "Export history"}
           </DropdownMenuItem>
 
           <DropdownMenuSeparator />
@@ -110,9 +121,17 @@ export default function VehicleActionsMenu({
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {isExporting && <p role="status" className="sr-only">Generating PDF...</p>}
+      {isExporting && (
+        <p role="status" className="sr-only">
+          Generating PDF...
+        </p>
+      )}
 
-      {exportError && <p role="alert" className="text-sm text-destructive">{exportError}</p>}
+      {exportError && (
+        <p role="alert" className="text-sm text-destructive">
+          {exportError}
+        </p>
+      )}
 
       <DeleteVehicleDialog
         open={isDeleteOpen}

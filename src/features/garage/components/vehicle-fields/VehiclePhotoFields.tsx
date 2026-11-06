@@ -30,19 +30,10 @@ export default function VehiclePhotoFields({
 
     if (!file) return;
 
-    const allowedTypes = [
-      "image/jpeg",
-      "image/png",
-      "image/webp",
-    ];
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
 
-    if (
-      !allowedTypes.includes(file.type) ||
-      file.size > 2 * 1024 * 1024
-    ) {
-      onPhotoError(
-        "Choose a JPG, PNG or WebP image under 2 MB.",
-      );
+    if (!allowedTypes.includes(file.type) || file.size > 2 * 1024 * 1024) {
+      onPhotoError("Choose a JPG, PNG or WebP image under 2 MB.");
       return;
     }
 
@@ -61,10 +52,7 @@ export default function VehiclePhotoFields({
     <fieldset className="content-card vehicle-form-section">
       <legend className="sr-only">Vehicle photo</legend>
       <h2 className="section-title">Vehicle photo</h2>
-      <p
-        id="vehicle-photo-help"
-        className="mt-1 text-sm text-muted"
-      >
+      <p id="vehicle-photo-help" className="mt-1 text-sm text-muted">
         Choose a JPG, PNG or WebP image. Maximum 2 MB.
       </p>
 
@@ -83,10 +71,7 @@ export default function VehiclePhotoFields({
       <div className="vehicle-photo-upload">
         <div className="flex items-center gap-3">
           <span className="vehicle-photo-icon">
-            <ImagePlus
-              className="size-5"
-              aria-hidden="true"
-            />
+            <ImagePlus className="size-5" aria-hidden="true" />
           </span>
           <div className="min-w-0">
             <label
@@ -95,7 +80,9 @@ export default function VehiclePhotoFields({
             >
               {photoFile ? "Change photo" : "Choose photo"}
             </label>
-            <p className="mt-0.5 text-xs text-muted">Add a photo to recognise your vehicle at a glance.</p>
+            <p className="mt-0.5 text-xs text-muted">
+              Add a photo to recognise your vehicle at a glance.
+            </p>
           </div>
         </div>
 
@@ -115,11 +102,9 @@ export default function VehiclePhotoFields({
         />
 
         {photoFile && (
-          <p
-            role="status"
-            className="truncate text-xs text-muted"
-          >
-            {photoFile.name} · {(photoFile.size / (1024 * 1024)).toFixed(2)} MB · Ready to save
+          <p role="status" className="truncate text-xs text-muted">
+            {photoFile.name} · {(photoFile.size / (1024 * 1024)).toFixed(2)} MB
+            · Ready to save
           </p>
         )}
 
@@ -145,5 +130,4 @@ export default function VehiclePhotoFields({
       </div>
     </fieldset>
   );
-
 }

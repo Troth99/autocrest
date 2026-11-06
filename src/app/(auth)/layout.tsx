@@ -1,3 +1,4 @@
+import SiteHeader from "@/shared/components/Header/SiteHeader";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -18,5 +19,10 @@ export default async function AuthLayout({
         : "/",
     );
   }
-  return children;
+  return (
+    <>
+      <SiteHeader />
+      {children}
+    </>
+  );
 }

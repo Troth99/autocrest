@@ -1,8 +1,8 @@
-import type { CurrentUser } from "@/shared/types/currentUser";
+import type { AppUser } from "@/shared/types/currentUser";
 
 export type ProfileCompletionProps = {
   user: Pick<
-    CurrentUser,
+    AppUser,
     "fullName" | "username" | "avatarUrl" | "phone" | "city" | "bio"
   >;
 };

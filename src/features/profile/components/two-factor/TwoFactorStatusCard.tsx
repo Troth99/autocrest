@@ -17,7 +17,14 @@ type Props = {
 };
 
 export default function TwoFactorStatusCard({
-  status, busy, error, inputId, triggerRef, onEnable, onRemoved, children,
+  status,
+  busy,
+  error,
+  inputId,
+  triggerRef,
+  onEnable,
+  onRemoved,
+  children,
 }: Props) {
   return (
     <div
@@ -56,11 +63,7 @@ export default function TwoFactorStatusCard({
           {busy ? "Preparing…" : "Enable 2FA"}
         </Button>
       )}
-      {status === "enabled" && (
-        <DisableTwoFactor
-          onRemoved={onRemoved}
-        />
-      )}
+      {status === "enabled" && <DisableTwoFactor onRemoved={onRemoved} />}
       {children}
       {error && (
         <p

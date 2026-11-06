@@ -41,9 +41,15 @@ export default function ChangePasswordForm() {
       reset();
       setSuccess(true);
     } catch (cause) {
-      const message = cause instanceof Error ? cause.message : "Could not change your password. Please try again.";
-      if (cause instanceof Error && "field" in cause &&
-          (cause.field === "currentPassword" || cause.field === "newPassword")) {
+      const message =
+        cause instanceof Error
+          ? cause.message
+          : "Could not change your password. Please try again.";
+      if (
+        cause instanceof Error &&
+        "field" in cause &&
+        (cause.field === "currentPassword" || cause.field === "newPassword")
+      ) {
         setErrors({ [cause.field]: message });
       } else {
         setSaveError(message);
@@ -55,8 +61,15 @@ export default function ChangePasswordForm() {
   }
 
   return (
-    <form className="grid gap-5" onSubmit={formHandler} aria-busy={busy}
-      onChange={() => { setSuccess(false); setSaveError(""); }}>
+    <form
+      className="grid gap-5"
+      onSubmit={formHandler}
+      aria-busy={busy}
+      onChange={() => {
+        setSuccess(false);
+        setSaveError("");
+      }}
+    >
       <fieldset disabled={busy} className="grid min-w-0 gap-5">
         <PasswordField
           id={`${inputId}-current`}
@@ -88,16 +101,35 @@ export default function ChangePasswordForm() {
           {...register("confirmPassword")}
         />
       </fieldset>
-      {saveError && <p role="alert" className="text-sm text-destructive">{saveError}</p>}
+      {saveError && (
+        <p role="alert" className="text-sm text-destructive">
+          {saveError}
+        </p>
+      )}
       {success && (
         <p role="status" className="password-security-notice">
-          <Check className="size-5 shrink-0" />Your password has been changed successfully.
+          <Check className="size-5 shrink-0" />
+          Your password has been changed successfully.
         </p>
       )}
       <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
-        <Link href="/profile" className={`button-base button-secondary px-5 py-2.5 text-sm ${busy ? "pointer-events-none opacity-50" : ""}`} aria-disabled={busy} tabIndex={busy ? -1 : undefined}>Back to profile</Link>
-        <Button type="submit" size="lg" disabled={busy} className="button-base button-primary h-auto cursor-pointer px-5 py-2.5">
-          {busy && <LoaderCircle className="size-4 animate-spin motion-reduce:animate-none" />}
+        <Link
+          href="/profile"
+          className={`button-base button-secondary px-5 py-2.5 text-sm ${busy ? "pointer-events-none opacity-50" : ""}`}
+          aria-disabled={busy}
+          tabIndex={busy ? -1 : undefined}
+        >
+          Back to profile
+        </Link>
+        <Button
+          type="submit"
+          size="lg"
+          disabled={busy}
+          className="button-base button-primary h-auto cursor-pointer px-5 py-2.5"
+        >
+          {busy && (
+            <LoaderCircle className="size-4 animate-spin motion-reduce:animate-none" />
+          )}
           {busy ? "Updating password..." : "Update password"}
         </Button>
       </div>
