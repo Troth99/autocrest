@@ -1,6 +1,7 @@
 import type { AppUser } from "@/shared/types/currentUser";
 import "server-only";
 import { createClient } from "@/lib/supabase/server";
+import { cookies } from "next/headers";
 
 export default async function getCurrentUser(): Promise<{
   user: AppUser | null;
@@ -23,9 +24,20 @@ export default async function getCurrentUser(): Promise<{
         .maybeSingle()
     : { data: null, error: null };
 
+  // Read the tracked sign-in method used for the profile label.
+  const cookieStore = await cookies();
+  const savedProvider = cookieStore.get("autocrest-login-provider")?.value;
+
+  const signInProvider =
+    savedProvider === "email" ||
+    savedProvider === "google" ||
+    savedProvider === "facebook"
+      ? savedProvider
+      : null;
+
   return {
     // Merge Auth and profile data; profile fields override matching Auth fields.
-    user: user ? { ...user, ...profile } : null,
+    user: user ? { ...user, ...profile, signInProvider } : null,
     // Let consumers handle profile errors while keeping the Auth user available.
     profileError: profileError ? "Unable to load your profile" : null,
   };

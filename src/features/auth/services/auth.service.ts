@@ -21,7 +21,6 @@ export async function registerUser({
   password,
   username,
 }: RegisterInput): Promise<void> {
-  
   async function isUsernameTaken(username: string): Promise<boolean> {
     const supabase = createClient();
     const { data, error } = await supabase.rpc("is_username_taken", {
@@ -86,6 +85,9 @@ export async function loginUser({
   if (error) {
     throw error;
   }
+
+  // Update the displayed method after a successful password sign-in.
+  document.cookie = "autocrest-login-provider=email; Path=/; SameSite=Lax";
 }
 
 export async function logoutUser(): Promise<void> {
@@ -95,6 +97,10 @@ export async function logoutUser(): Promise<void> {
   if (error) {
     throw error;
   }
+
+  // Clear the previous sign-in label after a successful sign-out.
+  document.cookie =
+    "autocrest-login-provider=; Path=/; SameSite=Lax; Max-Age=0";
 }
 
 export async function logInWithGoogle(): Promise<void> {
@@ -102,7 +108,7 @@ export async function logInWithGoogle(): Promise<void> {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${window.location.origin}/auth/callback`,
+      redirectTo: `${window.location.origin}/auth/callback?provider=google`,
     },
   });
 
@@ -116,7 +122,7 @@ export async function logInWithFacebook(): Promise<void> {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "facebook",
     options: {
-      redirectTo: `${window.location.origin}/auth/callback`,
+      redirectTo: `${window.location.origin}/auth/callback?provider=facebook`,
     },
   });
 

@@ -24,8 +24,9 @@ export function getProfileDisplayDetails(user: AppUser) {
       }).format(new Date(user.last_sign_in_at))
     : "Not available";
 
-  const provider = user.app_metadata?.provider;
-  
+ const provider = user.signInProvider;
+
+
   let signInMethod = "Not available";
 
   if (provider === "email") {

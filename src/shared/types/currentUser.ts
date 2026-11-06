@@ -9,4 +9,5 @@ export type AppUser = User & {
   city?: string | null;
   avatarUrl?: string | null;
   bio?: string | null;
+  signInProvider?: "email" | "google" | "facebook" | null;
 };
