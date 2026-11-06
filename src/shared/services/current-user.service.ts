@@ -13,12 +13,12 @@ export default async function getCurrentUser(): Promise<{
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Load custom fields for this account only when a user is signed in.
+  // Load the signed-in user's data from the profiles table.
   // maybeSingle allows a missing profile row without reporting a query error.
   const { data: profile, error: profileError } = user
     ? await supabase
         .from("profiles")
-        .select("username, fullName, phone, countryCode, region, city, avatarUrl, bio")
+        .select("username, fullName, phone, city, avatarUrl, bio")
         .eq("id", user.id)
         .maybeSingle()
     : { data: null, error: null };

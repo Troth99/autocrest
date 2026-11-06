@@ -5,6 +5,7 @@ import DangerZone from "./components/DangerZone";
 import PersonalInformationCard from "./components/PersonalInformationCard";
 import CompleteYourSetup from "./components/ProfileCompletion";
 import ProfileHero from "./components/ProfileHero";
+import { getProfileDisplayDetails } from "@/features/profile/utils/getProfileDisplayDetails";
 import { useCurrentUser } from "@/shared/context/CurrentUserContext";
 
 export default function ProfilePage() {
@@ -15,37 +16,8 @@ export default function ProfilePage() {
   }
   if (!user) return null;
 
-  // Location shown in the personal information card.
-  const countryName = user.countryCode
-    ? (new Intl.DisplayNames(["en"], { type: "region" }).of(user.countryCode) ??
-      user.countryCode)
-    : null;
-
-  const location =
-    [user.city, user.region, countryName].filter(Boolean).join(", ") || null;
-
-  // Account dates and sign-in details.
-  const memberSince = new Intl.DateTimeFormat("en-GB", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  }).format(new Date(user.created_at));
-
-  const lastSignIn = user.last_sign_in_at
-    ? new Intl.DateTimeFormat("en-GB", {
-        dateStyle: "medium",
-        timeStyle: "short",
-      }).format(new Date(user.last_sign_in_at))
-    : "Not available";
-
-  const provider = user.app_metadata?.provider;
-  let signInMethod = "Not available";
-
-  if (provider === "email") {
-    signInMethod = "Email and password";
-  } else if (provider) {
-    signInMethod = `${provider.charAt(0).toUpperCase()}${provider.slice(1)} account`;
-  }
+  const { location, memberSince, lastSignIn, signInMethod } =
+    getProfileDisplayDetails(user);
 
   return (
     <main className="mx-auto w-full max-w-310 flex-1 px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
