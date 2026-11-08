@@ -1,5 +1,13 @@
+import { VehicleServiceRecord } from "@/features/garage/types/vehicle-service-record";
 import { Wrench, Receipt, CalendarClock, ClipboardList, Package, Droplets, ShieldCheck, ChevronDown } from "lucide-react";
-export default function RecordVehicleDetails() {
+export default function RecordVehicleDetails({
+     vehicleReportById
+
+    }: {
+        vehicleReportById: VehicleServiceRecord
+    }) {
+
+   
 
 
     return (

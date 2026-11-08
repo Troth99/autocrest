@@ -30,3 +30,22 @@ export async function getVehicleReports(
   if (error) throw error;
   return data ?? [];
 }
+
+export async function getVehicleReportById(
+  supabase: SupabaseClient,
+  vehicleId: string,
+  reportId: string,
+): Promise<VehicleServiceRecord | null> {
+
+  const {data, error} = await supabase
+    .from("vehicle_services")
+    .select("*")
+    .eq("vehicleId", vehicleId)
+    .eq("id", reportId)
+    .maybeSingle<VehicleServiceRecord>();
+
+    if(error) {
+      throw error
+    }
+    return data ?? null
+}

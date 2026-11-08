@@ -19,8 +19,10 @@ export default async function VehiclePage({
     notFound();
   }
 
-  const photos = await getVehiclePhotoUrls(supabase, [vehicle.id]);
-  const vehicleServices = await getVehicleReports(supabase, vehicle.id);
+  const [photos, vehicleServices] = await Promise.all([
+    getVehiclePhotoUrls(supabase, [vehicle.id]),
+    getVehicleReports(supabase, vehicle.id),
+  ]);
 
   return (
     <main className="page-shell">
