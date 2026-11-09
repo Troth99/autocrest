@@ -30,7 +30,6 @@ export default async function IsDashboardLayout({
   }
   return (
     <>
-      <SiteHeader />
       <div className="flex w-full flex-1 flex-col lg:flex-row">
         <AccountNavigation />
         <div className="min-w-0 flex-1">{children}</div>

@@ -10,7 +10,9 @@ export default async function ResetPasswordPage() {
 
   const { data: { user }, error: userError } = await supabase.auth.getUser();
 
-  if (userError || !user) redirect("/forgot-password?error=invalid_reset_link");
+  if (userError || !user) {
+    redirect("/forgot-password?error=invalid_reset_link");
+  }
 
   const { data: assurance, error } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
 
@@ -20,6 +22,6 @@ export default async function ResetPasswordPage() {
 
     redirect("/verify-2fa?next=/reset-password");
   }
-  
+
   return <AuthShell><ResetPasswordForm /></AuthShell>;
 }
