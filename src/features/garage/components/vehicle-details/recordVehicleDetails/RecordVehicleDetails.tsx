@@ -1,14 +1,15 @@
-import { VehicleServiceRecord } from "@/features/garage/types/vehicle-service-record";
+import type { VehicleServiceRecordDetails } from "@/features/garage/types/vehicle-service-record";
+import { formatDate } from "@/shared/utils/formatDate";
 import { Wrench, Receipt, CalendarClock, ClipboardList, Package, Droplets, ShieldCheck, ChevronDown } from "lucide-react";
+import ServiceDetailsMainCard from "./ServiceDetailsMainCard";
+
+
 export default function RecordVehicleDetails({
      vehicleReportById
 
     }: {
-        vehicleReportById: VehicleServiceRecord
+        vehicleReportById: VehicleServiceRecordDetails
     }) {
-
-   
-
 
     return (
         <main className="page-shell">
@@ -17,46 +18,15 @@ export default function RecordVehicleDetails({
                     <p className="vehicle-heading-eyebrow">
                         My garage / Maintenance
                     </p>
-                    <h1 className="page-title">Oil & filters</h1>
                     <p className="mt-2 text-sm text-muted">
-                        Service record · 30 Oct 2026
+                        Service record at · {formatDate(vehicleReportById?.serviceDate)} 
                     </p>
                 </header>
 
                 <section className="section-card" aria-label="Service details">
                     <h2 className="maintenance-section-title"><span className="maintenance-section-icon"><Wrench className="size-4" aria-hidden="true" /></span>Service details</h2>
-
-                    <dl className="mt-4 grid gap-5 sm:grid-cols-2">
-                        <div>
-                            <dt className="detail-label">Service type</dt>
-                            <dd className="detail-value">Oil & filters</dd>
-                        </div>
-                        <div>
-                            <dt className="detail-label">Reason for visit</dt>
-                            <dd className="detail-value">Scheduled maintenance</dd>
-                        </div>
-                        <div>
-                            <dt className="detail-label">Date</dt>
-                            <dd className="detail-value">
-                                <time dateTime="2026-10-30">30 Oct 2026</time>
-                            </dd>
-                        </div>
-                        <div>
-                            <dt className="detail-label">Mileage</dt>
-                            <dd className="detail-value">145,200 km</dd>
-                        </div>
-                        <div className="sm:col-span-2">
-                            <dt className="detail-label">Workshop / mechanic</dt>
-                            <dd className="detail-value">Auto Service Sofia</dd>
-                        </div>
-                        <div className="sm:col-span-2">
-                            <dt className="detail-label">Work performed</dt>
-                            <dd className="detail-value">
-                                Replaced engine oil and oil filter. Checked fluid levels
-                                and inspected the engine for leaks.
-                            </dd>
-                        </div>
-                    </dl>
+                    <ServiceDetailsMainCard vehicleReportById={vehicleReportById} />
+                  
                 </section>
 
                 <div className="grid items-stretch gap-5 md:grid-cols-2">

@@ -9,3 +9,8 @@ export type VehicleServiceRecord = output<typeof addServiceSchema> & {
   currencyCode: string;
   createdAt: string;
 };
+
+export type VehicleServiceRecordDetails = VehicleServiceRecord & {
+  serviceTypeLabel: string;
+  visitReasonLabel: string;
+};
