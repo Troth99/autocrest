@@ -19,8 +19,20 @@ export async function GET(request: Request) {
     );
 
     if (!error) {
-      // Send successful sign-ins to MFA verification and recovery to password reset.
-      const destination = isPasswordReset ? "/reset-password" : "/verify-2fa";
+      // Recovery keeps its own MFA check; normal sign-ins only visit MFA when needed.
+      let destination = "/reset-password";
+
+      if (!isPasswordReset) {
+        const { data: assurance, error: assuranceError } =
+          await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+
+        // Fall back to the verification route if the check cannot be completed.
+        destination = assuranceError ||
+          (assurance.nextLevel === "aal2" && assurance.currentLevel !== "aal2")
+          ? "/verify-2fa"
+          : "/";
+
+      }
 
       const response = NextResponse.redirect(
         new URL(destination, requestUrl.origin),

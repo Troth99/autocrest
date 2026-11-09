@@ -2,7 +2,13 @@ import { createClient } from "@/lib/supabase/client";
 import { addServiceSchema } from "@/features/garage/validators/add-service-validator";
 import type { AddServiceFormValues } from "@/features/garage/types/add-service-form";
 import type { SupabaseClient } from "@supabase/supabase-js";
-import type { VehicleServiceRecord } from "@/features/garage/types/vehicle-service-record";
+import type {
+  VehicleServiceRecord,
+  VehicleServiceRecordDetails,
+} from "@/features/garage/types/vehicle-service-record";
+import { vehicleServiceLabels } from "@/features/garage/constants/vehicle-service-labels";
+import { visitReasonLabels } from "@/features/garage/constants/visit-reason-labels";
+import { formatVehicleValue } from "@/features/garage/utils/formatVehicleValue";
 
 export async function addVehicleService(
   vehicleId: string,
@@ -29,4 +35,36 @@ export async function getVehicleReports(
 
   if (error) throw error;
   return data ?? [];
+}
+
+export async function getVehicleReportById(
+  supabase: SupabaseClient,
+  vehicleId: string,
+  reportId: string,
+): Promise<VehicleServiceRecordDetails | null> {
+  const { data, error } = await supabase
+    .from("vehicle_services")
+    .select("*")
+    .eq("vehicleId", vehicleId)
+    .eq("id", reportId)
+    .maybeSingle<VehicleServiceRecord>();
+
+  if (error) {
+    throw error;
+  }
+  if (!data) return null;
+
+  // Prefer custom descriptions over the labels for stored values.
+  const serviceType =
+    data.customServiceType || vehicleServiceLabels[data.serviceType];
+  const visitReason =
+    data.customVisitReason ||
+    (data.visitReason ? visitReasonLabels[data.visitReason] : null);
+
+  // Prepare display labels and show "Not provided" for missing values.
+  return {
+    ...data,
+    serviceTypeLabel: formatVehicleValue(serviceType),
+    visitReasonLabel: formatVehicleValue(visitReason),
+  };
 }

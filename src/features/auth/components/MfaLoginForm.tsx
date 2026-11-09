@@ -135,7 +135,7 @@ export default function MfaLoginForm({
           type="submit"
           size="lg"
           disabled={busy || !factorId}
-          className="button-primary button-base h-12 w-full"
+          className="button-primary button-base h-12 w-full cursor-pointer text-sm font-semibold md:text-base"
         >
           {busy ? "Please wait..." : "Verify and continue"}
         </Button>
@@ -143,7 +143,7 @@ export default function MfaLoginForm({
           type="button"
           variant="outline"
           disabled={busy}
-          className="h-11 w-full"
+          className="h-11 w-full cursor-pointer text-sm font-semibold md:text-base"
           onClick={async () => {
             await run(async () => {
               await logoutUser();

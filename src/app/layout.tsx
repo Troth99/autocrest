@@ -6,6 +6,7 @@ import ThemeProvider from "@/shared/components/ThemeProvider/ThemeProvider";
 import { CurrentUserProvider } from "@/shared/context/CurrentUserContext";
 import "react-phone-number-input/style.css";
 import getCurrentUser from "@/shared/services/current-user.service";
+import SiteHeader from "@/shared/components/Header/SiteHeader";
 
 // Google Fonts configuration
 const geistSans = Geist({
@@ -36,6 +37,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         <ThemeProvider>
           <CurrentUserProvider initialUser={user} initialProfileError={profileError}>
+            <SiteHeader />
             {children}
             <SiteFooter />
           </CurrentUserProvider>
