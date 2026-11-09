@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { getAuthenticatedUser } from "@/lib/supabase/auth-user";
 import AuthShell from "@/features/auth/components/AuthShell";
 import ResetPasswordForm from "@/features/auth/components/ResetPasswordForm";
 
@@ -8,7 +9,7 @@ export default async function ResetPasswordPage() {
 
   const supabase = await createClient();
 
-  const { data: { user }, error: userError } = await supabase.auth.getUser();
+  const { data: { user }, error: userError } = await getAuthenticatedUser(supabase);
 
   if (userError || !user) {
     redirect("/forgot-password?error=invalid_reset_link");

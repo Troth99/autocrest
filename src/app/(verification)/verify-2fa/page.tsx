@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { getAuthenticatedUser } from "@/lib/supabase/auth-user";
 import MfaLoginForm from "@/features/auth/components/MfaLoginForm";
 
 export default async function VerifyTwoFactorPage({ searchParams }: {
@@ -8,8 +9,10 @@ export default async function VerifyTwoFactorPage({ searchParams }: {
   const { next } = await searchParams;
   // Only the recovery destination is accepted; arbitrary redirect URLs are ignored.
   const nextPath = next === "/reset-password" ? "/reset-password" : "/";
+
+  
   const supabase = await createClient();
-  const { data: { user }, error: userError } = await supabase.auth.getUser();
+  const { data: { user }, error: userError } = await getAuthenticatedUser(supabase);
 
   if (userError || !user) {
     redirect("/login");

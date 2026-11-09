@@ -2,6 +2,7 @@ import type { AppUser } from "@/shared/types/currentUser";
 import "server-only";
 import { createClient } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
+import { getAuthenticatedUser } from "@/lib/supabase/auth-user";
 
 export default async function getCurrentUser(): Promise<{
   user: AppUser | null;
@@ -12,7 +13,7 @@ export default async function getCurrentUser(): Promise<{
   // Get the authenticated account, or null when nobody is signed in.
   const {
     data: { user },
-  } = await supabase.auth.getUser();
+  } = await getAuthenticatedUser(supabase);
 
   // Load the signed-in user's data from the profiles table.
   // maybeSingle allows a missing profile row without reporting a query error.
