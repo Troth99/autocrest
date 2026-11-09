@@ -2,6 +2,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Vehicle } from "@/features/garage/types/vehicle";
 import { addVehicleSchema } from "@/features/garage/validators/add-vehicle-validator";
 import { createUpdateMileageSchema } from "@/features/garage/validators/update-mileage-validator";
+import {z} from "zod";
 
 export async function getVehicles(
   supabase: SupabaseClient,
@@ -116,6 +117,10 @@ export async function getVehicleById(
   // Ensure the user is signed in before fetching vehicle details
   if (!user) {
     throw new Error("You must be signed in to view vehicle details.");
+  }
+
+  if(!z.uuid().safeParse(vehicleId).success) {
+    throw new Error("Invalid vehicle ID format.");
   }
 
   const { data, error } = await supabase
