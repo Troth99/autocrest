@@ -10,11 +10,18 @@ export default async function VerifyTwoFactorPage({ searchParams }: {
   const nextPath = next === "/reset-password" ? "/reset-password" : "/";
   const supabase = await createClient();
   const { data: { user }, error: userError } = await supabase.auth.getUser();
-  if (userError || !user) redirect("/login");
+
+  if (userError || !user) {
+    redirect("/login");
+  }
 
   const { data: assurance, error } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
-  if (error) throw error;
-  if (assurance.currentLevel === "aal2" || assurance.nextLevel !== "aal2") redirect(nextPath);
+  if (error) {
+    throw error;
+  }
+  if (assurance.currentLevel === "aal2" || assurance.nextLevel !== "aal2") {
+    redirect(nextPath);
+  }
 
   const { data: factors, error: factorsError } = await supabase.auth.mfa.listFactors();
   if (factorsError) throw factorsError;
