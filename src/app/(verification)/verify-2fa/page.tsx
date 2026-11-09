@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { getAuthenticatedUser } from "@/lib/supabase/auth-user";
+import { getAuthenticatedUser } from "@/shared/services/auth-user.service";
 import MfaLoginForm from "@/features/auth/components/MfaLoginForm";
 
 export default async function VerifyTwoFactorPage({ searchParams }: {

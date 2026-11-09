@@ -1,5 +1,5 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { getAuthenticatedUser } from "@/lib/supabase/auth-user";
+import { getAuthenticatedUser } from "@/shared/services/auth-user.service";
 import type { Vehicle } from "@/features/garage/types/vehicle";
 import { addVehicleSchema } from "@/features/garage/validators/add-vehicle-validator";
 import { createUpdateMileageSchema } from "@/features/garage/validators/update-mileage-validator";

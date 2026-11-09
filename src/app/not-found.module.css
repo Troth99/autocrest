@@ -1,0 +1,92 @@
+@reference "./globals.css";
+
+.page {
+  @apply flex min-h-[70svh] flex-1 items-center justify-center py-16 sm:py-24;
+}
+
+.content {
+  @apply w-full max-w-2xl text-center;
+}
+
+.illustration {
+  @apply mx-auto mb-10 flex h-44 items-center justify-center gap-3 sm:h-52 sm:gap-5;
+}
+
+.digit {
+  @apply text-[8rem] font-semibold leading-none tracking-tighter text-info-border sm:text-[11rem];
+}
+
+.faceContainer {
+  @apply relative;
+}
+
+.face {
+  @apply size-32 overflow-visible text-accent-text sm:size-40;
+}
+
+.faceBackground {
+  @apply fill-info-soft stroke-info-border;
+}
+
+.badge {
+  @apply mb-5;
+}
+
+.heading {
+  @apply text-3xl font-semibold tracking-tight text-text-primary sm:text-5xl;
+}
+
+.description {
+  @apply mx-auto mt-4 max-w-sm;
+}
+
+.actions {
+  @apply mt-8 flex flex-col justify-center gap-3 sm:flex-row;
+}
+
+.action {
+  @apply gap-2 px-6 py-3 text-sm;
+}
+
+.icon {
+  @apply size-4;
+}
+
+.caption {
+  @apply mt-8 text-xs text-subtle;
+}
+
+.shadow {
+  @apply absolute -bottom-5 left-1/2 h-2 w-20 rounded-full bg-info-soft blur-sm;
+  transform: translateX(-50%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .face {
+    animation: drift 4s ease-in-out infinite;
+  }
+
+  .shadow {
+    animation: soften 4s ease-in-out infinite;
+  }
+
+  .tear {
+    animation: fall 4s ease-in-out infinite;
+  }
+}
+
+@keyframes drift {
+  0%, 100% { transform: translateY(0) rotate(-4deg); }
+  50% { transform: translateY(-10px) rotate(4deg); }
+}
+
+@keyframes soften {
+  0%, 100% { transform: translateX(-50%) scaleX(1); opacity: 1; }
+  50% { transform: translateX(-50%) scaleX(0.75); opacity: 0.5; }
+}
+
+@keyframes fall {
+  0%, 30%, 100% { transform: translateY(0); opacity: 0; }
+  45% { transform: translateY(0); opacity: 0.65; }
+  75%, 95% { transform: translateY(14px); opacity: 0; }
+}
