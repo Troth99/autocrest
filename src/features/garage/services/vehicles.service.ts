@@ -1,4 +1,5 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { getAuthenticatedUser } from "@/lib/supabase/auth-user";
 import type { Vehicle } from "@/features/garage/types/vehicle";
 import { addVehicleSchema } from "@/features/garage/validators/add-vehicle-validator";
 import { createUpdateMileageSchema } from "@/features/garage/validators/update-mileage-validator";
@@ -10,7 +11,7 @@ export async function getVehicles(
   const {
     data: { user },
     error: authError,
-  } = await supabase.auth.getUser();
+  } = await getAuthenticatedUser(supabase);
 
   if (authError) {
     throw authError;
@@ -107,7 +108,7 @@ export async function getVehicleById(
   const {
     data: { user },
     error: authError,
-  } = await supabase.auth.getUser();
+  } = await getAuthenticatedUser(supabase);
 
   // Check for authentication errors and ensure the user is signed in
   if (authError) {

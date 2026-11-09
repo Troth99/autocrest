@@ -1,4 +1,4 @@
-import SiteHeader from "@/shared/components/Header/SiteHeader";
+import { getAuthenticatedUser } from "@/lib/supabase/auth-user";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import AccountNavigation from "@/app/(dashboard)/components/AccountNavigation";
@@ -12,7 +12,7 @@ export default async function IsDashboardLayout({
 
   const {
     data: { user }
-  } = await supabase.auth.getUser();
+  } = await getAuthenticatedUser(supabase);
 
   if (!user) {
     redirect("/login");
