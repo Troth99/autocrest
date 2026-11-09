@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { getAuthenticatedUser } from "@/lib/supabase/auth-user";
+import { getAuthenticatedUser } from "@/shared/services/auth-user.service";
 import { redirect } from "next/navigation";
 
 export default async function AuthLayout({

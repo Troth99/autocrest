@@ -2,7 +2,7 @@ import type { AppUser } from "@/shared/types/currentUser";
 import "server-only";
 import { createClient } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
-import { getAuthenticatedUser } from "@/lib/supabase/auth-user";
+import { getAuthenticatedUser } from "@/shared/services/auth-user.service";
 
 export default async function getCurrentUser(): Promise<{
   user: AppUser | null;

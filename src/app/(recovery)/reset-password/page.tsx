@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { getAuthenticatedUser } from "@/lib/supabase/auth-user";
+import { getAuthenticatedUser } from "@/shared/services/auth-user.service";
 import AuthShell from "@/features/auth/components/AuthShell";
 import ResetPasswordForm from "@/features/auth/components/ResetPasswordForm";
 

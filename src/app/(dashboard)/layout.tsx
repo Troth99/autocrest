@@ -1,4 +1,4 @@
-import { getAuthenticatedUser } from "@/lib/supabase/auth-user";
+import { getAuthenticatedUser } from "@/shared/services/auth-user.service";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import AccountNavigation from "@/app/(dashboard)/components/AccountNavigation";
