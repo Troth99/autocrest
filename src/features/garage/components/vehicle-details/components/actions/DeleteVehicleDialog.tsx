@@ -4,7 +4,6 @@ import { Dialog } from "@base-ui/react/dialog";
 import Modal from "@/shared/components/Modal/Modal";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
 import { deleteVehicle } from "@/features/garage/services/vehicles.service";
 
 type Props = {
@@ -29,7 +28,8 @@ export default function DeleteVehicleDialog({
     setError(null);
 
     try {
-      await deleteVehicle(createClient(), vehicleId);
+      const result = await deleteVehicle(vehicleId);
+      if (result.error !== null) throw new Error(result.error);
       router.replace("/garrage");
       router.refresh();
     } catch (error) {

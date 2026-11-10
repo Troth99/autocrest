@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ZodError } from "zod";
-import { createClient } from "@/lib/supabase/client";
 import useEditVehicleCatalog from "@/features/garage/hooks/useEditVehicleCatalog";
 import { updateVehicle } from "@/features/garage/services/vehicles.service";
 import { resolveVehicleMakeModel } from "@/features/garage/utils/resolveVehicleMakeModel";
@@ -26,7 +25,11 @@ export default function useEditVehicleForm(vehicle: Vehicle) {
     setFieldErrors({});
     try {
       const names = resolveVehicleMakeModel(values, catalog);
-      await updateVehicle(createClient(), vehicle.id, { ...values, ...names });
+      const result = await updateVehicle(vehicle.id, { ...values, ...names });
+      if (result.error !== null) {
+        setFieldErrors(result.fieldErrors ?? {});
+        throw new Error(result.error);
+      }
     } catch (error) {
       if (error instanceof ZodError) {
         setFieldErrors(getVehicleFieldErrors(error));

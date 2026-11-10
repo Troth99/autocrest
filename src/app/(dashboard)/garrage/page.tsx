@@ -10,7 +10,7 @@ export default async function GarageRoute({
 }) {
   const { q } = await searchParams;
   const supabase = await createClient();
-  const vehicles = await getVehicles(supabase);
+  const vehicles = await getVehicles();
 
   const photos = await getVehiclePhotoUrls(
     supabase,

@@ -21,7 +21,6 @@ import {
 } from "@/features/garage/services/vehicles.service";
 import { downloadVehicleReport } from "@/features/garage/components/vehicle-report/download-vehicle-report";
 import { useState } from "react";
-import { createClient } from "@/lib/supabase/client";
 import DeleteVehicleDialog from "@/features/garage/components/vehicle-details/components/actions/DeleteVehicleDialog";
 
 export default function VehicleActionsMenu({
@@ -41,11 +40,16 @@ export default function VehicleActionsMenu({
     if (isPrimary || isSaving) return;
 
     setIsSaving(true);
+    setExportError(null);
 
     try {
-      await setPrimaryVehicle(createClient(), vehicleId);
+      const result = await setPrimaryVehicle(vehicleId);
+      if (result.error !== null) throw new Error(result.error);
       router.refresh();
-    } catch {
+    } catch (error) {
+      setExportError(
+        error instanceof Error ? error.message : "Could not set the primary vehicle.",
+      );
     } finally {
       setIsSaving(false);
     }
@@ -57,7 +61,8 @@ export default function VehicleActionsMenu({
     setExportError(null);
     try {
       // Fetch the latest saved details with the existing ownership check.
-      const vehicle = await getVehicleById(createClient(), vehicleId);
+      const vehicle = await getVehicleById(vehicleId);
+
       if (!vehicle) throw new Error("Vehicle not found.");
       await downloadVehicleReport(vehicle);
     } catch {

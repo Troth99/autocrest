@@ -13,7 +13,7 @@ export default async function VehiclePage({
   const { id } = await params;
 
   const supabase = await createClient();
-  const vehicle = await getVehicleById(supabase, id);
+  const vehicle = await getVehicleById(id);
 
   if (!vehicle) {
     notFound();

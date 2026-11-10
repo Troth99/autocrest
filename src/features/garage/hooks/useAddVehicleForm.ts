@@ -104,18 +104,21 @@ export default function useAddVehicleForm({
       }
 
       setIsSubmitting(true);
-      const supabase = createClient();
-
-      const vehicleId = await addVehicle(supabase, {
+      const result = await addVehicle({
         ...submittedValues,
         make,
         model,
       });
+      if (result.error !== null) {
+        setFieldErrors(result.fieldErrors ?? {});
+        throw new Error(result.error);
+      }
+      const vehicleId = result.data;
       setSavedVehicleId(vehicleId);
 
       if (photoFile) {
         try {
-          await uploadVehiclePhoto(supabase, vehicleId, photoFile);
+          await uploadVehiclePhoto(createClient(), vehicleId, photoFile);
         } catch (error) {
           setPhotoError(
             error instanceof Error

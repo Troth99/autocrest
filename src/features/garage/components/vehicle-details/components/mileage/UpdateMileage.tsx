@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { Gauge, X } from "lucide-react";
 import { Dialog } from "@base-ui/react/dialog";
 import Modal from "@/shared/components/Modal/Modal";
-import { createClient } from "@/lib/supabase/client";
 import { updateVehicleMileage } from "@/features/garage/services/vehicles.service";
 import { createUpdateMileageSchema } from "@/features/garage/validators/update-mileage-validator";
 import OdometerPhotoScan from "./OdometerPhotoScan";
@@ -79,13 +78,17 @@ export default function UpdateMileage({
     setIsSaving(true);
 
     try {
-      await updateVehicleMileage(createClient(), vehicleId, {
+      const result = await updateVehicleMileage(vehicleId, {
         mileageKm: mileage,
         mileageRecordedAt: recordedAt,
         mode,
         reason,
         confirmed,
       });
+      if (result.error !== null) {
+        setFieldErrors(result.fieldErrors ?? {});
+        throw new Error(result.error);
+      }
 
       setIsOpen(false);
       router.refresh();

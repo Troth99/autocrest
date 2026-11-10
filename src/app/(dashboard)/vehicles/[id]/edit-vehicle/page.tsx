@@ -9,7 +9,7 @@ import { notFound } from "next/navigation";
 export default async function EditVehiclePage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
     const supabase = await createClient();
-    const vehicle = await getVehicleById(supabase, id)
+    const vehicle = await getVehicleById(id)
 
 
     if (!vehicle) {
