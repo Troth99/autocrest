@@ -1,7 +1,8 @@
 import { createClient } from "@/lib/supabase/client";
-
-const REMEMBER_ME_COOKIE = "autocrest-remember-me";
-const REMEMBER_ME_MAX_AGE = 60 * 60 * 24 * 10;
+import {
+  REMEMBER_ME_COOKIE,
+  REMEMBER_ME_MAX_AGE,
+} from "@/lib/supabase/session-cookie-options";
 
 function saveRememberMePreference(rememberMe: boolean) {
   const maxAge = rememberMe ? `; Max-Age=${REMEMBER_ME_MAX_AGE}` : "";

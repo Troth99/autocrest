@@ -1,6 +1,7 @@
 import type { CookieOptions } from "@supabase/ssr";
 
-const REMEMBER_ME_MAX_AGE = 60 * 60 * 24 * 10; // 10 days
+export const REMEMBER_ME_COOKIE = "autocrest-remember-me";
+export const REMEMBER_ME_MAX_AGE = 60 * 60 * 24 * 10; // 10 days
 
 export function getSessionCookieOptions(
   options: CookieOptions,
