@@ -1,8 +1,8 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { getSessionCookieOptions } from "@/lib/supabase/session-cookie-options";
 
 const REMEMBER_ME_COOKIE = "autocrest-remember-me";
-const REMEMBER_ME_MAX_AGE = 60 * 60 * 24 * 10; //10 days
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
@@ -31,25 +31,11 @@ export async function updateSession(request: NextRequest) {
             request.cookies.get(REMEMBER_ME_COOKIE)?.value === "true";
 
           cookiesToSet.forEach(({ name, value, options }) => {
-            // Preserve cookie deletion so Remember me cannot extend its lifetime.
-            if (options.maxAge === 0) {
-              supabaseResponse.cookies.set(name, value, options);
-              return;
-            }
-
-            if (rememberMe) {
-              supabaseResponse.cookies.set(name, value, {
-                ...options,
-                maxAge: REMEMBER_ME_MAX_AGE,
-              });
-              return;
-            }
-
-            const sessionOptions = { ...options };
-            delete sessionOptions.maxAge;
-            delete sessionOptions.expires;
-
-            supabaseResponse.cookies.set(name, value, sessionOptions);
+            supabaseResponse.cookies.set(
+              name,
+              value,
+              getSessionCookieOptions(options, rememberMe),
+            );
           });
         },
       },
