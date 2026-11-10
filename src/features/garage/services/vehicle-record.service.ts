@@ -1,7 +1,9 @@
-import { createClient } from "@/lib/supabase/client";
+"use server";
+import { createClient } from "@/lib/supabase/server";
+import { getVehicleById } from "@/features/garage/services/vehicles.service";
+
 import { addServiceSchema } from "@/features/garage/validators/add-service-validator";
 import type { AddServiceFormValues } from "@/features/garage/types/add-service-form";
-import type { SupabaseClient } from "@supabase/supabase-js";
 import type {
   VehicleServiceRecord,
   VehicleServiceRecordDetails,
@@ -14,18 +16,32 @@ export async function addVehicleService(
   vehicleId: string,
   values: AddServiceFormValues,
 ) {
+  const vehicle = await getVehicleById(vehicleId);
+
+  if (!vehicle) throw new Error("Vehicle not found.");
+
   const validatedValues = addServiceSchema.parse(values);
-  const { error } = await createClient()
+
+  const supabase = await createClient();
+
+  const { error } = await supabase
     .from("vehicle_services")
-    .insert({ vehicleId, ...validatedValues });
+    .insert({ vehicleId: vehicle.id, ...validatedValues });
 
   if (error) throw error;
 }
 
 export async function getVehicleReports(
-  supabase: SupabaseClient,
   vehicleId: string,
 ): Promise<VehicleServiceRecord[]> {
+  const vehicle = await getVehicleById(vehicleId);
+
+  if (!vehicle) {
+    throw new Error("Vehicle not found.");
+  }
+
+  const supabase = await createClient();
+
   const { data, error } = await supabase
     .from("vehicle_services")
     .select("*")
@@ -38,10 +54,15 @@ export async function getVehicleReports(
 }
 
 export async function getVehicleReportById(
-  supabase: SupabaseClient,
   vehicleId: string,
   reportId: string,
 ): Promise<VehicleServiceRecordDetails | null> {
+  const vehicle = await getVehicleById(vehicleId);
+
+  if (!vehicle) return null;
+
+  const supabase = await createClient();
+
   const { data, error } = await supabase
     .from("vehicle_services")
     .select("*")

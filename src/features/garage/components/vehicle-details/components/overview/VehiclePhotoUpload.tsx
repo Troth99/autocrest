@@ -3,7 +3,6 @@
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Camera, LoaderCircle, X } from "lucide-react";
-import { createClient } from "@/lib/supabase/client";
 import {
   uploadVehiclePhoto,
   removeVehiclePhoto,
@@ -29,12 +28,17 @@ export default function VehiclePhotoUpload({
 
   async function handleUpload(file: File) {
     if (uploadInProgress.current) return;
+    if (file.size === 0 || file.size > 2 * 1024 * 1024) {
+      setError("Choose a JPG, PNG or WebP image under 2 MB.");
+      return;
+    }
     uploadInProgress.current = true;
     setIsUploading(true);
     setError(null);
 
     try {
-      await uploadVehiclePhoto(createClient(), vehicleId, file);
+      const result = await uploadVehiclePhoto(vehicleId, file);
+      if (result.error !== null) throw new Error(result.error);
       router.refresh();
     } catch (error) {
       setError(error instanceof Error ? error.message : "Photo upload failed.");
@@ -51,7 +55,8 @@ export default function VehiclePhotoUpload({
     setError(null);
 
     try {
-      await removeVehiclePhoto(createClient(), vehicleId, photoId);
+      const result = await removeVehiclePhoto(vehicleId, photoId);
+      if (result.error !== null) throw new Error(result.error);
       router.refresh();
     } catch (error) {
       setError(
