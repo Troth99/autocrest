@@ -1,76 +1,117 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+"use server";
+
+import { z } from "zod";
+import { createClient } from "@/lib/supabase/server";
+import { getAuthenticatedUser } from "@/shared/services/auth-user.service";
 import type { VehiclePhoto } from "@/features/garage/types/vehicle-photo";
 
-export const VEHICLE_PHOTO_BUCKET = "vehicle-photos";
+const VEHICLE_PHOTO_BUCKET = "vehicle-photos";
 
-export async function uploadVehiclePhoto(
-  supabase: SupabaseClient,
-  vehicleId: string,
-  file: File,
-) {
-  // Accept supported image formats up to 2 MB before starting an upload.
-  const extensions: Record<string, string> = {
-    "image/jpeg": "jpg",
-    "image/png": "png",
-    "image/webp": "webp",
-  };
-  const extension = extensions[file.type];
-  if (!extension || file.size === 0 || file.size > 2 * 1024 * 1024) {
-    throw new Error("Choose a JPG, PNG or WebP image under 2 MB.");
-  }
-
+async function getPhotoSession() {
+  const supabase = await createClient();
   const {
     data: { user },
-    error: authError,
-  } = await supabase.auth.getUser();
-  if (authError || !user) throw new Error("Sign in again to upload the photo.");
+    error,
+  } = await getAuthenticatedUser(supabase);
 
-  // Check that the signed-in user owns the target vehicle.
-  const { data: vehicle, error: vehicleError } = await supabase
-    .from("vehicles")
-    .select("id")
-    .eq("id", vehicleId)
-    .eq("userId", user.id)
-    .single();
-  if (vehicleError || !vehicle)
-    throw new Error("This vehicle is not available for photo upload.");
+  if (error || !user) throw new Error("Please sign in again.");
 
-  // Use a unique file path so uploads do not overwrite existing photos.
-  const path = `${user.id}/${vehicleId}/${crypto.randomUUID()}.${extension}`;
-  const storage = supabase.storage.from(VEHICLE_PHOTO_BUCKET);
-  const { error: uploadError } = await storage.upload(path, file, {
-    contentType: file.type,
-    upsert: false,
-  });
-  if (uploadError) throw new Error("Photo upload failed. Please try again.");
+  const { data: assurance, error: assuranceError } =
+    await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
 
-  // Link the stored file to its vehicle using a bucket-relative path.
-  const { error: metadataError } = await supabase
-    .from("vehicle_photos")
-    .insert({
-      vehicleId: vehicleId,
-      storagePath: path,
-      isPrimary: true,
-      sortOrder: 0,
-    });
-  if (metadataError) {
-    // Remove only the file created by this attempt if its database link failed.
-    const { error: cleanupError } = await storage.remove([path]);
-    if (cleanupError) {
-      throw new Error(
-        "Could not link the photo to the vehicle or remove the uploaded file. Please try again.",
-      );
-    }
-    throw new Error(
-      "Could not attach the photo to the vehicle. Please try again.",
-    );
+  if (assuranceError)
+    throw new Error("Could not verify your session. Please try again.");
+  if (assurance.nextLevel === "aal2" && assurance.currentLevel !== "aal2") {
+    throw new Error("Please complete two-factor authentication first.");
+  }
+
+  return { supabase, user };
+}
+
+// Return expected errors so Client Components can display them in production.
+async function runPhotoMutation(operation: () => Promise<void>) {
+  try {
+    await operation();
+    return { error: null };
+  } catch (error) {
+    return {
+      error:
+        error instanceof Error
+          ? error.message
+          : "Could not update the vehicle photo. Please try again.",
+    };
   }
 }
 
-export async function getVehiclePhotoUrls(
-  supabase: SupabaseClient,
-  vehicleIds: string[],
-) {
+export async function uploadVehiclePhoto(vehicleId: string, file: File) {
+  return await runPhotoMutation(async () => {
+    const { supabase, user } = await getPhotoSession();
+    if (!z.uuid().safeParse(vehicleId).success) {
+      throw new Error("Invalid vehicle ID format.");
+    }
+    if (!(file instanceof File)) {
+      throw new Error("Choose a JPG, PNG or WebP image under 2 MB.");
+    }
+    // Accept supported image formats up to 2 MB before starting an upload.
+    const extensions: Record<string, string> = {
+      "image/jpeg": "jpg",
+      "image/png": "png",
+      "image/webp": "webp",
+    };
+    const extension = extensions[file.type];
+    if (!extension || file.size === 0 || file.size > 2 * 1024 * 1024) {
+      throw new Error("Choose a JPG, PNG or WebP image under 2 MB.");
+    }
+
+    // Check that the signed-in user owns the target vehicle.
+    const { data: vehicle, error: vehicleError } = await supabase
+      .from("vehicles")
+      .select("id")
+      .eq("id", vehicleId)
+      .eq("userId", user.id)
+      .is("archivedAt", null)
+      .single();
+    if (vehicleError || !vehicle)
+      throw new Error("This vehicle is not available for photo upload.");
+
+    // Use a unique file path so uploads do not overwrite existing photos.
+    const path = `${user.id}/${vehicleId}/${crypto.randomUUID()}.${extension}`;
+    const storage = supabase.storage.from(VEHICLE_PHOTO_BUCKET);
+    const { error: uploadError } = await storage.upload(path, file, {
+      contentType: file.type,
+      upsert: false,
+    });
+    if (uploadError) throw new Error("Photo upload failed. Please try again.");
+
+    // Link the stored file to its vehicle using a bucket-relative path.
+    const { error: metadataError } = await supabase
+      .from("vehicle_photos")
+      .insert({
+        vehicleId: vehicleId,
+        storagePath: path,
+        isPrimary: true,
+        sortOrder: 0,
+      });
+    if (metadataError) {
+      // Remove only the file created by this attempt if its database link failed.
+      const { error: cleanupError } = await storage.remove([path]);
+      if (cleanupError) {
+        throw new Error(
+          "Could not link the photo to the vehicle or remove the uploaded file. Please try again.",
+        );
+      }
+      throw new Error(
+        "Could not attach the photo to the vehicle. Please try again.",
+      );
+    }
+  });
+}
+
+export async function getVehiclePhotoUrls(vehicleIds: string[]) {
+  const { supabase } = await getPhotoSession();
+  if (!z.array(z.uuid()).safeParse(vehicleIds).success) {
+    throw new Error("Invalid vehicle IDs.");
+  }
   const urls: Record<string, string> = {};
   // Store the selected photo's identity separately from its temporary URL.
   const selectedPhotos: Record<
@@ -99,7 +140,12 @@ export async function getVehiclePhotoUrls(
         | "createdAt"
       >[]
     >();
-  if (error) return { urls, selectedPhotos, error: "Vehicle photos could not be loaded." };
+  if (error)
+    return {
+      urls,
+      selectedPhotos,
+      error: "Vehicle photos could not be loaded.",
+    };
 
   // Keep the first photo for each vehicle according to the query ordering.
   const primary = new Map<string, string>();
@@ -146,63 +192,61 @@ export async function getVehiclePhotoUrls(
   };
 }
 
-export async function removeVehiclePhoto(
-  supabase: SupabaseClient,
-  vehicleId: string,
-  photoId: string,
-) {
-  const {
-    data: { user },
-    error: authError,
-  } = await supabase.auth.getUser();
+export async function removeVehiclePhoto(vehicleId: string, photoId: string) {
+  return await runPhotoMutation(async () => {
+    const { supabase, user } = await getPhotoSession();
+    if (
+      !z.uuid().safeParse(vehicleId).success ||
+      !z.uuid().safeParse(photoId).success
+    ) {
+      throw new Error("Invalid vehicle or photo ID format.");
+    }
 
-  if (authError || !user) {
-    throw new Error("Sign in again to remove the photo.");
-  }
+    // Verify ownership before removing any file.
+    const { data: vehicle, error: vehicleError } = await supabase
+      .from("vehicles")
+      .select("id")
+      .eq("id", vehicleId)
+      .eq("userId", user.id)
+      .is("archivedAt", null)
+      .single();
 
-  // Verify ownership before removing any file.
-  const { data: vehicle, error: vehicleError } = await supabase
-    .from("vehicles")
-    .select("id")
-    .eq("id", vehicleId)
-    .eq("userId", user.id)
-    .single();
+    if (vehicleError || !vehicle) {
+      throw new Error("This vehicle is not available.");
+    }
 
-  if (vehicleError || !vehicle) {
-    throw new Error("This vehicle is not available.");
-  }
+    // Read the actual storage path from the selected database record.
+    const { data: photo, error: photoError } = await supabase
+      .from("vehicle_photos")
+      .select("id, storagePath")
+      .eq("id", photoId)
+      .eq("vehicleId", vehicleId)
+      .single();
 
-  // Read the actual storage path from the selected database record.
-  const { data: photo, error: photoError } = await supabase
-    .from("vehicle_photos")
-    .select("id, storagePath")
-    .eq("id", photoId)
-    .eq("vehicleId", vehicleId)
-    .single();
+    if (photoError || !photo) {
+      throw new Error("The photo could not be found.");
+    }
 
-  if (photoError || !photo) {
-    throw new Error("The photo could not be found.");
-  }
+    const { error: storageError } = await supabase.storage
+      .from(VEHICLE_PHOTO_BUCKET)
+      .remove([photo.storagePath]);
 
-  const { error: storageError } = await supabase.storage
-    .from(VEHICLE_PHOTO_BUCKET)
-    .remove([photo.storagePath]);
+    if (storageError) {
+      throw new Error("Could not remove the photo file.");
+    }
 
-  if (storageError) {
-    throw new Error("Could not remove the photo file.");
-  }
+    const { data: deleted, error: deleteError } = await supabase
+      .from("vehicle_photos")
+      .delete()
+      .eq("id", photoId)
+      .eq("vehicleId", vehicleId)
+      .select("id")
+      .maybeSingle();
 
-  const { data: deleted, error: deleteError } = await supabase
-    .from("vehicle_photos")
-    .delete()
-    .eq("id", photoId)
-    .eq("vehicleId", vehicleId)
-    .select("id")
-    .maybeSingle();
-
-  if (deleteError || !deleted) {
-    throw new Error(
-      "The file was removed, but its database record could not be deleted.",
-    );
-  }
+    if (deleteError || !deleted) {
+      throw new Error(
+        "The file was removed, but its database record could not be deleted.",
+      );
+    }
+  });
 }
