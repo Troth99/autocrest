@@ -2,7 +2,7 @@
 import { useCurrentUser } from "@/shared/context/CurrentUserContext";
 import { updateProfile } from "@/features/profile/edit-profile/services/edit-profile.service";
 import type { ProfileFormValues } from "@/features/profile/edit-profile/services/edit-profile.service";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import useForm from "@/shared/hooks/useForm";
 import { useRouter } from "next/navigation";
 import { normalizePhoneNumber } from "@/features/profile/utils/normalizePhoneNumber";
@@ -17,6 +17,7 @@ export default function useEditProfileForm() {
   const [firstName = "", ...remainingNames] = (
     user?.fullName ?? ""
   ).split(/\s+/);
+  
   const initialValues: Omit<ProfileFormValues, "fullName"> & {
     firstName: string;
     lastName: string;
@@ -38,12 +39,6 @@ export default function useEditProfileForm() {
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
   const [avatarError, setAvatarError] = useState<string | null>(null);
   const avatarInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    return () => {
-      if (avatarPreview) URL.revokeObjectURL(avatarPreview);
-    };
-  }, [avatarPreview]);
 
   const updateProfileHandler = async (values: typeof initialValues) => {
     if (!user) return;
