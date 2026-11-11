@@ -85,6 +85,7 @@ export async function getVehicleReportById(
   // Prepare display labels and show "Not provided" for missing values.
   return {
     ...data,
+    vehicleName: `${vehicle.make} ${vehicle.model}`,
     serviceTypeLabel: formatVehicleValue(serviceType),
     visitReasonLabel: formatVehicleValue(visitReason),
   };

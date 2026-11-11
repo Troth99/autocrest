@@ -1,70 +1,55 @@
 import type { VehicleServiceRecordDetails } from "@/features/garage/types/vehicle-service-record";
 import { formatDate } from "@/shared/utils/formatDate";
-import { Wrench, Receipt, CalendarClock, ClipboardList, Package, Droplets, ShieldCheck, ChevronDown } from "lucide-react";
+import {
+    ClipboardList,
+    Package,
+    Droplets,
+    ShieldCheck,
+    ChevronDown,
+    CarFront,
+    CalendarDays,
+} from "lucide-react";
 import ServiceDetailsMainCard from "./ServiceDetailsMainCard";
+import VehicleCost from "./VehicleCost";
+import ServiceReminder from "./ServiceReminder";
 
 
 export default function RecordVehicleDetails({
-     vehicleReportById
+    vehicleReportById
 
-    }: {
-        vehicleReportById: VehicleServiceRecordDetails
-    }) {
+}: {
+    vehicleReportById: VehicleServiceRecordDetails
+}) {
 
     return (
         <main className="page-shell">
             <article className="mx-auto max-w-4xl space-y-5">
-                <header className="pb-2">
+                <header className="pb-3">
                     <p className="vehicle-heading-eyebrow">
                         My garage / Maintenance
                     </p>
-                    <p className="mt-2 text-sm text-muted">
-                        Service record at · {formatDate(vehicleReportById?.serviceDate)} 
-                    </p>
+                    <h1 className="vehicle-heading-title">
+                        {vehicleReportById.serviceTypeLabel}
+                    </h1>
+                    <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2">
+                        <p className="flex items-center gap-2 text-base font-medium">
+                            <CarFront className="size-4 text-info" aria-hidden="true" />
+                            {vehicleReportById.vehicleName}
+                        </p>
+                        <p className="flex items-center gap-2 text-sm text-muted">
+                            <CalendarDays className="size-4" aria-hidden="true" />
+                            <time dateTime={vehicleReportById.serviceDate}>
+                                {formatDate(vehicleReportById.serviceDate)}
+                            </time>
+                        </p>
+                    </div>
                 </header>
 
-                <section className="section-card" aria-label="Service details">
-                    <h2 className="maintenance-section-title"><span className="maintenance-section-icon"><Wrench className="size-4" aria-hidden="true" /></span>Service details</h2>
-                    <ServiceDetailsMainCard vehicleReportById={vehicleReportById} />
-                  
-                </section>
+                <ServiceDetailsMainCard vehicleReportById={vehicleReportById} />
 
                 <div className="grid items-stretch gap-5 md:grid-cols-2">
-                    <section className="section-card">
-                        <h2 className="maintenance-section-title"><span className="maintenance-section-icon"><Receipt className="size-4" aria-hidden="true" /></span>Cost</h2>
-
-                        <dl className="mt-4 grid gap-5 sm:grid-cols-2">
-                            <div>
-                                <dt className="detail-label">Parts</dt>
-                                <dd className="detail-value">90.00 €</dd>
-                            </div>
-                            <div>
-                                <dt className="detail-label">Labor</dt>
-                                <dd className="detail-value">30.00 €</dd>
-                            </div>
-                        </dl>
-
-                        <div className="mt-5 flex items-center justify-between border-t border-line pt-4">
-                            <span className="text-sm text-muted">Total cost</span>
-                            <span className="text-3xl font-semibold tracking-tight text-info-strong">120.00 €</span>
-                        </div>
-                    </section>
-                    <section className="section-card border-info-border bg-info-soft">
-                        <h2 className="maintenance-section-title"><span className="maintenance-section-icon"><CalendarClock className="size-4" aria-hidden="true" /></span>Next service reminder</h2>
-
-                        <dl className="mt-4 grid gap-5 sm:grid-cols-2">
-                            <div>
-                                <dt className="detail-label">Due date</dt>
-                                <dd className="detail-value">
-                                    <time dateTime="2027-10-30">30 Oct 2027</time>
-                                </dd>
-                            </div>
-                            <div>
-                                <dt className="detail-label">Due at mileage</dt>
-                                <dd className="detail-value">155,200 km</dd>
-                            </div>
-                        </dl>
-                    </section>
+                    <VehicleCost vehicleReportById={vehicleReportById} />
+                    <ServiceReminder vehicleReportById={vehicleReportById} />
                 </div>
 
                 <details className="section-card group">
