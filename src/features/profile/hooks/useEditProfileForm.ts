@@ -57,13 +57,17 @@ export default function useEditProfileForm() {
         ? await uploadAvatar(user.id, avatarFile)
         : values.avatarUrl;
       const { firstName, lastName, ...profileValues } = values;
-      await updateProfile(user.id, {
+      const result = await updateProfile(user.id, {
         ...profileValues,
         fullName: [firstName.trim(), lastName.trim()]
           .filter(Boolean)
           .join(" "),
         avatarUrl: avatarUrl,
       });
+
+      if (result.error !== null) {
+        throw new Error(result.error);
+      }
 
       router.push("/profile");
       router.refresh();
