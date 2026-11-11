@@ -1,32 +1,10 @@
 "use server";
 
 import { z } from "zod";
-import { createClient } from "@/lib/supabase/server";
-import { getAuthenticatedUser } from "@/shared/services/auth-user.service";
 import type { VehiclePhoto } from "@/features/garage/types/vehicle-photo";
+import requireUserWithMfa from "@/shared/services/auth-session.service";
 
 const VEHICLE_PHOTO_BUCKET = "vehicle-photos";
-
-async function getPhotoSession() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-    error,
-  } = await getAuthenticatedUser(supabase);
-
-  if (error || !user) throw new Error("Please sign in again.");
-
-  const { data: assurance, error: assuranceError } =
-    await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
-
-  if (assuranceError)
-    throw new Error("Could not verify your session. Please try again.");
-  if (assurance.nextLevel === "aal2" && assurance.currentLevel !== "aal2") {
-    throw new Error("Please complete two-factor authentication first.");
-  }
-
-  return { supabase, user };
-}
 
 // Return expected errors so Client Components can display them in production.
 async function runPhotoMutation(operation: () => Promise<void>) {
@@ -45,7 +23,9 @@ async function runPhotoMutation(operation: () => Promise<void>) {
 
 export async function uploadVehiclePhoto(vehicleId: string, file: File) {
   return await runPhotoMutation(async () => {
-    const { supabase, user } = await getPhotoSession();
+
+    const { supabase, user } = await requireUserWithMfa();
+
     if (!z.uuid().safeParse(vehicleId).success) {
       throw new Error("Invalid vehicle ID format.");
     }
@@ -108,7 +88,9 @@ export async function uploadVehiclePhoto(vehicleId: string, file: File) {
 }
 
 export async function getVehiclePhotoUrls(vehicleIds: string[]) {
-  const { supabase } = await getPhotoSession();
+
+  const { supabase } = await requireUserWithMfa();
+
   if (!z.array(z.uuid()).safeParse(vehicleIds).success) {
     throw new Error("Invalid vehicle IDs.");
   }
@@ -194,7 +176,9 @@ export async function getVehiclePhotoUrls(vehicleIds: string[]) {
 
 export async function removeVehiclePhoto(vehicleId: string, photoId: string) {
   return await runPhotoMutation(async () => {
-    const { supabase, user } = await getPhotoSession();
+
+    const { supabase, user } = await requireUserWithMfa();
+
     if (
       !z.uuid().safeParse(vehicleId).success ||
       !z.uuid().safeParse(photoId).success

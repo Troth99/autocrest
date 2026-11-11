@@ -1,6 +1,5 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
 import {
   vehicleDocumentSchema,
   type VehicleDocumentDetails,
@@ -10,6 +9,7 @@ import {
   getGeminiError,
 } from "@/features/garage/services/vehicle-document/gemini";
 import { responseSchema } from "@/features/garage/services/vehicle-document/schemas";
+import requireUserWithMfa from "@/shared/services/auth-session.service";
 
 type ScanResult =
   | { data: VehicleDocumentDetails; error: null }
@@ -18,31 +18,19 @@ type ScanResult =
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
-export async function extractVehicleDocument(document: File): Promise<ScanResult> {
-  // Allow scanning only for an authenticated Supabase user.
-  const supabase = await createClient();
-
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
-
-  if (error || !user) {
-    return { data: null, error: "Please sign in to scan a document." };
-  }
-
-  // Check whether this session still requires two-factor verification.
-  const { data: assurance, error: assuranceError } =
-    await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
-
-  // Stop scanning if the session security check fails.
-  if (assuranceError) {
-    return { data: null, error: "Could not verify your session. Please try again." };
-  }
-
-  // Block scanning until the user completes their enabled 2FA.
-  if (assurance.nextLevel === "aal2" && assurance.currentLevel !== "aal2") {
-    return { data: null, error: "Please complete two-factor authentication first." };
+export async function extractVehicleDocument(
+  document: File,
+): Promise<ScanResult> {
+  try {
+    await requireUserWithMfa();
+  } catch (error) {
+    return {
+      data: null,
+      error:
+        error instanceof Error
+          ? error.message
+          : "Could not verify your session.",
+    };
   }
 
   // Read the API key on the server without exposing it to the browser.
@@ -77,7 +65,10 @@ export async function extractVehicleDocument(document: File): Promise<ScanResult
     const result = responseSchema.parse(await response.json());
     const candidate = result.candidates?.[0];
     if (candidate?.finishReason && candidate.finishReason !== "STOP") {
-      return { data: null, error: "The scan did not finish. Please try again." };
+      return {
+        data: null,
+        error: "The scan did not finish. Please try again.",
+      };
     }
 
     // Collect the result text, excluding parts marked as internal reasoning.
@@ -87,7 +78,10 @@ export async function extractVehicleDocument(document: File): Promise<ScanResult
       .join("");
 
     if (!text) {
-      return { data: null, error: "Could not read the document. Try a clearer photo." };
+      return {
+        data: null,
+        error: "Could not read the document. Try a clearer photo.",
+      };
     }
 
     // Validate extracted fields with the same Zod schema used by the client.
@@ -96,7 +90,10 @@ export async function extractVehicleDocument(document: File): Promise<ScanResult
       return { data: null, error: "Could not validate the extracted details." };
     }
     if (Object.values(details.data).every((value) => value === null)) {
-      return { data: null, error: "No vehicle details were readable in this photo." };
+      return {
+        data: null,
+        error: "No vehicle details were readable in this photo.",
+      };
     }
 
     // Return details for autofill without saving the vehicle or photo.
@@ -106,8 +103,14 @@ export async function extractVehicleDocument(document: File): Promise<ScanResult
       error instanceof Error &&
       ["TimeoutError", "AbortError"].includes(error.name)
     ) {
-      return { data: null, error: "The scanning service took too long. Please try again." };
+      return {
+        data: null,
+        error: "The scanning service took too long. Please try again.",
+      };
     }
-    return { data: null, error: "Could not process the document. Please try again." };
+    return {
+      data: null,
+      error: "Could not process the document. Please try again.",
+    };
   }
 }

@@ -1,8 +1,6 @@
 "use server";
-
-import { createClient } from "@/lib/supabase/server";
-import { getAuthenticatedUser } from "@/shared/services/auth-user.service";
 import { editProfileSchema } from "@/features/profile/validators/edit-profile.validator";
+import requireUserWithMfa from "@/shared/services/auth-session.service";
 
 export type ProfileFormValues = {
   fullName: string;
@@ -15,29 +13,11 @@ export type ProfileFormValues = {
 
 export async function updateProfile(userId: string, values: ProfileFormValues) {
   try {
-    const supabase = await createClient();
-    const {
-      data: { user },
-      error: userError,
-    } = await getAuthenticatedUser(supabase);
 
-    if (userError || !user) {
-      return { error: "Please sign in again." };
-    }
+    const { supabase, user } = await requireUserWithMfa();
 
     if (user.id !== userId) {
       return { error: "You can only update your own profile." };
-    }
-
-    const { data: assurance, error: assuranceError } =
-      await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
-
-    if (assuranceError) {
-      return { error: "Could not verify your session. Please try again." };
-    }
-
-    if (assurance.nextLevel === "aal2" && assurance.currentLevel !== "aal2") {
-      return { error: "Please complete two-factor authentication first." };
     }
 
     const parsed = editProfileSchema.safeParse(values);
