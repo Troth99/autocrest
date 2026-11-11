@@ -1,35 +1,113 @@
+"use server";
+
+import { createClient } from "@/lib/supabase/server";
 import {
   vehicleDocumentSchema,
   type VehicleDocumentDetails,
 } from "@/features/garage/validators/vehicle-document.validator";
+import {
+  extractDocumentWithGemini,
+  getGeminiError,
+} from "@/features/garage/services/vehicle-document/gemini";
+import { responseSchema } from "@/features/garage/services/vehicle-document/schemas";
 
-export async function extractVehicleDocument(
-  file: File,
-): Promise<VehicleDocumentDetails> {
-  const formData = new FormData();
-  formData.append("document", file);
+type ScanResult =
+  | { data: VehicleDocumentDetails; error: null }
+  | { data: null; error: string };
 
-  const response = await fetch("/api/vehicles/extract", {
-    method: "POST",
-    body: formData,
-    signal: AbortSignal.timeout(75_000),
-  });
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
+const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
-  const result = await response.json();
+export async function extractVehicleDocument(document: File): Promise<ScanResult> {
+  // Allow scanning only for an authenticated Supabase user.
+  const supabase = await createClient();
 
-  if (!response.ok) {
-    throw new Error(
-      typeof result.error === "string"
-        ? result.error
-        : "Could not scan the document.",
-    );
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
+
+  if (error || !user) {
+    return { data: null, error: "Please sign in to scan a document." };
   }
 
-  const details = vehicleDocumentSchema.safeParse(result.details);
+  // Check whether this session still requires two-factor verification.
+  const { data: assurance, error: assuranceError } =
+    await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
 
-  if (!details.success) {
-    throw new Error("The server returned invalid vehicle details.");
+  // Stop scanning if the session security check fails.
+  if (assuranceError) {
+    return { data: null, error: "Could not verify your session. Please try again." };
   }
 
-  return details.data;
+  // Block scanning until the user completes their enabled 2FA.
+  if (assurance.nextLevel === "aal2" && assurance.currentLevel !== "aal2") {
+    return { data: null, error: "Please complete two-factor authentication first." };
+  }
+
+  // Read the API key on the server without exposing it to the browser.
+  const apiKey = process.env.GEMINI_API_KEY || process.env.OPEN_GEMINI_API_KEY;
+  if (!apiKey) {
+    return { data: null, error: "Document scanning is not configured." };
+  }
+
+  // Validate uploads on the server even when the browser already checked them.
+  if (!(document instanceof File) || document.size === 0) {
+    return { data: null, error: "Please select a document image." };
+  }
+
+  if (!ACCEPTED_TYPES.includes(document.type)) {
+    return { data: null, error: "Choose a JPEG, PNG or WebP image." };
+  }
+
+  if (document.size > MAX_FILE_SIZE) {
+    return { data: null, error: "The image must be 5 MB or smaller." };
+  }
+
+  try {
+    const response = await extractDocumentWithGemini(document, apiKey);
+
+    // Convert provider errors into messages the interface can display.
+    if (!response.ok) {
+      const { message } = await getGeminiError(response);
+      return { data: null, error: message };
+    }
+
+    // Validate the Gemini response and reject incomplete generation.
+    const result = responseSchema.parse(await response.json());
+    const candidate = result.candidates?.[0];
+    if (candidate?.finishReason && candidate.finishReason !== "STOP") {
+      return { data: null, error: "The scan did not finish. Please try again." };
+    }
+
+    // Collect the result text, excluding parts marked as internal reasoning.
+    const text = (candidate?.content?.parts ?? [])
+      .filter((item) => !item.thought)
+      .map((item) => item.text ?? "")
+      .join("");
+
+    if (!text) {
+      return { data: null, error: "Could not read the document. Try a clearer photo." };
+    }
+
+    // Validate extracted fields with the same Zod schema used by the client.
+    const details = vehicleDocumentSchema.safeParse(JSON.parse(text));
+    if (!details.success) {
+      return { data: null, error: "Could not validate the extracted details." };
+    }
+    if (Object.values(details.data).every((value) => value === null)) {
+      return { data: null, error: "No vehicle details were readable in this photo." };
+    }
+
+    // Return details for autofill without saving the vehicle or photo.
+    return { data: details.data, error: null };
+  } catch (error) {
+    if (
+      error instanceof Error &&
+      ["TimeoutError", "AbortError"].includes(error.name)
+    ) {
+      return { data: null, error: "The scanning service took too long. Please try again." };
+    }
+    return { data: null, error: "Could not process the document. Please try again." };
+  }
 }

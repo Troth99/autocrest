@@ -1,3 +1,5 @@
+import "server-only";
+
 import { extractPhotoWithGemini } from "@/features/garage/services/gemini-extraction.service";
 import { extractionInstructions } from "./instructions";
 import { extractionSchema } from "./schemas";
@@ -13,3 +15,4 @@ export async function extractDocumentWithGemini(document: File, apiKey: string) 
     responseSchema: extractionSchema,
   });
 }
+

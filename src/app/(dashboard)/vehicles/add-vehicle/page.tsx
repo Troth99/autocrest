@@ -1,6 +1,8 @@
 import AddVehicleForm from "@/features/garage/components/add-vehicle/AddVehicleForm";
 import VehicleTypeSelection from "@/features/garage/components/add-vehicle/components/VehicleTypeSelection";
 
+export const maxDuration = 70;
+
 type Props = {
   searchParams: Promise<{
     type?: string | string[];
