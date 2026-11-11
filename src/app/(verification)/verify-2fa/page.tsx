@@ -1,40 +1,17 @@
-import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
-import { getAuthenticatedUser } from "@/shared/services/auth-user.service";
+import { getMfaVerificationData } from "@/features/auth/services/session.service";
 import MfaLoginForm from "@/features/auth/components/MfaLoginForm";
 
-export default async function VerifyTwoFactorPage({ searchParams }: {
+export default async function VerifyTwoFactorPage({
+  searchParams,
+}: {
   searchParams: Promise<{ next?: string }>;
 }) {
   const { next } = await searchParams;
-  // Only the recovery destination is accepted; arbitrary redirect URLs are ignored.
-  const nextPath = next === "/reset-password" ? "/reset-password" : "/";
-
-  
-  const supabase = await createClient();
-  const { data: { user }, error: userError } = await getAuthenticatedUser(supabase);
-
-  if (userError || !user) {
-    redirect("/login");
-  }
-
-  const { data: assurance, error } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
-  if (error) {
-    throw error;
-  }
-  if (assurance.currentLevel === "aal2" || assurance.nextLevel !== "aal2") {
-    redirect(nextPath);
-  }
-
-  const { data: factors, error: factorsError } = await supabase.auth.mfa.listFactors();
-  if (factorsError) throw factorsError;
-  const totpFactors = factors.totp
-    .filter((factor) => factor.status === "verified")
-    .map((factor) => ({ id: factor.id, name: factor.friendly_name || "Authenticator app" }));
+  const { factors, nextPath } = await getMfaVerificationData(next);
 
   return (
     <main className="mx-auto flex min-h-screen max-w-md items-center px-6 py-16">
-      <MfaLoginForm factors={totpFactors} nextPath={nextPath} />
+      <MfaLoginForm factors={factors} nextPath={nextPath} />
     </main>
   );
 }
