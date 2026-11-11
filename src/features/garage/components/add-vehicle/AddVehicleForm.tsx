@@ -14,37 +14,18 @@ import VehicleTechnicalFields from "../vehicle-fields/VehicleTechnicalFields";
 import VehicleMileageFields from "../vehicle-fields/VehicleMileageFields";
 import VehiclePurchaseFields from "../vehicle-fields/VehiclePurchaseFields";
 import VehicleAdditionalDetails from "../vehicle-fields/VehicleAdditionalDetails";
+import type { VehicleMake } from "@/features/garage/types/vehicle-catalog";
 
-export default function AddVehicleForm() {
-  const {
-    makes,
-    isLoadingMakes,
-    makesError,
-    selectedMake,
-    models,
-    selectedModel,
-    isLoadingModels,
-    modelsError,
-    documentValues,
-    handleFieldChange,
-    handleDocumentExtracted,
-    handleMakeChange,
-    handleModelChange,
-    handleFormChange,
-    photoFile,
-    setPhotoFile,
-    photoError,
-    setPhotoError,
-    isSubmitting,
-    submitError,
-    fieldErrors,
-    savedVehicleId,
-    handleAddCar,
-  } = useAddVehicleController();
+export default function AddVehicleForm({
+  makes: initialMakes,
+}: {
+  makes: VehicleMake[];
+}) {
+  const { autofill, submission } = useAddVehicleController(initialMakes);
 
   // Keep input registration and submission wiring in the form component.
   const { register, registerCheckbox, formHandler } = useForm(
-    handleAddCar,
+    submission.handleAddCar,
     initialValues,
   );
 
@@ -52,75 +33,69 @@ export default function AddVehicleForm() {
     <main className="page-shell">
       <VehicleFormHeader />
 
-      {makesError && (
-        <p role="alert" className="mb-4 text-sm text-destructive">
-          {makesError}
-        </p>
-      )}
       <form
         noValidate
         className="vehicle-form grid gap-4"
         onSubmit={formHandler}
-        onChange={handleFormChange}
+        onChange={submission.handleFormChange}
       >
         <input type="hidden" name="vehicleType" value="car" />
 
         <fieldset
-          disabled={isSubmitting || Boolean(savedVehicleId)}
+          disabled={submission.isSubmitting || Boolean(submission.savedVehicleId)}
           className="contents"
         >
-          <VehicleDocumentScan onExtracted={handleDocumentExtracted} />
+          <VehicleDocumentScan onExtracted={autofill.handleDocumentExtracted} />
         </fieldset>
 
         <VehiclePhotoFields
-          photoFile={photoFile}
-          photoError={photoError}
-          onPhotoChange={setPhotoFile}
-          onPhotoError={setPhotoError}
+          photoFile={submission.photoFile}
+          photoError={submission.photoError}
+          onPhotoChange={submission.setPhotoFile}
+          onPhotoError={submission.setPhotoError}
         />
         <fieldset
-          disabled={isSubmitting || Boolean(savedVehicleId)}
+          disabled={submission.isSubmitting || Boolean(submission.savedVehicleId)}
           className="grid min-w-0 gap-5 border-0 p-0 xl:grid-cols-2"
         >
           <VehicleBasicFields
-            errors={fieldErrors}
+            errors={submission.fieldErrors}
             register={register}
-            values={documentValues}
-            onFieldChange={handleFieldChange}
-            makes={makes}
-            selectedMake={selectedMake}
-            onMakeChange={handleMakeChange}
-            isLoadingMakes={isLoadingMakes}
-            models={models}
-            selectedModel={selectedModel}
-            onModelChange={handleModelChange}
-            isLoadingModels={isLoadingModels}
-            modelsError={modelsError}
+            values={autofill.documentValues}
+            onFieldChange={autofill.handleFieldChange}
+            makes={autofill.makes}
+            selectedMake={autofill.selectedMake}
+            onMakeChange={autofill.handleMakeChange}
+            models={autofill.models}
+            selectedModel={autofill.selectedModel}
+            onModelChange={autofill.handleModelChange}
+            isLoadingModels={autofill.isLoadingModels}
+            modelsError={autofill.modelsError}
           />
           <VehicleRegistrationFields
-            errors={fieldErrors}
+            errors={submission.fieldErrors}
             register={register}
-            values={documentValues}
-            onFieldChange={handleFieldChange}
+            values={autofill.documentValues}
+            onFieldChange={autofill.handleFieldChange}
           />
           <VehicleTechnicalFields
-            errors={fieldErrors}
+            errors={submission.fieldErrors}
             register={register}
-            values={documentValues}
-            onFieldChange={handleFieldChange}
+            values={autofill.documentValues}
+            onFieldChange={autofill.handleFieldChange}
           />
-          <VehicleMileageFields errors={fieldErrors} register={register} />
-          <VehiclePurchaseFields errors={fieldErrors} register={register} />
+          <VehicleMileageFields errors={submission.fieldErrors} register={register} />
+          <VehiclePurchaseFields errors={submission.fieldErrors} register={register} />
           <VehicleAdditionalDetails
-            errors={fieldErrors}
+            errors={submission.fieldErrors}
             register={register}
             registerCheckbox={registerCheckbox}
           />
         </fieldset>
 
-        {submitError && (
+        {submission.submitError && (
           <p role="alert" className="text-sm text-destructive">
-            {submitError}
+            {submission.submitError}
           </p>
         )}
         <div className="flex flex-wrap items-center justify-end gap-3">
@@ -132,18 +107,18 @@ export default function AddVehicleForm() {
             })}
           >
             <X className="size-5" aria-hidden="true" />
-            {savedVehicleId ? "Continue to garage" : "Cancel"}
+            {submission.savedVehicleId ? "Continue to garage" : "Cancel"}
           </Link>
           <Button
             type="submit"
-            disabled={isSubmitting}
+            disabled={submission.isSubmitting}
             className="h-12 cursor-pointer gap-2.5 bg-accent px-6 text-base text-ink hover:bg-accent-strong"
           >
             <Check className="size-5" aria-hidden="true" />
-            {isSubmitting
+            {submission.isSubmitting
               ? "Saving..."
-              : savedVehicleId
-                ? photoFile
+              : submission.savedVehicleId
+                ? submission.photoFile
                   ? "Retry photo upload"
                   : "Continue to garage"
                 : "Add vehicle"}

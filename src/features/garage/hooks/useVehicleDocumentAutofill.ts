@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import useVehicleCatalog from "@/features/garage/hooks/useVehicleCatalog";
-import type { VehicleModel } from "@/features/garage/types/vehicle-catalog";
+import type { VehicleMake, VehicleModel } from "@/features/garage/types/vehicle-catalog";
 import type { VehicleDocumentDetails } from "@/features/garage/validators/vehicle-document.validator";
 import type { VehicleDocumentFormValues } from "@/features/garage/types/vehicle-document-form";
 import {
@@ -13,7 +13,7 @@ import {
 } from "@/features/garage/utils/vehicle-document-form";
 
 /** Manages editable document fields and matches scanned makes/models to the catalog. */
-export default function useVehicleDocumentAutofill() {
+export default function useVehicleDocumentAutofill(initialMakes: VehicleMake[]) {
   const [selectedModel, setSelectedModel] = useState("");
 
   // Keep input values as strings so scanned details can also be edited manually.
@@ -124,7 +124,7 @@ export default function useVehicleDocumentAutofill() {
   }
 
   // Reuse catalog loading and notify this hook when model data becomes available.
-  const catalog = useVehicleCatalog(handleModelsLoaded);
+  const catalog = useVehicleCatalog(initialMakes, handleModelsLoaded);
   const { makes, selectedMake, models, isLoadingModels } = catalog;
 
   // A manual selection cancels a queued scan match so it cannot override the choice.

@@ -10,16 +10,21 @@ import { getVehicleFieldErrors } from "@/features/garage/validators/getVehicleFi
 import type { Vehicle } from "@/features/garage/types/vehicle";
 import type { VehicleFormErrors } from "@/features/garage/types/add-vehicle-form";
 import type { EditVehicleFormValues } from "@/features/garage/types/edit-vehicle-form";
+import type { VehicleMake, VehicleModel } from "@/features/garage/types/vehicle-catalog";
 
-export default function useEditVehicleForm(vehicle: Vehicle) {
+export default function useEditVehicleForm(
+  vehicle: Vehicle,
+  makes: VehicleMake[],
+  models: VehicleModel[],
+) {
   const router = useRouter();
-  const catalog = useEditVehicleCatalog(vehicle);
+  const catalog = useEditVehicleCatalog(vehicle, makes, models);
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<VehicleFormErrors>({});
 
   async function handleEditVehicle(values: EditVehicleFormValues) {
-    if (isSaving || catalog.isLoadingMakes || catalog.isLoadingModels) return;
+    if (isSaving || catalog.isLoadingModels) return;
     setIsSaving(true);
     setSaveError(null);
     setFieldErrors({});

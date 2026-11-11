@@ -10,7 +10,6 @@ export type VehicleMakeModelProps = VehicleDocumentFieldProps & {
   makes: VehicleMake[];
   selectedMake: string;
   onMakeChange: (makeId: string) => void;
-  isLoadingMakes: boolean;
   models: VehicleModel[];
   selectedModel: string;
   onModelChange: (modelId: string) => void;
@@ -25,7 +24,6 @@ export default function VehicleMakeModelFields({
   makes,
   selectedMake,
   onMakeChange,
-  isLoadingMakes,
   models,
   selectedModel,
   onModelChange,
@@ -51,8 +49,7 @@ export default function VehicleMakeModelFields({
           options={makes}
           value={selectedMake}
           onChange={onMakeChange}
-          disabled={isLoadingMakes}
-          placeholder={isLoadingMakes ? "Loading makes..." : "Choose a make"}
+          placeholder="Choose a make"
           errorId={errors.make && selectedMake !== "other" ? "make-error" : undefined}
         />
         {selectedMake === "other" ? (

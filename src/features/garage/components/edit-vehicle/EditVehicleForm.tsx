@@ -13,13 +13,20 @@ import VehicleRegistrationFields from "@/features/garage/components/vehicle-fiel
 import VehicleTechnicalFields from "@/features/garage/components/vehicle-fields/VehicleTechnicalFields";
 import VehiclePurchaseFields from "@/features/garage/components/vehicle-fields/VehiclePurchaseFields";
 import VehicleAdditionalDetails from "@/features/garage/components/vehicle-fields/VehicleAdditionalDetails";
+import type { VehicleMake, VehicleModel } from "@/features/garage/types/vehicle-catalog";
 
 type Props = {
+  makes: VehicleMake[];
+  models: VehicleModel[];
   vehicle: Vehicle;
   photoUrl?: string | null;
 };
 
-export function EditVehicleForm({ vehicle }: Props) {
+export function EditVehicleForm({
+  vehicle,
+  makes: initialMakes,
+  models: initialModels,
+}: Props) {
   const detailsUrl = `/vehicles/${vehicle.id}`;
 
   const name = `${vehicle.make} ${vehicle.model}`;
@@ -29,7 +36,6 @@ export function EditVehicleForm({ vehicle }: Props) {
     models,
     selectedMake,
     selectedModel,
-    isLoadingMakes,
     isLoadingModels,
     modelsError,
     handleMakeChange: changeCatalogMake,
@@ -38,7 +44,7 @@ export function EditVehicleForm({ vehicle }: Props) {
     isSaving,
     saveError,
     fieldErrors,
-  } = useEditVehicleForm(vehicle);
+  } = useEditVehicleForm(vehicle, initialMakes, initialModels);
 
   const { values, register, registerCheckbox, formHandler, setFieldValue } =
     useForm(handleEditVehicle, getEditVehicleInitialValues(vehicle));
@@ -84,7 +90,6 @@ export function EditVehicleForm({ vehicle }: Props) {
             makes={makes}
             selectedMake={selectedMake}
             onMakeChange={handleMakeChange}
-            isLoadingMakes={isLoadingMakes}
             models={models}
             selectedModel={selectedModel}
             onModelChange={handleModelChange}
@@ -133,7 +138,7 @@ export function EditVehicleForm({ vehicle }: Props) {
           </Link>
           <Button
             type="submit"
-            disabled={isSaving || isLoadingMakes || isLoadingModels}
+            disabled={isSaving || isLoadingModels}
             className="h-12 gap-2.5 bg-accent px-6 text-base text-ink cursor-pointer"
           >
             <Check className="size-5" aria-hidden="true" />

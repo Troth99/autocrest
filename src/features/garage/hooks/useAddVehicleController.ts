@@ -1,13 +1,13 @@
 "use client";
-
 import type { FormEvent } from "react";
 import useAddVehicleForm from "@/features/garage/hooks/useAddVehicleForm";
 import useVehicleDocumentAutofill from "@/features/garage/hooks/useVehicleDocumentAutofill";
 import type { VehicleDocumentDetails } from "@/features/garage/validators/vehicle-document.validator";
+import type { VehicleMake } from "@/features/garage/types/vehicle-catalog";
 
 // Coordinate the existing scan, catalog and save hooks without putting handlers in JSX.
-export default function useAddVehicleController() {
-  const autofill = useVehicleDocumentAutofill();
+export default function useAddVehicleController(makes: VehicleMake[]) {
+  const autofill = useVehicleDocumentAutofill(makes);
   const submission = useAddVehicleForm(autofill);
 
   function handleFormChange(event: FormEvent<HTMLFormElement>) {
@@ -56,11 +56,15 @@ export default function useAddVehicleController() {
   }
 
   return {
-    ...autofill,
-    ...submission,
-    handleFormChange,
-    handleDocumentExtracted,
-    handleMakeChange,
-    handleModelChange,
+    autofill: {
+      ...autofill,
+      handleDocumentExtracted,
+      handleMakeChange,
+      handleModelChange,
+    },
+    submission: {
+      ...submission,
+      handleFormChange,
+    },
   };
 }
