@@ -1,15 +1,15 @@
+import type { Vehicle } from "@/features/garage/types/vehicle";
 import VehicleFieldError from "@/features/garage/components/add-vehicle/components/VehicleFieldError";
 import type { VehicleFormErrors } from "@/features/garage/types/add-vehicle-form";
-import type { VehicleFormRegister } from "@/features/garage/types/add-vehicle-form";
 
 type Props = {
   errors: VehicleFormErrors;
-  register?: VehicleFormRegister;
+  defaultValues?: Vehicle;
 };
 
 export default function VehicleMileageFields({
   errors,
-  register,
+  defaultValues,
 }: Props) {
   return (
     <fieldset className="content-card vehicle-form-section">
@@ -29,7 +29,7 @@ export default function VehicleMileageFields({
             className="native-input"
             id="mileageKm"
             name="mileageKm"
-            {...register?.("mileageKm")}
+            defaultValue={defaultValues?.mileageKm ?? ""}
             type="number"
             placeholder="e.g. 85000"
             min={0}
@@ -52,7 +52,7 @@ export default function VehicleMileageFields({
             className="native-input"
             id="mileageRecordedAt"
             name="mileageRecordedAt"
-            {...register?.("mileageRecordedAt")}
+            defaultValue={defaultValues?.mileageRecordedAt ?? ""}
             type="date"
             aria-invalid={Boolean(errors.mileageRecordedAt)}
             aria-describedby={errors.mileageRecordedAt ? "mileageRecordedAt-error" : undefined}

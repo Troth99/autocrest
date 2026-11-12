@@ -1,34 +1,32 @@
 import type { ChangeEvent } from "react";
 import VehicleFieldError from "@/features/garage/components/add-vehicle/components/VehicleFieldError";
 import type { VehicleFormErrors } from "@/features/garage/types/add-vehicle-form";
-import type { VehicleFormRegister } from "@/features/garage/types/add-vehicle-form";
 import type { VehicleDocumentFieldProps } from "@/features/garage/types/vehicle-document-form";
 
 type Props = VehicleDocumentFieldProps & {
   errors: VehicleFormErrors;
-  register?: VehicleFormRegister;
 };
 
 export default function VehicleRegistrationFields({
   values,
   onFieldChange,
-  register,
+  defaultValues,
   errors,
 }: Props) {
   function handlePlateChange(event: ChangeEvent<HTMLInputElement>) {
-    onFieldChange("plate", event.target.value);
+    onFieldChange?.("plate", event.target.value);
   }
 
   function handleVinChange(event: ChangeEvent<HTMLInputElement>) {
-    onFieldChange("vin", event.target.value);
+    onFieldChange?.("vin", event.target.value);
   }
 
   function handleRegistrationCertificateNumberChange(event: ChangeEvent<HTMLInputElement>) {
-    onFieldChange("registrationCertificateNumber", event.target.value);
+    onFieldChange?.("registrationCertificateNumber", event.target.value);
   }
 
   function handleFirstRegistrationDateChange(event: ChangeEvent<HTMLInputElement>) {
-    onFieldChange("firstRegistrationDate", event.target.value);
+    onFieldChange?.("firstRegistrationDate", event.target.value);
   }
 
   return (
@@ -49,7 +47,8 @@ export default function VehicleRegistrationFields({
             className="native-input"
             id="plate"
             name="plate"
-            value={values.plate}
+            value={values?.plate}
+            defaultValue={values ? undefined : defaultValues?.plate ?? ""}
             onChange={handlePlateChange}
             type="text"
             placeholder="e.g. CB1234AB"
@@ -72,7 +71,8 @@ export default function VehicleRegistrationFields({
             className="native-input"
             id="vin"
             name="vin"
-            value={values.vin}
+            value={values?.vin}
+            defaultValue={values ? undefined : defaultValues?.vin ?? ""}
             onChange={handleVinChange}
             type="text"
             placeholder="Vehicle identification number"
@@ -95,7 +95,8 @@ export default function VehicleRegistrationFields({
             className="native-input"
             id="registrationCertificateNumber"
             name="registrationCertificateNumber"
-            value={values.registrationCertificateNumber}
+            value={values?.registrationCertificateNumber}
+            defaultValue={values ? undefined : defaultValues?.registrationCertificateNumber ?? ""}
             onChange={handleRegistrationCertificateNumberChange}
             type="text"
             aria-invalid={Boolean(errors.registrationCertificateNumber)}
@@ -117,7 +118,7 @@ export default function VehicleRegistrationFields({
             className="native-input"
             id="registrationCountryCode"
             name="registrationCountryCode"
-            {...register?.("registrationCountryCode")}
+            defaultValue={values ? undefined : defaultValues?.registrationCountryCode ?? ""}
             type="text"
             placeholder="e.g. BG"
             aria-invalid={Boolean(errors.registrationCountryCode)}
@@ -139,7 +140,8 @@ export default function VehicleRegistrationFields({
             className="native-input"
             id="firstRegistrationDate"
             name="firstRegistrationDate"
-            value={values.firstRegistrationDate}
+            value={values?.firstRegistrationDate}
+            defaultValue={values ? undefined : defaultValues?.firstRegistrationDate ?? ""}
             onChange={handleFirstRegistrationDateChange}
             type="date"
             aria-invalid={Boolean(errors.firstRegistrationDate)}

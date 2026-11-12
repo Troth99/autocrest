@@ -1,5 +1,4 @@
 import { EditVehicleForm } from "@/features/garage/components/edit-vehicle/EditVehicleForm";
-import { getVehiclePhotoUrls } from "@/features/garage/services/vehicle-photo.service";
 import { getVehicleById } from "@/features/garage/services/vehicles.service";
 import {
   getVehicleMakes,
@@ -19,7 +18,6 @@ export default async function EditVehiclePage({
     notFound();
   }
 
-  const photos = await getVehiclePhotoUrls([vehicle.id]);
   const makes = await getVehicleMakes(vehicle.vehicleType);
   const savedMake = makes.find((make) =>
     make.name.trim().toLowerCase() === vehicle.make.trim().toLowerCase(),
@@ -32,7 +30,7 @@ export default async function EditVehiclePage({
       makes={makes}
       models={models}
       vehicle={vehicle}
-      photoUrl={photos.urls[vehicle.id] ?? null}
+
     />
   );
 }

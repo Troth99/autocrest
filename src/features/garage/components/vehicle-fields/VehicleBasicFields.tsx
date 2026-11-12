@@ -1,15 +1,15 @@
+import type { Vehicle } from "@/features/garage/types/vehicle";
 import type { ReactNode } from "react";
 import VehicleMakeModelFields, { type VehicleMakeModelProps } from "@/features/garage/components/vehicle-fields/VehicleMakeModelFields";
 import VehicleFieldError from "@/features/garage/components/add-vehicle/components/VehicleFieldError";
-import type { VehicleFormRegister } from "@/features/garage/types/add-vehicle-form";
 
-type Props = { register?: VehicleFormRegister } & (VehicleMakeModelProps | {
+type Props = { defaultValues?: Vehicle; } & (VehicleMakeModelProps | {
   errors: VehicleMakeModelProps["errors"];
   makeModelFields: ReactNode;
 });
 
 export default function VehicleBasicFields(props: Props) {
-  const { errors, register } = props;
+  const { errors, defaultValues } = props;
   return (
     <fieldset className="content-card vehicle-form-section">
       <legend className="sr-only">Basic information</legend>
@@ -31,7 +31,7 @@ export default function VehicleBasicFields(props: Props) {
             className="native-input"
             id="manufactureYear"
             name="manufactureYear"
-            {...register?.("manufactureYear")}
+            defaultValue={defaultValues?.manufactureYear ?? ""}
             type="number"
             aria-required="true"
             placeholder="e.g. 2020"
@@ -55,7 +55,7 @@ export default function VehicleBasicFields(props: Props) {
             className="native-input"
             id="trim"
             name="trim"
-            {...register?.("trim")}
+            defaultValue={defaultValues?.trim ?? ""}
             type="text"
             placeholder="e.g. 1.8 Hybrid Design"
             aria-invalid={Boolean(errors.trim)}
@@ -77,7 +77,7 @@ export default function VehicleBasicFields(props: Props) {
             className="native-input"
             id="nickname"
             name="nickname"
-            {...register?.("nickname")}
+            defaultValue={defaultValues?.nickname ?? ""}
             type="text"
             placeholder="A name for your vehicle"
             aria-invalid={Boolean(errors.nickname)}
@@ -99,7 +99,7 @@ export default function VehicleBasicFields(props: Props) {
             aria-describedby={errors.vehicleUse ? "vehicleUse-error" : undefined}
             id="vehicleUse"
             name="vehicleUse"
-            {...register?.("vehicleUse")}
+            defaultValue={defaultValues?.vehicleUse ?? ""}
             className="form-select"
           >
             <option

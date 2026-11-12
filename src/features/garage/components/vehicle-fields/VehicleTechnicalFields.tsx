@@ -2,43 +2,41 @@ import type { ChangeEvent } from "react";
 import VehicleFieldError from "@/features/garage/components/add-vehicle/components/VehicleFieldError";
 import type {
   VehicleFormErrors,
-  VehicleFormRegister,
 } from "@/features/garage/types/add-vehicle-form";
 import type { VehicleDocumentFieldProps } from "@/features/garage/types/vehicle-document-form";
 
 type Props = VehicleDocumentFieldProps & {
   errors: VehicleFormErrors;
-  register?: VehicleFormRegister;
 };
 
 export default function VehicleTechnicalFields({
   values,
   onFieldChange,
-  register,
+  defaultValues,
   errors,
 }: Props) {
   function handleFuelTypeChange(event: ChangeEvent<HTMLSelectElement>) {
-    onFieldChange("fuelType", event.target.value);
+    onFieldChange?.("fuelType", event.target.value);
   }
 
   function handleEngineCcChange(event: ChangeEvent<HTMLInputElement>) {
-    onFieldChange("engineCc", event.target.value);
+    onFieldChange?.("engineCc", event.target.value);
   }
 
   function handlePowerHpChange(event: ChangeEvent<HTMLInputElement>) {
-    onFieldChange("powerHp", event.target.value);
+    onFieldChange?.("powerHp", event.target.value);
   }
 
   function handleEuroStandardChange(event: ChangeEvent<HTMLSelectElement>) {
-    onFieldChange("euroStandard", event.target.value);
+    onFieldChange?.("euroStandard", event.target.value);
   }
 
   function handleColourChange(event: ChangeEvent<HTMLInputElement>) {
-    onFieldChange("colour", event.target.value);
+    onFieldChange?.("colour", event.target.value);
   }
 
   function handleSeatsChange(event: ChangeEvent<HTMLInputElement>) {
-    onFieldChange("seats", event.target.value);
+    onFieldChange?.("seats", event.target.value);
   }
 
   return (
@@ -61,7 +59,8 @@ export default function VehicleTechnicalFields({
             id="fuelType"
             aria-required="true"
             name="fuelType"
-            value={values.fuelType}
+            value={values?.fuelType}
+            defaultValue={values ? undefined : defaultValues?.fuelType ?? ""}
             onChange={handleFuelTypeChange}
             className="form-select"
           >
@@ -110,7 +109,7 @@ export default function VehicleTechnicalFields({
             id="transmission"
             aria-required="true"
             name="transmission"
-            {...register?.("transmission")}
+            defaultValue={values ? undefined : defaultValues?.transmission ?? ""}
             className="form-select"
           >
             <option
@@ -142,7 +141,7 @@ export default function VehicleTechnicalFields({
             aria-describedby={errors.drivetrain ? "drivetrain-error" : undefined}
             id="drivetrain"
             name="drivetrain"
-            {...register?.("drivetrain")}
+            defaultValue={values ? undefined : defaultValues?.drivetrain ?? ""}
             className="form-select"
           >
             <option
@@ -177,7 +176,8 @@ export default function VehicleTechnicalFields({
             className="native-input"
             id="engineCc"
             name="engineCc"
-            value={values.engineCc}
+            value={values?.engineCc}
+            defaultValue={values ? undefined : defaultValues?.engineCc ?? ""}
             onChange={handleEngineCcChange}
             type="number"
             placeholder="e.g. 1798"
@@ -201,7 +201,8 @@ export default function VehicleTechnicalFields({
             className="native-input"
             id="powerHp"
             name="powerHp"
-            value={values.powerHp}
+            value={values?.powerHp}
+            defaultValue={values ? undefined : defaultValues?.powerHp ?? ""}
             onChange={handlePowerHpChange}
             type="number"
             placeholder="e.g. 122"
@@ -226,7 +227,8 @@ export default function VehicleTechnicalFields({
             aria-describedby={errors.euroStandard ? "euroStandard-error" : undefined}
             id="euroStandard"
             name="euroStandard"
-            value={values.euroStandard}
+            value={values?.euroStandard}
+            defaultValue={values ? undefined : defaultValues?.euroStandard ?? ""}
             onChange={handleEuroStandardChange}
             className="form-select"
           >
@@ -268,7 +270,8 @@ export default function VehicleTechnicalFields({
             className="native-input"
             id="colour"
             name="colour"
-            value={values.colour}
+            value={values?.colour}
+            defaultValue={values ? undefined : defaultValues?.colour ?? ""}
             aria-invalid={Boolean(errors.colour)}
             aria-describedby={errors.colour ? "colour-error" : undefined}
             onChange={handleColourChange}
@@ -292,7 +295,8 @@ export default function VehicleTechnicalFields({
             type="number"
             min={1}
             step={1}
-            value={values.seats}
+            value={values?.seats}
+            defaultValue={values ? undefined : defaultValues?.seats ?? ""}
             aria-invalid={Boolean(errors.seats)}
             aria-describedby={errors.seats ? "seats-error" : undefined}
             onChange={handleSeatsChange}

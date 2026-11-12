@@ -1,13 +1,12 @@
+import type { Vehicle } from "@/features/garage/types/vehicle";
 import VehicleFieldError from "@/features/garage/components/add-vehicle/components/VehicleFieldError";
 import type { VehicleFormErrors } from "@/features/garage/types/add-vehicle-form";
-import type { VehicleFormRegister, VehicleFormRegisterCheckbox } from "@/features/garage/types/add-vehicle-form";
 
-type Props = { errors: VehicleFormErrors; register?: VehicleFormRegister; registerCheckbox?: VehicleFormRegisterCheckbox };
+type Props = { errors: VehicleFormErrors; defaultValues?: Vehicle; };
 
 export default function VehiclAdditionalDetails({
   errors,
-  register,
-  registerCheckbox,
+  defaultValues,
 }: Props) {
   return (
     <fieldset className="content-card vehicle-form-section">
@@ -21,7 +20,7 @@ export default function VehiclAdditionalDetails({
         <textarea
           id="description"
           name="description"
-          {...register?.("description")}
+          defaultValue={defaultValues?.description ?? ""}
           aria-invalid={Boolean(errors.description)}
           aria-describedby={errors.description ? "description-error" : undefined}
           rows={4}
@@ -41,7 +40,7 @@ export default function VehiclAdditionalDetails({
         <input
           id="isPrimary"
           name="isPrimary"
-          {...registerCheckbox?.("isPrimary")}
+          defaultChecked={defaultValues?.isPrimary ?? false}
           type="checkbox"
           className="mt-1 size-4 accent-info"
         />

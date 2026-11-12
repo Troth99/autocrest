@@ -1,5 +1,8 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+import type { VehicleFormState } from "@/features/garage/types/add-vehicle-form";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Vehicle } from "@/features/garage/types/vehicle";
 import { addVehicleSchema } from "@/features/garage/validators/add-vehicle-validator";
@@ -147,15 +150,25 @@ async function findOwnedVehicle(
   return data ?? null;
 }
 
-export async function updateVehicle(vehicleId: string, input: unknown) {
-  return await runVehicleMutation(async () => {
+export async function updateVehicle(
+  vehicleId: string,
+  _previousState: VehicleFormState,
+  formData: FormData,
+): Promise<VehicleFormState> {
+  const result = await runVehicleMutation(async () => {
 
     const { supabase, user } = await requireUserWithMfa();
 
-    if (!z.uuid().safeParse(vehicleId).success) {
-      throw new Error("Invalid vehicle ID format.");
-    }
-    const values = addVehicleSchema.parse(input);
+    const vehicle = await findOwnedVehicle(supabase, user.id, vehicleId);
+    if (!vehicle) throw new Error("Vehicle not found.");
+
+    const values = addVehicleSchema.parse({
+      ...Object.fromEntries(formData),
+      isPrimary: formData.has("isPrimary"),
+      // Mileage is validated from the saved record, never from this form.
+      mileageKm: String(vehicle.mileageKm),
+      mileageRecordedAt: vehicle.mileageRecordedAt?.slice(0, 10) ?? "",
+    });
 
     const { data, error } = await supabase
       .from("vehicles")
@@ -181,6 +194,14 @@ export async function updateVehicle(vehicleId: string, input: unknown) {
 
     return data.id;
   });
+
+  if (result.error !== null) {
+    return { error: result.error, fieldErrors: result.fieldErrors ?? {} };
+  }
+
+  revalidatePath("/garrage");
+  revalidatePath(`/vehicles/${vehicleId}`);
+  redirect(`/vehicles/${vehicleId}`);
 }
 
 export async function updateVehicleMileage(vehicleId: string, input: unknown) {
