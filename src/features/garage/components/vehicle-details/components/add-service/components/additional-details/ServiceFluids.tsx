@@ -1,11 +1,10 @@
+import { useState } from "react";
 import { FieldError } from "@/shared/components/FieldError/FieldError";
-import type { VehicleServiceSectionProps } from "@/features/garage/types/add-service-form";
+import type { Props } from "@/features/garage/types/add-service-form";
 
-export default function ServiceFluids({
-    register,
-    errors,
-    values,
-}: VehicleServiceSectionProps) {
+export default function ServiceFluids({    errors,
+}: Props) {
+    const [fluidType, setFluidType] = useState("");
     return (
         <fieldset className="space-y-4 service-detail-group">
             <legend className="px-2 text-sm font-semibold">
@@ -16,7 +15,7 @@ export default function ServiceFluids({
                 <label htmlFor="fluid-type" className="text-sm">
                     Fluid type
                 </label>
-                <select id="fluid-type" {...register("fluidType")} className="form-select">
+                <select id="fluid-type" name="fluidType" value={fluidType} onChange={(event) => setFluidType(event.target.value)} className="form-select">
                     <option value="">Select fluid</option>
                     <option value="engine-oil">Engine oil</option>
                     <option value="transmission-oil">Transmission oil</option>
@@ -29,7 +28,7 @@ export default function ServiceFluids({
                 <FieldError message={errors.fluidType} />
             </div>
 
-            {values.fluidType === "other" && (
+            {fluidType === "other" && (
                 <div className="grid gap-2">
                     <label htmlFor="custom-fluid-type" className="text-sm">
                         Specify fluid *
@@ -43,7 +42,7 @@ export default function ServiceFluids({
                         title="Enter the fluid type."
                         placeholder="Enter the fluid type"
                         className="native-input"
-                        {...register("customFluidType")}
+                        name="customFluidType"
                     />
                     <FieldError message={errors.customFluidType} />
                 </div>
@@ -55,7 +54,7 @@ export default function ServiceFluids({
                         Brand / specification
                     </label>
                     <input data-slot="input"
-                        id="fluid-specification" {...register("fluidSpecification")}
+                        id="fluid-specification" name="fluidSpecification"
                         type="text"
                         placeholder="e.g. 5W-30, manufacturer approval"
                         className="native-input"
@@ -68,7 +67,7 @@ export default function ServiceFluids({
                         Quantity (liters)
                     </label>
                     <input data-slot="input"
-                        id="fluid-quantity" {...register("fluidQuantity")}
+                        id="fluid-quantity" name="fluidQuantity"
                         type="number"
                         min="0"
                         step="0.01"

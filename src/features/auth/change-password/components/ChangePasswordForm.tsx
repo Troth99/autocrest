@@ -57,8 +57,8 @@ export default function ChangePasswordForm() {
     }
   }
 
-  if (success) {
-    return (
+
+  return success ? (
       <div className="grid gap-5">
         <p role="status" className="password-security-notice">
           <Check className="size-5 shrink-0" aria-hidden="true" />
@@ -73,10 +73,7 @@ export default function ChangePasswordForm() {
           </Link>
         </div>
       </div>
-    );
-  }
-
-  return (
+  ) : (
     <form
       className="grid gap-5"
       action={savePasswordHandler}

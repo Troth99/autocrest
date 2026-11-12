@@ -1,50 +1,50 @@
 "use client";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useActionState } from "react";
 import ServiceAdditionalDetails from "./components/additional-details/ServiceAdditionalDetails";
 import ServiceCost from "./components/ServiceCost";
 import ServiceDetails from "./components/ServiceDetails";
 import ServiceReminder from "./components/ServiceReminder";
-import useForm from "@/shared/hooks/useForm";
-import { initialValues as initialServiceValues } from "@/features/garage/constants/add-service-form";
-import type { AddServiceFormValues } from "@/features/garage/types/add-service-form";
-import { validateAddServiceForm } from "@/features/garage/validators/add-service-validator";
 import { addVehicleService } from "@/features/garage/services/vehicle-record.service";
+import type {
+  AddServiceFormState,
+} from "@/features/garage/types/add-service-form";
 
 type Props = {
   vehicleId: string;
 };
 export default function AddService({ vehicleId }: Props) {
   const router = useRouter();
-  const [isSaving, setIsSaving] = useState(false);
-  const [saveError, setSaveError] = useState<string | null>(null);
 
-  async function addServiceHandler(values: AddServiceFormValues) {
-    if (isSaving) return;
-    setIsSaving(true);
-    setSaveError(null);
-
+  async function addServiceHandler(
+    _previousState: AddServiceFormState,
+    formData: FormData,
+  ): Promise<AddServiceFormState> {
     try {
-      await addVehicleService(vehicleId, values);
-    } catch (error) {
-      setSaveError(
-        error instanceof Error
-          ? error.message
-          : "Could not save the service. Please try again.",
+      const result = await addVehicleService(
+        vehicleId,
+        Object.fromEntries(formData.entries()),
       );
-      setIsSaving(false);
-      return;
+      if (result.error || Object.keys(result.fieldErrors).length > 0) {
+        return result;
+      }
+    } catch {
+      return {
+        error: "Could not save the service. Please try again.",
+        fieldErrors: {},
+      };
     }
 
     router.push(`/vehicles/${vehicleId}`);
     router.refresh();
+    return { error: null, fieldErrors: {} };
   }
 
-  const { register, formHandler, values, errors } = useForm(
-    addServiceHandler,
-    initialServiceValues,
-    validateAddServiceForm,
-  );
+  const [{ error: saveError, fieldErrors: errors }, formAction, isSaving] =
+    useActionState<AddServiceFormState, FormData>(
+      addServiceHandler,
+      { error: null, fieldErrors: {} },
+    );
 
   return (
     <main className="mx-auto w-full min-w-0 max-w-4xl px-4 py-8 sm:px-6 sm:py-10">
@@ -62,29 +62,27 @@ export default function AddService({ vehicleId }: Props) {
         <form
           className="vehicle-form grid min-w-0 gap-4"
           noValidate
-          onSubmit={formHandler}
+          action={formAction}
+          onReset={(event) => event.preventDefault()}
         >
           <fieldset disabled={isSaving} className="grid min-w-0 gap-4">
             <legend className="sr-only">Service record</legend>
             <fieldset className="content-card vehicle-form-section space-y-4">
               <legend className="sr-only">Service details</legend>
               <ServiceDetails
-                register={register}
                 errors={errors}
-                values={values}
               />
             </fieldset>
 
             <fieldset className="content-card vehicle-form-section space-y-4">
-              <ServiceCost register={register} errors={errors} />
+              <ServiceCost errors={errors} />
             </fieldset>
 
-            <ServiceReminder register={register} errors={errors} />
+            <ServiceReminder errors={errors} />
 
             <ServiceAdditionalDetails
-              register={register}
+
               errors={errors}
-              values={values}
             />
 
             {saveError && (

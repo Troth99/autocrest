@@ -3,7 +3,8 @@ import { createClient } from "@/lib/supabase/server";
 import { getVehicleById } from "@/features/garage/services/vehicles.service";
 
 import { addServiceSchema } from "@/features/garage/validators/add-service-validator";
-import type { AddServiceFormValues } from "@/features/garage/types/add-service-form";
+import { initialValues } from "@/features/garage/constants/add-service-form";
+import type { AddServiceFormValues, AddServiceFormState } from "@/features/garage/types/add-service-form";
 import type {
   VehicleServiceRecord,
   VehicleServiceRecordDetails,
@@ -11,24 +12,39 @@ import type {
 import { vehicleServiceLabels } from "@/features/garage/constants/vehicle-service-labels";
 import { visitReasonLabels } from "@/features/garage/constants/visit-reason-labels";
 import { formatVehicleValue } from "@/features/garage/utils/formatVehicleValue";
+import { getFieldErrors } from "@/shared/validators/getFieldErrors";
 
 export async function addVehicleService(
   vehicleId: string,
-  values: AddServiceFormValues,
-) {
+  values: Record<string, FormDataEntryValue>,
+): Promise<AddServiceFormState> {
   const vehicle = await getVehicleById(vehicleId);
 
   if (!vehicle) throw new Error("Vehicle not found.");
 
-  const validatedValues = addServiceSchema.parse(values);
+  const result = addServiceSchema.safeParse({ ...initialValues, ...values });
+
+  if (!result.success) {
+    return {
+      error: null,
+      fieldErrors: getFieldErrors<keyof AddServiceFormValues>(result.error),
+    };
+  }
 
   const supabase = await createClient();
 
   const { error } = await supabase
     .from("vehicle_services")
-    .insert({ vehicleId: vehicle.id, ...validatedValues });
+    .insert({ vehicleId: vehicle.id, ...result.data });
 
-  if (error) throw error;
+  if (error) {
+    return {
+      error: "Could not save the service. Please try again.",
+      fieldErrors: {},
+    };
+  }
+
+  return { error: null, fieldErrors: {} };
 }
 
 export async function getVehicleReports(
