@@ -4,7 +4,6 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "@/shared/components/ui/avatar";
-import { getInitials } from "@/features/profile/utils/getInitials";
 
 type Props = {
   name: string;
@@ -26,7 +25,7 @@ export default function EditProfilePreview({
             <AvatarImage src={avatarUrl} alt={`${name}'s profile picture`} />
           )}
           <AvatarFallback className="bg-linear-to-br from-info-soft to-info/30 text-5xl font-medium text-info sm:text-6xl">
-            {getInitials(name, email ?? "")}
+
           </AvatarFallback>
         </Avatar>
         <h2 className="mt-6 w-full wrap-break-word text-2xl font-semibold tracking-tight">

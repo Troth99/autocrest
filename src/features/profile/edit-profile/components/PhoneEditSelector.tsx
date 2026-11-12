@@ -5,17 +5,19 @@ import PhoneCountrySelect from "./PhoneCountrySelect";
 
 type Props = {
   value: string;
+  disabled: boolean;
   onChange: (value: string) => void;
   error: string | null;
 };
 
-export default function PhoneEditSelector({ value, onChange, error }: Props) {
+export default function PhoneEditSelector({ value, onChange, error, disabled }: Props) {
     return (
           <div className="form-field">
             <label htmlFor="phone">Phone number</label>
 
             <PhoneInput
               id="phone"
+              disabled={disabled}
               name="phone"
               defaultCountry="BG"
               international

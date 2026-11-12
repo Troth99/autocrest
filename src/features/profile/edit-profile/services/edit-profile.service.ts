@@ -1,4 +1,5 @@
 "use server";
+import { revalidatePath } from "next/cache";
 import { editProfileSchema } from "@/features/profile/validators/edit-profile.validator";
 import requireUserWithMfa from "@/shared/services/auth-session.service";
 
@@ -51,6 +52,7 @@ export async function updateProfile(userId: string, values: ProfileFormValues) {
         "Your profile could not be updated. Refresh the page and try again.",
       );
     }
+    revalidatePath("/", "layout");
     return { error: null };
   } catch (error) {
     return {

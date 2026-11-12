@@ -8,28 +8,10 @@ import ProfileDetailsFields from "@/features/profile/edit-profile/components/Pro
 import ProfileFormActions from "@/features/profile/edit-profile/components/ProfileFormActions";
 
 export default function EditProfilePage() {
-  const {
-    user,
-    fullName,
-    values,
-    register,
-    formHandler,
-    errors,
-    saveError,
-    phoneError,
-    setPhoneError,
-    isSaving,
-    avatarFile,
-    setAvatarFile,
-    avatarPreview,
-    setAvatarPreview,
-    avatarError,
-    setAvatarError,
-    avatarInputRef,
-    setFieldValue,
-  } = useEditProfileForm();
+  
+  const form = useEditProfileForm();
 
-  if (!user) return null;
+  if (!form.user) return null;
 
   return (
     <main className="mx-auto w-full max-w-7xl px-5 py-8 sm:px-8 sm:py-10">
@@ -42,19 +24,17 @@ export default function EditProfilePage() {
 
       <div className="mt-8 grid items-stretch gap-6 xl:grid-cols-[minmax(16rem,0.8fr)_minmax(0,1.6fr)]">
         <EditProfilePreview
-          name={
-            fullName ||
-            user.user_metadata?.full_name ||
-            user.user_metadata?.name ||
-            values.username ||
-            user.email?.split("@")[0] ||
-            "user"
-          }
-          email={user.email ?? null}
-          phone={values.phone}
-          avatarUrl={avatarPreview || values.avatarUrl || null}
+          name={form.user.fullName ?? ""}
+          email={form.user.email ?? null}
+          phone={form.phone}
+          avatarUrl={form.avatarPreview || form.user.avatarUrl || null}
         />
-        <form className="profile-edit-form" onSubmit={formHandler}>
+        <form
+          className="profile-edit-form"
+          action={form.updateProfileHandler}
+
+          onReset={(event) => event.preventDefault()}
+        >
           <div>
             <h2 className="text-xl font-semibold tracking-tight">
               Personal information
@@ -64,38 +44,26 @@ export default function EditProfilePage() {
             </p>
           </div>
           <ProfileAvatarSelector
-            avatarPreview={avatarPreview}
-            avatarFile={avatarFile}
-            avatarUrl={values.avatarUrl}
-            initials={getInitials(
-              fullName ||
-                user.user_metadata?.full_name ||
-                user.user_metadata?.name ||
-                values.username ||
-                user.email?.split("@")[0] ||
-                "user",
-              user.email ?? "",
-            )}
-            isSaving={isSaving}
-            avatarError={avatarError}
-            avatarInputRef={avatarInputRef}
-            setAvatarFile={setAvatarFile}
-            setAvatarPreview={setAvatarPreview}
-            setAvatarError={setAvatarError}
+            avatarPreview={form.avatarPreview}
+            avatarFile={form.avatarFile}
+            avatarUrl={form.user.avatarUrl ?? ""}
+            initials={getInitials(form.user.fullName ?? "", form.user.email ?? "")}
+            isSaving={form.isSaving}
+            avatarError={form.avatarError}
+            setAvatarFile={form.setAvatarFile}
+            setAvatarPreview={form.setAvatarPreview}
+            setAvatarError={form.setAvatarError}
           />
           <div className="border-t border-line" />
           <ProfileDetailsFields
-            register={register}
-            values={values}
-            errors={errors}
-            isSaving={isSaving}
-            phoneError={phoneError}
-            onPhoneChange={(value) => {
-              setFieldValue("phone", value);
-              setPhoneError(null);
-            }}
+            user={form.user}
+            phone={form.phone}
+            errors={form.errors}
+            isSaving={form.isSaving}
+            phoneError={form.phoneError}
+            onPhoneChange={form.handlePhoneChange}
           />
-          <ProfileFormActions saveError={saveError} isSaving={isSaving} />{" "}
+          <ProfileFormActions saveError={form.saveError} isSaving={form.isSaving} />
         </form>
       </div>
     </main>

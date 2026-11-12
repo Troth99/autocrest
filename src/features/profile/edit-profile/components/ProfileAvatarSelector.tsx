@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, type ChangeEvent, type RefObject } from "react";
+import { useRef, type ChangeEvent } from "react";
 import {
   Avatar,
   AvatarFallback,
@@ -16,7 +16,6 @@ type Props = {
   initials: string;
   isSaving: boolean;
   avatarError: string | null;
-  avatarInputRef: RefObject<HTMLInputElement | null>;
   setAvatarFile: (file: File | null) => void;
   setAvatarPreview: (url: string | null) => void;
   setAvatarError: (error: string | null) => void;
@@ -29,11 +28,11 @@ export default function ProfileAvatarSelector({
   initials,
   isSaving,
   avatarError,
-  avatarInputRef,
   setAvatarFile,
   setAvatarPreview,
   setAvatarError,
 }: Props) {
+  const avatarInputRef = useRef<HTMLInputElement>(null);
   const readerRef = useRef<FileReader | null>(null);
 
   function avatarChangeHandler(event: ChangeEvent<HTMLInputElement>) {

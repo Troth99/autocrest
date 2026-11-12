@@ -1,8 +1,12 @@
 ﻿import Link from "next/link";
 import { Save } from "lucide-react";
 import { Button, buttonVariants } from "@/shared/components/ui/button";
+import { useFormStatus } from "react-dom";
 type Props = { saveError: string | null; isSaving: boolean };
-export default function ProfileFormActions({ saveError, isSaving }: Props) {
+export default function ProfileFormActions({ saveError }: Props) {
+
+  const { pending } = useFormStatus();
+
   return (
     <>
       {saveError && (
@@ -22,11 +26,11 @@ export default function ProfileFormActions({ saveError, isSaving }: Props) {
         </Link>
         <Button
           type="submit"
-          disabled={isSaving}
+          disabled={pending}
           className="h-11 cursor-pointer bg-accent px-6 text-ink hover:bg-accent/85"
         >
           <Save />
-          {isSaving ? "Saving..." : "Save changes"}
+          {pending ? "Saving..." : "Save changes"}
         </Button>
       </div>
     </>
