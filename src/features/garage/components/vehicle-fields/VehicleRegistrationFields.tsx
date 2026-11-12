@@ -6,7 +6,7 @@ import type { VehicleDocumentFieldProps } from "@/features/garage/types/vehicle-
 
 type Props = VehicleDocumentFieldProps & {
   errors: VehicleFormErrors;
-  register: VehicleFormRegister;
+  register?: VehicleFormRegister;
 };
 
 export default function VehicleRegistrationFields({
@@ -116,7 +116,8 @@ export default function VehicleRegistrationFields({
             data-slot="input"
             className="native-input"
             id="registrationCountryCode"
-            {...register("registrationCountryCode")}
+            name="registrationCountryCode"
+            {...register?.("registrationCountryCode")}
             type="text"
             placeholder="e.g. BG"
             aria-invalid={Boolean(errors.registrationCountryCode)}

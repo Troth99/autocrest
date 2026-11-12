@@ -2,7 +2,7 @@ import VehicleFieldError from "@/features/garage/components/add-vehicle/componen
 import type { VehicleFormErrors } from "@/features/garage/types/add-vehicle-form";
 import type { VehicleFormRegister } from "@/features/garage/types/add-vehicle-form";
 
-type Props = { errors: VehicleFormErrors; register: VehicleFormRegister };
+type Props = { errors: VehicleFormErrors; register?: VehicleFormRegister };
 
 export default function VehiclePurchaseFields({
   errors,
@@ -25,7 +25,8 @@ export default function VehiclePurchaseFields({
             data-slot="input"
             className="native-input"
             id="purchaseDate"
-            {...register("purchaseDate")}
+            name="purchaseDate"
+            {...register?.("purchaseDate")}
             type="date"
             aria-invalid={Boolean(errors.purchaseDate)}
             aria-describedby={errors.purchaseDate ? "purchaseDate-error" : undefined}
@@ -45,7 +46,8 @@ export default function VehiclePurchaseFields({
             data-slot="input"
             className="native-input"
             id="purchasePrice"
-            {...register("purchasePrice")}
+            name="purchasePrice"
+            {...register?.("purchasePrice")}
             type="number"
             min={0}
             step="0.01"
@@ -67,7 +69,8 @@ export default function VehiclePurchaseFields({
             data-slot="input"
             className="native-input"
             id="purchaseCurrencyCode"
-            {...register("purchaseCurrencyCode")}
+            name="purchaseCurrencyCode"
+            {...register?.("purchaseCurrencyCode")}
             type="text"
             placeholder="e.g. EUR"
             aria-invalid={Boolean(errors.purchaseCurrencyCode)}

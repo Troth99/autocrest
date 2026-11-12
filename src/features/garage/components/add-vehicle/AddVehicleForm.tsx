@@ -1,10 +1,9 @@
 "use client";
 import Link from "next/link";
-import { Check, X } from "lucide-react";
-import { Button, buttonVariants } from "@/shared/components/ui/button";
+import { X } from "lucide-react";
+import { buttonVariants } from "@/shared/components/ui/button";
 import useAddVehicleController from "@/features/garage/hooks/useAddVehicleController";
-import useForm from "@/shared/hooks/useForm";
-import { initialValues } from "@/features/garage/constants/add-vehicle-form";
+import SubmittingFormAddCar from "./components/SubmittingFormAddCar";
 import VehicleFormHeader from "./components/VehicleFormHeader";
 import VehicleDocumentScan from "./components/VehicleDocumentScan";
 import VehiclePhotoFields from "../vehicle-fields/VehiclePhotoFields";
@@ -23,12 +22,6 @@ export default function AddVehicleForm({
 }) {
   const { autofill, submission } = useAddVehicleController(initialMakes);
 
-  // Keep input registration and submission wiring in the form component.
-  const { register, registerCheckbox, formHandler } = useForm(
-    submission.handleAddCar,
-    initialValues,
-  );
-
   return (
     <main className="page-shell">
       <VehicleFormHeader />
@@ -36,7 +29,9 @@ export default function AddVehicleForm({
       <form
         noValidate
         className="vehicle-form grid gap-4"
-        onSubmit={formHandler}
+        action={submission.formAction}
+        // Keep entered values when validation or photo upload fails.
+        onReset={(event) => event.preventDefault()}
         onChange={submission.handleFormChange}
       >
         <input type="hidden" name="vehicleType" value="car" />
@@ -48,19 +43,21 @@ export default function AddVehicleForm({
           <VehicleDocumentScan onExtracted={autofill.handleDocumentExtracted} />
         </fieldset>
 
-        <VehiclePhotoFields
-          photoFile={submission.photoFile}
-          photoError={submission.photoError}
-          onPhotoChange={submission.setPhotoFile}
-          onPhotoError={submission.setPhotoError}
-        />
+        <fieldset disabled={submission.isSubmitting} className="contents">
+          <VehiclePhotoFields
+            photoFile={submission.photoFile}
+            photoError={submission.photoError}
+            onPhotoChange={submission.setPhotoFile}
+            onPhotoError={submission.setPhotoError}
+          />
+        </fieldset>
         <fieldset
           disabled={submission.isSubmitting || Boolean(submission.savedVehicleId)}
           className="grid min-w-0 gap-5 border-0 p-0 xl:grid-cols-2"
         >
           <VehicleBasicFields
             errors={submission.fieldErrors}
-            register={register}
+
             values={autofill.documentValues}
             onFieldChange={autofill.handleFieldChange}
             makes={autofill.makes}
@@ -74,22 +71,21 @@ export default function AddVehicleForm({
           />
           <VehicleRegistrationFields
             errors={submission.fieldErrors}
-            register={register}
+
             values={autofill.documentValues}
             onFieldChange={autofill.handleFieldChange}
           />
           <VehicleTechnicalFields
             errors={submission.fieldErrors}
-            register={register}
+
             values={autofill.documentValues}
             onFieldChange={autofill.handleFieldChange}
           />
-          <VehicleMileageFields errors={submission.fieldErrors} register={register} />
-          <VehiclePurchaseFields errors={submission.fieldErrors} register={register} />
+          <VehicleMileageFields errors={submission.fieldErrors} />
+          <VehiclePurchaseFields errors={submission.fieldErrors} />
           <VehicleAdditionalDetails
             errors={submission.fieldErrors}
-            register={register}
-            registerCheckbox={registerCheckbox}
+
           />
         </fieldset>
 
@@ -109,20 +105,10 @@ export default function AddVehicleForm({
             <X className="size-5" aria-hidden="true" />
             {submission.savedVehicleId ? "Continue to garage" : "Cancel"}
           </Link>
-          <Button
-            type="submit"
-            disabled={submission.isSubmitting}
-            className="h-12 cursor-pointer gap-2.5 bg-accent px-6 text-base text-ink hover:bg-accent-strong"
-          >
-            <Check className="size-5" aria-hidden="true" />
-            {submission.isSubmitting
-              ? "Saving..."
-              : submission.savedVehicleId
-                ? submission.photoFile
-                  ? "Retry photo upload"
-                  : "Continue to garage"
-                : "Add vehicle"}
-          </Button>
+          <SubmittingFormAddCar
+            savedVehicleId={submission.savedVehicleId}
+            hasPhoto={Boolean(submission.photoFile)}
+          />
         </div>
       </form>
     </main>

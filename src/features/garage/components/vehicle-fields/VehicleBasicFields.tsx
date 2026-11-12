@@ -3,7 +3,7 @@ import VehicleMakeModelFields, { type VehicleMakeModelProps } from "@/features/g
 import VehicleFieldError from "@/features/garage/components/add-vehicle/components/VehicleFieldError";
 import type { VehicleFormRegister } from "@/features/garage/types/add-vehicle-form";
 
-type Props = { register: VehicleFormRegister } & (VehicleMakeModelProps | {
+type Props = { register?: VehicleFormRegister } & (VehicleMakeModelProps | {
   errors: VehicleMakeModelProps["errors"];
   makeModelFields: ReactNode;
 });
@@ -30,7 +30,8 @@ export default function VehicleBasicFields(props: Props) {
             data-slot="input"
             className="native-input"
             id="manufactureYear"
-            {...register("manufactureYear")}
+            name="manufactureYear"
+            {...register?.("manufactureYear")}
             type="number"
             aria-required="true"
             placeholder="e.g. 2020"
@@ -53,7 +54,8 @@ export default function VehicleBasicFields(props: Props) {
             data-slot="input"
             className="native-input"
             id="trim"
-            {...register("trim")}
+            name="trim"
+            {...register?.("trim")}
             type="text"
             placeholder="e.g. 1.8 Hybrid Design"
             aria-invalid={Boolean(errors.trim)}
@@ -74,7 +76,8 @@ export default function VehicleBasicFields(props: Props) {
             data-slot="input"
             className="native-input"
             id="nickname"
-            {...register("nickname")}
+            name="nickname"
+            {...register?.("nickname")}
             type="text"
             placeholder="A name for your vehicle"
             aria-invalid={Boolean(errors.nickname)}
@@ -95,7 +98,8 @@ export default function VehicleBasicFields(props: Props) {
             aria-invalid={Boolean(errors.vehicleUse)}
             aria-describedby={errors.vehicleUse ? "vehicleUse-error" : undefined}
             id="vehicleUse"
-            {...register("vehicleUse")}
+            name="vehicleUse"
+            {...register?.("vehicleUse")}
             className="form-select"
           >
             <option

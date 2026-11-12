@@ -4,7 +4,7 @@ import type { VehicleFormRegister } from "@/features/garage/types/add-vehicle-fo
 
 type Props = {
   errors: VehicleFormErrors;
-  register: VehicleFormRegister;
+  register?: VehicleFormRegister;
 };
 
 export default function VehicleMileageFields({
@@ -28,7 +28,8 @@ export default function VehicleMileageFields({
             data-slot="input"
             className="native-input"
             id="mileageKm"
-            {...register("mileageKm")}
+            name="mileageKm"
+            {...register?.("mileageKm")}
             type="number"
             placeholder="e.g. 85000"
             min={0}
@@ -50,7 +51,8 @@ export default function VehicleMileageFields({
             data-slot="input"
             className="native-input"
             id="mileageRecordedAt"
-            {...register("mileageRecordedAt")}
+            name="mileageRecordedAt"
+            {...register?.("mileageRecordedAt")}
             type="date"
             aria-invalid={Boolean(errors.mileageRecordedAt)}
             aria-describedby={errors.mileageRecordedAt ? "mileageRecordedAt-error" : undefined}

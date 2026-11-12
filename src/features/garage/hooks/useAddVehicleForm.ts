@@ -3,7 +3,8 @@
 import { getVehicleFieldErrors } from "@/features/garage/validators/getVehicleFieldErrors";
 import { resolveVehicleMakeModel } from "@/features/garage/utils/resolveVehicleMakeModel";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useActionState, useState } from "react";
+import { initialValues } from "@/features/garage/constants/add-vehicle-form";
 import { addVehicle } from "@/features/garage/services/vehicles.service";
 import { uploadVehiclePhoto } from "@/features/garage/services/vehicle-photo.service";
 import { addVehicleSchema } from "@/features/garage/validators/add-vehicle-validator";
@@ -35,13 +36,20 @@ export default function useAddVehicleForm({
   const router = useRouter();
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [photoError, setPhotoError] = useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<VehicleFormErrors>({});
   const [savedVehicleId, setSavedVehicleId] = useState<string | null>(null);
 
-  async function handleAddCar(values: AddVehicleFormValues) {
-    if (isSubmitting) return;
+  async function handleAddCar(formData: FormData) {
+    const values: AddVehicleFormValues = {
+      ...initialValues,
+      ...Object.fromEntries(
+        Array.from(formData.entries()).filter(
+          ([, value]) => typeof value === "string",
+        ),
+      ),
+      isPrimary: formData.has("isPrimary"),
+    };
     if (photoFile && (photoFile.size === 0 || photoFile.size > 2 * 1024 * 1024)) {
       setPhotoError("Choose a JPG, PNG or WebP image under 2 MB.");
       return;
@@ -49,7 +57,6 @@ export default function useAddVehicleForm({
 
     // A retry after a photo error must not insert another vehicle.
     if (savedVehicleId) {
-      setIsSubmitting(true);
       setSubmitError(null);
       setPhotoError(null);
       try {
@@ -68,14 +75,12 @@ export default function useAddVehicleForm({
         setSubmitError(
           "Your vehicle is already saved. Retry the photo upload or continue to the garage.",
         );
-      } finally {
-        setIsSubmitting(false);
       }
       return;
     }
 
     // Catalog selection and document autofill already own these fields.
-    // Include their current values when submitting the registered inputs.
+    // Include their current values alongside the native form inputs.
     const submittedValues: AddVehicleFormValues = {
       ...values,
       ...documentValues,
@@ -107,8 +112,6 @@ export default function useAddVehicleForm({
         setSubmitError("Please correct the highlighted fields.");
         return;
       }
-
-      setIsSubmitting(true);
       const result = await addVehicle({
         ...submittedValues,
         make,
@@ -146,10 +149,16 @@ export default function useAddVehicleForm({
           ? error.message
           : "Could not save the vehicle. Please try again.",
       );
-    } finally {
-      setIsSubmitting(false);
     }
   }
+
+  const [, formAction, isSubmitting] = useActionState(
+    async (_previousState: null, formData: FormData) => {
+      await handleAddCar(formData);
+      return null;
+    },
+    null,
+  );
 
   return {
     photoFile,
@@ -162,6 +171,6 @@ export default function useAddVehicleForm({
     fieldErrors,
     setFieldErrors,
     savedVehicleId,
-    handleAddCar,
+    formAction,
   };
 }

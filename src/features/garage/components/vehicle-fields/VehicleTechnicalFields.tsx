@@ -8,7 +8,7 @@ import type { VehicleDocumentFieldProps } from "@/features/garage/types/vehicle-
 
 type Props = VehicleDocumentFieldProps & {
   errors: VehicleFormErrors;
-  register: VehicleFormRegister;
+  register?: VehicleFormRegister;
 };
 
 export default function VehicleTechnicalFields({
@@ -109,7 +109,8 @@ export default function VehicleTechnicalFields({
             aria-describedby={errors.transmission ? "transmission-error" : undefined}
             id="transmission"
             aria-required="true"
-            {...register("transmission")}
+            name="transmission"
+            {...register?.("transmission")}
             className="form-select"
           >
             <option
@@ -140,7 +141,8 @@ export default function VehicleTechnicalFields({
             aria-invalid={Boolean(errors.drivetrain)}
             aria-describedby={errors.drivetrain ? "drivetrain-error" : undefined}
             id="drivetrain"
-            {...register("drivetrain")}
+            name="drivetrain"
+            {...register?.("drivetrain")}
             className="form-select"
           >
             <option
