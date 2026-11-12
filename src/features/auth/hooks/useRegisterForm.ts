@@ -46,7 +46,7 @@ export default function useRegisterForm() {
         password: values.password,
       });
 
-      router.push("/");
+      router.replace("/");
       router.refresh();
       
     } catch (error) {

@@ -64,7 +64,7 @@ export default function useAddVehicleForm({
           const result = await uploadVehiclePhoto(savedVehicleId, photoFile);
           if (result.error !== null) throw new Error(result.error);
         }
-        router.push("/garrage");
+        router.replace("/garrage");
         router.refresh();
       } catch (error) {
         setPhotoError(
@@ -141,7 +141,7 @@ export default function useAddVehicleForm({
         }
       }
 
-      router.push("/garrage");
+      router.replace("/garrage");
       router.refresh();
     } catch (error) {
       setSubmitError(

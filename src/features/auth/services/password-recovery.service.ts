@@ -9,6 +9,7 @@ export async function requestPasswordReset(email: string) {
   const values = forgotPasswordSchema.parse({ email });
   // The callback exchanges the email link's PKCE code for a session.
   const redirectTo = new URL("/auth/callback", window.location.origin);
+  
   redirectTo.searchParams.set("next", "/reset-password");
   const { error } = await createClient().auth.resetPasswordForEmail(values.email, {
     redirectTo: redirectTo.toString(),

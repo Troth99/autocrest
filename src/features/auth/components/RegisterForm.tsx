@@ -6,6 +6,8 @@ import { PasswordField } from "./PasswordField";
 import { FieldError } from "@/shared/components/FieldError/FieldError";
 import useRegisterForm from "@/features/auth/hooks/useRegisterForm";
 
+//to make RegisterForm with actions instead useForm
+
 export default function RegisterForm() {
   const { register, formHandler, errors, isSubmitting } = useRegisterForm();
 

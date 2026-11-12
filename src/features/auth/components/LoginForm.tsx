@@ -7,6 +7,8 @@ import { FieldError } from "@/shared/components/FieldError/FieldError";
 import useLoginForm from "@/features/auth/hooks/useLoginForm";
 import { FacebookIcon, GoogleIcon } from "./icons/AuthProviderIcons";
 
+//to make login form with actions isntead useForm
+
 export default function LoginForm({
   passwordReset = false,
 }: {

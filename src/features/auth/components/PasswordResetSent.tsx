@@ -18,13 +18,13 @@ export default function PasswordResetSent({ titleId, email, retryAt, onRetry }: 
 
   useEffect(() => {
     
-    const interval = window.setInterval(() => {
+    const interval = setInterval(() => {
       const remaining = Math.max(0, Math.ceil((retryAt - Date.now()) / 1000));
       setSecondsLeft(remaining);
-      if (remaining === 0) window.clearInterval(interval);
+      if (remaining === 0) clearInterval(interval);
     }, 1000);
 
-    return () => window.clearInterval(interval);
+    return () => clearInterval(interval);
   }, [retryAt]);
 
   return (

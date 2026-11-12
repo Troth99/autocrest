@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import { redirect, RedirectType } from "next/navigation";
 import type { VehicleFormState } from "@/features/garage/types/add-vehicle-form";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Vehicle } from "@/features/garage/types/vehicle";
@@ -201,7 +201,7 @@ export async function updateVehicle(
 
   revalidatePath("/garrage");
   revalidatePath(`/vehicles/${vehicleId}`);
-  redirect(`/vehicles/${vehicleId}`);
+  redirect(`/vehicles/${vehicleId}`, RedirectType.replace);
 }
 
 export async function updateVehicleMileage(vehicleId: string, input: unknown) {

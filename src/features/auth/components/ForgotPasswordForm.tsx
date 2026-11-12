@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { startTransition, useEffect, useId, useState } from "react";
 import SendResetLinkButton from "@/features/auth/components/SendResetLinkButton";
 import PasswordResetSent from "@/features/auth/components/PasswordResetSent";
@@ -16,6 +17,7 @@ export default function ForgotPasswordForm({
   invalidLink?: boolean;
 }) {
   const inputId = useId();
+  const router = useRouter();
   const [errors, setErrors] = useState<{ email?: string }>({});
   const [busy, setBusy] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -30,8 +32,8 @@ export default function ForgotPasswordForm({
     setSignOutError("");
     try {
       await logoutUser();
-      // Reload to clear server-rendered account data along with the session.
-      window.location.replace("/login");
+      router.replace("/login");
+      router.refresh();
     } catch {
       setSignOutError("Could not sign out. Please try again.");
       setIsSigningOut(false);

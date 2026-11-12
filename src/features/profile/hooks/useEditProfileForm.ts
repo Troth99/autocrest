@@ -2,13 +2,14 @@
 import { useCurrentUser } from "@/shared/context/CurrentUserContext";
 import { updateProfile } from "@/features/profile/edit-profile/services/edit-profile.service";
 import { useState } from "react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { normalizePhoneNumber } from "@/features/profile/utils/normalizePhoneNumber";
 import { isValidPhoneNumber } from "libphonenumber-js";
 import { uploadAvatar } from "@/features/profile/edit-profile/services/upload-avatar.service";
 import { profileNameSchema } from "@/features/profile/validators/profile-name.validator";
 
 export default function useEditProfileForm() {
+  const router = useRouter();
   const { user } = useCurrentUser();
 
   const [phone, setPhone] = useState(normalizePhoneNumber(user?.phone));
@@ -78,7 +79,8 @@ export default function useEditProfileForm() {
       return;
     }
 
-    redirect("/profile");
+    router.replace("/profile");
+    router.refresh();
   }
 
   return {

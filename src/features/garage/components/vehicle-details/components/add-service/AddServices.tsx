@@ -9,13 +9,14 @@ import { addVehicleService } from "@/features/garage/services/vehicle-record.ser
 import type {
   AddServiceFormState,
 } from "@/features/garage/types/add-service-form";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import AddServiceButton from "./components/AddServiceButton";
 
 type Props = {
   vehicleId: string;
 };
 export default function AddService({ vehicleId }: Props) {
+  const router = useRouter();
   const [errors, setErrors] = useState<AddServiceFormState>({
     error: null,
     fieldErrors: {},
@@ -45,7 +46,8 @@ export default function AddService({ vehicleId }: Props) {
       return;
     }
 
-    redirect(`/vehicles/${vehicleId}`);
+    router.replace(`/vehicles/${vehicleId}`);
+    router.refresh();
   }
 
 

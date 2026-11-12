@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useId, useState } from "react";
 import { Button } from "@/shared/components/ui/button";
 import { PasswordField } from "@/features/auth/components/PasswordField";
@@ -11,6 +12,7 @@ import { logoutUser } from "@/features/auth/services/auth.service";
 
 export default function ResetPasswordForm() {
   const inputId = useId();
+  const router = useRouter();
   const [signOutError, setSignOutError] = useState("");
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [errors, setErrors] = useState<Partial<ResetPasswordValues>>({});
@@ -23,8 +25,8 @@ export default function ResetPasswordForm() {
     setSignOutError("");
     try {
       await logoutUser();
-      // Reload the page so server-rendered account data is cleared as well.
-      window.location.replace("/login?password_reset=success");
+      router.replace("/login?password_reset=success");
+      router.refresh();
     } catch {
       // The password is already saved; retry only signing out, not the update.
       setSignOutError(
