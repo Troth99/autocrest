@@ -38,6 +38,7 @@ export function PasswordField({
         />
         <Button
           type="button"
+          tabIndex={-1}
           variant="ghost"
           size="icon"
           aria-label={showPassword ? "Hide password" : "Show password"}

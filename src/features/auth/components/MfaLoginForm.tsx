@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useRef, useState, type FormEvent } from "react";
+import { useId, useRef, useState, type SubmitEvent } from "react";
 import { useRouter } from "next/navigation";
 import { ShieldCheck } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
@@ -41,7 +41,7 @@ export default function MfaLoginForm({
     }
   }
 
-  async function verify(event: FormEvent<HTMLFormElement>) {
+  async function verify(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     await run(async () => {
       if (!factors.some((factor) => factor.id === factorId))

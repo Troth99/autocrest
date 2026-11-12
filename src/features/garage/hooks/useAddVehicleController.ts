@@ -1,5 +1,5 @@
 "use client";
-import type { FormEvent } from "react";
+import type { ChangeEvent } from "react";
 import useAddVehicleForm from "@/features/garage/hooks/useAddVehicleForm";
 import useVehicleDocumentAutofill from "@/features/garage/hooks/useVehicleDocumentAutofill";
 import type { VehicleDocumentDetails } from "@/features/garage/validators/vehicle-document.validator";
@@ -10,7 +10,7 @@ export default function useAddVehicleController(makes: VehicleMake[]) {
   const autofill = useVehicleDocumentAutofill(makes);
   const submission = useAddVehicleForm(autofill);
 
-  function handleFormChange(event: FormEvent<HTMLFormElement>) {
+  function handleFormChange(event: ChangeEvent<HTMLFormElement>) {
     const target = event.target;
     if (
       !(
