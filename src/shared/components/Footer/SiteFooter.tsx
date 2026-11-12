@@ -1,3 +1,6 @@
+"use client";
+import { usePathname } from "next/navigation";
+
 const footerColumns = [
   {
     heading: "Product",
@@ -14,6 +17,12 @@ const footerColumns = [
 ];
 
 export default function SiteFooter() {
+  const pathName = usePathname();
+
+  if (pathName === "/reset-password" || pathName === "/forgot-password") {
+    return null;
+  }
+
   return (
     <footer className="site-footer">
       <div className="relative z-10 mx-auto max-w-6xl px-6 py-12">

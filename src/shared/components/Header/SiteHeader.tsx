@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import GarageHeaderTools, {
   GarageSearch,
 } from "@/features/garage/components/garrage-header/GarageHeaderTools";
@@ -13,8 +14,12 @@ type SiteHeaderProps = {
 
 export default function SiteHeader({ showNavigation = true }: SiteHeaderProps) {
   const { user } = useCurrentUser();
+  const pathname = usePathname();
 
-  // Recovery sessions should not look like a normal signed-in dashboard.
+  if (pathname === "/reset-password" || pathname === "/forgot-password") {
+    return null
+  }
+
   const isAccountPage = Boolean(user) && showNavigation;
 
   return (
