@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useId, useState } from "react";
 import { Button } from "@/shared/components/ui/button";
 import { PasswordField } from "@/features/auth/components/PasswordField";
-import usePasswordRecoveryForm from "@/features/auth/hooks/usePasswordRecoveryForm";
 import { resetPassword } from "@/features/auth/services/password-recovery.service";
 import { validateResetPassword } from "@/features/auth/validators/password-recovery.validator";
 import type { ResetPasswordValues } from "@/features/auth/validators/password-recovery.validator";
@@ -14,6 +13,10 @@ export default function ResetPasswordForm() {
   const inputId = useId();
   const [signOutError, setSignOutError] = useState("");
   const [isSigningOut, setIsSigningOut] = useState(false);
+  const [errors, setErrors] = useState<Partial<ResetPasswordValues>>({});
+  const [busy, setBusy] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
 
   async function finishRecovery() {
     setIsSigningOut(true);
@@ -31,17 +34,33 @@ export default function ResetPasswordForm() {
     }
   }
 
-  async function submit(values: ResetPasswordValues) {
-    await resetPassword(values);
-    await finishRecovery();
-  }
+  async function resetPasswordHandler(formData: FormData) {
+    const values = {
+      newPassword: String(formData.get("newPassword") ?? ""),
+      confirmPassword: String(formData.get("confirmPassword") ?? ""),
+    };
+    const fieldErrors = validateResetPassword(values);
+    setErrors(fieldErrors);
+    setError("");
 
-  const { register, formHandler, errors, busy, success, error } =
-    usePasswordRecoveryForm(
-      { newPassword: "", confirmPassword: "" },
-      validateResetPassword,
-      submit,
-    );
+    if (Object.keys(fieldErrors).length > 0) return;
+
+    setBusy(true);
+    try {
+      await resetPassword(values);
+      // Once saved, only retry signing out if navigation cannot complete.
+      setSuccess(true);
+      await finishRecovery();
+    } catch (cause) {
+      setError(
+        cause instanceof Error
+          ? cause.message
+          : "Something went wrong. Please try again.",
+      );
+    } finally {
+      setBusy(false);
+    }
+  }
 
   return (
     <section aria-labelledby={`${inputId}-title`}>
@@ -73,7 +92,8 @@ export default function ResetPasswordForm() {
       ) : (
         <form
           noValidate
-          onSubmit={formHandler}
+          action={resetPasswordHandler}
+          onReset={(event) => event.preventDefault()}
           className="mt-6 grid gap-5"
           aria-busy={busy}
         >
@@ -82,14 +102,16 @@ export default function ResetPasswordForm() {
               id={`${inputId}-new`}
               label="New password"
               error={errors.newPassword}
-              {...register("newPassword")}
+              name="newPassword"
+              onChange={() => setErrors((current) => ({ ...current, newPassword: undefined }))}
             />
             <PasswordField
               id={`${inputId}-confirm`}
               label="Confirm new password"
               hint={null}
               error={errors.confirmPassword}
-              {...register("confirmPassword")}
+              name="confirmPassword"
+              onChange={() => setErrors((current) => ({ ...current, confirmPassword: undefined }))}
             />
           </fieldset>
           {error && (
