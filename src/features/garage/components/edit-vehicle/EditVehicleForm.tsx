@@ -60,7 +60,7 @@ export function EditVehicleForm({
     return await updateVehicle(vehicle.id, previousState, formData);
   }
 
-  const [{ error: saveError, fieldErrors }, formAction, pending] = useActionState(
+  const [state, formAction, pending] = useActionState(
     saveVehicle,
     { error: null, fieldErrors: {} },
   );
@@ -94,7 +94,7 @@ export function EditVehicleForm({
           <div className="grid min-w-0 gap-5 xl:grid-cols-2">
             <VehicleBasicFields
               defaultValues={vehicle}
-              errors={fieldErrors}
+              errors={state.fieldErrors}
               values={manualNames}
               onFieldChange={handleFieldChange}
               makes={catalog.makes}
@@ -109,27 +109,27 @@ export function EditVehicleForm({
 
             <VehicleRegistrationFields
               defaultValues={vehicle}
-              errors={fieldErrors}
+              errors={state.fieldErrors}
             />
 
             <VehicleTechnicalFields
               defaultValues={vehicle}
-              errors={fieldErrors}
+              errors={state.fieldErrors}
             />
 
             <div className="grid content-start gap-5">
-              <VehiclePurchaseFields defaultValues={vehicle} errors={fieldErrors} />
+              <VehiclePurchaseFields defaultValues={vehicle} errors={state.fieldErrors} />
             </div>
 
             <VehicleAdditionalDetails
               defaultValues={vehicle}
-              errors={fieldErrors}
+              errors={state.fieldErrors}
             />
           </div>
         </fieldset>
-        {saveError && (
+        {state.error && (
           <p role="alert" className="text-sm text-destructive">
-            {saveError}
+            {state.error}
           </p>
         )}
         <div className="flex flex-wrap items-center justify-end gap-3">
