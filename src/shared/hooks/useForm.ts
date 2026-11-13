@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  useCallback,
   useState,
   type ChangeEvent,
   type SyntheticEvent,
@@ -91,27 +90,6 @@ export default function useForm<T extends FormValues>(
     }));
   };
 
-  // Populate multiple existing fields at once, for example after a document scan.
-  const setFormValues = useCallback(
-    (nextValues: Partial<{ [K in keyof T]: T[K] | null }>) => {
-      setValues((currentValues) => {
-        const updatedValues = { ...currentValues };
-
-        for (const key of Object.keys(currentValues) as (keyof T)[]) {
-          const value = nextValues[key];
-          // undefined preserves the current value; null replaces it with an empty string.
-          if (value === undefined) continue;
-
-          updatedValues[key] = (value ?? "") as T[typeof key];
-        }
-
-        return updatedValues;
-      });
-      setErrors({});
-    },
-    [],
-  );
-
   // Checkboxes use checked (boolean) instead of value (string).
   const registerCheckbox = (fieldName: CheckboxFieldName<T>) => ({
     name: fieldName,
@@ -120,12 +98,6 @@ export default function useForm<T extends FormValues>(
       setFieldValue(fieldName, event.target.checked as T[typeof fieldName]),
   });
 
-  // Restore the initial values and clear all errors.
-  const reset = () => {
-    setValues(initialValues);
-    setErrors({});
-  };
-
   return {
     values,
     register,
@@ -133,8 +105,6 @@ export default function useForm<T extends FormValues>(
     errors,
     setErrors,
     setFieldValue,
-    setFormValues,
     registerCheckbox,
-    reset,
   };
 }

@@ -30,10 +30,3 @@ export const extractionSchema = z.toJSONSchema(vehicleDocumentSchema, {
     }
   },
 });
-
-// Validate the provider error code without exposing its raw response.
-export const providerErrorSchema = z.object({
-  error: z.object({
-    status: z.string().optional(),
-  }),
-});

@@ -63,7 +63,7 @@ export default function EditProfilePage() {
             phoneError={form.phoneError}
             onPhoneChange={form.handlePhoneChange}
           />
-          <ProfileFormActions saveError={form.saveError} isSaving={form.isSaving} />
+          <ProfileFormActions saveError={form.saveError} />
         </form>
       </div>
     </main>

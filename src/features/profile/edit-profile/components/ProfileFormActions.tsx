@@ -2,7 +2,7 @@
 import { Save } from "lucide-react";
 import { Button, buttonVariants } from "@/shared/components/ui/button";
 import { useFormStatus } from "react-dom";
-type Props = { saveError: string | null; isSaving: boolean };
+type Props = { saveError: string | null };
 export default function ProfileFormActions({ saveError }: Props) {
 
   const { pending } = useFormStatus();
