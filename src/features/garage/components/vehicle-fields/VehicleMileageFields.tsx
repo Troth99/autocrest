@@ -3,11 +3,13 @@ import VehicleFieldError from "@/features/garage/components/add-vehicle/componen
 import type { VehicleFormErrors } from "@/features/garage/types/add-vehicle-form";
 
 type Props = {
+  onClearFieldError?: (field: keyof VehicleFormErrors) => void;
   errors: VehicleFormErrors;
   defaultValues?: Vehicle;
 };
 
 export default function VehicleMileageFields({
+  onClearFieldError,
   errors,
   defaultValues,
 }: Props) {
@@ -29,6 +31,7 @@ export default function VehicleMileageFields({
             className="native-input"
             id="mileageKm"
             name="mileageKm"
+            onInput={() => onClearFieldError?.("mileageKm")}
             defaultValue={defaultValues?.mileageKm ?? ""}
             type="number"
             placeholder="e.g. 85000"
@@ -52,6 +55,7 @@ export default function VehicleMileageFields({
             className="native-input"
             id="mileageRecordedAt"
             name="mileageRecordedAt"
+            onInput={() => onClearFieldError?.("mileageRecordedAt")}
             defaultValue={defaultValues?.mileageRecordedAt ?? ""}
             type="date"
             aria-invalid={Boolean(errors.mileageRecordedAt)}

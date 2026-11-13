@@ -4,12 +4,13 @@ import VehicleMakeModelFields, { type VehicleMakeModelProps } from "@/features/g
 import VehicleFieldError from "@/features/garage/components/add-vehicle/components/VehicleFieldError";
 
 type Props = { defaultValues?: Vehicle; } & (VehicleMakeModelProps | {
+  onClearFieldError?: VehicleMakeModelProps["onClearFieldError"];
   errors: VehicleMakeModelProps["errors"];
   makeModelFields: ReactNode;
 });
 
 export default function VehicleBasicFields(props: Props) {
-  const { errors, defaultValues } = props;
+  const { errors, defaultValues, onClearFieldError } = props;
   return (
     <fieldset className="content-card vehicle-form-section">
       <legend className="sr-only">Basic information</legend>
@@ -31,6 +32,7 @@ export default function VehicleBasicFields(props: Props) {
             className="native-input"
             id="manufactureYear"
             name="manufactureYear"
+            onInput={() => onClearFieldError?.("manufactureYear")}
             defaultValue={defaultValues?.manufactureYear ?? ""}
             type="number"
             aria-required="true"
@@ -55,6 +57,7 @@ export default function VehicleBasicFields(props: Props) {
             className="native-input"
             id="trim"
             name="trim"
+            onInput={() => onClearFieldError?.("trim")}
             defaultValue={defaultValues?.trim ?? ""}
             type="text"
             placeholder="e.g. 1.8 Hybrid Design"
@@ -77,6 +80,7 @@ export default function VehicleBasicFields(props: Props) {
             className="native-input"
             id="nickname"
             name="nickname"
+            onInput={() => onClearFieldError?.("nickname")}
             defaultValue={defaultValues?.nickname ?? ""}
             type="text"
             placeholder="A name for your vehicle"
@@ -99,6 +103,7 @@ export default function VehicleBasicFields(props: Props) {
             aria-describedby={errors.vehicleUse ? "vehicleUse-error" : undefined}
             id="vehicleUse"
             name="vehicleUse"
+            onInput={() => onClearFieldError?.("vehicleUse")}
             defaultValue={defaultValues?.vehicleUse ?? ""}
             className="form-select"
           >

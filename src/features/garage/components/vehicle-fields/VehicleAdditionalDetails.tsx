@@ -2,9 +2,14 @@ import type { Vehicle } from "@/features/garage/types/vehicle";
 import VehicleFieldError from "@/features/garage/components/add-vehicle/components/VehicleFieldError";
 import type { VehicleFormErrors } from "@/features/garage/types/add-vehicle-form";
 
-type Props = { errors: VehicleFormErrors; defaultValues?: Vehicle; };
+type Props = {
+  onClearFieldError?: (field: keyof VehicleFormErrors) => void;
+  errors: VehicleFormErrors;
+  defaultValues?: Vehicle;
+};
 
 export default function VehiclAdditionalDetails({
+  onClearFieldError,
   errors,
   defaultValues,
 }: Props) {
@@ -20,6 +25,7 @@ export default function VehiclAdditionalDetails({
         <textarea
           id="description"
           name="description"
+          onInput={() => onClearFieldError?.("description")}
           defaultValue={defaultValues?.description ?? ""}
           aria-invalid={Boolean(errors.description)}
           aria-describedby={errors.description ? "description-error" : undefined}
@@ -40,6 +46,7 @@ export default function VehiclAdditionalDetails({
         <input
           id="isPrimary"
           name="isPrimary"
+          onInput={() => onClearFieldError?.("isPrimary")}
           defaultChecked={defaultValues?.isPrimary ?? false}
           type="checkbox"
           className="mt-1 size-4 accent-info"

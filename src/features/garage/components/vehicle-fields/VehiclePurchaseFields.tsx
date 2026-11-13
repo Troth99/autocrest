@@ -2,9 +2,14 @@ import type { Vehicle } from "@/features/garage/types/vehicle";
 import VehicleFieldError from "@/features/garage/components/add-vehicle/components/VehicleFieldError";
 import type { VehicleFormErrors } from "@/features/garage/types/add-vehicle-form";
 
-type Props = { errors: VehicleFormErrors; defaultValues?: Vehicle; };
+type Props = {
+  onClearFieldError?: (field: keyof VehicleFormErrors) => void;
+  errors: VehicleFormErrors;
+  defaultValues?: Vehicle;
+};
 
 export default function VehiclePurchaseFields({
+  onClearFieldError,
   errors,
   defaultValues,
 }: Props) {
@@ -26,6 +31,7 @@ export default function VehiclePurchaseFields({
             className="native-input"
             id="purchaseDate"
             name="purchaseDate"
+            onInput={() => onClearFieldError?.("purchaseDate")}
             defaultValue={defaultValues?.purchaseDate ?? ""}
             type="date"
             aria-invalid={Boolean(errors.purchaseDate)}
@@ -47,6 +53,7 @@ export default function VehiclePurchaseFields({
             className="native-input"
             id="purchasePrice"
             name="purchasePrice"
+            onInput={() => onClearFieldError?.("purchasePrice")}
             defaultValue={defaultValues?.purchasePrice ?? ""}
             type="number"
             min={0}
@@ -70,6 +77,7 @@ export default function VehiclePurchaseFields({
             className="native-input"
             id="purchaseCurrencyCode"
             name="purchaseCurrencyCode"
+            onInput={() => onClearFieldError?.("purchaseCurrencyCode")}
             defaultValue={defaultValues?.purchaseCurrencyCode ?? ""}
             type="text"
             placeholder="e.g. EUR"

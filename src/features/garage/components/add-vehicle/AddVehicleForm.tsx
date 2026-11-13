@@ -20,7 +20,7 @@ export default function AddVehicleForm({
 }: {
   makes: VehicleMake[];
 }) {
-  const { autofill, submission } = useAddVehicleController(initialMakes);
+  const { autofill, submission, handleRegistrationChange } = useAddVehicleController(initialMakes);
 
   return (
     <main className="page-shell">
@@ -55,8 +55,8 @@ export default function AddVehicleForm({
           className="grid min-w-0 gap-5 border-0 p-0 xl:grid-cols-2"
         >
           <VehicleBasicFields
-            errors={submission.state.fieldErrors}
-
+            errors={submission.fieldErrors}
+            onClearFieldError={submission.clearFieldError}
             values={autofill.documentValues}
             onFieldChange={autofill.handleFieldChange}
             makes={autofill.makes}
@@ -69,26 +69,37 @@ export default function AddVehicleForm({
             modelsError={autofill.modelsError}
           />
           <VehicleRegistrationFields
-            errors={submission.state.fieldErrors}
+            errors={submission.fieldErrors}
+            onClearFieldError={submission.clearFieldError}
 
             values={autofill.documentValues}
-            onFieldChange={autofill.handleFieldChange}
+            onChange={handleRegistrationChange}
           />
           <VehicleTechnicalFields
-            errors={submission.state.fieldErrors}
+            errors={submission.fieldErrors}
+            onClearFieldError={submission.clearFieldError}
 
             values={autofill.documentValues}
             onFieldChange={autofill.handleFieldChange}
           />
-          <VehicleMileageFields errors={submission.state.fieldErrors} />
-          <VehiclePurchaseFields errors={submission.state.fieldErrors} />
+          <VehicleMileageFields
+            errors={submission.fieldErrors}
+            onClearFieldError={submission.clearFieldError}
+          />
+          <VehiclePurchaseFields
+            errors={submission.fieldErrors}
+            onClearFieldError={submission.clearFieldError}
+          />
           <VehicleAdditionalDetails
-            errors={submission.state.fieldErrors}
+            errors={submission.fieldErrors}
+            onClearFieldError={submission.clearFieldError}
 
           />
         </fieldset>
 
-        {submission.state.error && (
+        {submission.state.error &&
+          (submission.state.error !== "Please correct the highlighted fields." ||
+            Object.values(submission.fieldErrors).some(Boolean)) && (
           <p role="alert" className="text-sm text-destructive">
             {submission.state.error}
           </p>

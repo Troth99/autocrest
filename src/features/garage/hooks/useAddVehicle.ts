@@ -5,14 +5,17 @@ import { useRouter } from "next/navigation";
 import { useActionState, useState } from "react";
 import { addVehicle } from "@/features/garage/services/vehicles.service";
 import { uploadVehiclePhoto } from "@/features/garage/services/vehicle-photo.service";
-import type { VehicleFormState } from "@/features/garage/types/add-vehicle-form";
+import type {
+  VehicleFormErrors,
+  VehicleFormState,
+} from "@/features/garage/types/add-vehicle-form";
 import type { VehicleDocumentFormValues } from "@/features/garage/types/vehicle-document-form";
 import type {
   VehicleMake,
   VehicleModel,
 } from "@/features/garage/types/vehicle-catalog";
 
-type AddVehicleState = VehicleFormState & {
+type AddVehicleState = Omit<VehicleFormState, "fieldErrors"> & {
   photoError: string | null;
   savedVehicleId: string | null;
 };
@@ -36,15 +39,20 @@ export default function useAddVehicle({
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   // File selection can fail before the form is submitted.
   const [photoError, setPhotoError] = useState<string | null>(null);
+  // Field errors can be cleared individually while editing.
+  const [fieldErrors, setFieldErrors] = useState<VehicleFormErrors>({});
 
+  function clearFieldError(field: keyof VehicleFormErrors) {
+    setFieldErrors((errors) => ({ ...errors, [field]: undefined }));
+  }
   async function handleAddCar(
     previousState: AddVehicleState,
     formData: FormData,
   ): Promise<AddVehicleState> {
+    setFieldErrors({});
     let vehicleId = previousState.savedVehicleId;
     const emptyState: AddVehicleState = {
       error: null,
-      fieldErrors: {},
       photoError: null,
       savedVehicleId: vehicleId,
     };
@@ -82,11 +90,12 @@ export default function useAddVehicle({
         });
         // The service validates the input and returns field errors.
         const result = await addVehicle({ ...values, make, model });
+
         if (result.error !== null) {
+          setFieldErrors(result.fieldErrors ?? {});
           return {
             ...emptyState,
             error: result.error,
-            fieldErrors: result.fieldErrors ?? {},
           };
         }
         vehicleId = result.data;
@@ -118,7 +127,6 @@ export default function useAddVehicle({
 
   const [state, formAction, isSubmitting] = useActionState(handleAddCar, {
     error: null,
-    fieldErrors: {},
     photoError: null,
     savedVehicleId: null,
   });
@@ -131,5 +139,7 @@ export default function useAddVehicle({
     setPhotoFile,
     photoError: photoError ?? state.photoError,
     setPhotoError,
+    fieldErrors,
+    clearFieldError,
   };
 }
