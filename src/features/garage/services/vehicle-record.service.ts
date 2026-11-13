@@ -1,4 +1,5 @@
 "use server";
+import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { getVehicleById } from "@/features/garage/services/vehicles.service";
 
@@ -44,6 +45,7 @@ export async function addVehicleService(
     };
   }
 
+  revalidatePath(`/vehicles/${vehicleId}`);
   return { error: null, fieldErrors: {} };
 }
 

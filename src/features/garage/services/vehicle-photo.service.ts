@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import type { VehiclePhoto } from "@/features/garage/types/vehicle-photo";
 import requireUserWithMfa from "@/shared/services/auth-session.service";
@@ -84,6 +85,8 @@ export async function uploadVehiclePhoto(vehicleId: string, file: File) {
         "Could not attach the photo to the vehicle. Please try again.",
       );
     }
+    revalidatePath("/garrage");
+    revalidatePath(`/vehicles/${vehicleId}`);
   });
 }
 
@@ -232,5 +235,7 @@ export async function removeVehiclePhoto(vehicleId: string, photoId: string) {
         "The file was removed, but its database record could not be deleted.",
       );
     }
+    revalidatePath("/garrage");
+    revalidatePath(`/vehicles/${vehicleId}`);
   });
 }

@@ -105,6 +105,7 @@ export async function addVehicle(input: unknown) {
     if (!data) {
       throw new Error("Could not save the vehicle.");
     }
+    revalidatePath("/garrage");
     return data.id as string;
   });
 }
@@ -264,6 +265,8 @@ export async function updateVehicleMileage(vehicleId: string, input: unknown) {
       );
     }
 
+    revalidatePath("/garrage");
+    revalidatePath(`/vehicles/${vehicleId}`);
     return data.id;
   });
 }
@@ -283,6 +286,8 @@ export async function setPrimaryVehicle(vehicleId: string) {
     if (error) {
       throw error;
     }
+    revalidatePath("/garrage");
+    revalidatePath(`/vehicles/${vehicleId}`);
   });
 }
 
@@ -335,5 +340,7 @@ export async function deleteVehicle(vehicleId: string) {
           : "Could not delete the vehicle. Please try again.",
       );
     }
+    revalidatePath("/garrage");
+    revalidatePath(`/vehicles/${vehicleId}`);
   });
 }

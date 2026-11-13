@@ -1,4 +1,3 @@
-import AuthShell from "@/features/auth/components/AuthShell";
 import ForgotPasswordForm from "@/features/auth/components/ForgotPasswordForm";
 
 export default async function ForgotPasswordPage({
@@ -9,8 +8,10 @@ export default async function ForgotPasswordPage({
   const { error } = await searchParams;
 
   return (
-    <AuthShell>
-      <ForgotPasswordForm invalidLink={error === "invalid_reset_link"} />
-    </AuthShell>
+    <main className="flex w-full flex-1 items-center justify-center px-4 py-12 sm:py-16">
+      <div className="w-full max-w-md rounded-2xl border border-line bg-panel p-6 shadow-xl sm:p-8">
+        <ForgotPasswordForm invalidLink={error === "invalid_reset_link"} />
+      </div>
+    </main>
   );
 }

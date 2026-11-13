@@ -32,12 +32,11 @@ export default function AddVehicleForm({
         action={submission.formAction}
         // Keep entered values when validation or photo upload fails.
         onReset={(event) => event.preventDefault()}
-        onChange={submission.handleFormChange}
       >
         <input type="hidden" name="vehicleType" value="car" />
 
         <fieldset
-          disabled={submission.isSubmitting || Boolean(submission.savedVehicleId)}
+          disabled={submission.isSubmitting || Boolean(submission.state.savedVehicleId)}
           className="contents"
         >
           <VehicleDocumentScan onExtracted={autofill.handleDocumentExtracted} />
@@ -52,11 +51,11 @@ export default function AddVehicleForm({
           />
         </fieldset>
         <fieldset
-          disabled={submission.isSubmitting || Boolean(submission.savedVehicleId)}
+          disabled={submission.isSubmitting || Boolean(submission.state.savedVehicleId)}
           className="grid min-w-0 gap-5 border-0 p-0 xl:grid-cols-2"
         >
           <VehicleBasicFields
-            errors={submission.fieldErrors}
+            errors={submission.state.fieldErrors}
 
             values={autofill.documentValues}
             onFieldChange={autofill.handleFieldChange}
@@ -70,28 +69,28 @@ export default function AddVehicleForm({
             modelsError={autofill.modelsError}
           />
           <VehicleRegistrationFields
-            errors={submission.fieldErrors}
+            errors={submission.state.fieldErrors}
 
             values={autofill.documentValues}
             onFieldChange={autofill.handleFieldChange}
           />
           <VehicleTechnicalFields
-            errors={submission.fieldErrors}
+            errors={submission.state.fieldErrors}
 
             values={autofill.documentValues}
             onFieldChange={autofill.handleFieldChange}
           />
-          <VehicleMileageFields errors={submission.fieldErrors} />
-          <VehiclePurchaseFields errors={submission.fieldErrors} />
+          <VehicleMileageFields errors={submission.state.fieldErrors} />
+          <VehiclePurchaseFields errors={submission.state.fieldErrors} />
           <VehicleAdditionalDetails
-            errors={submission.fieldErrors}
+            errors={submission.state.fieldErrors}
 
           />
         </fieldset>
 
-        {submission.submitError && (
+        {submission.state.error && (
           <p role="alert" className="text-sm text-destructive">
-            {submission.submitError}
+            {submission.state.error}
           </p>
         )}
         <div className="flex flex-wrap items-center justify-end gap-3">
@@ -103,10 +102,10 @@ export default function AddVehicleForm({
             })}
           >
             <X className="size-5" aria-hidden="true" />
-            {submission.savedVehicleId ? "Continue to garage" : "Cancel"}
+            {submission.state.savedVehicleId ? "Continue to garage" : "Cancel"}
           </Link>
           <SubmittingFormAddCar
-            savedVehicleId={submission.savedVehicleId}
+            savedVehicleId={submission.state.savedVehicleId}
             hasPhoto={Boolean(submission.photoFile)}
           />
         </div>

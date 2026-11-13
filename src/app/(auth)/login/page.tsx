@@ -1,9 +1,14 @@
 import { LoginForm } from "@/features/auth";
-import AuthShell from "@/features/auth/components/AuthShell";
 
 export default async function LoginPage({ searchParams }: {
   searchParams: Promise<{ password_reset?: string }>;
 }) {
   const { password_reset } = await searchParams;
-  return <AuthShell><LoginForm passwordReset={password_reset === "success"} /></AuthShell>;
+  return (
+    <main className="flex w-full flex-1 items-center justify-center px-4 py-12 sm:py-16">
+      <div className="w-full max-w-md rounded-2xl border border-line bg-panel p-6 shadow-xl sm:p-8">
+        <LoginForm passwordReset={password_reset === "success"} />
+      </div>
+    </main>
+  );
 }
