@@ -10,7 +10,7 @@ import type {
   VehicleServiceRecord,
   VehicleServiceRecordDetails,
 } from "@/features/garage/types/vehicle-service-record";
-import { vehicleServiceLabels } from "@/features/garage/constants/vehicle-service-labels";
+import { fluidTypeLabels, serviceOutcomeLabels, vehicleServiceLabels } from "@/features/garage/constants/vehicle-service-labels";
 import { visitReasonLabels } from "@/features/garage/constants/visit-reason-labels";
 import { formatVehicleValue } from "@/features/garage/utils/formatVehicleValue";
 import { getFieldErrors } from "@/shared/validators/getFieldErrors";
@@ -106,5 +106,13 @@ export async function getVehicleReportById(
     vehicleName: `${vehicle.make} ${vehicle.model}`,
     serviceTypeLabel: formatVehicleValue(serviceType),
     visitReasonLabel: formatVehicleValue(visitReason),
+    fluidTypeLabel: formatVehicleValue(
+      data.fluidType === "other"
+        ? data.customFluidType
+        : data.fluidType ? fluidTypeLabels[data.fluidType] : null,
+    ),
+    serviceOutcomeLabel: formatVehicleValue(
+      data.serviceOutcome ? serviceOutcomeLabels[data.serviceOutcome] : null,
+    ),
   };
 }
