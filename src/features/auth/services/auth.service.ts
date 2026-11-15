@@ -1,6 +1,6 @@
 "use server";
 
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { cookieOptions } from "@/lib/supabase/auth-cookie-options";
@@ -20,7 +20,7 @@ import { getFieldErrors } from "@/shared/validators/getFieldErrors";
 
 async function saveRememberMePreference(rememberMe: boolean) {
   const cookieStore = await cookies();
-  
+
   cookieStore.set(REMEMBER_ME_COOKIE, String(rememberMe), {
     ...cookieOptions,
     ...(rememberMe ? { maxAge: REMEMBER_ME_MAX_AGE } : {}),
@@ -33,7 +33,6 @@ async function saveEmailProvider() {
 }
 
 export async function registerUser(input: unknown) {
-  
   const result = registerSchema.safeParse(input);
   if (!result.success) {
     return { errors: getFieldErrors<keyof RegisterFormValues>(result.error) };
@@ -116,18 +115,32 @@ export async function loginWithOAuth(provider: "google" | "facebook") {
   if (provider !== "google" && provider !== "facebook") {
     return { error: "Unsupported sign-in provider." };
   }
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
-  if (!siteUrl)
-    return { error: "Sign-in is not configured. Please try again later." };
 
-  const callbackUrl = new URL("/auth/callback", siteUrl);
+  // Use the browser's origin so local and deployed sign-ins return to the same site.
+  const requestHeaders = await headers();
+  const origin = requestHeaders.get("origin");
+
+  if (!origin) {
+    return { error: "Could not start sign-in. Please try again." };
+  }
+
+  // Keep the provider in the callback URL for the profile's sign-in method label.
+  const callbackUrl = new URL("/auth/callback", origin);
   callbackUrl.searchParams.set("provider", provider);
+
+  // Get the provider's authorization URL; the Server Action handles the redirect.
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
-    options: { redirectTo: callbackUrl.toString(), skipBrowserRedirect: true },
+    options: {
+      redirectTo: callbackUrl.toString(),
+      skipBrowserRedirect: true,
+    },
   });
-  if (error || !data.url)
+
+  if (error || !data.url) {
     return { error: "Could not start sign-in. Please try again." };
+  }
+
   redirect(data.url);
 }
