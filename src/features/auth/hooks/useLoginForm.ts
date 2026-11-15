@@ -22,6 +22,7 @@ export default function useLoginForm() {
     _previousState: LoginState,
     formData: FormData,
   ): Promise<LoginState> {
+    
     const values: LoginFormValues = {
       email: String(formData.get("email") ?? ""),
       password: String(formData.get("password") ?? ""),
@@ -36,7 +37,8 @@ export default function useLoginForm() {
 
     try {
       const result = await loginUser(values);
-      if (Object.keys(result.errors).length > 0) return { errors: result.errors };
+      if (Object.keys(result.errors).length > 0)
+        return { errors: result.errors };
     } catch (error) {
       console.error(error);
       return {
@@ -62,11 +64,8 @@ export default function useLoginForm() {
     try {
       const result = await loginWithOAuth(provider);
       setOauthError(result.error);
+    } finally {
       setOauthPending(false);
-    } catch (error) {
-      console.error(error);
-      setOauthPending(false);
-      setOauthError("Could not start sign-in. Please try again.");
     }
   }
 

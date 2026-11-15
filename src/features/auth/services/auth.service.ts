@@ -20,6 +20,7 @@ import { getFieldErrors } from "@/shared/validators/getFieldErrors";
 
 async function saveRememberMePreference(rememberMe: boolean) {
   const cookieStore = await cookies();
+  
   cookieStore.set(REMEMBER_ME_COOKIE, String(rememberMe), {
     ...cookieOptions,
     ...(rememberMe ? { maxAge: REMEMBER_ME_MAX_AGE } : {}),
