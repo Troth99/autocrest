@@ -1,4 +1,4 @@
-import { LoginForm } from "@/features/auth";
+import LoginForm from "@/features/auth/components/LoginForm";
 
 export default async function LoginPage({ searchParams }: {
   searchParams: Promise<{ password_reset?: string }>;

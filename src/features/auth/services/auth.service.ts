@@ -1,7 +1,6 @@
 "use server";
 
-import { cookies, headers } from "next/headers";
-import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import { cookieOptions } from "@/lib/supabase/auth-cookie-options";
 import {
@@ -109,38 +108,4 @@ export async function logoutUser(): Promise<void> {
   if (error) throw error;
   const cookieStore = await cookies();
   cookieStore.delete("autocrest-login-provider");
-}
-
-export async function loginWithOAuth(provider: "google" | "facebook") {
-  if (provider !== "google" && provider !== "facebook") {
-    return { error: "Unsupported sign-in provider." };
-  }
-
-  // Use the browser's origin so local and deployed sign-ins return to the same site.
-  const requestHeaders = await headers();
-  const origin = requestHeaders.get("origin");
-
-  if (!origin) {
-    return { error: "Could not start sign-in. Please try again." };
-  }
-
-  // Keep the provider in the callback URL for the profile's sign-in method label.
-  const callbackUrl = new URL("/auth/callback", origin);
-  callbackUrl.searchParams.set("provider", provider);
-
-  // Get the provider's authorization URL; the Server Action handles the redirect.
-  const supabase = await createClient();
-  const { data, error } = await supabase.auth.signInWithOAuth({
-    provider,
-    options: {
-      redirectTo: callbackUrl.toString(),
-      skipBrowserRedirect: true,
-    },
-  });
-
-  if (error || !data.url) {
-    return { error: "Could not start sign-in. Please try again." };
-  }
-
-  redirect(data.url);
 }
