@@ -12,7 +12,7 @@ import {
 type LoginState = { errors: Partial<Record<keyof LoginFormValues, string>> };
 
 export default function useLoginForm() {
-  const [oauthPending, setOauthPending] = useState(false);
+  const [pendingProvider, setPendingProvider] = useState<"google" | "facebook" | null>(null);
   const router = useRouter();
   const [oauthError, setOauthError] = useState<string | null>(null);
 
@@ -57,22 +57,24 @@ export default function useLoginForm() {
 
   async function oauthLoginHandler(provider: "google" | "facebook") {
     setOauthError(null);
-    setOauthPending(true);
+    setPendingProvider(provider);
 
     try {
       const result = await loginWithOAuth(provider);
       setOauthError(result.error);
+      if (result.error) setPendingProvider(null);
     } catch {
       setOauthError("Could not start sign-in. Please try again.");
-    } finally {
-      setOauthPending(false);
+      setPendingProvider(null);
     }
   }
 
   return {
     formAction,
     errors: state.errors,
-    isSubmitting: pending || oauthPending,
+    isSubmitting: pending || pendingProvider !== null,
+    isEmailPending: pending,
+    pendingProvider,
     oauthLoginHandler,
     oauthError,
   };

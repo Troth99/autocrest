@@ -4,7 +4,7 @@ import { Button } from "@/shared/components/ui/button";
 import { PasswordField } from "./PasswordField";
 import { FieldError } from "@/shared/components/FieldError/FieldError";
 import useLoginForm from "@/features/auth/hooks/useLoginForm";
-import { FacebookIcon, GoogleIcon } from "./icons/AuthProviderIcons";
+import OAuthButtons from "./OAuthButtons";
 
 export default function LoginForm({
   passwordReset = false,
@@ -15,6 +15,8 @@ export default function LoginForm({
     formAction,
     errors,
     isSubmitting,
+    isEmailPending,
+    pendingProvider,
     oauthLoginHandler,
     oauthError,
   } = useLoginForm();
@@ -41,30 +43,11 @@ export default function LoginForm({
         </p>
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-2">
-        <Button
-          className="oauth-button oauth-button-google h-11 cursor-pointer"
-          type="button"
-          variant="outline"
-          onClick={() => oauthLoginHandler("google")}
-          disabled={isSubmitting}
-        >
-          <GoogleIcon />
-          Continue with Google
-        </Button>
-        <Button
-          className="oauth-button oauth-button-facebook h-11 cursor-pointer"
-          type="button"
-          variant="outline"
-          onClick={() => oauthLoginHandler("facebook")}
-          disabled={isSubmitting}
-        >
-          <FacebookIcon />
-          Continue with Facebook
-        </Button>
-
-        {/* Placeholder for additional OAuth buttons, e.g., Microsoft, Apple */}
-      </div>
+      <OAuthButtons
+        isSubmitting={isSubmitting}
+        pendingProvider={pendingProvider}
+        oauthLoginHandler={oauthLoginHandler}
+      />
 
       {oauthError && <div role="alert"><FieldError message={oauthError} /></div>}
 
@@ -116,23 +99,24 @@ export default function LoginForm({
           error={errors.password}
         />
 
-        <label className="flex cursor-pointer items-start gap-2.5 text-xs leading-[1.45] text-muted">
+        <div className="flex items-start gap-2.5 text-xs leading-[1.45] text-muted">
           <input
-            className="mt-px size-4 "
+            className="mt-px size-4 cursor-pointer disabled:cursor-not-allowed"
             type="checkbox"
             name="rememberMe"
+            aria-labelledby="remember-me-label"
             disabled={isSubmitting}
           />
-          <span>Remember me</span>
-        </label>
+          <span id="remember-me-label">Remember me</span>
+        </div>
 
         <Button
-          className="button-primary button-base mt-1 h-auto w-full px-4 py-3.5 text-sm"
+          className="button-primary button-base mt-1 h-auto w-full cursor-pointer px-4 py-3.5 text-sm"
           type="submit"
           size="lg"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Signing in..." : "Sign in"}
+          {isEmailPending ? "Signing in..." : "Sign in"}
         </Button>
       </form>
 
