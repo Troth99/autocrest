@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { toErrors } from "./zod-helpers";
 
 // Validation schemas and helper functions for authentication forms.
 //register form validation schema
@@ -18,6 +17,3 @@ export const registerSchema = z
 // Type for the register form values derived from the schema automatically generated.
 export type RegisterFormValues = z.infer<typeof registerSchema>;
 
-export function validateRegisterForm(values: RegisterFormValues) {
-  return toErrors(registerSchema.safeParse(values));
-}

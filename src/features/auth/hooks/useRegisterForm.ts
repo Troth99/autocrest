@@ -1,65 +1,43 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState } from "react";
 import { useRouter } from "next/navigation";
-import useForm from "@/shared/hooks/useForm";
-import {
-  loginUser,
-  registerUser,
-} from "@/features/auth/services/auth.service";
-import {
-  validateRegisterForm,
-  type RegisterFormValues,
-} from "@/features/auth/validators/register.validator";
+import { registerUser } from "@/features/auth/services/auth.service";
+import type { RegisterFormValues } from "@/features/auth/validators/register.validator";
 
-const initialValues: RegisterFormValues = {
-  username: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
+type RegisterState = {
+  errors: Partial<Record<keyof RegisterFormValues, string>>;
 };
 
 export default function useRegisterForm() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
   const router = useRouter();
 
-  const { register, formHandler, errors, setErrors } = useForm(
-    registerHandler,
-    initialValues,
-    validateRegisterForm,
-  );
+  async function registerHandler(
+    _previousState: RegisterState,
+    formData: FormData,
+  ): Promise<RegisterState> {
 
-  async function registerHandler(values: RegisterFormValues) {
-    if (isSubmitting) return;
-    setIsSubmitting(true);
+    const values = Object.fromEntries(formData);
 
     try {
-      await registerUser({
-        username: values.username.trim(),
-        email: values.email.trim(),
-        password: values.password,
-      });
-
-      await loginUser({
-        email: values.email.trim(),
-        password: values.password,
-      });
-
-      router.replace("/");
-      router.refresh();
-      
+      const result = await registerUser(values);
+      if (Object.keys(result.errors).length > 0) return { errors: result.errors };
     } catch (error) {
-      setIsSubmitting(false);
-      if (error instanceof Error && error.name === "UsernameTakenError") {
-        setErrors({ username: error.message });
-        return;
-      }
-      setErrors({
-        email: error instanceof Error ? error.message : "Something went wrong.",
-      });
+      console.error(error);
+      return {
+        errors: {
+          email: "Could not create your account. Please try again.",
+        },
+      };
     }
+
+    router.replace("/");
+    router.refresh();
+    return { errors: {} };
   }
 
-  return { register, formHandler, errors, isSubmitting };
+  const [state, formAction, isSubmitting] = useActionState(registerHandler, {
+    errors: {},
+  });
+  return { formAction, errors: state.errors, isSubmitting };
 }
