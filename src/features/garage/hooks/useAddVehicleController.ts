@@ -1,66 +1,21 @@
 "use client";
 
-import type { FormEvent } from "react";
-import useAddVehicleForm from "@/features/garage/hooks/useAddVehicleForm";
+import type { ChangeEvent } from "react";
+import type { VehicleDocumentFormValues } from "@/features/garage/types/vehicle-document-form";
+import useAddVehicle from "@/features/garage/hooks/useAddVehicle";
 import useVehicleDocumentAutofill from "@/features/garage/hooks/useVehicleDocumentAutofill";
-import type { VehicleDocumentDetails } from "@/features/garage/validators/vehicle-document.validator";
+import type { VehicleMake } from "@/features/garage/types/vehicle-catalog";
 
-// Coordinate the existing scan, catalog and save hooks without putting handlers in JSX.
-export default function useAddVehicleController() {
-  const autofill = useVehicleDocumentAutofill();
-  const submission = useAddVehicleForm(autofill);
+export default function useAddVehicleController(makes: VehicleMake[]) {
+  const autofill = useVehicleDocumentAutofill(makes);
+  const submission = useAddVehicle(autofill);
 
-  function handleFormChange(event: FormEvent<HTMLFormElement>) {
-    const target = event.target;
-    if (
-      !(
-        target instanceof HTMLInputElement ||
-        target instanceof HTMLSelectElement ||
-        target instanceof HTMLTextAreaElement
-      )
-    )
-      return;
-    const field =
-      target.name === "customMake"
-        ? "make"
-        : target.name === "customModel"
-          ? "model"
-          : target.name;
-    submission.setFieldErrors((current) => ({
-      ...current,
-      [field]: undefined,
-    }));
-    submission.setSubmitError(null);
+  function handleRegistrationChange(event: ChangeEvent<HTMLInputElement>) {
+    const { name, value } = event.currentTarget;
+    const field = name as keyof VehicleDocumentFormValues;
+    autofill.handleFieldChange(field, value);
+    submission.clearFieldError(field);
   }
 
-  function handleDocumentExtracted(details: VehicleDocumentDetails) {
-    autofill.handleDocumentExtracted(details);
-    submission.setFieldErrors({});
-    submission.setSubmitError(null);
-  }
-
-  function handleMakeChange(makeId: string) {
-    autofill.handleMakeChange(makeId);
-    submission.setFieldErrors((current) => ({
-      ...current,
-      make: undefined,
-      model: undefined,
-    }));
-    submission.setSubmitError(null);
-  }
-
-  function handleModelChange(modelId: string) {
-    autofill.handleModelChange(modelId);
-    submission.setFieldErrors((current) => ({ ...current, model: undefined }));
-    submission.setSubmitError(null);
-  }
-
-  return {
-    ...autofill,
-    ...submission,
-    handleFormChange,
-    handleDocumentExtracted,
-    handleMakeChange,
-    handleModelChange,
-  };
+  return { autofill, submission, handleRegistrationChange };
 }

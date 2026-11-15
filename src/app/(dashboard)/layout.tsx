@@ -1,6 +1,4 @@
-import { getAuthenticatedUser } from "@/shared/services/auth-user.service";
-import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
+import { requireVerifiedSession } from "@/features/auth/services/session.service";
 import AccountNavigation from "@/app/(dashboard)/components/AccountNavigation";
 
 export default async function IsDashboardLayout({
@@ -8,26 +6,8 @@ export default async function IsDashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const supabase = await createClient()
 
-  const {
-    data: { user }
-  } = await getAuthenticatedUser(supabase);
-
-  if (!user) {
-    redirect("/login");
-  }
-
-  const { data: assurance, error } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel()
-
-  if (error) {
-    throw error
-  }
-
-  //check if account has enabled 2FA
-  if (assurance.nextLevel === "aal2" && assurance.currentLevel !== "aal2") {
-    redirect("/verify-2fa");
-  }
+  await requireVerifiedSession();
   return (
     <>
       <div className="flex w-full flex-1 flex-col lg:flex-row">

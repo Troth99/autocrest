@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useRef, useState, type FormEvent } from "react";
+import { useEffect, useId, useRef, useState, type SubmitEvent } from "react";
 import TwoFactorStatusCard, { type TwoFactorStatus } from "@/features/profile/components/two-factor/TwoFactorStatusCard";
 import TwoFactorSetupDialog, { type TwoFactorSetupData } from "@/features/profile/components/two-factor/TwoFactorSetupUI";
 import {
@@ -72,7 +72,7 @@ export default function TwoFactorSetup() {
   }
 
   //Function to verify the two-factor authentication code entered by the user. If verification is successful, update the status to "enabled" and reset the setup state.
-  async function verify(event: FormEvent<HTMLFormElement>) {
+  async function verify(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!setup) return;
     await run(async () => {

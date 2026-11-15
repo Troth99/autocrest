@@ -1,12 +1,17 @@
+import type { Vehicle } from "@/features/garage/types/vehicle";
 import VehicleFieldError from "@/features/garage/components/add-vehicle/components/VehicleFieldError";
 import type { VehicleFormErrors } from "@/features/garage/types/add-vehicle-form";
-import type { VehicleFormRegister } from "@/features/garage/types/add-vehicle-form";
 
-type Props = { errors: VehicleFormErrors; register: VehicleFormRegister };
+type Props = {
+  onClearFieldError?: (field: keyof VehicleFormErrors) => void;
+  errors: VehicleFormErrors;
+  defaultValues?: Vehicle;
+};
 
 export default function VehiclePurchaseFields({
+  onClearFieldError,
   errors,
-  register,
+  defaultValues,
 }: Props) {
   return (
     <fieldset className="content-card vehicle-form-section">
@@ -25,7 +30,9 @@ export default function VehiclePurchaseFields({
             data-slot="input"
             className="native-input"
             id="purchaseDate"
-            {...register("purchaseDate")}
+            name="purchaseDate"
+            onInput={() => onClearFieldError?.("purchaseDate")}
+            defaultValue={defaultValues?.purchaseDate ?? ""}
             type="date"
             aria-invalid={Boolean(errors.purchaseDate)}
             aria-describedby={errors.purchaseDate ? "purchaseDate-error" : undefined}
@@ -45,7 +52,9 @@ export default function VehiclePurchaseFields({
             data-slot="input"
             className="native-input"
             id="purchasePrice"
-            {...register("purchasePrice")}
+            name="purchasePrice"
+            onInput={() => onClearFieldError?.("purchasePrice")}
+            defaultValue={defaultValues?.purchasePrice ?? ""}
             type="number"
             min={0}
             step="0.01"
@@ -67,7 +76,9 @@ export default function VehiclePurchaseFields({
             data-slot="input"
             className="native-input"
             id="purchaseCurrencyCode"
-            {...register("purchaseCurrencyCode")}
+            name="purchaseCurrencyCode"
+            onInput={() => onClearFieldError?.("purchaseCurrencyCode")}
+            defaultValue={defaultValues?.purchaseCurrencyCode ?? ""}
             type="text"
             placeholder="e.g. EUR"
             aria-invalid={Boolean(errors.purchaseCurrencyCode)}

@@ -11,6 +11,9 @@ export type VehicleServiceRecord = output<typeof addServiceSchema> & {
 };
 
 export type VehicleServiceRecordDetails = VehicleServiceRecord & {
+  vehicleName: string;
   serviceTypeLabel: string;
   visitReasonLabel: string;
+  fluidTypeLabel: string;
+  serviceOutcomeLabel: string;
 };

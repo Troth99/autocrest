@@ -1,25 +1,17 @@
-import AuthShell from "@/features/auth/components/AuthShell";
 import ForgotPasswordForm from "@/features/auth/components/ForgotPasswordForm";
-import { createClient } from "@/lib/supabase/server";
-import { getAuthenticatedUser } from "@/shared/services/auth-user.service";
-import { redirect } from "next/navigation";
 
-export default async function ForgotPasswordPage({ searchParams }: {
+export default async function ForgotPasswordPage({
+  searchParams,
+}: {
   searchParams: Promise<{ error?: string }>;
 }) {
-  const supabase = await createClient();
-  const { data: { user } } = await getAuthenticatedUser(supabase);
-
-  if (user) {
-    const { data, error } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
-    if (error) throw error;
-    redirect(
-      data.nextLevel === "aal2" && data.currentLevel !== "aal2"
-        ? "/verify-2fa"
-        : "/",
-    );
-  }
-
   const { error } = await searchParams;
-  return <AuthShell><ForgotPasswordForm invalidLink={error === "invalid_reset_link"} /></AuthShell>;
+
+  return (
+    <main className="flex w-full flex-1 items-center justify-center px-4 py-12 sm:py-16">
+      <div className="w-full max-w-md rounded-2xl border border-line bg-panel p-6 shadow-xl sm:p-8">
+        <ForgotPasswordForm invalidLink={error === "invalid_reset_link"} />
+      </div>
+    </main>
+  );
 }

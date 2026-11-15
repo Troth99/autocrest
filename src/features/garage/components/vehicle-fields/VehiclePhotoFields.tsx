@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type ChangeEvent } from "react";
+import { useRef, useState, type ChangeEvent } from "react";
 import { ImagePlus } from "lucide-react";
 
 type Props = {
@@ -17,12 +17,7 @@ export default function VehiclePhotoFields({
   onPhotoError,
 }: Props) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!previewUrl) return;
-
-    return () => URL.revokeObjectURL(previewUrl);
-  }, [previewUrl]);
+  const readerRef = useRef<FileReader | null>(null);
 
   function handlePhotoChange(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
@@ -38,11 +33,23 @@ export default function VehiclePhotoFields({
     }
 
     onPhotoError(null);
-    onPhotoChange(file);
-    setPreviewUrl(URL.createObjectURL(file));
+    readerRef.current?.abort();
+    const fileReader = new FileReader();
+    readerRef.current = fileReader;
+
+    fileReader.onload = () => {
+      if (typeof fileReader.result !== "string") return;
+      onPhotoChange(file);
+      setPreviewUrl(fileReader.result);
+    };
+    fileReader.onerror = () => {
+      onPhotoError("Could not read the photo. Please try again.");
+    };
+    fileReader.readAsDataURL(file);
   }
 
   function handleRemovePhoto() {
+    readerRef.current?.abort();
     onPhotoChange(null);
     onPhotoError(null);
     setPreviewUrl(null);

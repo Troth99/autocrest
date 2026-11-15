@@ -1,12 +1,12 @@
+import { useState } from "react";
 import { FieldError } from "@/shared/components/FieldError/FieldError";
-import type { VehicleServiceSectionProps } from "@/features/garage/types/add-service-form";
+import type { Props } from "@/features/garage/types/add-service-form";
 
 
-export default function ServiceDetails({
-    register,
-    errors,
-    values,
-}: VehicleServiceSectionProps) {
+export default function ServiceDetails({    errors,
+}: Props) {
+    const [serviceType, setServiceType] = useState("");
+    const [visitReason, setVisitReason] = useState("");
 
     return (
         <>
@@ -17,7 +17,7 @@ export default function ServiceDetails({
                     <label htmlFor="service-type" className="form-field-label">
                         Service type *
                     </label>
-                    <select id="service-type" className="form-select" {...register("serviceType")}>
+                    <select id="service-type" className="form-select" name="serviceType" value={serviceType} onChange={(event) => setServiceType(event.target.value)}>
                         <option value="">Select service</option>
                         <option value="oil">Oil & filters</option>
                         <option value="brakes">Brakes</option>
@@ -36,7 +36,7 @@ export default function ServiceDetails({
                         <option value="other">Other</option>
                     </select>
                     <FieldError message={errors.serviceType} />
-                    {values.serviceType === "other" && (
+                    {serviceType === "other" && (
                         <div className="grid gap-2">
                             <label htmlFor="custom-service-type" className="form-field-label">
                                 Specify service *
@@ -50,7 +50,7 @@ export default function ServiceDetails({
                                 title="Enter a service description."
                                 placeholder="Describe the service"
                                 className="native-input"
-                                {...register("customServiceType")}
+                                name="customServiceType"
                             />
                             <FieldError message={errors.customServiceType} />
                         </div>
@@ -61,7 +61,7 @@ export default function ServiceDetails({
                     <label htmlFor="visit-reason" className="form-field-label" >
                         Reason for visit
                     </label>
-                    <select id="visit-reason" className="form-select" {...register("visitReason")}>
+                    <select id="visit-reason" className="form-select" name="visitReason" value={visitReason} onChange={(event) => setVisitReason(event.target.value)}>
                         <option value="">Select reason</option>
                         <option value="scheduled">Scheduled maintenance</option>
                         <option value="repair">Repair</option>
@@ -70,7 +70,7 @@ export default function ServiceDetails({
                         <option value="other">Other</option>
                     </select>
                     <FieldError message={errors.visitReason} />
-                    {values.visitReason === "other" && (
+                    {visitReason === "other" && (
                         <div className="grid gap-2">
                             <label htmlFor="custom-visit-reason" className="form-field-label">
                                 Specify reason *
@@ -84,7 +84,7 @@ export default function ServiceDetails({
                                 title="Enter a reason for the visit."
                                 placeholder="Describe the reason for your visit"
                                 className="native-input"
-                                {...register("customVisitReason")}
+                                name="customVisitReason"
                             />
                             <FieldError message={errors.customVisitReason} />
                         </div>
@@ -100,7 +100,7 @@ export default function ServiceDetails({
                         id="service-date"
                         type="date"
                         className="native-input"
-                        {...register("serviceDate")}
+                        name="serviceDate"
                     />
                     <FieldError message={errors.serviceDate} />
                 </div>
@@ -116,7 +116,7 @@ export default function ServiceDetails({
                         step="1"
                         placeholder="150000"
                         className="native-input"
-                        {...register("mileageKm")}
+                        name="mileageKm"
                     />
                     <FieldError message={errors.mileageKm} />
                 </div>
@@ -130,7 +130,7 @@ export default function ServiceDetails({
                     type="text"
                     placeholder="Workshop name or DIY"
                     className="native-input"
-                    {...register("provider")}
+                    name="provider"
                 />
                 <FieldError message={errors.provider} />
             </div>
@@ -144,7 +144,7 @@ export default function ServiceDetails({
                     rows={3}
                     placeholder="Describe what was checked, repaired or replaced."
                     className="form-textarea"
-                    {...register("workPerformed")}
+                    name="workPerformed"
                 />
                 <FieldError message={errors.workPerformed} />
             </div>

@@ -1,9 +1,7 @@
 import { FieldError } from "@/shared/components/FieldError/FieldError";
 import type { Props as VehicleAddServiceProps } from "@/features/garage/types/add-service-form";
 
-export default function ServiceWarranty({
-    register,
-    errors,
+export default function ServiceWarranty({    errors,
 }: VehicleAddServiceProps) {
     return (
         <fieldset className="space-y-4 service-detail-group">
@@ -17,7 +15,7 @@ export default function ServiceWarranty({
                         Valid until
                     </label>
                     <input data-slot="input"
-                        id="warranty-date" {...register("warrantyDate")}
+                        id="warranty-date" name="warrantyDate"
                         type="date"
                         className="native-input"
                     />
@@ -29,7 +27,7 @@ export default function ServiceWarranty({
                         Odometer limit (km)
                     </label>
                     <input data-slot="input"
-                        id="warranty-mileage" {...register("warrantyMileageKm")}
+                        id="warranty-mileage" name="warrantyMileageKm"
                         type="number"
                         min="0"
                         step="1"

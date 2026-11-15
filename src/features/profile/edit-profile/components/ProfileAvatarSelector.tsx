@@ -1,6 +1,6 @@
 "use client";
 
-import type { RefObject } from "react";
+import { useRef, type ChangeEvent } from "react";
 import {
   Avatar,
   AvatarFallback,
@@ -16,7 +16,6 @@ type Props = {
   initials: string;
   isSaving: boolean;
   avatarError: string | null;
-  avatarInputRef: RefObject<HTMLInputElement | null>;
   setAvatarFile: (file: File | null) => void;
   setAvatarPreview: (url: string | null) => void;
   setAvatarError: (error: string | null) => void;
@@ -29,11 +28,51 @@ export default function ProfileAvatarSelector({
   initials,
   isSaving,
   avatarError,
-  avatarInputRef,
   setAvatarFile,
   setAvatarPreview,
   setAvatarError,
 }: Props) {
+  const avatarInputRef = useRef<HTMLInputElement>(null);
+  const readerRef = useRef<FileReader | null>(null);
+
+  function avatarChangeHandler(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+
+    event.target.value = "";
+    if (!file) return;
+
+    if (
+      !["image/jpeg", "image/png", "image/webp"].includes(file.type) ||
+      file.size > 2 * 1024 * 1024
+    ) {
+      setAvatarError("Choose a JPG, PNG or WebP image under 2 MB.");
+      return;
+    }
+
+    setAvatarError(null);
+    readerRef.current?.abort();
+    
+    const fileReader = new FileReader();
+    readerRef.current = fileReader;
+
+    fileReader.onload = () => {
+      if (typeof fileReader.result !== "string") return;
+      setAvatarFile(file);
+      setAvatarPreview(fileReader.result);
+    };
+    fileReader.onerror = () => {
+      setAvatarError("Could not read the photo. Please try again.");
+    };
+    fileReader.readAsDataURL(file);
+  }
+
+  function handleUndoAvatar() {
+    readerRef.current?.abort();
+    setAvatarFile(null);
+    setAvatarPreview(null);
+    setAvatarError(null);
+  }
+
   return (
     <section aria-labelledby="photo-heading">
       <h3
@@ -79,23 +118,7 @@ export default function ProfileAvatarSelector({
             aria-label="Choose profile photo"
             aria-describedby="avatar-help"
             disabled={isSaving}
-            onChange={(event) => {
-              const file = event.target.files?.[0];
-              event.target.value = "";
-              if (!file) return;
-              if (
-                !["image/jpeg", "image/png", "image/webp"].includes(
-                  file.type,
-                ) ||
-                file.size > 2 * 1024 * 1024
-              ) {
-                setAvatarError("Choose a JPG, PNG or WebP image under 2 MB.");
-                return;
-              }
-              setAvatarError(null);
-              setAvatarFile(file);
-              setAvatarPreview(URL.createObjectURL(file));
-            }}
+            onChange={avatarChangeHandler}
           />
           <div className="flex flex-wrap items-center gap-2">
             <Button
@@ -114,11 +137,7 @@ export default function ProfileAvatarSelector({
                 variant="ghost"
                 disabled={isSaving}
                 className="h-10 cursor-pointer rounded-xl px-3 text-muted"
-                onClick={() => {
-                  setAvatarFile(null);
-                  setAvatarPreview(null);
-                  setAvatarError(null);
-                }}
+                onClick={handleUndoAvatar}
               >
                 Undo
               </Button>

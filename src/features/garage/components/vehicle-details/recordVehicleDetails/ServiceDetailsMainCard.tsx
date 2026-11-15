@@ -1,6 +1,7 @@
 import type { VehicleServiceRecordDetails } from "@/features/garage/types/vehicle-service-record";
 import { formatVehicleValue } from "@/features/garage/utils/formatVehicleValue";
 import { formatDate } from "@/shared/utils/formatDate";
+import { Wrench } from "lucide-react";
 
 
 export default function ServiceDetailsMainCard({
@@ -10,6 +11,10 @@ export default function ServiceDetailsMainCard({
 }) {
 
     return (
+          <section className="section-card" aria-label="Service details">
+                    <h2 className="maintenance-section-title"><span className="maintenance-section-icon"><Wrench className="size-4" aria-hidden="true" /></span>Service details</h2>
+
+             
         <dl className="mt-4 grid gap-5 sm:grid-cols-2">
             <div>
                 <dt className="detail-label">Service type</dt>
@@ -44,5 +49,6 @@ export default function ServiceDetailsMainCard({
                 </dd>
             </div>
         </dl>
+        </section>
     )
 }

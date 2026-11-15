@@ -1,4 +1,5 @@
-import { createClient } from "@/lib/supabase/client";
+"use server";
+import { createClient } from "@/lib/supabase/server";
 import type {
   VehicleMake,
   VehicleModel,
@@ -8,10 +9,10 @@ import type { VehicleType } from "@/features/garage/types/vehicle";
 export async function getVehicleMakes(
   vehicleType: VehicleType,
 ): Promise<VehicleMake[]> {
-    // Return an empty array if vehicleType is not provided
+  // Return an empty array if vehicleType is not provided
   if (!vehicleType) return [];
 
-  const supabase = createClient();
+  const supabase = await createClient();
 
   // Fetch vehicle makes from the database based on the provided vehicle type
   const { data, error } = await supabase
@@ -30,7 +31,7 @@ export async function getVehicleModels(
 ): Promise<VehicleModel[]> {
   if (!makeId) return [];
 
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase
     .from("vehicle_models")

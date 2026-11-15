@@ -1,61 +1,69 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, Check, X } from "lucide-react";
-import { Button, buttonVariants } from "@/shared/components/ui/button";
+import { useActionState, useState } from "react";
+import useEditVehicleCatalog from "@/features/garage/hooks/useEditVehicleCatalog";
+import { updateVehicle } from "@/features/garage/services/vehicles.service";
+import { resolveVehicleMakeModel } from "@/features/garage/utils/resolveVehicleMakeModel";
+import { ArrowLeft, X } from "lucide-react";
+import { buttonVariants } from "@/shared/components/ui/button";
 import type { Vehicle } from "@/features/garage/types/vehicle";
-import useEditVehicleForm from "@/features/garage/hooks/useEditVehicleForm";
-import useForm from "@/shared/hooks/useForm";
-import { getEditVehicleInitialValues } from "@/features/garage/utils/getEditVehicleInitialValues";
+import type { VehicleFormState } from "@/features/garage/types/add-vehicle-form";
 import type { VehicleDocumentFormValues } from "@/features/garage/types/vehicle-document-form";
 import VehicleBasicFields from "@/features/garage/components/vehicle-fields/VehicleBasicFields";
 import VehicleRegistrationFields from "@/features/garage/components/vehicle-fields/VehicleRegistrationFields";
 import VehicleTechnicalFields from "@/features/garage/components/vehicle-fields/VehicleTechnicalFields";
 import VehiclePurchaseFields from "@/features/garage/components/vehicle-fields/VehiclePurchaseFields";
 import VehicleAdditionalDetails from "@/features/garage/components/vehicle-fields/VehicleAdditionalDetails";
+import type { VehicleMake, VehicleModel } from "@/features/garage/types/vehicle-catalog";
+import SubmitEditVehicleButton from "./SubmittingEditVehicleButton";
 
 type Props = {
+  makes: VehicleMake[];
+  models: VehicleModel[];
   vehicle: Vehicle;
-  photoUrl?: string | null;
 };
 
-export function EditVehicleForm({ vehicle }: Props) {
+export function EditVehicleForm({
+  vehicle,
+  makes: initialMakes,
+  models: initialModels,
+}: Props) {
   const detailsUrl = `/vehicles/${vehicle.id}`;
 
   const name = `${vehicle.make} ${vehicle.model}`;
 
-  const {
-    makes,
-    models,
-    selectedMake,
-    selectedModel,
-    isLoadingMakes,
-    isLoadingModels,
-    modelsError,
-    handleMakeChange: changeCatalogMake,
-    handleModelChange,
-    handleEditVehicle,
-    isSaving,
-    saveError,
-    fieldErrors,
-  } = useEditVehicleForm(vehicle);
+  const catalog = useEditVehicleCatalog(vehicle, initialMakes, initialModels);
 
-  const { values, register, registerCheckbox, formHandler, setFieldValue } =
-    useForm(handleEditVehicle, getEditVehicleInitialValues(vehicle));
+  const [manualNames, setManualNames] = useState({
+    customMake: vehicle.make,
+    customModel: vehicle.model,
+  });
 
   function handleMakeChange(makeId: string) {
-    if (makeId === selectedMake) return;
-    changeCatalogMake(makeId);
-    // A new make invalidates the previous manually entered model.
-    setFieldValue("customModel", "");
+
+    if (makeId === catalog.selectedMake) return;
+
+    catalog.handleMakeChange(makeId);
+    setManualNames((current) => ({ ...current, customModel: "" }));
   }
 
-  function handleFieldChange(
-    field: keyof VehicleDocumentFormValues,
-    value: string,
-  ) {
-    setFieldValue(field, value);
+  function handleFieldChange(field: keyof VehicleDocumentFormValues, value: string) {
+    if (field === "customMake" || field === "customModel") {
+      setManualNames((current) => ({ ...current, [field]: value }));
+    }
   }
+
+  const names = resolveVehicleMakeModel(manualNames, catalog);
+
+  async function saveVehicle(previousState: VehicleFormState, formData: FormData) {
+    return await updateVehicle(vehicle.id, previousState, formData);
+  }
+
+  const [state, formAction, pending] = useActionState(
+    saveVehicle,
+    { error: null, fieldErrors: {} },
+  );
 
   return (
     <main className="page-shell">
@@ -74,51 +82,54 @@ export function EditVehicleForm({ vehicle }: Props) {
         </p>
       </header>
 
-      <form className="vehicle-form grid gap-5" onSubmit={formHandler}>
-        <div className="grid min-w-0 gap-5 xl:grid-cols-2">
-          <VehicleBasicFields
-            errors={fieldErrors}
-            register={register}
-            values={values}
-            onFieldChange={handleFieldChange}
-            makes={makes}
-            selectedMake={selectedMake}
-            onMakeChange={handleMakeChange}
-            isLoadingMakes={isLoadingMakes}
-            models={models}
-            selectedModel={selectedModel}
-            onModelChange={handleModelChange}
-            isLoadingModels={isLoadingModels}
-            modelsError={modelsError}
-          />
+      <form
+        className="vehicle-form grid gap-5"
+        action={formAction}
+        // Preserve native input values when the action returns validation errors.
+        onReset={(event) => event.preventDefault()}
+      >
+        <input type="hidden" name="make" value={names.make} />
+        <input type="hidden" name="model" value={names.model} />
+        <fieldset disabled={pending} className="contents">
+          <div className="grid min-w-0 gap-5 xl:grid-cols-2">
+            <VehicleBasicFields
+              defaultValues={vehicle}
+              errors={state.fieldErrors}
+              values={manualNames}
+              onFieldChange={handleFieldChange}
+              makes={catalog.makes}
+              selectedMake={catalog.selectedMake}
+              onMakeChange={handleMakeChange}
+              models={catalog.models}
+              selectedModel={catalog.selectedModel}
+              onModelChange={catalog.handleModelChange}
+              isLoadingModels={catalog.isLoadingModels}
+              modelsError={catalog.modelsError}
+            />
 
-          <VehicleRegistrationFields
-            register={register}
-            errors={fieldErrors}
-            values={values}
-            onFieldChange={handleFieldChange}
-          />
+            <VehicleRegistrationFields
+              defaultValues={vehicle}
+              errors={state.fieldErrors}
+            />
 
-          <VehicleTechnicalFields
-            register={register}
-            errors={fieldErrors}
-            values={values}
-            onFieldChange={handleFieldChange}
-          />
+            <VehicleTechnicalFields
+              defaultValues={vehicle}
+              errors={state.fieldErrors}
+            />
 
-          <div className="grid content-start gap-5">
-            <VehiclePurchaseFields register={register} errors={fieldErrors} />
+            <div className="grid content-start gap-5">
+              <VehiclePurchaseFields defaultValues={vehicle} errors={state.fieldErrors} />
+            </div>
+
+            <VehicleAdditionalDetails
+              defaultValues={vehicle}
+              errors={state.fieldErrors}
+            />
           </div>
-
-          <VehicleAdditionalDetails
-            errors={fieldErrors}
-            register={register}
-            registerCheckbox={registerCheckbox}
-          />
-        </div>
-        {saveError && (
+        </fieldset>
+        {state.error && (
           <p role="alert" className="text-sm text-destructive">
-            {saveError}
+            {state.error}
           </p>
         )}
         <div className="flex flex-wrap items-center justify-end gap-3">
@@ -131,14 +142,7 @@ export function EditVehicleForm({ vehicle }: Props) {
           >
             <X className="size-5" aria-hidden="true" /> Cancel
           </Link>
-          <Button
-            type="submit"
-            disabled={isSaving || isLoadingMakes || isLoadingModels}
-            className="h-12 gap-2.5 bg-accent px-6 text-base text-ink cursor-pointer"
-          >
-            <Check className="size-5" aria-hidden="true" />
-            {isSaving ? "Saving..." : "Save changes"}
-          </Button>
+          <SubmitEditVehicleButton isLoadingModels={catalog.isLoadingModels} />
         </div>
       </form>
     </main>

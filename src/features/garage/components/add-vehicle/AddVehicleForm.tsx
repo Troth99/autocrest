@@ -1,10 +1,9 @@
 "use client";
 import Link from "next/link";
-import { Check, X } from "lucide-react";
-import { Button, buttonVariants } from "@/shared/components/ui/button";
+import { X } from "lucide-react";
+import { buttonVariants } from "@/shared/components/ui/button";
 import useAddVehicleController from "@/features/garage/hooks/useAddVehicleController";
-import useForm from "@/shared/hooks/useForm";
-import { initialValues } from "@/features/garage/constants/add-vehicle-form";
+import SubmittingFormAddCar from "./components/SubmittingFormAddCar";
 import VehicleFormHeader from "./components/VehicleFormHeader";
 import VehicleDocumentScan from "./components/VehicleDocumentScan";
 import VehiclePhotoFields from "../vehicle-fields/VehiclePhotoFields";
@@ -14,113 +13,95 @@ import VehicleTechnicalFields from "../vehicle-fields/VehicleTechnicalFields";
 import VehicleMileageFields from "../vehicle-fields/VehicleMileageFields";
 import VehiclePurchaseFields from "../vehicle-fields/VehiclePurchaseFields";
 import VehicleAdditionalDetails from "../vehicle-fields/VehicleAdditionalDetails";
+import type { VehicleMake } from "@/features/garage/types/vehicle-catalog";
 
-export default function AddVehicleForm() {
-  const {
-    makes,
-    isLoadingMakes,
-    makesError,
-    selectedMake,
-    models,
-    selectedModel,
-    isLoadingModels,
-    modelsError,
-    documentValues,
-    handleFieldChange,
-    handleDocumentExtracted,
-    handleMakeChange,
-    handleModelChange,
-    handleFormChange,
-    photoFile,
-    setPhotoFile,
-    photoError,
-    setPhotoError,
-    isSubmitting,
-    submitError,
-    fieldErrors,
-    savedVehicleId,
-    handleAddCar,
-  } = useAddVehicleController();
-
-  // Keep input registration and submission wiring in the form component.
-  const { register, registerCheckbox, formHandler } = useForm(
-    handleAddCar,
-    initialValues,
-  );
+export default function AddVehicleForm({
+  makes: initialMakes,
+}: {
+  makes: VehicleMake[];
+}) {
+  const { autofill, submission, handleRegistrationChange } = useAddVehicleController(initialMakes);
 
   return (
     <main className="page-shell">
       <VehicleFormHeader />
 
-      {makesError && (
-        <p role="alert" className="mb-4 text-sm text-destructive">
-          {makesError}
-        </p>
-      )}
       <form
         noValidate
         className="vehicle-form grid gap-4"
-        onSubmit={formHandler}
-        onChange={handleFormChange}
+        action={submission.formAction}
+        // Keep entered values when validation or photo upload fails.
+        onReset={(event) => event.preventDefault()}
       >
         <input type="hidden" name="vehicleType" value="car" />
 
         <fieldset
-          disabled={isSubmitting || Boolean(savedVehicleId)}
+          disabled={submission.isSubmitting || Boolean(submission.state.savedVehicleId)}
           className="contents"
         >
-          <VehicleDocumentScan onExtracted={handleDocumentExtracted} />
+          <VehicleDocumentScan onExtracted={autofill.handleDocumentExtracted} />
         </fieldset>
 
-        <VehiclePhotoFields
-          photoFile={photoFile}
-          photoError={photoError}
-          onPhotoChange={setPhotoFile}
-          onPhotoError={setPhotoError}
-        />
+        <fieldset disabled={submission.isSubmitting} className="contents">
+          <VehiclePhotoFields
+            photoFile={submission.photoFile}
+            photoError={submission.photoError}
+            onPhotoChange={submission.setPhotoFile}
+            onPhotoError={submission.setPhotoError}
+          />
+        </fieldset>
         <fieldset
-          disabled={isSubmitting || Boolean(savedVehicleId)}
+          disabled={submission.isSubmitting || Boolean(submission.state.savedVehicleId)}
           className="grid min-w-0 gap-5 border-0 p-0 xl:grid-cols-2"
         >
           <VehicleBasicFields
-            errors={fieldErrors}
-            register={register}
-            values={documentValues}
-            onFieldChange={handleFieldChange}
-            makes={makes}
-            selectedMake={selectedMake}
-            onMakeChange={handleMakeChange}
-            isLoadingMakes={isLoadingMakes}
-            models={models}
-            selectedModel={selectedModel}
-            onModelChange={handleModelChange}
-            isLoadingModels={isLoadingModels}
-            modelsError={modelsError}
+            errors={submission.fieldErrors}
+            onClearFieldError={submission.clearFieldError}
+            values={autofill.documentValues}
+            onFieldChange={autofill.handleFieldChange}
+            makes={autofill.makes}
+            selectedMake={autofill.selectedMake}
+            onMakeChange={autofill.handleMakeChange}
+            models={autofill.models}
+            selectedModel={autofill.selectedModel}
+            onModelChange={autofill.handleModelChange}
+            isLoadingModels={autofill.isLoadingModels}
+            modelsError={autofill.modelsError}
           />
           <VehicleRegistrationFields
-            errors={fieldErrors}
-            register={register}
-            values={documentValues}
-            onFieldChange={handleFieldChange}
+            errors={submission.fieldErrors}
+            onClearFieldError={submission.clearFieldError}
+
+            values={autofill.documentValues}
+            onChange={handleRegistrationChange}
           />
           <VehicleTechnicalFields
-            errors={fieldErrors}
-            register={register}
-            values={documentValues}
-            onFieldChange={handleFieldChange}
+            errors={submission.fieldErrors}
+            onClearFieldError={submission.clearFieldError}
+
+            values={autofill.documentValues}
+            onFieldChange={autofill.handleFieldChange}
           />
-          <VehicleMileageFields errors={fieldErrors} register={register} />
-          <VehiclePurchaseFields errors={fieldErrors} register={register} />
+          <VehicleMileageFields
+            errors={submission.fieldErrors}
+            onClearFieldError={submission.clearFieldError}
+          />
+          <VehiclePurchaseFields
+            errors={submission.fieldErrors}
+            onClearFieldError={submission.clearFieldError}
+          />
           <VehicleAdditionalDetails
-            errors={fieldErrors}
-            register={register}
-            registerCheckbox={registerCheckbox}
+            errors={submission.fieldErrors}
+            onClearFieldError={submission.clearFieldError}
+
           />
         </fieldset>
 
-        {submitError && (
+        {submission.state.error &&
+          (submission.state.error !== "Please correct the highlighted fields." ||
+            Object.values(submission.fieldErrors).some(Boolean)) && (
           <p role="alert" className="text-sm text-destructive">
-            {submitError}
+            {submission.state.error}
           </p>
         )}
         <div className="flex flex-wrap items-center justify-end gap-3">
@@ -132,22 +113,12 @@ export default function AddVehicleForm() {
             })}
           >
             <X className="size-5" aria-hidden="true" />
-            {savedVehicleId ? "Continue to garage" : "Cancel"}
+            {submission.state.savedVehicleId ? "Continue to garage" : "Cancel"}
           </Link>
-          <Button
-            type="submit"
-            disabled={isSubmitting}
-            className="h-12 cursor-pointer gap-2.5 bg-accent px-6 text-base text-ink hover:bg-accent-strong"
-          >
-            <Check className="size-5" aria-hidden="true" />
-            {isSubmitting
-              ? "Saving..."
-              : savedVehicleId
-                ? photoFile
-                  ? "Retry photo upload"
-                  : "Continue to garage"
-                : "Add vehicle"}
-          </Button>
+          <SubmittingFormAddCar
+            savedVehicleId={submission.state.savedVehicleId}
+            hasPhoto={Boolean(submission.photoFile)}
+          />
         </div>
       </form>
     </main>

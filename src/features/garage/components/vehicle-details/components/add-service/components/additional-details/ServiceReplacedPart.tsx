@@ -1,9 +1,7 @@
 import { FieldError } from "@/shared/components/FieldError/FieldError";
 import { Props as VehicleAddServiceProps } from "@/features/garage/types/add-service-form";
 
-export default function ServiceReplacedPart({
-    register,
-    errors,
+export default function ServiceReplacedPart({    errors,
 }: VehicleAddServiceProps) {
     return (
         <fieldset className="space-y-4 service-detail-group">
@@ -20,7 +18,7 @@ export default function ServiceReplacedPart({
                     type="text"
                     placeholder="e.g. Oil filter"
                     className="native-input"
-                    {...register("partName")}
+                    name="partName"
                 />
                 <FieldError message={errors.partName} />
             </div>
@@ -31,7 +29,7 @@ export default function ServiceReplacedPart({
                         Brand
                     </label>
                     <input data-slot="input"
-                        id="part-brand" {...register("partBrand")}
+                        id="part-brand" name="partBrand"
                         type="text"
                         placeholder="Manufacturer"
                         className="native-input"
@@ -44,7 +42,7 @@ export default function ServiceReplacedPart({
                         Part number
                     </label>
                     <input data-slot="input"
-                        id="part-number" {...register("partNumber")}
+                        id="part-number" name="partNumber"
                         type="text"
                         placeholder="Catalogue number"
                         className="native-input"
@@ -58,7 +56,7 @@ export default function ServiceReplacedPart({
                     Quantity
                 </label>
                 <input data-slot="input"
-                    id="part-quantity" {...register("partQuantity")}
+                    id="part-quantity" name="partQuantity"
                     type="number"
                     min="1"
                     step="1"

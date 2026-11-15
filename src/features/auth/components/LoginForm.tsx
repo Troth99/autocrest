@@ -1,5 +1,4 @@
 "use client";
-
 import Link from "next/link";
 import { Button } from "@/shared/components/ui/button";
 import { PasswordField } from "./PasswordField";
@@ -13,13 +12,11 @@ export default function LoginForm({
   passwordReset?: boolean;
 }) {
   const {
-    register,
-    registerCheckbox,
-    formHandler,
+    formAction,
     errors,
     isSubmitting,
-    googleLoginHandler,
-    facebookLoginHandler,
+    oauthLoginHandler,
+    oauthError,
   } = useLoginForm();
 
   return (
@@ -49,7 +46,7 @@ export default function LoginForm({
           className="oauth-button oauth-button-google h-11 cursor-pointer"
           type="button"
           variant="outline"
-          onClick={googleLoginHandler}
+          onClick={() => oauthLoginHandler("google")}
           disabled={isSubmitting}
         >
           <GoogleIcon />
@@ -59,7 +56,7 @@ export default function LoginForm({
           className="oauth-button oauth-button-facebook h-11 cursor-pointer"
           type="button"
           variant="outline"
-          onClick={facebookLoginHandler}
+          onClick={() => oauthLoginHandler("facebook")}
           disabled={isSubmitting}
         >
           <FacebookIcon />
@@ -69,6 +66,8 @@ export default function LoginForm({
         {/* Placeholder for additional OAuth buttons, e.g., Microsoft, Apple */}
       </div>
 
+      {oauthError && <div role="alert"><FieldError message={oauthError} /></div>}
+
       <div className="my-5 flex items-center gap-3" aria-hidden="true">
         <span className="h-px flex-1 bg-line" />
         <span className="text-[0.6875rem] font-medium uppercase tracking-[0.18em] text-muted">
@@ -77,7 +76,12 @@ export default function LoginForm({
         <span className="h-px flex-1 bg-line" />
       </div>
 
-      <form className="grid gap-4" onSubmit={formHandler}>
+      <form
+        className="grid gap-4"
+        action={formAction}
+        // Keep entered values when validation or authentication fails.
+        onReset={(event) => event.preventDefault()}
+      >
         <div className="grid gap-2">
           <label className="field-label" htmlFor="email">
             Email address
@@ -88,7 +92,8 @@ export default function LoginForm({
             placeholder="you@example.com"
             autoComplete="email"
             className="form-input"
-            {...register("email")}
+            name="email"
+            disabled={isSubmitting}
           />
           <FieldError message={errors.email} />
         </div>
@@ -106,7 +111,8 @@ export default function LoginForm({
               Forgot password?
             </Link>
           }
-          {...register("password")}
+          name="password"
+          disabled={isSubmitting}
           error={errors.password}
         />
 
@@ -114,7 +120,8 @@ export default function LoginForm({
           <input
             className="mt-px size-4 "
             type="checkbox"
-            {...registerCheckbox("rememberMe")}
+            name="rememberMe"
+            disabled={isSubmitting}
           />
           <span>Remember me</span>
         </label>

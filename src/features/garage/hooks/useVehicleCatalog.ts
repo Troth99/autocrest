@@ -1,97 +1,53 @@
 "use client";
 
-import { useEffect, useEffectEvent, useState } from "react";
+import { useRef, useState } from "react";
 import type {
   VehicleMake,
   VehicleModel,
 } from "@/features/garage/types/vehicle-catalog";
-import {
-  getVehicleMakes,
-  getVehicleModels,
-} from "@/features/garage/services/vehicle-catalog.service";
+import { getVehicleModels } from "@/features/garage/services/vehicle-catalog.service";
 
 export default function useVehicleCatalog(
+  makes: VehicleMake[],
   onModelsReady: (models: VehicleModel[]) => void,
+  initialMake = "",
+  initialModels: VehicleModel[] = [],
 ) {
-  const [makes, setMakes] = useState<VehicleMake[]>([]);
-  const [isLoadingMakes, setIsLoadingMakes] = useState(true);
-  const [makesError, setMakesError] = useState<string | null>(null);
-  const [selectedMake, setSelectedMake] = useState("");
-  const [models, setModels] = useState<VehicleModel[]>([]);
+  const [selectedMake, setSelectedMake] = useState(initialMake);
+  const [models, setModels] = useState(initialModels);
   const [isLoadingModels, setIsLoadingModels] = useState(false);
   const [modelsError, setModelsError] = useState<string | null>(null);
+  const currentMake = useRef(initialMake);
+  const requestId = useRef(0);
 
-  const onModelsLoaded = useEffectEvent(onModelsReady);
-
-  function handleMakeChange(makeId: string) {
-    if (makeId === selectedMake) return;
+  async function handleMakeChange(makeId: string) {
+    if (makeId === currentMake.current) return;
+    currentMake.current = makeId;
+    const id = ++requestId.current;
     setSelectedMake(makeId);
     setModels([]);
     setModelsError(null);
-    setIsLoadingModels(Boolean(makeId) && makeId !== "other");
+    const needsModels = Boolean(makeId) && makeId !== "other";
+    setIsLoadingModels(needsModels);
+    if (!needsModels) return;
+
+    try {
+      const data = await getVehicleModels(makeId);
+      // Ignore results from a make that the user has already changed.
+      if (id !== requestId.current) return;
+      setModels(data);
+      onModelsReady(data);
+    } catch {
+      if (id !== requestId.current) return;
+      setModelsError("Could not load models.");
+      onModelsReady([]);
+    } finally {
+      if (id === requestId.current) setIsLoadingModels(false);
+    }
   }
-
-  useEffect(() => {
-    let cancelled = false;
-
-    async function loadMakes() {
-      try {
-        const data = await getVehicleMakes("car");
-        if (!cancelled) {
-          setMakes(data);
-        }
-      } catch {
-        if (!cancelled) {
-          setMakesError("Could not load vehicle makes.");
-        }
-      } finally {
-        if (!cancelled) {
-          setIsLoadingMakes(false);
-        }
-      }
-    }
-
-    void loadMakes();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-  useEffect(() => {
-    if (!selectedMake || selectedMake === "other") return;
-
-    let cancelled = false;
-
-    async function loadModels() {
-      try {
-        const data = await getVehicleModels(selectedMake);
-
-        if (!cancelled) {
-          setModels(data);
-          onModelsLoaded(data);
-        }
-      } catch {
-        if (!cancelled) {
-          setModelsError("Could not load models.");
-          onModelsLoaded([]);
-        }
-      } finally {
-        if (!cancelled) {
-          setIsLoadingModels(false);
-        }
-      }
-    }
-
-    void loadModels();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [selectedMake]);
 
   return {
     makes,
-    isLoadingMakes,
-    makesError,
     selectedMake,
     models,
     isLoadingModels,

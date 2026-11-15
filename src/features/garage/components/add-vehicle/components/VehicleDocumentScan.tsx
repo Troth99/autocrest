@@ -58,7 +58,14 @@ export default function VehicleDocumentScan({
     setExtractedDetails(null);
 
     try {
-      const details = await extractVehicleDocument(frontFile);
+      const result = await extractVehicleDocument(frontFile);
+
+      if (result.error !== null) {
+        setFrontError(result.error);
+        return;
+      }
+
+      const details = result.data;
 
       onExtracted(details);
       setExtractedDetails(details);

@@ -1,3 +1,6 @@
+import type { VehicleFormErrors } from "@/features/garage/types/add-vehicle-form";
+import type { Vehicle } from "@/features/garage/types/vehicle";
+
 export type VehicleDocumentFormValues = {
   customMake: string;
   customModel: string;
@@ -14,6 +17,8 @@ export type VehicleDocumentFormValues = {
 };
 
 export type VehicleDocumentFieldProps = {
-  values: VehicleDocumentFormValues;
-  onFieldChange: (field: keyof VehicleDocumentFormValues, value: string) => void;
+  onClearFieldError?: (field: keyof VehicleFormErrors) => void;
+  values?: Partial<VehicleDocumentFormValues>;
+  defaultValues?: Vehicle;
+  onFieldChange?: (field: keyof VehicleDocumentFormValues, value: string) => void;
 };

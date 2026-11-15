@@ -1,3 +1,5 @@
+import "server-only";
+
 import { setTimeout as delay } from "node:timers/promises";
 
 // Share one deadline across all attempts so retries cannot extend the scan timeout.
@@ -27,9 +29,4 @@ export async function requestDocumentExtraction(
     await response.body?.cancel();
     await delay(1000 * 2 ** attempt, undefined, { signal: options.signal });
   }
-}
-
-
-export async function handleExtract() {
-  
 }

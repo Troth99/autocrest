@@ -1,28 +1,15 @@
-import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
-import { getAuthenticatedUser } from "@/shared/services/auth-user.service";
-import AuthShell from "@/features/auth/components/AuthShell";
+import { requirePasswordResetSession } from "@/features/auth/services/session.service";
 import ResetPasswordForm from "@/features/auth/components/ResetPasswordForm";
 
 // This route is outside the auth layout, which redirects signed-in users away.
 export default async function ResetPasswordPage() {
+  await requirePasswordResetSession();
 
-  const supabase = await createClient();
-
-  const { data: { user }, error: userError } = await getAuthenticatedUser(supabase);
-
-  if (userError || !user) {
-    redirect("/forgot-password?error=invalid_reset_link");
-  }
-
-  const { data: assurance, error } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
-
-  if (error) throw error;
-
-  if (assurance.nextLevel === "aal2" && assurance.currentLevel !== "aal2") {
-
-    redirect("/verify-2fa?next=/reset-password");
-  }
-
-  return <AuthShell><ResetPasswordForm /></AuthShell>;
+  return (
+    <main className="flex w-full flex-1 items-center justify-center px-4 py-12 sm:py-16">
+      <div className="w-full max-w-md rounded-2xl border border-line bg-panel p-6 shadow-xl sm:p-8">
+        <ResetPasswordForm />
+      </div>
+    </main>
+  );
 }

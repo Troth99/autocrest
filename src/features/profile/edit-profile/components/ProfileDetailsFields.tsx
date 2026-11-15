@@ -1,40 +1,29 @@
-﻿import ProfileNameFields from "@/features/profile/edit-profile/components/ProfileNameFields";
-import type { ChangeEvent } from "react";
+import ProfileNameFields from "@/features/profile/edit-profile/components/ProfileNameFields";
+import { useState } from "react";
 import PhoneEditSelector from "@/features/profile/edit-profile/components/PhoneEditSelector";
-import type { ProfileFormValues } from "@/features/profile/edit-profile/services/edit-profile.service";
+import type { AppUser } from "@/shared/types/currentUser";
 
-export type EditProfileFormValues = Omit<ProfileFormValues, "fullName"> & {
-  firstName: string;
-  lastName: string;
-};
 export type ProfileDetailsFieldsProps = {
-  register: (field: keyof EditProfileFormValues) => {
-    name: string;
-    value: string;
-    onChange: (
-      event: ChangeEvent<
-        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-      >,
-    ) => void;
-  };
-  values: EditProfileFormValues;
-  errors: Partial<EditProfileFormValues>;
+  user: AppUser;
+  phone: string;
+  errors: Partial<Record<"firstName" | "lastName", string>>;
   isSaving: boolean;
   phoneError: string | null;
   onPhoneChange: (value: string) => void;
 };
 export default function ProfileDetailsFields({
-  register,
-  values,
+  user,
+  phone,
   errors,
   isSaving,
   phoneError,
   onPhoneChange,
 }: ProfileDetailsFieldsProps) {
+  const [bio, setBio] = useState(user.bio ?? "");
   return (
     <section className="grid items-start gap-5 sm:grid-cols-2">
       <ProfileNameFields
-        register={register}
+        fullName={user.fullName ?? ""}
         errors={errors}
         isSaving={isSaving}
       />{" "}
@@ -45,13 +34,16 @@ export default function ProfileDetailsFields({
           className="native-input"
           id="username"
           placeholder="username"
-          {...register("username")}
+          name="username"
+          defaultValue={user.username ?? ""}
+          disabled={isSaving}
         />
       </label>
       <PhoneEditSelector
-        value={values.phone}
+        value={phone}
         error={phoneError}
         onChange={onPhoneChange}
+        disabled={isSaving}
       />
       <label className="form-field" htmlFor="location">
         Location
@@ -60,7 +52,9 @@ export default function ProfileDetailsFields({
           className="native-input"
           id="location"
           placeholder="City"
-          {...register("city")}
+          name="city"
+          defaultValue={user.city ?? ""}
+          disabled={isSaving}
         />
       </label>
       <label className="form-field sm:col-span-2">
@@ -72,13 +66,16 @@ export default function ProfileDetailsFields({
           aria-describedby="bio-character-count"
           placeholder="Tell people a little about yourself."
           className="profile-description-input"
-          {...register("bio")}
+          name="bio"
+          value={bio}
+          onChange={(event) => setBio(event.target.value)}
+          disabled={isSaving}
         />
         <span
           id="bio-character-count"
           className="text-right text-xs font-normal text-muted"
         >
-          {values.bio.length} / 255 characters
+          {bio.length} / 255 characters
         </span>
       </label>
     </section>

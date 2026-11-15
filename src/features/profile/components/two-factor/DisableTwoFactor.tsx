@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useRef, useState, type FormEvent } from "react";
+import { useId, useRef, useState, type SubmitEvent } from "react";
 import { Dialog } from "@base-ui/react/dialog";
 import Modal from "@/shared/components/Modal/Modal";
 import { Check, LoaderCircle, ShieldAlert, X } from "lucide-react";
@@ -80,7 +80,7 @@ export default function DisableTwoFactor({
     if (result) onRemoved(result.stillEnabled);
   }
 
-  async function disable(event: FormEvent<HTMLFormElement>) {
+  async function disable(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     await run(async () => {
       if (!factors.some((factor) => factor.id === factorId))

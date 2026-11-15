@@ -1,8 +1,9 @@
 
 import type { ProfileDetailsFieldsProps } from "@/features/profile/edit-profile/components/ProfileDetailsFields";
 
-type Props = Pick<ProfileDetailsFieldsProps, "register" | "errors" | "isSaving">;
-export default function ProfileNameFields({ register, errors, isSaving }: Props) {
+type Props = Pick<ProfileDetailsFieldsProps, "errors" | "isSaving"> & { fullName: string };
+export default function ProfileNameFields({ fullName, errors, isSaving }: Props) {
+  const [firstName = "", ...remainingNames] = fullName.split(/\s+/);
   return (<>
             <label
               className="form-field"
@@ -18,7 +19,8 @@ export default function ProfileNameFields({ register, errors, isSaving }: Props)
                 autoComplete="given-name"
                 placeholder="Your first name"
                 disabled={isSaving}
-                {...register("firstName")}
+                name="firstName"
+                defaultValue={firstName}
               />
               {errors.firstName && (
                 <span
@@ -44,7 +46,8 @@ export default function ProfileNameFields({ register, errors, isSaving }: Props)
                 autoComplete="family-name"
                 placeholder="Your last name"
                 disabled={isSaving}
-                {...register("lastName")}
+                name="lastName"
+                defaultValue={remainingNames.join(" ")}
               />
               {errors.lastName && (
                 <span

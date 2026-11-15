@@ -7,7 +7,7 @@ import { FieldError } from "@/shared/components/FieldError/FieldError";
 import useRegisterForm from "@/features/auth/hooks/useRegisterForm";
 
 export default function RegisterForm() {
-  const { register, formHandler, errors, isSubmitting } = useRegisterForm();
+  const { formAction, errors, isSubmitting } = useRegisterForm();
 
   return (
     <section className="auth-form-card" aria-labelledby="register-title">
@@ -21,7 +21,12 @@ export default function RegisterForm() {
         </p>
       </div>
 
-      <form className="grid gap-4" onSubmit={formHandler}>
+      <form
+        className="grid gap-4"
+        action={formAction}
+        // Keep entered values when validation or authentication fails.
+        onReset={(event) => event.preventDefault()}
+      >
         <div className="grid gap-2">
           <label className="field-label" htmlFor="username">
             Username
@@ -33,7 +38,8 @@ export default function RegisterForm() {
             autoComplete="username"
             minLength={3}
             className="form-input"
-            {...register("username")}
+            name="username"
+            disabled={isSubmitting}
           />
           <FieldError message={errors.username} />
         </div>
@@ -48,7 +54,8 @@ export default function RegisterForm() {
             placeholder="you@example.com"
             autoComplete="email"
             className="form-input"
-            {...register("email")}
+            name="email"
+            disabled={isSubmitting}
           />
           <FieldError message={errors.email} />
         </div>
@@ -58,20 +65,23 @@ export default function RegisterForm() {
           label="Password"
           autoComplete="new-password"
           error={errors.password}
-          {...register("password")}
+          name="password"
+            disabled={isSubmitting}
         />
         <PasswordField
           id="confirm-password"
           label="Confirm Password"
           autoComplete="new-password"
           error={errors.confirmPassword}
-          {...register("confirmPassword")}
+          name="confirmPassword"
+            disabled={isSubmitting}
         />
 
         <label className="flex cursor-pointer items-start gap-2.5 text-xs leading-[1.45] text-muted">
           <input
             className="mt-px size-4 accent-accent"
             name="terms"
+            disabled={isSubmitting}
             type="checkbox"
             required
           />

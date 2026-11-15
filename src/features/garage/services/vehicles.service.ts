@@ -1,35 +1,15 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
+import { revalidatePath } from "next/cache";
+import { redirect, RedirectType } from "next/navigation";
+import type { VehicleFormState } from "@/features/garage/types/add-vehicle-form";
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { getAuthenticatedUser } from "@/shared/services/auth-user.service";
 import type { Vehicle } from "@/features/garage/types/vehicle";
 import { addVehicleSchema } from "@/features/garage/validators/add-vehicle-validator";
 import { createUpdateMileageSchema } from "@/features/garage/validators/update-mileage-validator";
 import { z } from "zod";
 import { getVehicleFieldErrors } from "@/features/garage/validators/getVehicleFieldErrors";
-
-// Every exported function is an entry point, including calls from Client Components.
-async function getVehicleSession() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-    error,
-  } = await getAuthenticatedUser(supabase);
-
-  if (error || !user) throw new Error("Please sign in again.");
-
-  const { data: assurance, error: assuranceError } =
-    await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
-
-  if (assuranceError)
-    throw new Error("Could not verify your session. Please try again.");
-  if (assurance.nextLevel === "aal2" && assurance.currentLevel !== "aal2") {
-    throw new Error("Please complete two-factor authentication first.");
-  }
-
-  return { supabase, user };
-}
+import requireUserWithMfa from "@/shared/services/auth-session.service";
 
 // Expected errors must be returned; production Server Actions redact thrown errors.
 async function runVehicleMutation<T>(operation: () => Promise<T>) {
@@ -55,7 +35,7 @@ async function runVehicleMutation<T>(operation: () => Promise<T>) {
 }
 
 export async function getVehicles(): Promise<Vehicle[]> {
-  const { supabase, user } = await getVehicleSession();
+  const { supabase, user } = await requireUserWithMfa();
 
   const { data, error } = await supabase
     .from("vehicles")
@@ -75,8 +55,8 @@ export async function getVehicles(): Promise<Vehicle[]> {
 
 export async function addVehicle(input: unknown) {
   return await runVehicleMutation(async () => {
-    const { supabase, user } = await getVehicleSession();
-    // Validate the input using the Zod schema
+
+    const { supabase, user } = await requireUserWithMfa();
     const values = addVehicleSchema.parse(input);
 
     const { data, error } = await supabase
@@ -125,6 +105,7 @@ export async function addVehicle(input: unknown) {
     if (!data) {
       throw new Error("Could not save the vehicle.");
     }
+    revalidatePath("/garrage");
     return data.id as string;
   });
 }
@@ -132,7 +113,8 @@ export async function addVehicle(input: unknown) {
 export async function getVehicleById(
   vehicleId: string,
 ): Promise<Vehicle | null> {
-  const { supabase, user } = await getVehicleSession();
+  const { supabase, user } = await requireUserWithMfa();
+
   return await findOwnedVehicle(supabase, user.id, vehicleId);
 }
 
@@ -169,13 +151,25 @@ async function findOwnedVehicle(
   return data ?? null;
 }
 
-export async function updateVehicle(vehicleId: string, input: unknown) {
-  return await runVehicleMutation(async () => {
-    const { supabase, user } = await getVehicleSession();
-    if (!z.uuid().safeParse(vehicleId).success) {
-      throw new Error("Invalid vehicle ID format.");
-    }
-    const values = addVehicleSchema.parse(input);
+export async function updateVehicle(
+  vehicleId: string,
+  _previousState: VehicleFormState,
+  formData: FormData,
+): Promise<VehicleFormState> {
+  const result = await runVehicleMutation(async () => {
+
+    const { supabase, user } = await requireUserWithMfa();
+
+    const vehicle = await findOwnedVehicle(supabase, user.id, vehicleId);
+    if (!vehicle) throw new Error("Vehicle not found.");
+
+    const values = addVehicleSchema.parse({
+      ...Object.fromEntries(formData),
+      isPrimary: formData.has("isPrimary"),
+      // Mileage is validated from the saved record, never from this form.
+      mileageKm: String(vehicle.mileageKm),
+      mileageRecordedAt: vehicle.mileageRecordedAt?.slice(0, 10) ?? "",
+    });
 
     const { data, error } = await supabase
       .from("vehicles")
@@ -201,11 +195,21 @@ export async function updateVehicle(vehicleId: string, input: unknown) {
 
     return data.id;
   });
+
+  if (result.error !== null) {
+    return { error: result.error, fieldErrors: result.fieldErrors ?? {} };
+  }
+
+  revalidatePath("/garrage");
+  revalidatePath(`/vehicles/${vehicleId}`);
+  redirect(`/vehicles/${vehicleId}`, RedirectType.replace);
 }
 
 export async function updateVehicleMileage(vehicleId: string, input: unknown) {
   return await runVehicleMutation(async () => {
-    const { supabase, user } = await getVehicleSession();
+
+    const { supabase, user } = await requireUserWithMfa();
+
     const vehicle = await findOwnedVehicle(supabase, user.id, vehicleId);
 
     if (!vehicle) {
@@ -233,16 +237,16 @@ export async function updateVehicleMileage(vehicleId: string, input: unknown) {
         mileageRecordedAt: recordedAt,
         ...(values.mode !== "reading"
           ? {
-              mileageAdjustment: {
-                kind: values.mode,
-                reason: values.reason,
-                previousMileageKm: vehicle.mileageKm,
-                previousRecordedAt: vehicle.mileageRecordedAt,
-                mileageKm: values.mileageKm,
-                recordedAt: recordedAt,
-                adjustedAt: new Date().toISOString(),
-              },
-            }
+            mileageAdjustment: {
+              kind: values.mode,
+              reason: values.reason,
+              previousMileageKm: vehicle.mileageKm,
+              previousRecordedAt: vehicle.mileageRecordedAt,
+              mileageKm: values.mileageKm,
+              recordedAt: recordedAt,
+              adjustedAt: new Date().toISOString(),
+            },
+          }
           : {}),
       })
       .eq("id", vehicleId)
@@ -261,13 +265,17 @@ export async function updateVehicleMileage(vehicleId: string, input: unknown) {
       );
     }
 
+    revalidatePath("/garrage");
+    revalidatePath(`/vehicles/${vehicleId}`);
     return data.id;
   });
 }
 
 export async function setPrimaryVehicle(vehicleId: string) {
   return await runVehicleMutation(async () => {
-    const { supabase } = await getVehicleSession();
+
+    const { supabase } = await requireUserWithMfa();
+
     if (!z.uuid().safeParse(vehicleId).success) {
       throw new Error("Invalid vehicle ID format.");
     }
@@ -278,12 +286,16 @@ export async function setPrimaryVehicle(vehicleId: string) {
     if (error) {
       throw error;
     }
+    revalidatePath("/garrage");
+    revalidatePath(`/vehicles/${vehicleId}`);
   });
 }
 
 export async function deleteVehicle(vehicleId: string) {
   return await runVehicleMutation(async () => {
-    const { supabase, user } = await getVehicleSession();
+
+    const { supabase, user } = await requireUserWithMfa();
+
     // Verify ownership before deleting any files.
     const vehicle = await findOwnedVehicle(supabase, user.id, vehicleId);
 
@@ -328,5 +340,7 @@ export async function deleteVehicle(vehicleId: string) {
           : "Could not delete the vehicle. Please try again.",
       );
     }
+    revalidatePath("/garrage");
+    revalidatePath(`/vehicles/${vehicleId}`);
   });
 }

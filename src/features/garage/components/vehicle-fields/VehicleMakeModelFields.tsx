@@ -10,7 +10,6 @@ export type VehicleMakeModelProps = VehicleDocumentFieldProps & {
   makes: VehicleMake[];
   selectedMake: string;
   onMakeChange: (makeId: string) => void;
-  isLoadingMakes: boolean;
   models: VehicleModel[];
   selectedModel: string;
   onModelChange: (modelId: string) => void;
@@ -19,13 +18,13 @@ export type VehicleMakeModelProps = VehicleDocumentFieldProps & {
 };
 
 export default function VehicleMakeModelFields({
+  onClearFieldError,
   errors,
   values,
   onFieldChange,
   makes,
   selectedMake,
   onMakeChange,
-  isLoadingMakes,
   models,
   selectedModel,
   onModelChange,
@@ -34,11 +33,11 @@ export default function VehicleMakeModelFields({
 }: VehicleMakeModelProps) {
 
   function handleCustomMakeChange(event: ChangeEvent<HTMLInputElement>) {
-    onFieldChange("customMake", event.target.value);
+    onFieldChange?.("customMake", event.target.value);
   }
 
   function handleCustomModelChange(event: ChangeEvent<HTMLInputElement>) {
-    onFieldChange("customModel", event.target.value);
+    onFieldChange?.("customModel", event.target.value);
   }
 
   return (
@@ -50,9 +49,11 @@ export default function VehicleMakeModelFields({
           label="Make"
           options={makes}
           value={selectedMake}
-          onChange={onMakeChange}
-          disabled={isLoadingMakes}
-          placeholder={isLoadingMakes ? "Loading makes..." : "Choose a make"}
+          onChange={(value) => {
+            onMakeChange(value);
+            onClearFieldError?.("make");
+          }}
+          placeholder="Choose a make"
           errorId={errors.make && selectedMake !== "other" ? "make-error" : undefined}
         />
         {selectedMake === "other" ? (
@@ -66,7 +67,8 @@ export default function VehicleMakeModelFields({
               className="native-input"
               id="custom-make"
               name="customMake"
-              value={values.customMake}
+              onInput={() => onClearFieldError?.("make")}
+              value={values?.customMake}
               onChange={handleCustomMakeChange}
               placeholder="Enter your vehicle make"
               aria-required="true"
@@ -95,7 +97,8 @@ export default function VehicleMakeModelFields({
               className="native-input"
               id="custom-model"
               name="customModel"
-              value={values.customModel}
+              onInput={() => onClearFieldError?.("model")}
+              value={values?.customModel}
               onChange={handleCustomModelChange}
               placeholder="Enter your vehicle model"
               aria-required="true"
@@ -116,7 +119,10 @@ export default function VehicleMakeModelFields({
               label="Model"
               options={models}
               value={selectedModel}
-              onChange={onModelChange}
+              onChange={(value) => {
+                onModelChange(value);
+                onClearFieldError?.("model");
+              }}
               disabled={!selectedMake || isLoadingModels}
               placeholder={!selectedMake ? "Choose a make first" : isLoadingModels ? "Loading models..." : "Choose a model"}
               errorId={modelsError ? "model-catalog-error" : errors.model && selectedModel !== "other" ? "model-error" : undefined}
@@ -132,7 +138,8 @@ export default function VehicleMakeModelFields({
                   className="native-input"
                   id="custom-model"
                   name="customModel"
-                  value={values.customModel}
+                  onInput={() => onClearFieldError?.("model")}
+                  value={values?.customModel}
                   onChange={handleCustomModelChange}
                   placeholder="Enter your vehicle model"
                   aria-required="true"

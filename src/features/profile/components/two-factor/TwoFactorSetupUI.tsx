@@ -1,4 +1,4 @@
-import type { FormEvent, RefObject } from "react";
+import type { SubmitEvent, RefObject } from "react";
 import { Check, LoaderCircle, ShieldCheck, X } from "lucide-react";
 import { Dialog } from "@base-ui/react/dialog";
 import Modal from "@/shared/components/Modal/Modal";
@@ -17,7 +17,7 @@ type Props = {
   inputId: string;
   triggerRef: RefObject<HTMLButtonElement | null>;
   onClose: () => Promise<void>;
-  onVerify: (event: FormEvent<HTMLFormElement>) => Promise<void>;
+  onVerify: (event: SubmitEvent<HTMLFormElement>) => Promise<void>;
   onCodeChange: (code: string) => void;
   onRetry: () => Promise<void>;
 };
