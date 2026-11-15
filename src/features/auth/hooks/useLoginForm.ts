@@ -2,10 +2,8 @@
 
 import { useActionState, useState } from "react";
 import { useRouter } from "next/navigation";
-import {
-  loginUser,
-  loginWithOAuth,
-} from "@/features/auth/services/auth.service";
+import { loginUser } from "@/features/auth/services/auth.service";
+import { loginWithOAuth } from "@/features/auth/services/oauth.service";
 import {
   validateLoginForm,
   type LoginFormValues,
@@ -64,6 +62,8 @@ export default function useLoginForm() {
     try {
       const result = await loginWithOAuth(provider);
       setOauthError(result.error);
+    } catch {
+      setOauthError("Could not start sign-in. Please try again.");
     } finally {
       setOauthPending(false);
     }

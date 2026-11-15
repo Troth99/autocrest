@@ -18,7 +18,7 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "@/shared/components/ui/avatar";
-import { logoutUser } from "@/features/auth";
+import { logoutUser } from "@/features/auth/services/auth.service";
 import ThemeSelector from "@/shared/components/Header/UserMenu/ThemeSelector/ThemeSelector";
 
 type UserMenuProps = {
