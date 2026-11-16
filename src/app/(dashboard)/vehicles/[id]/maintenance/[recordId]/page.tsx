@@ -1,4 +1,4 @@
-import RecordVehicleDetails from "@/features/garage/components/vehicle-details/recordVehicleDetails/RecordVehicleDetails";
+import RecordVehicleDetails from "@/features/garage/components/vehicle-details/components/recordVehicleDetails/RecordVehicleDetails";
 import { getVehicleReportById } from "@/features/garage/services/vehicle-record.service";
 import { notFound } from "next/navigation";
 
