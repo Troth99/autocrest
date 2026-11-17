@@ -10,10 +10,10 @@ export default function Home() {
     <div className="min-h-screen text-text-primary">
       {/* Hero */}
       <HeroSection />
-      {/* How it works */}
-      <HowItWorksSection />
       {/* Modules */}
       <ModulesSection />
+      {/* How it works */}
+      <HowItWorksSection />
       {/* Timeline */}
       <TimelineSection />
     </div>

@@ -22,7 +22,7 @@ export default function HeroSection() {
           />
         </svg>
       ))}
-      <div className="relative mx-auto w-full max-w-6xl">
+      <div className="relative mx-auto w-full max-w-[112rem]">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-xs font-semibold tracking-[0.18em] text-accent-text">
             YOUR PERSONAL VEHICLE SPACE
@@ -47,7 +47,7 @@ export default function HeroSection() {
             </a>
           </div>
         </div>
-        <div className="mt-10 sm:mt-12">
+        <div className="mt-8 sm:mt-10">
           <VehicleTypes />
         </div>
       </div>

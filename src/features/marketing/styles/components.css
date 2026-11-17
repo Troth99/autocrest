@@ -1,8 +1,8 @@
 /* Marketing component styles. Keep layout-specific utilities in JSX. */
 @layer components {
   .marketing-hero {
-    @apply relative isolate block w-full overflow-hidden px-4 pb-10 pt-12;
-    @apply sm:px-6 sm:pb-12 sm:pt-16;
+    @apply relative isolate block w-full overflow-hidden px-4 pb-3 pt-12;
+    @apply sm:px-6 sm:pb-4 sm:pt-16;
   }
 
   .marketing-hero-road {
