@@ -20,7 +20,8 @@ export default function SiteHeader({ showNavigation = true }: SiteHeaderProps) {
     return null;
   }
 
-  const isAccountPage = Boolean(user) && showNavigation && pathname !== "/";
+  const isGaragePage = pathname === "/garrage";
+  const showMarketingLinks = !user || pathname === "/";
 
   return (
     <header className="site-header">
@@ -45,12 +46,13 @@ export default function SiteHeader({ showNavigation = true }: SiteHeaderProps) {
           </span>
         </Link>
 
-        {showNavigation &&
-          (isAccountPage ? (
-            <div className="header-search">
-              <GarageSearch />
-            </div>
-          ) : (
+        {showNavigation && user && isGaragePage && (
+          <div className="header-search">
+            <GarageSearch />
+          </div>
+        )}
+
+        {showNavigation && showMarketingLinks && (
             <div className="header-marketing-links">
               <Link href="/#modules" className="header-nav-link">
                 Features
@@ -62,18 +64,13 @@ export default function SiteHeader({ showNavigation = true }: SiteHeaderProps) {
                 Why AutoCrest
               </Link>
             </div>
-          ))}
+        )}
 
         {showNavigation && (
           <div className="ml-auto flex max-w-full flex-wrap items-center justify-end gap-2 sm:gap-3">
-            {isAccountPage && <GarageHeaderTools />}
             {user ? (
               <>
-                {!isAccountPage && (
-                  <Link href="/garrage" className="button-primary button-base px-4 py-2.5 text-sm shadow-none">
-                    My garage
-                  </Link>
-                )}
+                <GarageHeaderTools />
                 <UserMenu
                   username={user.username || "Account"}
                   email={user.email ?? ""}
