@@ -1,8 +1,44 @@
 /* Marketing component styles. Keep layout-specific utilities in JSX. */
 @layer components {
   .marketing-hero {
-    @apply relative isolate flex min-h-[calc(100svh-5rem)] w-full items-center overflow-hidden px-6;
-    @apply py-12 sm:px-10 lg:px-12 lg:py-20;
+    @apply relative isolate block w-full overflow-hidden px-4 pb-10 pt-12;
+    @apply sm:px-6 sm:pb-12 sm:pt-16;
+  }
+
+  .marketing-hero-road {
+    position: absolute;
+    top: 0;
+    width: max(18rem, calc(50% - 16rem));
+    height: 25rem;
+    stroke: var(--accent-text);
+    stroke-width: 1;
+    opacity: 0.4;
+    pointer-events: none;
+    mask-image: linear-gradient(to bottom, transparent, #000 20%, #000 65%, transparent);
+  }
+
+  .marketing-hero-road-left {
+    left: -2rem;
+  }
+
+  .marketing-hero-road-right {
+    right: -2rem;
+    transform: scaleX(-1);
+  }
+
+  @media (max-width: 47.999rem) {
+    .marketing-hero-road {
+      width: 14rem;
+      opacity: 0.12;
+    }
+
+    .marketing-hero-road-left {
+      left: -9rem;
+    }
+
+    .marketing-hero-road-right {
+      right: -9rem;
+    }
   }
 
   .timeline-check {
