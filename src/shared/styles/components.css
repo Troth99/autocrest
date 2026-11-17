@@ -73,8 +73,60 @@
   }
 
   .account-navigation {
-    @apply border-b border-line bg-panel px-3 py-4 lg:w-52 lg:shrink-0 lg:border-b-0 lg:border-r;
-    @apply lg:px-4 lg:py-8;
+    @apply border-b border-line bg-panel px-3 py-4 lg:w-64 lg:shrink-0 lg:border-b-0 lg:border-r;
+    @apply lg:py-8;
+  }
+
+  .account-navigation-heading {
+    @apply mb-3 px-4 text-xs font-semibold uppercase tracking-wider text-muted;
+  }
+
+  .account-navigation-placeholder {
+    display: grid;
+    grid-template-columns: 1.25rem minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 0.5rem;
+    padding: 0.75rem 0.875rem;
+    border-left: 3px solid transparent;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    white-space: nowrap;
+    color: var(--text-muted);
+  }
+
+  .account-navigation-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.3rem 0.4rem;
+    border-radius: 999px;
+    background: var(--secondary);
+    color: var(--text-muted);
+    font-size: 0.5625rem;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .account-navigation a {
+    white-space: nowrap;
+  }
+
+  @media (min-width: 64rem) {
+    .account-navigation {
+      width: 16rem;
+      flex: 0 0 16rem;
+    }
+  }
+
+  .account-navigation a[aria-current="page"] {
+    background: color-mix(in srgb, var(--accent) 12%, var(--surface-panel));
+    color: var(--text-primary);
+  }
+
+  .account-navigation a[aria-current="page"] svg {
+    color: var(--accent);
   }
 
   .form-textarea {
@@ -180,6 +232,10 @@
     background-color: var(--surface-input);
     color: var(--text-primary);
   }
-  .PhoneInputInput::placeholder { color: var(--text-muted); }
-  .PhoneInputInput:focus-visible { border-color: var(--focus-ring); }
+  .PhoneInputInput::placeholder {
+    color: var(--text-muted);
+  }
+  .PhoneInputInput:focus-visible {
+    border-color: var(--focus-ring);
+  }
 }
