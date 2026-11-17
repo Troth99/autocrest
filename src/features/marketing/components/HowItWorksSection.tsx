@@ -1,63 +1,44 @@
-import { BellRing, CarFront, ClipboardList } from "lucide-react";
-
 const steps = [
   {
-    step: "01",
     title: "Add your vehicle",
-    description:
-      "Start with the basics: make, model, year, mileage, and VIN when you have it.",
-    icon: CarFront,
+    description: "Create a home for each vehicle with the key details.",
   },
   {
-    step: "02",
-    title: "Record everything",
-    description:
-      "Keep services, repairs, expenses, documents, and mileage in one clear timeline.",
-    icon: ClipboardList,
+    title: "Record the work",
+    description: "Add services, repairs and costs as they happen.",
   },
   {
-    step: "03",
-    title: "Stay prepared",
-    description:
-      "See what is due next and get reminders before important dates arrive.",
-    icon: BellRing,
+    title: "See what comes next",
+    description: "Keep track of upcoming service and stay in control.",
   },
 ];
 
 export default function HowItWorksSection() {
   return (
-    <section
-      id="how-it-works"
-      className="mx-auto max-w-6xl px-6 py-16 sm:py-24"
-    >
-      <div className="mx-auto max-w-2xl text-center">
-        <span className="eyebrow">SIMPLE BY DESIGN</span>
-        <h2 className="page-title mt-4">
-          One clear place for your vehicle&apos;s life
-        </h2>
-        <p className="mt-4 section-description sm:text-base">
-          No automotive expertise needed. Just capture what happens and let
-          AutoCrest keep it organised.
-        </p>
-      </div>
-      <div className="mt-10 grid gap-4 md:grid-cols-3">
-        {steps.map(({ step, title, description, icon: Icon }) => (
-          <article key={step} className="panel-card p-6 sm:p-7">
-            <div className="flex items-center justify-between">
-              <span className="flex size-11 items-center justify-center rounded-2xl bg-info-soft text-info">
-                <Icon className="size-5" />
-              </span>
-              <span className="text-xs font-bold tracking-[0.16em] text-accent-text">
-                {step}
-              </span>
-            </div>
-            <h3 className="mt-7 text-lg font-semibold tracking-[-0.025em] text-text-primary">
-              {title}
-            </h3>
-            <p className="mt-3 section-description">{description}</p>
-          </article>
+    <section id="how-it-works" aria-labelledby="how-it-works-title" className="marketing-section">
+      <h2 id="how-it-works-title" className="marketing-section-title">
+        From scattered records to a story.
+      </h2>
+      <ol className="mt-6 grid gap-6 md:grid-cols-3 md:gap-0">
+        {steps.map(({ title, description }, index) => (
+          <li key={title} className="relative px-4 text-center">
+            {index < steps.length - 1 && (
+              <span
+                className="absolute left-[calc(50%+2rem)] right-[calc(-50%+2rem)] top-4 hidden h-px bg-info-border md:block"
+                aria-hidden="true"
+              />
+            )}
+            <span
+              className="relative mx-auto flex size-8 items-center justify-center rounded-full border border-info bg-background text-sm font-semibold text-accent-text"
+              aria-hidden="true"
+            >
+              {index + 1}
+            </span>
+            <h3 className="mt-3 text-lg font-semibold text-text-primary">{title}</h3>
+            <p className="marketing-copy mx-auto mt-1 max-w-xs">{description}</p>
+          </li>
         ))}
-      </div>
+      </ol>
     </section>
   );
 }

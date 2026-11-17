@@ -53,7 +53,8 @@ export default function UserMenu({
         // Start loading the profile before the user selects it from the menu.
         onPointerEnter={() => router.prefetch("/profile")}
         onFocus={() => router.prefetch("/profile")}
-        className="cursor-pointer  rounded-full outline-none transition-[transform,box-shadow] duration-200 hover:scale-105 hover:shadow-[0_0_18px_rgb(56_189_248/28%)] focus-visible:ring-2 focus-visible:ring-ring/50 motion-reduce:transition-none motion-reduce:hover:scale-100"
+        aria-label="Open account menu"
+        className="cursor-pointer rounded-full outline-none ring-1 ring-line transition-shadow hover:ring-border-input focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none"
       >
         <Avatar>
           {avatarUrl && <AvatarImage src={avatarUrl} alt={username} />}

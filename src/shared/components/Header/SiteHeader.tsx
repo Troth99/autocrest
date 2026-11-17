@@ -17,20 +17,21 @@ export default function SiteHeader({ showNavigation = true }: SiteHeaderProps) {
   const pathname = usePathname();
 
   if (pathname === "/reset-password" || pathname === "/forgot-password") {
-    return null
+    return null;
   }
 
-  const isAccountPage = Boolean(user) && showNavigation;
+  const isAccountPage = Boolean(user) && showNavigation && pathname !== "/";
 
   return (
-    <header className="sticky top-0 z-10 border-b border-line bg-dark-800">
+    <header className="site-header">
       <nav
-        className={`header-nav max-w-7xl ${isAccountPage ? "header-nav-account" : ""}`}
+        aria-label="Main navigation"
+        className="header-nav"
       >
-        <Link href="/" className="flex shrink-0 items-center gap-2">
+        <Link href="/" className="flex shrink-0 items-center gap-2 rounded-lg outline-offset-4 focus-visible:outline-2 focus-visible:outline-focus">
           <svg
             viewBox="0 0 36 32"
-            className="h-8 w-9 shrink-0 text-accent-text"
+            className="h-7 w-8 shrink-0 text-accent"
             fill="currentColor"
             aria-hidden="true"
           >
@@ -39,7 +40,7 @@ export default function SiteHeader({ showNavigation = true }: SiteHeaderProps) {
             <path d="M25.5 12 36 29H27.5L19.5 19Z" opacity="0.7" />
             <path d="M18 22 24 29H12Z" />
           </svg>
-          <span className="text-xl font-semibold tracking-tight text-text-primary">
+          <span className="text-xl font-bold tracking-tight text-text-primary">
             AutoCrest
           </span>
         </Link>
@@ -50,28 +51,35 @@ export default function SiteHeader({ showNavigation = true }: SiteHeaderProps) {
               <GarageSearch />
             </div>
           ) : (
-            <div className="hidden items-center gap-6 md:flex">
-              <a href="#modules" className="header-nav-link">
-                Modules
-              </a>
-              <a href="#how-it-works" className="header-nav-link">
+            <div className="header-marketing-links">
+              <Link href="/#modules" className="header-nav-link">
+                Features
+              </Link>
+              <Link href="/#how-it-works" className="header-nav-link">
                 How it works
-              </a>
-              <a href="#timeline" className="header-nav-link">
-                Timeline
-              </a>
+              </Link>
+              <Link href="/#timeline" className="header-nav-link">
+                Why AutoCrest
+              </Link>
             </div>
           ))}
 
         {showNavigation && (
-          <div className="flex max-w-full shrink-0 flex-wrap items-center gap-2 sm:gap-5 lg:translate-x-3">
+          <div className="ml-auto flex max-w-full flex-wrap items-center justify-end gap-2 sm:gap-3">
             {isAccountPage && <GarageHeaderTools />}
             {user ? (
-              <UserMenu
-                username={user.username || "Account"}
-                email={user.email ?? ""}
-                avatarUrl={user.avatarUrl || null}
-              />
+              <>
+                {!isAccountPage && (
+                  <Link href="/garrage" className="button-primary button-base px-4 py-2.5 text-sm shadow-none">
+                    My garage
+                  </Link>
+                )}
+                <UserMenu
+                  username={user.username || "Account"}
+                  email={user.email ?? ""}
+                  avatarUrl={user.avatarUrl || null}
+                />
+              </>
             ) : (
               <>
                 <Link href="/login" className="header-sign-in">
@@ -79,9 +87,9 @@ export default function SiteHeader({ showNavigation = true }: SiteHeaderProps) {
                 </Link>
                 <Link
                   href="/register"
-                  className="button-primary button-base px-4 py-2 text-sm font-semibold hover:scale-105"
+                  className="button-primary button-base px-4 py-2.5 text-sm shadow-none"
                 >
-                  Get started
+                  Start your garage
                 </Link>
               </>
             )}

@@ -139,35 +139,33 @@
 
 /* Site header */
 @layer components {
-  .header-nav {
-    @apply mx-auto flex items-center justify-between gap-4 px-4 py-4 sm:px-6;
+  .site-header {
+    @apply sticky top-0 z-40 border-b border-line bg-background/95 backdrop-blur-md;
   }
 
-  .header-nav-account {
-    @apply w-full flex-wrap;
+  .header-nav {
+    @apply mx-auto flex w-full max-w-[112rem] flex-wrap items-center justify-between gap-x-4 gap-y-3 px-4 py-3 sm:px-6;
+  }
+
+  .header-marketing-links {
+    @apply order-last flex w-full items-center justify-center gap-2 border-t border-line pt-3;
+    @apply md:order-0 md:ml-auto md:w-auto md:gap-4 md:border-0 md:pt-0;
   }
 
   .header-nav-link {
-    @apply relative rounded-lg px-2 py-1.5 text-sm font-medium text-text-secondary;
-    @apply transition-[color,background-color,transform] duration-200 after:absolute after:inset-x-2;
-    @apply after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full;
-    @apply after:bg-info after:transition-transform after:duration-200 hover:-translate-y-0.5;
-    @apply hover:bg-info-soft hover:text-info-strong hover:after:scale-x-100;
-    @apply motion-reduce:transition-none motion-reduce:hover:translate-y-0;
-    @apply motion-reduce:after:transition-none;
+    @apply rounded-lg px-3 py-2 text-sm font-medium text-text-secondary;
+    @apply transition-colors hover:bg-panel hover:text-text-primary;
+    @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus motion-reduce:transition-none;
   }
 
   .header-sign-in {
-    @apply hidden rounded-full border border-line bg-panel px-3.5 py-2 text-sm font-semibold;
-    @apply text-text-primary shadow-sm;
-    @apply transition-[color,background-color,border-color,transform,box-shadow] duration-200;
-    @apply hover:-translate-y-0.5 hover:border-info-border hover:bg-info-soft hover:text-info-strong;
-    @apply hover:shadow-[0_8px_20px_rgb(166_154_232/14%)] sm:block motion-reduce:transition-none;
-    @apply motion-reduce:hover:translate-y-0;
+    @apply rounded-lg px-2 py-2.5 text-sm font-medium text-text-secondary sm:px-3;
+    @apply transition-colors hover:bg-panel hover:text-text-primary;
+    @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus motion-reduce:transition-none;
   }
 
   .header-search {
-    @apply order-last w-full min-w-0 sm:order-0 sm:ml-auto sm:w-auto sm:flex-1 sm:max-w-sm;
+    @apply order-last w-full min-w-0 md:order-0 md:ml-auto md:max-w-md md:flex-1;
   }
 }
 

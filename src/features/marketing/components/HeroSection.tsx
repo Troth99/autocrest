@@ -29,17 +29,17 @@ export default function HeroSection() {
           </p>
           <h1
             id="hero-title"
-            className="mt-5 text-5xl font-semibold leading-[1.05] tracking-tighter text-text-primary sm:text-7xl lg:text-8xl"
+            className="marketing-hero-title mt-3"
           >
             Every journey.
             <br />
             <span className="text-accent-text">One garage.</span>
           </h1>
-          <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-text-secondary sm:text-lg">
+          <p className="mx-auto mt-4 max-w-xl text-base leading-6 text-text-secondary">
             Keep your vehicle details, service history and next steps together.
           </p>
-          <div className="mt-7 flex flex-wrap justify-center gap-3 sm:gap-4">
-            <Link href="/register" className="button-primary button-base px-6 py-3 text-sm shadow-none">
+          <div className="mt-5 flex flex-wrap justify-center gap-3">
+            <Link href="/garrage" className="button-primary button-base px-6 py-3 text-sm shadow-none">
               Start your garage
             </Link>
             <a href="#how-it-works" className="button-secondary button-base px-6 py-3 text-sm">
@@ -47,7 +47,7 @@ export default function HeroSection() {
             </a>
           </div>
         </div>
-        <div className="mt-8 sm:mt-10">
+        <div className="mt-8">
           <VehicleTypes />
         </div>
       </div>
