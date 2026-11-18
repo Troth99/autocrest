@@ -1,6 +1,6 @@
 import Link from "next/link";
 import HeaderNavigation from "@/shared/components/Header/HeaderNavigation";
-import HeaderNavLinks from "@/shared/components/Header/HeaderNavLinks";
+import HeaderNavLinks from "@/shared/components/Header/headerNavLinks";
 
 
 export default function SiteHeader() {
