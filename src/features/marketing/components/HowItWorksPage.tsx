@@ -8,7 +8,7 @@ export default function HowItWorksPage() {
         <p className="text-sm font-semibold uppercase tracking-widest text-accent">
           How it works
         </p>
-        <h1 id="how-it-works-heading" className="mt-4 max-w-4xl text-3xl font-semibold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
+        <h1 id="how-it-works-heading" className="mt-4 max-w-4xl marketing-page-title">
           Your vehicle. Its story. One place.
         </h1>
         <p className="section-description mt-5 max-w-2xl sm:text-lg">
@@ -31,7 +31,7 @@ export default function HowItWorksPage() {
             <p className="section-description mt-3">
               Save its details, upload a photo and make it part of your garage. Registration-document scanning can help fill in the form. Review the results before saving.
             </p>
-            <p className="mt-4 border-t border-line pt-4 text-sm leading-6 text-text-secondary">
+            <p className="marketing-step-note">
               Managing several vehicles? Choose a primary vehicle and search by make, model, nickname or plate.
             </p>
           </li>
@@ -44,7 +44,7 @@ export default function HowItWorksPage() {
             <p className="section-description mt-3">
               Update the mileage and record maintenance, repairs and costs. Keep the work performed, replaced parts and workshop details together.
             </p>
-            <p className="mt-4 border-t border-line pt-4 text-sm leading-6 text-text-secondary">
+            <p className="marketing-step-note">
               Add the service date, mileage, parts and labour costs so each visit is easy to look back on.
             </p>
           </li>
@@ -57,7 +57,7 @@ export default function HowItWorksPage() {
             <p className="section-description mt-3">
               See upcoming service dates and mileage from your saved records. Download a PDF summary of your vehicle details whenever you need it.
             </p>
-            <p className="mt-4 border-t border-line pt-4 text-sm leading-6 text-text-secondary">
+            <p className="marketing-step-note">
               Include the next recommended date or mileage in a service record to see it on the vehicle page.
             </p>
           </li>

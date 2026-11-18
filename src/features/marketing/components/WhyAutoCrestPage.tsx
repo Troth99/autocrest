@@ -8,7 +8,7 @@ export default function WhyAutoCrestPage() {
         <p className="text-sm font-semibold uppercase tracking-widest text-accent">
           About AutoCrest
         </p>
-        <h1 id="why-autocrest-heading" className="mt-5 text-3xl font-semibold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
+        <h1 id="why-autocrest-heading" className="mt-5 marketing-page-title">
           Vehicle ownership, better organised.
         </h1>
         <p className="mt-6 text-lg leading-8 sm:text-xl">
@@ -17,7 +17,7 @@ export default function WhyAutoCrestPage() {
         </p>
       </section>
 
-      <section aria-labelledby="about-heading" className="mt-12 grid gap-5 border-t border-line py-10 md:grid-cols-[1fr_2fr] md:gap-12">
+      <section aria-labelledby="about-heading" className="mt-12 marketing-about-section">
         <h2 id="about-heading" className="text-2xl font-semibold tracking-tight">Who we are</h2>
         <div className="max-w-2xl space-y-4 text-lg leading-8 text-text-secondary">
           <p>
@@ -33,7 +33,7 @@ export default function WhyAutoCrestPage() {
         </div>
       </section>
 
-      <section aria-labelledby="mission-heading" className="grid gap-5 border-t border-line py-10 md:grid-cols-[1fr_2fr] md:gap-12">
+      <section aria-labelledby="mission-heading" className="marketing-about-section">
         <h2 id="mission-heading" className="text-2xl font-semibold tracking-tight">Why we built it</h2>
         <div className="max-w-2xl space-y-4 text-lg leading-8 text-text-secondary">
           <p>
@@ -49,7 +49,7 @@ export default function WhyAutoCrestPage() {
         </div>
       </section>
 
-      <section aria-labelledby="approach-heading" className="grid gap-5 border-t border-line py-10 md:grid-cols-[1fr_2fr] md:gap-12">
+      <section aria-labelledby="approach-heading" className="marketing-about-section">
         <h2 id="approach-heading" className="text-2xl font-semibold tracking-tight">What matters to us</h2>
         <div className="max-w-2xl space-y-7">
           <div>
@@ -77,7 +77,7 @@ export default function WhyAutoCrestPage() {
         </div>
       </section>
 
-      <section aria-labelledby="future-heading" className="grid gap-5 border-t border-line py-10 md:grid-cols-[1fr_2fr] md:gap-12">
+      <section aria-labelledby="future-heading" className="marketing-about-section">
         <h2 id="future-heading" className="text-2xl font-semibold tracking-tight">Where we are heading</h2>
         <p className="max-w-2xl text-lg leading-8 text-text-secondary">
           We are building on vehicle details and service history, with plans

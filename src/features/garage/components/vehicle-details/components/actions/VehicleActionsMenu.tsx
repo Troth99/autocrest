@@ -81,7 +81,7 @@ export default function VehicleActionsMenu({
         <DropdownMenuTrigger
           aria-label={isExporting ? "Generating PDF" : "More vehicle actions"}
           aria-busy={isExporting}
-          className="button-base button-secondary border p-2.5 cursor-pointer"
+          className="vehicle-detail-action size-10 cursor-pointer border-accent bg-accent/20 p-0 text-text-primary hover:bg-accent/30"
         >
           {isExporting ? (
             <LoaderCircle className="size-5 animate-spin" aria-hidden="true" />

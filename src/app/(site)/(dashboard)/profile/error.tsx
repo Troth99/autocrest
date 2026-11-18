@@ -10,7 +10,7 @@ export default function Error() {
         aria-labelledby="profile-error-heading"
         className="section-card w-full max-w-md text-center"
       >
-        <div className="mx-auto mb-5 flex size-24 -rotate-6 items-center justify-center rounded-full bg-info-soft text-info-strong">
+        <div className="error-page-icon">
           <Angry className="size-16" strokeWidth={1.5} aria-hidden="true" />
         </div>
         <h1 id="profile-error-heading" className="section-title">
