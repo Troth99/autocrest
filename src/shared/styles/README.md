@@ -11,6 +11,9 @@ responsive placement and one-off variations in the component's `className`.
 | Forms | `form-field`, `form-field-label`, `form-input`, `native-input`, `form-select`, `form-textarea` | `components.css` and `utilities.css` |
 | Dialog placement | `modal-position` | `src/shared/styles/components.css` |
 | Service field groups | `service-detail-group` | `src/features/garage/styles/components.css` |
+| Auth page and card | `auth-page`, `auth-page-card` | `src/features/auth/styles/components.css` |
+| Marketing page headings and repeated sections | `marketing-page-title`, `marketing-step-note`, `marketing-about-section` | `src/features/marketing/styles/components.css` |
+| Error page illustration background | `error-page-icon` | `src/shared/styles/components.css` |
 
 `field-description` is small supporting text; `section-description` is the larger
 section introduction. They intentionally have different font sizes and line heights.

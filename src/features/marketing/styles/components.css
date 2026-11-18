@@ -1,23 +1,88 @@
 /* Marketing component styles. Keep layout-specific utilities in JSX. */
 @layer components {
+  .marketing-page-title {
+    @apply text-3xl font-semibold leading-tight tracking-tight sm:text-4xl lg:text-5xl;
+  }
+
+  .marketing-step-note {
+    @apply mt-4 border-t border-line pt-4 text-sm leading-6 text-text-secondary;
+  }
+
+  .marketing-about-section {
+    @apply grid gap-5 border-t border-line py-10 md:grid-cols-[1fr_2fr] md:gap-12;
+  }
+
+  .marketing-home {
+    background: var(--background);
+  }
+
+  .marketing-section {
+    @apply mx-auto max-w-[112rem] scroll-mt-24 px-4 py-5 sm:px-6 sm:py-6;
+  }
+
+  :root:not(.light) .marketing-section {
+    --accent-text: var(--accent);
+    --info: var(--accent);
+    --info-strong: var(--accent-strong);
+    --info-soft: color-mix(in srgb, var(--accent) 10%, transparent);
+    --info-border: color-mix(in srgb, var(--accent) 30%, transparent);
+  }
+
+  .marketing-section-title {
+    @apply text-left text-2xl font-semibold leading-tight tracking-tight text-text-primary sm:text-3xl lg:text-4xl;
+  }
+
+  .marketing-copy {
+    @apply text-sm leading-5 text-text-secondary;
+  }
+
+  .marketing-hero-title {
+    font-size: clamp(2.75rem, 5.5vw, 5.5rem);
+    font-weight: 750;
+    line-height: 1.02;
+    letter-spacing: -0.055em;
+    color: var(--text-primary);
+  }
+
   .marketing-hero {
-    @apply relative isolate flex min-h-[calc(100svh-5rem)] w-full items-center overflow-hidden px-6;
-    @apply py-12 sm:px-10 lg:px-12 lg:py-20;
+    @apply relative isolate block w-full overflow-hidden px-4 pb-3 pt-8;
+    @apply sm:px-6 sm:pb-4 sm:pt-10;
   }
 
-  .timeline-check {
-    @apply mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-accent/15;
-    @apply text-accent-text;
+  .marketing-hero-road {
+    position: absolute;
+    top: 0;
+    width: max(18rem, calc(50% - 16rem));
+    height: 25rem;
+    stroke: var(--accent-text);
+    stroke-width: 1;
+    opacity: 0.4;
+    pointer-events: none;
+    mask-image: linear-gradient(to bottom, transparent, #000 20%, #000 65%, transparent);
   }
 
-  .timeline-card {
-    @apply rounded-3xl border border-line bg-panel p-6;
-    @apply shadow-[0_18px_40px_rgb(0_0_0/18%),inset_0_1px_rgb(255_255_255/4%)] sm:p-8;
+  .marketing-hero-road-left {
+    left: -2rem;
   }
 
-  .timeline-callout {
-    @apply mt-16 rounded-3xl border border-accent/20 bg-accent/10 px-6 py-10 text-center sm:mt-24;
-    @apply sm:px-10 sm:py-14;
+  .marketing-hero-road-right {
+    right: -2rem;
+    transform: scaleX(-1);
+  }
+
+  @media (max-width: 47.999rem) {
+    .marketing-hero-road {
+      width: 14rem;
+      opacity: 0.12;
+    }
+
+    .marketing-hero-road-left {
+      left: -9rem;
+    }
+
+    .marketing-hero-road-right {
+      right: -9rem;
+    }
   }
 
 }

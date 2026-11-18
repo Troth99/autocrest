@@ -28,7 +28,7 @@ export function GarageSearch() {
     <form
       action="/garrage"
       role="search"
-      className="order-last w-full md:order-0 md:max-w-md md:flex-1 lg:max-w-xl"
+      className="w-full"
     >
       <label htmlFor="garage-search" className="sr-only">
         Search your garage by vehicle name or plate

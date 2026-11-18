@@ -9,6 +9,29 @@
 }
 
 @layer components {
+  .error-page-icon {
+    @apply mx-auto mb-5 flex size-24 -rotate-6 items-center justify-center rounded-full bg-info-soft text-info-strong;
+  }
+
+  .vehicle-types {
+    @apply grid grid-cols-4 gap-y-6 rounded-2xl border border-line bg-panel px-2 py-6 sm:px-4 md:grid-cols-8;
+  }
+
+  .vehicle-types-item {
+    @apply flex flex-col items-center justify-center gap-2 text-text-secondary;
+    border-inline-start: 1px solid var(--border-default);
+  }
+
+  .vehicle-types-item:nth-child(4n + 1) {
+    border-inline-start: 0;
+  }
+
+  @media (min-width: 48rem) {
+    .vehicle-types-item:nth-child(5) {
+      border-inline-start: 1px solid var(--border-default);
+    }
+  }
+
   .page-shell {
     width: 100%;
     max-width: 80rem;
@@ -54,8 +77,60 @@
   }
 
   .account-navigation {
-    @apply border-b border-line bg-panel px-3 py-4 lg:w-52 lg:shrink-0 lg:border-b-0 lg:border-r;
-    @apply lg:px-4 lg:py-8;
+    @apply border-b border-line bg-panel px-3 py-4 lg:w-64 lg:shrink-0 lg:border-b-0 lg:border-r;
+    @apply lg:py-8;
+  }
+
+  .account-navigation-heading {
+    @apply mb-3 px-4 text-xs font-semibold uppercase tracking-wider text-muted;
+  }
+
+  .account-navigation-placeholder {
+    display: grid;
+    grid-template-columns: 1.25rem minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 0.5rem;
+    padding: 0.75rem 0.875rem;
+    border-left: 3px solid transparent;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    white-space: nowrap;
+    color: var(--text-muted);
+  }
+
+  .account-navigation-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.3rem 0.4rem;
+    border-radius: 999px;
+    background: var(--secondary);
+    color: var(--text-muted);
+    font-size: 0.5625rem;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .account-navigation a {
+    white-space: nowrap;
+  }
+
+  @media (min-width: 64rem) {
+    .account-navigation {
+      width: 16rem;
+      flex: 0 0 16rem;
+    }
+  }
+
+  .account-navigation a[aria-current="page"] {
+    background: color-mix(in srgb, var(--accent) 12%, var(--surface-panel));
+    color: var(--text-primary);
+  }
+
+  .account-navigation a[aria-current="page"] svg {
+    color: var(--accent);
   }
 
   .form-textarea {
@@ -104,51 +179,49 @@
   }
 
   .site-footer {
-    @apply relative isolate overflow-hidden border-t border-line bg-(image:--footer-background);
-    @apply shadow-[0_-18px_42px_rgb(0_0_0/12%),inset_0_1px_rgb(255_255_255/2.5%)] before:absolute;
-    @apply before:left-1/2 before:-top-px before:h-px before:w-[min(30rem,70vw)];
-    @apply before:-translate-x-1/2;
-    @apply before:bg-[linear-gradient(90deg,transparent,#38bdf8_25%,var(--accent)_75%,transparent)];
-    @apply before:opacity-45 before:content-[''];
+    @apply mt-auto border-t border-line bg-background;
+  }
+
+  .footer-link {
+    @apply inline-block rounded-sm py-1 text-sm text-muted transition-colors;
+    @apply hover:text-text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focus;
+    @apply motion-reduce:transition-none;
   }
 
   .site-footer-bottom {
-    @apply mt-10 flex flex-col items-center justify-between gap-4 border-t border-line pt-6 text-xs;
-    @apply text-subtle sm:flex-row;
+    @apply mt-8 flex flex-col gap-2 text-xs text-subtle sm:flex-row sm:items-center sm:justify-between;
   }
 }
 
 /* Site header */
 @layer components {
-  .header-nav {
-    @apply mx-auto flex items-center justify-between gap-4 px-4 py-4 sm:px-6;
+  .site-header {
+    @apply sticky top-0 z-40 border-b border-line bg-background/95 backdrop-blur-md;
   }
 
-  .header-nav-account {
-    @apply w-full flex-wrap;
+  .header-nav {
+    @apply mx-auto flex w-full max-w-[112rem] flex-wrap items-center justify-between gap-x-4 gap-y-3 px-4 py-3 sm:px-6;
+  }
+
+  .header-marketing-links {
+    @apply order-last flex w-full items-center justify-center gap-2 border-t border-line pt-3;
+    @apply md:order-0 md:ml-auto md:w-auto md:gap-4 md:border-0 md:pt-0;
   }
 
   .header-nav-link {
-    @apply relative rounded-lg px-2 py-1.5 text-sm font-medium text-text-secondary;
-    @apply transition-[color,background-color,transform] duration-200 after:absolute after:inset-x-2;
-    @apply after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full;
-    @apply after:bg-info after:transition-transform after:duration-200 hover:-translate-y-0.5;
-    @apply hover:bg-info-soft hover:text-info-strong hover:after:scale-x-100;
-    @apply motion-reduce:transition-none motion-reduce:hover:translate-y-0;
-    @apply motion-reduce:after:transition-none;
+    @apply rounded-lg px-3 py-2 text-sm font-medium text-text-secondary;
+    @apply transition-colors hover:bg-panel hover:text-text-primary;
+    @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus motion-reduce:transition-none;
   }
 
   .header-sign-in {
-    @apply hidden rounded-full border border-line bg-panel px-3.5 py-2 text-sm font-semibold;
-    @apply text-text-primary shadow-sm;
-    @apply transition-[color,background-color,border-color,transform,box-shadow] duration-200;
-    @apply hover:-translate-y-0.5 hover:border-info-border hover:bg-info-soft hover:text-info-strong;
-    @apply hover:shadow-[0_8px_20px_rgb(166_154_232/14%)] sm:block motion-reduce:transition-none;
-    @apply motion-reduce:hover:translate-y-0;
+    @apply rounded-lg px-2 py-2.5 text-sm font-medium text-text-secondary sm:px-3;
+    @apply transition-colors hover:bg-panel hover:text-text-primary;
+    @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus motion-reduce:transition-none;
   }
 
   .header-search {
-    @apply order-last w-full min-w-0 sm:order-0 sm:ml-auto sm:w-auto sm:flex-1 sm:max-w-sm;
+    @apply order-last w-full min-w-0 md:order-0 md:ml-auto md:max-w-md md:flex-1;
   }
 }
 
@@ -163,6 +236,10 @@
     background-color: var(--surface-input);
     color: var(--text-primary);
   }
-  .PhoneInputInput::placeholder { color: var(--text-muted); }
-  .PhoneInputInput:focus-visible { border-color: var(--focus-ring); }
+  .PhoneInputInput::placeholder {
+    color: var(--text-muted);
+  }
+  .PhoneInputInput:focus-visible {
+    border-color: var(--focus-ring);
+  }
 }

@@ -1,80 +1,94 @@
-import {
-  CalendarClock,
-  FileText,
-  ReceiptText,
-  Share2,
-  Wrench,
-} from "lucide-react";
+import { CalendarDays, CarFront, Wrench } from "lucide-react";
 
-const modules = [
-  {
-    title: "Maintenance",
-    description: "Log services, repairs, parts, and mileage with every visit.",
-    icon: Wrench,
-    color: "text-info",
-  },
-  {
-    title: "Expenses",
-    description:
-      "See the real cost of owning your vehicle, not just separate payments.",
-    icon: ReceiptText,
-    color: "text-info",
-  },
-  {
-    title: "Documents",
-    description:
-      "Keep insurance, invoices, and important vehicle records together.",
-    icon: FileText,
-    color: "text-info",
-  },
-  {
-    title: "Reminders",
-    description:
-      "Never miss a service, inspection, insurance, tax, or vignette deadline.",
-    icon: CalendarClock,
-    color: "text-info",
-  },
-  {
-    title: "Shareable history",
-    description:
-      "Prepare a clear, trustworthy history when it is time to sell.",
-    icon: Share2,
-    color: "text-accent-text",
-  },
+const serviceHistory = [
+  { title: "Oil & filter change", date: "12 Apr 2026", dateTime: "2026-04-12" },
+  { title: "Brake service", date: "28 Jan 2026", dateTime: "2026-01-28" },
+  { title: "Annual inspection", date: "3 Oct 2025", dateTime: "2025-10-03" },
+];
+
+const vehicleDetails = [
+  { label: "Make", value: "BMW" },
+  { label: "Model", value: "530d Touring" },
+  { label: "Year", value: "2021" },
 ];
 
 export default function ModulesSection() {
   return (
     <section
       id="modules"
-      className="border-y border-line bg-panel/35 py-16 sm:py-24"
+      aria-labelledby="modules-title"
+      className="marketing-section"
     >
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="max-w-2xl">
-          <span className="eyebrow">EVERYDAY OWNERSHIP</span>
-          <h2 className="page-title mt-4">
-            Everything your vehicle needs, organised.
-          </h2>
-          <p className="mt-4 section-description sm:text-base">
-            From the first service to the next sale, AutoCrest helps you
-            understand the complete picture.
-          </p>
-        </div>
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {modules.map(({ title, description, icon: Icon, color }) => (
-            <article key={title} className="panel-card p-6">
-              <span
-                className={`flex size-10 items-center justify-center rounded-2xl bg-input ${color}`}
-              >
-                <Icon className="size-5" />
-              </span>
-              <h3 className="mt-5 text-base font-semibold text-text-primary">
-                {title}
-              </h3>
-              <p className="mt-2 section-description">{description}</p>
-            </article>
-          ))}
-        </div>
+      <h2 id="modules-title" className="marketing-section-title">
+        A clearer picture of every vehicle.
+      </h2>
+      <div className="mt-4 grid gap-4 lg:grid-cols-3">
+        <article className="section-card h-full">
+          <div className="flex items-start gap-3">
+            <CalendarDays className="mt-0.5 size-7 shrink-0 text-accent-text" strokeWidth={1.5} aria-hidden="true" />
+            <div>
+              <h3 className="text-lg font-semibold">Service history timeline</h3>
+              <p className="marketing-copy mt-1">
+                A clear, chronological record of every service, repair and update.
+              </p>
+            </div>
+          </div>
+          <ol className="mt-4">
+            {serviceHistory.map(({ title, date, dateTime }, index) => (
+              <li key={title} className="relative grid grid-cols-[0.75rem_minmax(0,1fr)_auto] items-center gap-3 py-2.5">
+                {index < serviceHistory.length - 1 && (
+                  <span className="absolute bottom-[-50%] left-[0.34375rem] top-1/2 w-px bg-border-input" aria-hidden="true" />
+                )}
+                <span className="relative flex items-center justify-center" aria-hidden="true">
+                  <span className={`size-2.5 rounded-full border border-info ${index === 0 ? "bg-info" : "bg-panel"}`} />
+                </span>
+                <span className="text-sm font-medium">{title}</span>
+                <time dateTime={dateTime} className="whitespace-nowrap text-xs text-muted">
+                  {date}
+                </time>
+              </li>
+            ))}
+          </ol>
+        </article>
+
+        <article className="section-card h-full">
+          <div className="flex items-start gap-3">
+            <CarFront className="mt-0.5 size-7 shrink-0 text-accent-text" strokeWidth={1.5} aria-hidden="true" />
+            <div>
+              <h3 className="text-lg font-semibold">Vehicle details</h3>
+              <p className="marketing-copy mt-1">
+                Keep the key information for each vehicle in one place.
+              </p>
+            </div>
+          </div>
+          <dl className="mt-4 divide-y divide-line">
+            {vehicleDetails.map(({ label, value }) => (
+              <div key={label} className="flex items-center justify-between gap-4 py-2.5 text-sm">
+                <dt className="text-muted">{label}</dt>
+                <dd className="text-right font-medium">{value}</dd>
+              </div>
+            ))}
+          </dl>
+        </article>
+
+        <article className="section-card h-full">
+          <div className="flex items-start gap-3">
+            <Wrench className="mt-0.5 size-7 shrink-0 text-accent-text" strokeWidth={1.5} aria-hidden="true" />
+            <div>
+              <h3 className="text-lg font-semibold">Next service</h3>
+              <p className="marketing-copy mt-1">
+                See what&apos;s due next and plan ahead with confidence.
+              </p>
+            </div>
+          </div>
+          <div className="mt-4 flex items-start gap-3 rounded-xl bg-info-soft p-4">
+            <CalendarDays className="mt-0.5 size-6 shrink-0 text-info" strokeWidth={1.5} aria-hidden="true" />
+            <div>
+              <p className="text-lg font-semibold text-info">Due in 4,800 km</p>
+              <p className="mt-1 text-sm text-text-secondary">Next service: Oil &amp; filter change</p>
+            </div>
+          </div>
+        </article>
       </div>
     </section>
   );

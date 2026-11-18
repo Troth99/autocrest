@@ -8,8 +8,8 @@ export default async function ForgotPasswordPage({
   const { error } = await searchParams;
 
   return (
-    <main className="flex w-full flex-1 items-center justify-center px-4 py-12 sm:py-16">
-      <div className="w-full max-w-md rounded-2xl border border-line bg-panel p-6 shadow-xl sm:p-8">
+    <main className="auth-page">
+      <div className="auth-page-card">
         <ForgotPasswordForm invalidLink={error === "invalid_reset_link"} />
       </div>
     </main>

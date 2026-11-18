@@ -1,34 +1,5 @@
 import Image from "next/image";
-
-const euCountries = [
-  "AT",
-  "BE",
-  "BG",
-  "HR",
-  "CY",
-  "CZ",
-  "DK",
-  "EE",
-  "FI",
-  "FR",
-  "DE",
-  "GR",
-  "HU",
-  "IE",
-  "IT",
-  "LV",
-  "LT",
-  "LU",
-  "MT",
-  "NL",
-  "PL",
-  "PT",
-  "RO",
-  "SK",
-  "SI",
-  "ES",
-  "SE",
-];
+import { euCountries } from "@/shared/constants/eu-countries";
 
 type Props = {
   plate: string;
