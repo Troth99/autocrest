@@ -16,9 +16,6 @@ export default function SiteHeader({ showNavigation = true }: SiteHeaderProps) {
   const { user } = useCurrentUser();
   const pathname = usePathname();
 
-  if (pathname === "/reset-password" || pathname === "/forgot-password") {
-    return null;
-  }
 
   const isGaragePage = pathname === "/garrage";
   const showMarketingLinks = !user || pathname === "/";

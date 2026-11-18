@@ -1,5 +1,5 @@
 import { requireVerifiedSession } from "@/features/auth/services/session.service";
-import AccountNavigation from "@/app/(dashboard)/components/AccountNavigation";
+import AccountNavigation from "@/app/(site)/(dashboard)/components/AccountNavigation";
 
 export default async function IsDashboardLayout({
   children,
