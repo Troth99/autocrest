@@ -1,10 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import GarageHeaderTools, {
-  GarageSearch,
-} from "@/features/garage/components/garrage-header/GarageHeaderTools";
+import GarageHeaderTools from "@/features/garage/components/garrage-header/GarageHeaderTools";
 import UserMenu from "@/shared/components/Header/UserMenu/UserMenu";
 import { useCurrentUser } from "@/shared/context/CurrentUserContext";
 
@@ -14,11 +11,6 @@ type SiteHeaderProps = {
 
 export default function SiteHeader({ showNavigation = true }: SiteHeaderProps) {
   const { user } = useCurrentUser();
-  const pathname = usePathname();
-
-
-  const isGaragePage = pathname === "/garrage";
-  const showMarketingLinks = !user || pathname === "/";
 
   return (
     <header className="site-header">
@@ -43,24 +35,19 @@ export default function SiteHeader({ showNavigation = true }: SiteHeaderProps) {
           </span>
         </Link>
 
-        {showNavigation && user && isGaragePage && (
-          <div className="header-search">
-            <GarageSearch />
-          </div>
-        )}
 
-        {showNavigation && showMarketingLinks && (
-            <div className="header-marketing-links">
-              <Link href="/#modules" className="header-nav-link">
-                Features
-              </Link>
-              <Link href="/#how-it-works" className="header-nav-link">
-                How it works
-              </Link>
-              <Link href="/#timeline" className="header-nav-link">
-                Why AutoCrest
-              </Link>
-            </div>
+        {showNavigation  && (
+          <div className="header-marketing-links">
+            <Link href="/#modules" className="header-nav-link">
+              Features
+            </Link>
+            <Link href="/#how-it-works" className="header-nav-link">
+              How it works
+            </Link>
+            <Link href="/#timeline" className="header-nav-link">
+              Why AutoCrest
+            </Link>
+          </div>
         )}
 
         {showNavigation && (

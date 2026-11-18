@@ -1,5 +1,6 @@
 import VehicleCard from "@/features/garage/components/garage-home/VehicleCard";
 import GarageOverview from "@/features/garage/components/garage-home/GarageOverview";
+import { GarageSearch } from "@/features/garage/components/garrage-header/GarageHeaderTools";
 import { CarFront } from "lucide-react";
 import AddVehicleButton from "@/features/garage/components/garage-home/AddVehicleButton";
 import Link from "next/link";
@@ -40,6 +41,9 @@ export default async function GaragePage({
 
       <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
         <section className="min-w-0" aria-labelledby="vehicles-heading">
+          <div className="mb-6">
+            <GarageSearch />
+          </div>
           {query && (
             <div className="garage-search-summary">
               <p className="text-muted">
