@@ -1,16 +1,9 @@
-"use client";
-
 import Link from "next/link";
-import GarageHeaderTools from "@/features/garage/components/garrage-header/GarageHeaderTools";
-import UserMenu from "@/shared/components/Header/UserMenu/UserMenu";
-import { useCurrentUser } from "@/shared/context/CurrentUserContext";
+import HeaderNavigation from "@/shared/components/Header/HeaderNavigation";
+import HeaderNavLinks from "@/shared/components/Header/HeaderNavLinks";
 
-type SiteHeaderProps = {
-  showNavigation?: boolean;
-};
 
-export default function SiteHeader({ showNavigation = true }: SiteHeaderProps) {
-  const { user } = useCurrentUser();
+export default function SiteHeader() {
 
   return (
     <header className="site-header">
@@ -35,47 +28,10 @@ export default function SiteHeader({ showNavigation = true }: SiteHeaderProps) {
           </span>
         </Link>
 
+      <HeaderNavLinks />
 
-        {showNavigation  && (
-          <div className="header-marketing-links">
-            <Link href="/#modules" className="header-nav-link">
-              Features
-            </Link>
-            <Link href="/#how-it-works" className="header-nav-link">
-              How it works
-            </Link>
-            <Link href="/#timeline" className="header-nav-link">
-              Why AutoCrest
-            </Link>
-          </div>
-        )}
+        <HeaderNavigation />
 
-        {showNavigation && (
-          <div className="ml-auto flex max-w-full flex-wrap items-center justify-end gap-2 sm:gap-3">
-            {user ? (
-              <>
-                <GarageHeaderTools />
-                <UserMenu
-                  username={user.username || "Account"}
-                  email={user.email ?? ""}
-                  avatarUrl={user.avatarUrl || null}
-                />
-              </>
-            ) : (
-              <>
-                <Link href="/login" className="header-sign-in">
-                  Sign in
-                </Link>
-                <Link
-                  href="/register"
-                  className="button-primary button-base px-4 py-2.5 text-sm shadow-none"
-                >
-                  Start your garage
-                </Link>
-              </>
-            )}
-          </div>
-        )}
       </nav>
     </header>
   );
