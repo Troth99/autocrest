@@ -28,13 +28,14 @@ export default function SiteHeader() {
           </span>
         </Link>
 
-      <HeaderNavLinks href={"/why-autocrest"}/>
-      <HeaderNavLinks href={"/how-it-works"}/>
-      <HeaderNavLinks href={"/help"}/>
-      <HeaderNavLinks href={"/contacts"}/>
+        <div className="header-marketing-links">
+          <HeaderNavLinks href="/why-autocrest">Why AutoCrest</HeaderNavLinks>
+          <HeaderNavLinks href="/how-it-works">How it works</HeaderNavLinks>
+          <HeaderNavLinks href="/help">Help</HeaderNavLinks>
+          <HeaderNavLinks href="/contacts">Contacts</HeaderNavLinks>
+        </div>
 
         <HeaderNavigation />
-
       </nav>
     </header>
   );
